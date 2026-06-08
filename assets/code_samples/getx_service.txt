@@ -1,0 +1,17 @@
+// Ideal for Databases, Authentication, or Network Clients
+class DatabaseService extends GetxService {
+  Future<void> init() async {
+    print('DB Connection Established');
+  }
+}
+
+// Register at the root of your application
+GetMaterialApp(
+  bindings: [
+    Bind<DatabaseService>(() => DatabaseService()),
+  ],
+  child: const MyApp(),
+);
+
+// Resolve context-less anywhere in your business logic
+final db = Get.find<DatabaseService>();

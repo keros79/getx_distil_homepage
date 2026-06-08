@@ -1,0 +1,21 @@
+class SearchController extends GetxController {
+  final searchQuery = ''.obs;
+  late final Worker _worker;
+
+  @override
+  void onInit() {
+    super.onInit();
+    // Triggers API call only after 500ms of typing inactivity
+    _worker = debounce(
+      searchQuery, 
+      (query) => fetchApi(query), 
+      time: const Duration(milliseconds: 500),
+    );
+  }
+
+  @override
+  void onClose() {
+    _worker.dispose(); // Enforced explicit disposal to prevent memory leaks!
+    super.onClose();
+  }
+}

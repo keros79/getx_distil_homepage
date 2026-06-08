@@ -1,0 +1,22 @@
+// Route configuration (e.g. GoRouter)
+GoRoute(
+  path: '/settings',
+  builder: (context, state) => BindingWidget(
+    bindings: [
+      Bind<SettingsController>(() => SettingsController()),
+    ],
+    child: const SettingsPage(),
+  ),
+)
+
+// Inside SettingsPage (resolves automatically via BuildContext)
+class SettingsPage extends GetView<SettingsController> {
+  const SettingsPage({super.key});
+  
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Obx(() => Text(controller.someData.value)),
+    );
+  }
+}

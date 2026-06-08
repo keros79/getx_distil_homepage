@@ -1,0 +1,32 @@
+class User {
+  String name;
+  User({required this.name});
+}
+
+class CounterController extends GetxController {
+  // 1. Primitive Observables
+  final count = 0.obs;                 // RxInt
+  final isLogged = false.obs;          // RxBool
+  final balance = 0.0.obs;             // RxDouble
+  final title = 'Hello'.obs;           // RxString
+
+  // 2. Safe Nullable Observables
+  final name = Rxn<String>();          // Rxn<String> (initially null)
+
+  // 3. Collection Observables
+  final items = <String>[].obs;        // RxList<String> (auto-batched)
+
+  // 4. Custom Object Observables
+  final user = User(name: 'Guest').obs; // Rx<User>
+
+  void updateState() {
+    count.value++;                     // Triggers update
+    isLogged.toggle();                 // Helper for RxBool
+    title.value = 'Distilled GetX';    // Triggers update if changed
+    items.add('Item ${items.length}'); // Batched mutation
+    user.value = User(name: 'Alice');  // Custom object update
+  }
+}
+
+// In your View layer:
+Obx(() => Text('${controller.count.value}'));

@@ -1,0 +1,24 @@
+// Controller utilizing StateMixin for typical API loading/error state
+class UserController extends GetxController with StateMixin<String> {
+  void fetchUser() async {
+    change(null, status: RxStatus.loading());
+    try {
+      final res = await api.getUser();
+      if (res.isEmpty) {
+        change(null, status: RxStatus.empty());
+      } else {
+        change(res, status: RxStatus.success());
+      }
+    } catch (e) {
+      change(null, status: RxStatus.error(e.toString()));
+    }
+  }
+}
+
+// Declarative UI mapping in the View layer:
+controller.obx(
+  (state) => Text('Welcome, $state'),
+  onLoading: const CircularProgressIndicator(),
+  onEmpty: const Text('No user data found.'),
+  onError: (error) => Text('Error: $error', style: const TextStyle(color: Colors.red)),
+);

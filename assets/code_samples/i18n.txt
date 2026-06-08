@@ -1,0 +1,30 @@
+// 1. Define custom translations dictionary
+class MyTranslations extends Translations {
+  @override
+  Map<String, Map<String, String>> get keys => {
+    'en_US': {
+      'hello': 'Hello World',
+      'welcome': 'Welcome, @name!',
+    },
+    'ko_KR': {
+      'hello': '안녕하세요',
+      'welcome': '안녕하세요, @name님!',
+    }
+  };
+}
+
+// 2. Register translations at root GetMaterialApp
+GetMaterialApp(
+  translations: MyTranslations(),
+  locale: const Locale('en', 'US'),
+  fallbackLocale: const Locale('en', 'US'),
+  child: const MyApp(),
+);
+
+// 3. Render localized text reactively in the View
+Obx(() => Text('hello'.tr))
+Obx(() => Text('welcome'.trParams({'name': 'John Doe'})))
+
+// 4. Switch locale dynamically at runtime
+Get.locale = const Locale('ko', 'KR'); // Switch to Korean
+Get.locale = const Locale('en', 'US'); // Switch to English

@@ -1,0 +1,16 @@
+// 1. put: Instantly registers a singleton in global memory
+final controller = Get.put(CounterController());
+
+// 2. lazyPut: Registers a builder, instantiated on first Get.find
+Get.lazyPut(() => CounterController());
+
+// 3. put with tag: Register multiple instances of the same type
+Get.put(CounterController(), tag: 'special_counter');
+
+// 4. Find instances (context-less anywhere in your code)
+final controller = Get.find<CounterController>();
+final specialController = Get.find<CounterController>(null, 'special_counter');
+
+// 5. Context-aware (Hybrid DI lookup)
+// Prioritizes tree-scoped BindingWidget. Falls back to global registry.
+final contextController = Get.find<CounterController>(context);
