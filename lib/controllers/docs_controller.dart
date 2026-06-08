@@ -53,7 +53,18 @@ class CounterController extends GetxController {
   void increment() => count.value++;
 }
 // View
-Obx(() => Text('\${controller.count.value}'));''';
+// Option 1: Obx widget
+Obx(() => Text('\${controller.count.value}'));
+
+// Option 2: GetView widget
+class CounterView extends GetView<CounterController> {
+  const CounterView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() => Text('\${controller.count.value}'));
+  }
+}''';
       case 'global_di':
         return '''
 final controller = Get.put(CounterController());

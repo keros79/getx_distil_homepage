@@ -29,4 +29,19 @@ class CounterController extends GetxController {
 }
 
 // In your View layer:
+// Option 1: Wrap reactive widgets with Obx()
 Obx(() => Text('${controller.count.value}'));
+
+// Option 2: Extend GetView to automatically bind the controller
+class CounterView extends GetView<CounterController> {
+  const CounterView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Obx(() => Text('${controller.count.value}')),
+      ),
+    );
+  }
+}

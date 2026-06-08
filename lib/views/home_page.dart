@@ -112,39 +112,7 @@ class HomePage extends GetView<HomeController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // Banner Tag
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 6.0),
-            decoration: BoxDecoration(
-              color: Colors.black.withOpacity(0.03),
-              borderRadius: BorderRadius.circular(20.0),
-              border: Border.all(color: Colors.black.withOpacity(0.06), width: 1.0),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  width: 8.0,
-                  height: 8.0,
-                  decoration: const BoxDecoration(
-                    color: AppTheme.googleGreen,
-                    shape: BoxShape.circle,
-                  ),
-                ),
-                const SizedBox(width: 8.0),
-                const Text(
-                  'Latest Release v1.0.3',
-                  style: TextStyle(
-                    fontFamily: 'Google Sans Flex',
-                    color: AppTheme.textSecondary,
-                    fontSize: 12.0,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 24.0),
+
 
           // Main Header Text (Dark Gradient for Light Theme)
           ShaderMask(
@@ -880,13 +848,6 @@ Obx(() => Wrap(
                   const Text(
                     '© 2026 getx_distil. Open source under MIT License.',
                     style: TextStyle(color: AppTheme.textMuted, fontSize: 12.0),
-                  ),
-                  InkWell(
-                    onTap: _launchGitHub,
-                    child: const Text(
-                      'v1.0.3 | pub.dev Package',
-                      style: TextStyle(color: AppTheme.googleBlue, fontSize: 12.0, fontWeight: FontWeight.bold),
-                    ),
                   ),
                 ],
               ),
