@@ -344,9 +344,12 @@ Obx(() => Wrap(
                   ),
           ),
           const SizedBox(height: 32.0),
-          const CodeBlock(
-            code: playgroundCode,
-            language: 'dart',
+          const SizedBox(
+            width: double.infinity,
+            child: CodeBlock(
+              code: playgroundCode,
+              language: 'dart',
+            ),
           ),
         ],
       ),
