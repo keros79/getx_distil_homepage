@@ -11,13 +11,49 @@ import '../core/widgets/code_block.dart';
 import '../core/widgets/glass_card.dart';
 import '../core/widgets/particle_field.dart';
 
-class ApiDetailPage extends GetView<DocsController> {
+class ApiDetailPage extends StatefulWidget {
   final String section;
 
   const ApiDetailPage({
     super.key,
     required this.section,
   });
+
+  @override
+  State<ApiDetailPage> createState() => _ApiDetailPageState();
+}
+
+class _ApiDetailPageState extends State<ApiDetailPage> {
+  late final ScrollController _scrollController;
+  double _scrollOffset = 0.0;
+  late final DocsController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = Get.find<DocsController>();
+    _scrollController = ScrollController();
+    _scrollController.addListener(() {
+      setState(() {
+        _scrollOffset = _scrollController.offset;
+      });
+    });
+  }
+
+  @override
+  void didUpdateWidget(ApiDetailPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.section != oldWidget.section) {
+      _scrollController.jumpTo(0.0);
+      _scrollOffset = 0.0;
+    }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   // Section metadata mapping
   static final Map<String, Map<String, dynamic>> sectionMeta = {
@@ -117,23 +153,23 @@ class ApiDetailPage extends GetView<DocsController> {
 
   @override
   Widget build(BuildContext context) {
+    final section = widget.section;
     final double screenWidth = MediaQuery.of(context).size.width;
-    final bool isMobile = screenWidth < 1000;
-    
-    // Retrieve metadata for current section
-    final meta = sectionMeta[section] ?? sectionMeta['reactive-state']!;
-    final String title = meta['title'];
-    final String codeKey = meta['codeKey'];
-    final String description = meta['description'];
-    final List<String> points = List<String>.from(meta['points']);
-    final String nextSection = meta['next'];
-    final String nextTitle = meta['nextTitle'];
-    final Color color = meta['color'];
+    final bool isMobile = screenWidth < 800;
 
-    Widget contentBody = Column(
+    final meta = sectionMeta[section] ?? sectionMeta['reactive-state']!;
+    final String title = meta['title'] as String;
+    final String codeKey = meta['codeKey'] as String;
+    final String description = meta['description'] as String;
+    final List<String> points = meta['points'] as List<String>;
+    final String nextSection = meta['next'] as String;
+    final String nextTitle = meta['nextTitle'] as String;
+    final Color color = meta['color'] as Color;
+
+    final contentBody = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Category Label
+        // Category / Breadcrumb
         Row(
           children: [
             const Text(
@@ -163,77 +199,82 @@ class ApiDetailPage extends GetView<DocsController> {
         ),
         const SizedBox(height: 16.0),
 
-        // Section Title
+        // Title
         Text(
           title,
           style: const TextStyle(
             fontFamily: 'Google Sans Flex',
-            fontSize: 32.0,
-            fontWeight: FontWeight.bold,
+            fontSize: 36.0,
+            fontWeight: FontWeight.w800,
             color: AppTheme.textPrimary,
             letterSpacing: -1.0,
           ),
         ),
-        const SizedBox(height: 16.0),
-
-        // Description
+        const SizedBox(height: 12.0),
         Text(
           description,
-          style: const TextStyle(
-            color: AppTheme.textSecondary,
-            fontSize: 15.5,
-            height: 1.6,
-          ),
+          style: const TextStyle(color: AppTheme.textSecondary, fontSize: 16.0, height: 1.5),
         ),
         const SizedBox(height: 32.0),
 
-        // Key Enhancements (Glow panel)
+        // Points
         const Text(
           'KEY ENHANCEMENTS',
           style: TextStyle(
             fontFamily: 'Google Sans Flex',
             fontSize: 12.0,
+            color: AppTheme.textMuted,
             fontWeight: FontWeight.bold,
-            color: AppTheme.textSecondary,
             letterSpacing: 1.5,
           ),
         ),
-        const SizedBox(height: 12.0),
-        ...points.map((point) => Padding(
-              padding: const EdgeInsets.symmetric(vertical: 6.0),
+        const SizedBox(height: 16.0),
+        Column(
+          children: points.map((pt) {
+            final parts = pt.split(':');
+            final prefix = parts[0];
+            final suffix = parts.length > 1 ? parts[1] : '';
+
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 12.0),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Icon(Icons.offline_bolt_rounded, color: color, size: 18.0),
+                  Icon(Icons.bolt_rounded, color: color, size: 20.0),
                   const SizedBox(width: 12.0),
                   Expanded(
-                    child: Text(
-                      point,
-                      style: const TextStyle(color: AppTheme.textSecondary, fontSize: 14.0, height: 1.4),
+                    child: RichText(
+                      text: TextSpan(
+                        style: const TextStyle(color: AppTheme.textSecondary, fontSize: 14.5, height: 1.5, fontFamily: 'Google Sans Flex'),
+                        children: [
+                          TextSpan(text: '$prefix:', style: const TextStyle(fontWeight: FontWeight.bold, color: AppTheme.textPrimary)),
+                          TextSpan(text: suffix),
+                        ],
+                      ),
                     ),
                   ),
                 ],
               ),
-            )),
-        
-        const SizedBox(height: 40.0),
+            );
+          }).toList(),
+        ),
+        const SizedBox(height: 32.0),
 
-        // Code block
+        // Live Demo Code
         const Text(
           'IMPLEMENTATION EXAMPLE',
           style: TextStyle(
             fontFamily: 'Google Sans Flex',
             fontSize: 12.0,
+            color: AppTheme.textMuted,
             fontWeight: FontWeight.bold,
-            color: AppTheme.textSecondary,
             letterSpacing: 1.5,
           ),
         ),
         const SizedBox(height: 16.0),
-        
         controller.obx(
           (state) => CodeBlock(
-            code: state?[codeKey] ?? '// Sample code loading failed.',
+            code: state?[codeKey] ?? '// Failed loading code sample.',
             language: 'dart',
           ),
           onLoading: const GlassCard(
@@ -246,10 +287,9 @@ class ApiDetailPage extends GetView<DocsController> {
           ),
           onError: (error) => Text('Error loading code sample: $error', style: const TextStyle(color: AppTheme.googleRed)),
         ),
-
         const SizedBox(height: 48.0),
 
-        // Bottom Navigation Card
+        // Next Card
         GlassCard(
           glowColor: color,
           child: Row(
@@ -259,12 +299,12 @@ class ApiDetailPage extends GetView<DocsController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    'Next Topic',
+                    'Next up',
                     style: TextStyle(color: AppTheme.textMuted, fontSize: 13.0, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 4.0),
                   Text(
-                    nextTitle,
+                    'Explore $nextTitle',
                     style: const TextStyle(color: AppTheme.textPrimary, fontSize: 16.0, fontWeight: FontWeight.bold),
                   ),
                 ],
@@ -308,6 +348,7 @@ class ApiDetailPage extends GetView<DocsController> {
                       // Content Area
                       Expanded(
                         child: SingleChildScrollView(
+                          controller: _scrollController,
                           padding: EdgeInsets.symmetric(
                             horizontal: isMobile ? 24.0 : 48.0,
                             vertical: 32.0,
@@ -332,7 +373,7 @@ class ApiDetailPage extends GetView<DocsController> {
             top: 0,
             left: 0,
             right: 0,
-            child: NavBar(scrollOffset: screenWidth > 800 ? 100 : 0),
+            child: NavBar(scrollOffset: _scrollOffset),
           ),
         ],
       ),

@@ -10,8 +10,35 @@ import '../core/widgets/particle_field.dart';
 import '../core/widgets/code_block.dart';
 import '../core/widgets/glass_card.dart';
 
-class GuidePage extends GetView<DocsController> {
+class GuidePage extends StatefulWidget {
   const GuidePage({super.key});
+
+  @override
+  State<GuidePage> createState() => _GuidePageState();
+}
+
+class _GuidePageState extends State<GuidePage> {
+  late final ScrollController _scrollController;
+  double _scrollOffset = 0.0;
+  late final DocsController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = Get.find<DocsController>();
+    _scrollController = ScrollController();
+    _scrollController.addListener(() {
+      setState(() {
+        _scrollOffset = _scrollController.offset;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +56,7 @@ class GuidePage extends GetView<DocsController> {
           // Main contents
           Positioned.fill(
             child: SingleChildScrollView(
+              controller: _scrollController,
               child: Column(
                 children: [
                   const SizedBox(height: 120.0), // Space for NavBar
@@ -200,7 +228,7 @@ class MyApp extends StatelessWidget {
             top: 0,
             left: 0,
             right: 0,
-            child: NavBar(scrollOffset: screenWidth > 800 ? 100 : 0),
+            child: NavBar(scrollOffset: _scrollOffset),
           ),
         ],
       ),

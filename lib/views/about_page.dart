@@ -7,14 +7,39 @@ import '../core/widgets/nav_bar.dart';
 import '../core/widgets/particle_field.dart';
 import '../core/widgets/glass_card.dart';
 
-class AboutPage extends StatelessWidget {
+class AboutPage extends StatefulWidget {
   const AboutPage({super.key});
+
+  @override
+  State<AboutPage> createState() => _AboutPageState();
+}
+
+class _AboutPageState extends State<AboutPage> {
+  late final ScrollController _scrollController;
+  double _scrollOffset = 0.0;
 
   void _launchUrl(String urlString) async {
     final Uri url = Uri.parse(urlString);
     if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
       throw Exception('Could not launch $url');
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+    _scrollController.addListener(() {
+      setState(() {
+        _scrollOffset = _scrollController.offset;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -33,6 +58,7 @@ class AboutPage extends StatelessWidget {
           // Main contents scroll view
           Positioned.fill(
             child: SingleChildScrollView(
+              controller: _scrollController,
               child: Column(
                 children: [
                   const SizedBox(height: 120.0), // Space for NavBar
@@ -174,7 +200,7 @@ class AboutPage extends StatelessWidget {
             top: 0,
             left: 0,
             right: 0,
-            child: NavBar(scrollOffset: screenWidth > 800 ? 100 : 0),
+            child: NavBar(scrollOffset: _scrollOffset),
           ),
         ],
       ),
