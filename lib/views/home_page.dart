@@ -10,6 +10,7 @@ import '../core/widgets/nav_bar.dart';
 import '../core/widgets/particle_field.dart';
 import '../core/widgets/animated_orb.dart';
 import '../core/widgets/glass_card.dart';
+import '../core/widgets/code_block.dart';
 
 class HomePage extends GetView<HomeController> {
   const HomePage({super.key});
@@ -153,7 +154,7 @@ class HomePage extends GetView<HomeController> {
               end: Alignment.bottomCenter,
             ).createShader(bounds),
             child: Text(
-              'Build the New Way',
+              isMobile ? 'Flutter State\nManagement' : 'Flutter State Management\nDistilled & Refined',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: 'Google Sans Flex',
@@ -270,8 +271,22 @@ class HomePage extends GetView<HomeController> {
     );
   }
 
-  // Interactive Live Playground
   Widget _buildPlayground(BuildContext context, bool isMobile) {
+    const String playgroundCode = '''
+// 1. Declare reactive variables inside Controller
+final counter = 0.obs;
+final textInput = 'Type something...'.obs;
+final demoItems = <String>[].obs;
+
+// 2. Wrap UI widgets with Obx() for pinpoint reactive rebuilds
+Obx(() => Text('\${controller.counter.value}'))
+
+Obx(() => Text(controller.textInput.value))
+
+Obx(() => Wrap(
+  children: controller.demoItems.map((item) => Chip(label: Text(item))).toList(),
+))''';
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 24.0),
       width: 1000,
@@ -319,6 +334,22 @@ class HomePage extends GetView<HomeController> {
                       Expanded(child: _buildPlaygroundRight(context)),
                     ],
                   ),
+          ),
+          const SizedBox(height: 32.0),
+          const Text(
+            'Obx() Playground Implementation Code:',
+            style: TextStyle(
+              fontFamily: 'Google Sans Flex',
+              fontWeight: FontWeight.bold,
+              fontSize: 14.0,
+              color: AppTheme.textSecondary,
+              letterSpacing: 0.5,
+            ),
+          ),
+          const SizedBox(height: 12.0),
+          const CodeBlock(
+            code: playgroundCode,
+            language: 'dart',
           ),
         ],
       ),
