@@ -15,8 +15,8 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => const Size.fromHeight(70.0);
 
-  void _launchGitHub() async {
-    final Uri url = Uri.parse('https://github.com/keros79/getx_distil');
+  void _launchPubDev() async {
+    final Uri url = Uri.parse('https://pub.dev/packages/getx_distil');
     if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
       throw Exception('Could not launch $url');
     }
@@ -104,11 +104,11 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
                     ),
                     const SizedBox(width: 16.0),
                     
-                    // GitHub Button
+                    // pub.dev Button
                     ElevatedButton.icon(
-                      onPressed: _launchGitHub,
-                      icon: const Icon(Icons.code_rounded, size: 16.0),
-                      label: const Text('GitHub'),
+                      onPressed: _launchPubDev,
+                      icon: const Icon(Icons.layers_rounded, size: 16.0, color: AppTheme.googleYellow),
+                      label: const Text('pub.dev'),
                       style: ElevatedButton.styleFrom(
                         foregroundColor: AppTheme.textPrimary,
                         backgroundColor: Colors.black.withOpacity(0.04),
