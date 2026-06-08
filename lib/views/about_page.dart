@@ -44,25 +44,37 @@ class AboutPage extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          // Developer Avatar Placeholder / Icon
+                          // Developer Avatar
                           Container(
                             width: 100.0,
                             height: 100.0,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              gradient: AppTheme.primaryGradient,
                               boxShadow: [
                                 BoxShadow(
-                                  color: AppTheme.googleBlue.withOpacity(0.3),
+                                  color: AppTheme.googleBlue.withOpacity(0.15),
                                   blurRadius: 20.0,
                                 ),
                               ],
                             ),
-                            child: const Center(
-                              child: Icon(
-                                Icons.person_rounded,
-                                size: 50.0,
-                                color: Colors.white,
+                            child: ClipOval(
+                              child: Image.asset(
+                                'assets/image/mypicture.jpg',
+                                fit: BoxFit.cover,
+                                filterQuality: FilterQuality.high,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Container(
+                                    decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      gradient: AppTheme.primaryGradient,
+                                    ),
+                                    child: const Icon(
+                                      Icons.person_rounded,
+                                      size: 50.0,
+                                      color: Colors.white,
+                                    ),
+                                  );
+                                },
                               ),
                             ),
                           ),
@@ -70,7 +82,7 @@ class AboutPage extends StatelessWidget {
 
                           // Name
                           const Text(
-                            'Donghyeop Kang (keros79)',
+                            'Danny Kang',
                             style: TextStyle(
                               fontFamily: 'Google Sans Flex',
                               fontSize: 32.0,
@@ -110,12 +122,20 @@ class AboutPage extends StatelessWidget {
                                 const SizedBox(height: 16.0),
                                 const Text(
                                   'Hello! I am a passionate mobile and web framework engineer interested in Flutter, state machines, reactive programming, and modular Dependency Injection (DI) system design. My goal is to build tools that maximize developer productivity and maintain high visual excellence.',
-                                  style: TextStyle(color: AppTheme.textSecondary, fontSize: 14.5, height: 1.6),
+                                  style: TextStyle(
+                                    color: AppTheme.textSecondary,
+                                    fontSize: 14.5,
+                                    height: 1.6,
+                                  ),
                                 ),
                                 const SizedBox(height: 16.0),
                                 const Text(
                                   'I pioneered "getx_distil" out of a practical need to integrate the reactive DX paradigms of GetX with modern declarative routers like GoRouter, completely removing unnecessary legacy global overlays and fixing concurrency issues.',
-                                  style: TextStyle(color: AppTheme.textSecondary, fontSize: 14.5, height: 1.6),
+                                  style: TextStyle(
+                                    color: AppTheme.textSecondary,
+                                    fontSize: 14.5,
+                                    height: 1.6,
+                                  ),
                                 ),
                               ],
                             ),
@@ -124,11 +144,20 @@ class AboutPage extends StatelessWidget {
 
                           // Contributions & Links
                           isMobile
-                              ? Column(
-                                  children: _buildLinkCards(),
-                                )
+                              ? Column(children: _buildLinkCards())
                               : Row(
-                                  children: _buildLinkCards().map((w) => Expanded(child: Padding(padding: const EdgeInsets.symmetric(horizontal: 10.0), child: w))).toList(),
+                                  children: _buildLinkCards()
+                                      .map(
+                                        (w) => Expanded(
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 10.0,
+                                            ),
+                                            child: w,
+                                          ),
+                                        ),
+                                      )
+                                      .toList(),
                                 ),
 
                           const SizedBox(height: 60.0),
@@ -161,21 +190,39 @@ class AboutPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Icon(Icons.code_rounded, color: AppTheme.googleGreen, size: 28.0),
+            const Icon(
+              Icons.code_rounded,
+              color: AppTheme.googleGreen,
+              size: 28.0,
+            ),
             const SizedBox(height: 12.0),
             const Text(
               'GitHub Profile',
-              style: TextStyle(color: AppTheme.textPrimary, fontSize: 16.0, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                color: AppTheme.textPrimary,
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const SizedBox(height: 8.0),
             const Text(
               'Checkout repositories, open-source utilities, and contribute to getx_distil packages.',
-              style: TextStyle(color: AppTheme.textSecondary, fontSize: 13.0, height: 1.4),
+              style: TextStyle(
+                color: AppTheme.textSecondary,
+                fontSize: 13.0,
+                height: 1.4,
+              ),
             ),
             const SizedBox(height: 16.0),
             TextButton(
               onPressed: () => _launchUrl('https://github.com/keros79'),
-              child: const Text('Visit GitHub ->', style: TextStyle(color: AppTheme.googleGreen, fontWeight: FontWeight.bold)),
+              child: const Text(
+                'Visit GitHub ->',
+                style: TextStyle(
+                  color: AppTheme.googleGreen,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ],
         ),
@@ -187,21 +234,40 @@ class AboutPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Icon(Icons.layers_outlined, color: AppTheme.googleYellow, size: 28.0),
+            const Icon(
+              Icons.layers_outlined,
+              color: AppTheme.googleYellow,
+              size: 28.0,
+            ),
             const SizedBox(height: 12.0),
             const Text(
               'pub.dev Packages',
-              style: TextStyle(color: AppTheme.textPrimary, fontSize: 16.0, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                color: AppTheme.textPrimary,
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const SizedBox(height: 8.0),
             const Text(
               'Explore published packages, benchmarks, documentation scoring, and installations.',
-              style: TextStyle(color: AppTheme.textSecondary, fontSize: 13.0, height: 1.4),
+              style: TextStyle(
+                color: AppTheme.textSecondary,
+                fontSize: 13.0,
+                height: 1.4,
+              ),
             ),
             const SizedBox(height: 16.0),
             TextButton(
-              onPressed: () => _launchUrl('https://pub.dev/packages/getx_distil'),
-              child: const Text('Visit pub.dev ->', style: TextStyle(color: AppTheme.googleYellow, fontWeight: FontWeight.bold)),
+              onPressed: () =>
+                  _launchUrl('https://pub.dev/packages/getx_distil'),
+              child: const Text(
+                'Visit pub.dev ->',
+                style: TextStyle(
+                  color: AppTheme.googleYellow,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ],
         ),
@@ -221,41 +287,77 @@ class _AboutMobileDrawer extends StatelessWidget {
         child: Column(
           children: [
             ListTile(
-              leading: const Icon(Icons.bolt_rounded, color: AppTheme.googleBlue),
-              title: const Text('getx_distil', style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.textPrimary)),
+              leading: const Icon(
+                Icons.bolt_rounded,
+                color: AppTheme.googleBlue,
+              ),
+              title: const Text(
+                'getx_distil',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: AppTheme.textPrimary,
+                ),
+              ),
               trailing: IconButton(
-                icon: const Icon(Icons.close_rounded, color: AppTheme.textSecondary),
+                icon: const Icon(
+                  Icons.close_rounded,
+                  color: AppTheme.textSecondary,
+                ),
                 onPressed: () => Navigator.of(context).pop(),
               ),
             ),
             const Divider(color: Color(0xFF1E1E2F)),
             ListTile(
-              leading: const Icon(Icons.home_outlined, color: AppTheme.textSecondary),
-              title: const Text('Home', style: TextStyle(color: AppTheme.textPrimary)),
+              leading: const Icon(
+                Icons.home_outlined,
+                color: AppTheme.textSecondary,
+              ),
+              title: const Text(
+                'Home',
+                style: TextStyle(color: AppTheme.textPrimary),
+              ),
               onTap: () {
                 Navigator.of(context).pop();
                 context.go('/');
               },
             ),
             ListTile(
-              leading: const Icon(Icons.menu_book_outlined, color: AppTheme.textSecondary),
-              title: const Text('Guide', style: TextStyle(color: AppTheme.textPrimary)),
+              leading: const Icon(
+                Icons.menu_book_outlined,
+                color: AppTheme.textSecondary,
+              ),
+              title: const Text(
+                'Guide',
+                style: TextStyle(color: AppTheme.textPrimary),
+              ),
               onTap: () {
                 Navigator.of(context).pop();
                 context.go('/guide');
               },
             ),
             ListTile(
-              leading: const Icon(Icons.code_rounded, color: AppTheme.textSecondary),
-              title: const Text('API Reference', style: TextStyle(color: AppTheme.textPrimary)),
+              leading: const Icon(
+                Icons.code_rounded,
+                color: AppTheme.textSecondary,
+              ),
+              title: const Text(
+                'API Reference',
+                style: TextStyle(color: AppTheme.textPrimary),
+              ),
               onTap: () {
                 Navigator.of(context).pop();
                 context.go('/api/reactive-state');
               },
             ),
             ListTile(
-              leading: const Icon(Icons.person_outline_rounded, color: AppTheme.textSecondary),
-              title: const Text('About Developer', style: TextStyle(color: AppTheme.textPrimary)),
+              leading: const Icon(
+                Icons.person_outline_rounded,
+                color: AppTheme.textSecondary,
+              ),
+              title: const Text(
+                'About Developer',
+                style: TextStyle(color: AppTheme.textPrimary),
+              ),
               onTap: () {
                 Navigator.of(context).pop();
               },

@@ -293,25 +293,33 @@ Obx(() => Wrap(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'EXPERIENCE THE REACTIVITY',
-            style: TextStyle(
-              fontFamily: 'Google Sans Flex',
-              color: AppTheme.googleBlue,
-              fontSize: 13.0,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 2.0,
+          const Align(
+            alignment: Alignment.center,
+            child: Text(
+              'EXPERIENCE THE REACTIVITY',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontFamily: 'Google Sans Flex',
+                color: AppTheme.googleBlue,
+                fontSize: 13.0,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 2.0,
+              ),
             ),
           ),
           const SizedBox(height: 10.0),
-          const Text(
-            'Try the micro-state engine live',
-            style: TextStyle(
-              fontFamily: 'Google Sans Flex',
-              color: AppTheme.textPrimary,
-              fontSize: 28.0,
-              fontWeight: FontWeight.w700,
-              letterSpacing: -0.5,
+          const Align(
+            alignment: Alignment.center,
+            child: Text(
+              'Try the micro-state engine live',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontFamily: 'Google Sans Flex',
+                color: AppTheme.textPrimary,
+                fontSize: 28.0,
+                fontWeight: FontWeight.w700,
+                letterSpacing: -0.5,
+              ),
             ),
           ),
           const SizedBox(height: 24.0),
@@ -336,17 +344,6 @@ Obx(() => Wrap(
                   ),
           ),
           const SizedBox(height: 32.0),
-          const Text(
-            'Obx() Playground Implementation Code:',
-            style: TextStyle(
-              fontFamily: 'Google Sans Flex',
-              fontWeight: FontWeight.bold,
-              fontSize: 14.0,
-              color: AppTheme.textSecondary,
-              letterSpacing: 0.5,
-            ),
-          ),
-          const SizedBox(height: 12.0),
           const CodeBlock(
             code: playgroundCode,
             language: 'dart',

@@ -14,37 +14,30 @@ class SidebarToc extends StatelessWidget {
     {
       'title': '1. Reactive State (Rx & Obx)',
       'path': 'reactive-state',
-      'icon': '🎯',
     },
     {
       'title': '2. Global Dependency Injection',
       'path': 'global-di',
-      'icon': '🚀',
     },
     {
       'title': '3. Widget Tree Scoped DI',
       'path': 'binding-widget',
-      'icon': '🌳',
     },
     {
       'title': '4. Global Persistent Services',
       'path': 'getx-service',
-      'icon': '🌐',
     },
     {
       'title': '5. Background Side-Effects',
       'path': 'worker',
-      'icon': '🛠️',
     },
     {
       'title': '6. Declarative Async Branching',
       'path': 'state-mixin',
-      'icon': '🔄',
     },
     {
       'title': '7. Internationalization (i18n)',
       'path': 'i18n',
-      'icon': '🌍',
     },
   ];
 
@@ -56,7 +49,7 @@ class SidebarToc extends StatelessWidget {
         color: AppTheme.bg,
         border: Border(
           right: BorderSide(
-            color: Colors.white.withOpacity(0.06),
+            color: Colors.black.withOpacity(0.06),
             width: 1.0,
           ),
         ),
@@ -88,7 +81,6 @@ class SidebarToc extends StatelessWidget {
                 
                 return _TocItem(
                   title: section['title']!,
-                  icon: section['icon']!,
                   isSelected: isSelected,
                   onTap: () => context.go('/api/${section['path']}'),
                 );
@@ -103,13 +95,11 @@ class SidebarToc extends StatelessWidget {
 
 class _TocItem extends StatefulWidget {
   final String title;
-  final String icon;
   final bool isSelected;
   final VoidCallback onTap;
 
   const _TocItem({
     required this.title,
-    required this.icon,
     required this.isSelected,
     required this.onTap,
   });
@@ -126,36 +116,34 @@ class _TocItemState extends State<_TocItem> {
     return MouseRegion(
       onEnter: (_) => setState(() => _isHovered = true),
       onExit: (_) => setState(() => _isHovered = false),
-      child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 4.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4.0),
+        child: Material(
           color: widget.isSelected
               ? AppTheme.googleBlue.withOpacity(0.08)
-              : (_isHovered ? Colors.white.withOpacity(0.03) : Colors.transparent),
-          border: Border.all(
-            color: widget.isSelected
-                ? AppTheme.googleBlue.withOpacity(0.2)
-                : Colors.transparent,
-            width: 1.0,
+              : (_isHovered ? Colors.black.withOpacity(0.03) : Colors.transparent),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            side: BorderSide(
+              color: widget.isSelected
+                  ? AppTheme.googleBlue.withOpacity(0.2)
+                  : Colors.transparent,
+              width: 1.0,
+            ),
           ),
-        ),
-        child: ListTile(
-          onTap: widget.onTap,
-          dense: true,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
-          leading: Text(
-            widget.icon,
-            style: const TextStyle(fontSize: 16.0),
-          ),
-          title: Text(
-            widget.title,
-            style: TextStyle(
-              fontFamily: 'Google Sans Flex',
-              fontSize: 14.0,
-              fontWeight: widget.isSelected ? FontWeight.w600 : FontWeight.w400,
-              color: widget.isSelected ? Colors.white : AppTheme.textSecondary,
+          clipBehavior: Clip.antiAlias,
+          child: ListTile(
+            onTap: widget.onTap,
+            dense: true,
+            contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+            title: Text(
+              widget.title,
+              style: TextStyle(
+                fontFamily: 'Google Sans Flex',
+                fontSize: 14.0,
+                fontWeight: widget.isSelected ? FontWeight.w600 : FontWeight.w400,
+                color: widget.isSelected ? AppTheme.textPrimary : AppTheme.textSecondary,
+              ),
             ),
           ),
         ),
