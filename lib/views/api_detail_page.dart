@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:getx_distil/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../controllers/docs_controller.dart';
 import '../core/app_theme.dart';
@@ -343,6 +344,13 @@ class ApiDetailPage extends GetView<DocsController> {
 class _ApiMobileDrawer extends StatelessWidget {
   const _ApiMobileDrawer();
 
+  void _launchPubDev() async {
+    final Uri url = Uri.parse('https://pub.dev/packages/getx_distil');
+    if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+      throw Exception('Could not launch $url');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -375,6 +383,14 @@ class _ApiMobileDrawer extends StatelessWidget {
                 context.go('/guide');
               },
             ),
+            ListTile(
+              leading: const Icon(Icons.person_outline_rounded, color: AppTheme.textSecondary),
+              title: const Text('About Developer', style: TextStyle(color: AppTheme.textPrimary)),
+              onTap: () {
+                Navigator.of(context).pop();
+                context.go('/about');
+              },
+            ),
             const Divider(color: Color(0xFF1E1E2F)),
             
             // Section list for quick swap
@@ -384,7 +400,7 @@ class _ApiMobileDrawer extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final sec = SidebarToc.sections[index];
                   return ListTile(
-                    leading: Text(sec['icon']!),
+                    leading: const Icon(Icons.description_outlined, color: AppTheme.textSecondary, size: 18.0),
                     title: Text(sec['title']!, style: const TextStyle(color: AppTheme.textPrimary, fontSize: 13.5)),
                     onTap: () {
                       Navigator.of(context).pop();
@@ -392,6 +408,20 @@ class _ApiMobileDrawer extends StatelessWidget {
                     },
                   );
                 },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: ElevatedButton.icon(
+                onPressed: _launchPubDev,
+                icon: const Icon(Icons.layers_rounded, color: AppTheme.googleYellow),
+                label: const Text('pub.dev'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppTheme.surfaceLight,
+                  foregroundColor: AppTheme.textPrimary,
+                  minimumSize: const Size.fromHeight(50.0),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                ),
               ),
             ),
           ],

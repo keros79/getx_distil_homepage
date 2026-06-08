@@ -144,20 +144,19 @@ class AboutPage extends StatelessWidget {
 
                           // Contributions & Links
                           isMobile
-                              ? Column(children: _buildLinkCards())
+                              ? Column(
+                                  children: [
+                                    _buildGitHubCard(),
+                                    const SizedBox(height: 16.0),
+                                    _buildPubDevCard(),
+                                  ],
+                                )
                               : Row(
-                                  children: _buildLinkCards()
-                                      .map(
-                                        (w) => Expanded(
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                              horizontal: 10.0,
-                                            ),
-                                            child: w,
-                                          ),
-                                        ),
-                                      )
-                                      .toList(),
+                                  children: [
+                                    Expanded(child: _buildGitHubCard()),
+                                    const SizedBox(width: 20.0),
+                                    Expanded(child: _buildPubDevCard()),
+                                  ],
                                 ),
 
                           const SizedBox(height: 60.0),
@@ -182,102 +181,109 @@ class AboutPage extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildLinkCards() {
-    return [
-      GlassCard(
-        glowColor: AppTheme.googleGreen,
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Icon(
-              Icons.code_rounded,
-              color: AppTheme.googleGreen,
-              size: 28.0,
+  Widget _buildGitHubCard() {
+    return GlassCard(
+      glowColor: AppTheme.googleGreen,
+      padding: const EdgeInsets.all(20.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Icon(
+            Icons.code_rounded,
+            color: AppTheme.googleGreen,
+            size: 28.0,
+          ),
+          const SizedBox(height: 12.0),
+          const Text(
+            'GitHub Profile',
+            style: TextStyle(
+              color: AppTheme.textPrimary,
+              fontSize: 16.0,
+              fontWeight: FontWeight.bold,
             ),
-            const SizedBox(height: 12.0),
-            const Text(
-              'GitHub Profile',
+          ),
+          const SizedBox(height: 8.0),
+          const Text(
+            'Checkout repositories, open-source utilities, and contribute to getx_distil packages.',
+            style: TextStyle(
+              color: AppTheme.textSecondary,
+              fontSize: 13.0,
+              height: 1.4,
+            ),
+          ),
+          const SizedBox(height: 16.0),
+          TextButton(
+            onPressed: () => _launchUrl('https://github.com/keros79'),
+            child: const Text(
+              'Visit GitHub ->',
               style: TextStyle(
-                color: AppTheme.textPrimary,
-                fontSize: 16.0,
+                color: AppTheme.googleGreen,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 8.0),
-            const Text(
-              'Checkout repositories, open-source utilities, and contribute to getx_distil packages.',
-              style: TextStyle(
-                color: AppTheme.textSecondary,
-                fontSize: 13.0,
-                height: 1.4,
-              ),
-            ),
-            const SizedBox(height: 16.0),
-            TextButton(
-              onPressed: () => _launchUrl('https://github.com/keros79'),
-              child: const Text(
-                'Visit GitHub ->',
-                style: TextStyle(
-                  color: AppTheme.googleGreen,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
-      const SizedBox(height: 16.0),
-      GlassCard(
-        glowColor: AppTheme.googleYellow,
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Icon(
-              Icons.layers_outlined,
-              color: AppTheme.googleYellow,
-              size: 28.0,
+    );
+  }
+
+  Widget _buildPubDevCard() {
+    return GlassCard(
+      glowColor: AppTheme.googleYellow,
+      padding: const EdgeInsets.all(20.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Icon(
+            Icons.layers_outlined,
+            color: AppTheme.googleYellow,
+            size: 28.0,
+          ),
+          const SizedBox(height: 12.0),
+          const Text(
+            'pub.dev Packages',
+            style: TextStyle(
+              color: AppTheme.textPrimary,
+              fontSize: 16.0,
+              fontWeight: FontWeight.bold,
             ),
-            const SizedBox(height: 12.0),
-            const Text(
-              'pub.dev Packages',
+          ),
+          const SizedBox(height: 8.0),
+          const Text(
+            'Explore published packages, benchmarks, documentation scoring, and installations.',
+            style: TextStyle(
+              color: AppTheme.textSecondary,
+              fontSize: 13.0,
+              height: 1.4,
+            ),
+          ),
+          const SizedBox(height: 16.0),
+          TextButton(
+            onPressed: () =>
+                _launchUrl('https://pub.dev/packages/getx_distil'),
+            child: const Text(
+              'Visit pub.dev ->',
               style: TextStyle(
-                color: AppTheme.textPrimary,
-                fontSize: 16.0,
+                color: AppTheme.googleYellow,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 8.0),
-            const Text(
-              'Explore published packages, benchmarks, documentation scoring, and installations.',
-              style: TextStyle(
-                color: AppTheme.textSecondary,
-                fontSize: 13.0,
-                height: 1.4,
-              ),
-            ),
-            const SizedBox(height: 16.0),
-            TextButton(
-              onPressed: () =>
-                  _launchUrl('https://pub.dev/packages/getx_distil'),
-              child: const Text(
-                'Visit pub.dev ->',
-                style: TextStyle(
-                  color: AppTheme.googleYellow,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
-    ];
+    );
   }
 }
 
 class _AboutMobileDrawer extends StatelessWidget {
   const _AboutMobileDrawer();
+
+  void _launchPubDev() async {
+    final Uri url = Uri.parse('https://pub.dev/packages/getx_distil');
+    if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+      throw Exception('Could not launch $url');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -361,6 +367,21 @@ class _AboutMobileDrawer extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).pop();
               },
+            ),
+            const Spacer(),
+            Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: ElevatedButton.icon(
+                onPressed: _launchPubDev,
+                icon: const Icon(Icons.layers_rounded, color: AppTheme.googleYellow),
+                label: const Text('pub.dev'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppTheme.surfaceLight,
+                  foregroundColor: AppTheme.textPrimary,
+                  minimumSize: const Size.fromHeight(50.0),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                ),
+              ),
             ),
           ],
         ),

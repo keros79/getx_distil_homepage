@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:getx_distil/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../controllers/docs_controller.dart';
 import '../core/app_theme.dart';
@@ -229,6 +230,13 @@ class MyApp extends StatelessWidget {
 class _GuideMobileDrawer extends StatelessWidget {
   const _GuideMobileDrawer();
 
+  void _launchPubDev() async {
+    final Uri url = Uri.parse('https://pub.dev/packages/getx_distil');
+    if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+      throw Exception('Could not launch $url');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -275,6 +283,21 @@ class _GuideMobileDrawer extends StatelessWidget {
                 Navigator.of(context).pop();
                 context.go('/about');
               },
+            ),
+            const Spacer(),
+            Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: ElevatedButton.icon(
+                onPressed: _launchPubDev,
+                icon: const Icon(Icons.layers_rounded, color: AppTheme.googleYellow),
+                label: const Text('pub.dev'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppTheme.surfaceLight,
+                  foregroundColor: AppTheme.textPrimary,
+                  minimumSize: const Size.fromHeight(50.0),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                ),
+              ),
             ),
           ],
         ),

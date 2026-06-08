@@ -623,27 +623,16 @@ Obx(() => Wrap(
           ),
           const SizedBox(height: 48.0),
 
-          // Grid View Layout
-          GridView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: isMobile ? 1 : 3,
-              crossAxisSpacing: 20.0,
-              mainAxisSpacing: 20.0,
-              childAspectRatio: isMobile ? 1.5 : 1.25,
-            ),
-            itemCount: features.length,
-            itemBuilder: (context, index) {
-              final item = features[index];
-              return GlassCard(
-                glowColor: item['color'],
-                onTap: () => context.go('/api/${item['path']}'),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
+          // Grid/List View Layout
+          if (isMobile)
+            Column(
+              children: features.map((item) {
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 20.0),
+                  child: GlassCard(
+                    glowColor: item['color'],
+                    onTap: () => context.go('/api/${item['path']}'),
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Icon(item['icon'], color: item['color'], size: 36.0),
@@ -665,31 +654,96 @@ Obx(() => Wrap(
                             fontSize: 13.5,
                             height: 1.5,
                           ),
-                          maxLines: 4,
-                          overflow: TextOverflow.ellipsis,
+                        ),
+                        const SizedBox(height: 20.0),
+                        const Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              'Learn More',
+                              style: TextStyle(
+                                color: AppTheme.textSecondary,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12.0,
+                              ),
+                            ),
+                            SizedBox(width: 4.0),
+                            Icon(Icons.arrow_forward_rounded, size: 14.0, color: AppTheme.textSecondary),
+                          ],
                         ),
                       ],
                     ),
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          'Learn More',
-                          style: TextStyle(
-                            color: AppTheme.textSecondary,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12.0,
+                  ),
+                );
+              }).toList(),
+            )
+          else
+            GridView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                crossAxisSpacing: 20.0,
+                mainAxisSpacing: 20.0,
+                childAspectRatio: 1.1,
+              ),
+              itemCount: features.length,
+              itemBuilder: (context, index) {
+                final item = features[index];
+                return GlassCard(
+                  glowColor: item['color'],
+                  onTap: () => context.go('/api/${item['path']}'),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(item['icon'], color: item['color'], size: 36.0),
+                          const SizedBox(height: 16.0),
+                          Text(
+                            item['title'],
+                            style: const TextStyle(
+                              fontFamily: 'Google Sans Flex',
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.w700,
+                              color: AppTheme.textPrimary,
+                            ),
                           ),
-                        ),
-                        SizedBox(width: 4.0),
-                        Icon(Icons.arrow_forward_rounded, size: 14.0, color: AppTheme.textSecondary),
-                      ],
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
+                          const SizedBox(height: 8.0),
+                          Text(
+                            item['description'],
+                            style: const TextStyle(
+                              color: AppTheme.textSecondary,
+                              fontSize: 13.5,
+                              height: 1.5,
+                            ),
+                            maxLines: 4,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            'Learn More',
+                            style: TextStyle(
+                              color: AppTheme.textSecondary,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12.0,
+                            ),
+                          ),
+                          SizedBox(width: 4.0),
+                          Icon(Icons.arrow_forward_rounded, size: 14.0, color: AppTheme.textSecondary),
+                        ],
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
         ],
       ),
     );
@@ -886,13 +940,15 @@ class _ArchitectureBadge extends StatelessWidget {
             decoration: BoxDecoration(color: color, shape: BoxShape.circle),
           ),
           const SizedBox(width: 12.0),
-          Text(
-            text,
-            style: const TextStyle(
-              fontFamily: 'Google Sans Flex',
-              fontWeight: FontWeight.w600,
-              fontSize: 14.0,
-              color: AppTheme.textPrimary,
+          Expanded(
+            child: Text(
+              text,
+              style: const TextStyle(
+                fontFamily: 'Google Sans Flex',
+                fontWeight: FontWeight.w600,
+                fontSize: 14.0,
+                color: AppTheme.textPrimary,
+              ),
             ),
           ),
         ],
@@ -905,8 +961,8 @@ class _ArchitectureBadge extends StatelessWidget {
 class _MobileDrawer extends StatelessWidget {
   const _MobileDrawer();
 
-  void _launchGitHub() async {
-    final Uri url = Uri.parse('https://github.com/keros79/getx_distil');
+  void _launchPubDev() async {
+    final Uri url = Uri.parse('https://pub.dev/packages/getx_distil');
     if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
       throw Exception('Could not launch $url');
     }
@@ -964,9 +1020,9 @@ class _MobileDrawer extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(24.0),
               child: ElevatedButton.icon(
-                onPressed: _launchGitHub,
-                icon: const Icon(Icons.code_rounded),
-                label: const Text('GitHub Repository'),
+                onPressed: _launchPubDev,
+                icon: const Icon(Icons.layers_rounded, color: AppTheme.googleYellow),
+                label: const Text('pub.dev'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppTheme.surfaceLight,
                   foregroundColor: AppTheme.textPrimary,
