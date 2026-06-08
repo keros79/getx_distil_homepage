@@ -46,15 +46,15 @@ class _GlassCardState extends State<GlassCard> {
               boxShadow: [
                 if (_isHovered)
                   BoxShadow(
-                    color: activeGlowColor.withOpacity(0.15),
-                    blurRadius: 30.0,
-                    spreadRadius: 2.0,
+                    color: activeGlowColor.withOpacity(0.12),
+                    blurRadius: 24.0,
+                    spreadRadius: 1.0,
                     offset: const Offset(0, 8),
                   )
                 else
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.3),
-                    blurRadius: 20.0,
+                    color: Colors.black.withOpacity(0.03),
+                    blurRadius: 16.0,
                     offset: const Offset(0, 4),
                   ),
               ],
@@ -68,13 +68,13 @@ class _GlassCardState extends State<GlassCard> {
                   padding: widget.padding,
                   decoration: BoxDecoration(
                     color: _isHovered 
-                        ? AppTheme.surfaceLight.withOpacity(0.4) 
-                        : AppTheme.surface.withOpacity(0.5),
+                        ? Colors.white.withOpacity(0.9) 
+                        : Colors.white.withOpacity(0.65),
                     borderRadius: BorderRadius.circular(widget.borderRadius),
                     border: Border.all(
                       color: _isHovered 
-                          ? activeGlowColor.withOpacity(0.5) 
-                          : Colors.white.withOpacity(0.08),
+                          ? activeGlowColor.withOpacity(0.4) 
+                          : Colors.black.withOpacity(0.06),
                       width: 1.0,
                     ),
                   ),

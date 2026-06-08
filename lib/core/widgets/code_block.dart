@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_highlight/flutter_highlight.dart';
-import 'package:flutter_highlight/themes/atom-one-dark.dart';
+import 'package:flutter_highlight/themes/atom-one-light.dart';
 import '../app_theme.dart';
 
 class CodeBlock extends StatefulWidget {
@@ -33,10 +33,10 @@ class _CodeBlockState extends State<CodeBlock> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xFF0F1015),
+        color: const Color(0xFFF8F9FA),
         borderRadius: BorderRadius.circular(12.0),
         border: Border.all(
-          color: Colors.white.withOpacity(0.05),
+          color: Colors.black.withOpacity(0.08),
           width: 1.0,
         ),
       ),
@@ -51,7 +51,7 @@ class _CodeBlockState extends State<CodeBlock> {
                 child: HighlightView(
                   widget.code.trim(),
                   language: widget.language,
-                  theme: atomOneDarkTheme,
+                  theme: atomOneLightTheme,
                   padding: EdgeInsets.zero,
                   textStyle: const TextStyle(
                     fontFamily: 'Google Sans Mono',
@@ -71,10 +71,10 @@ class _CodeBlockState extends State<CodeBlock> {
                 height: 40.0,
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.2),
+                  color: Colors.black.withOpacity(0.03),
                   border: Border(
                     bottom: BorderSide(
-                      color: Colors.white.withOpacity(0.05),
+                      color: Colors.black.withOpacity(0.05),
                       width: 1.0,
                     ),
                   ),
@@ -101,7 +101,7 @@ class _CodeBlockState extends State<CodeBlock> {
                         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                         decoration: BoxDecoration(
                           border: Border.all(
-                            color: Colors.white.withOpacity(_isCopied ? 0.2 : 0.08),
+                            color: Colors.black.withOpacity(_isCopied ? 0.2 : 0.08),
                             width: 1.0,
                           ),
                           borderRadius: BorderRadius.circular(6.0),

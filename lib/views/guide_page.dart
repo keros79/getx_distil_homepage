@@ -77,7 +77,7 @@ class GuidePage extends GetView<DocsController> {
                               fontFamily: 'Google Sans Flex',
                               fontSize: 38.0,
                               fontWeight: FontWeight.w800,
-                              color: Colors.white,
+                              color: AppTheme.textPrimary,
                               letterSpacing: -1.0,
                             ),
                           ),
@@ -173,7 +173,7 @@ class MyApp extends StatelessWidget {
                                     const SizedBox(height: 4.0),
                                     const Text(
                                       'Explore Reactive State (Rx & Obx)',
-                                      style: TextStyle(color: Colors.white, fontSize: 16.0, fontWeight: FontWeight.bold),
+                                      style: TextStyle(color: AppTheme.textPrimary, fontSize: 16.0, fontWeight: FontWeight.bold),
                                     ),
                                   ],
                                 ),
@@ -216,7 +216,7 @@ class MyApp extends StatelessWidget {
             fontFamily: 'Google Sans Flex',
             fontSize: 22.0,
             fontWeight: FontWeight.bold,
-            color: Colors.white,
+            color: AppTheme.textPrimary,
             letterSpacing: -0.5,
           ),
         ),
@@ -238,7 +238,7 @@ class _GuideMobileDrawer extends StatelessWidget {
           children: [
             ListTile(
               leading: const Icon(Icons.bolt_rounded, color: AppTheme.googleBlue),
-              title: const Text('getx_distil', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+              title: const Text('getx_distil', style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.textPrimary)),
               trailing: IconButton(
                 icon: const Icon(Icons.close_rounded, color: AppTheme.textSecondary),
                 onPressed: () => Navigator.of(context).pop(),
@@ -247,7 +247,7 @@ class _GuideMobileDrawer extends StatelessWidget {
             const Divider(color: Color(0xFF1E1E2F)),
             ListTile(
               leading: const Icon(Icons.home_outlined, color: AppTheme.textSecondary),
-              title: const Text('Home', style: TextStyle(color: Colors.white)),
+              title: const Text('Home', style: TextStyle(color: AppTheme.textPrimary)),
               onTap: () {
                 Navigator.of(context).pop();
                 context.go('/');
@@ -255,14 +255,14 @@ class _GuideMobileDrawer extends StatelessWidget {
             ),
             ListTile(
               leading: const Icon(Icons.menu_book_outlined, color: AppTheme.textSecondary),
-              title: const Text('Guide', style: TextStyle(color: Colors.white)),
+              title: const Text('Guide', style: TextStyle(color: AppTheme.textPrimary)),
               onTap: () {
                 Navigator.of(context).pop();
               },
             ),
             ListTile(
               leading: const Icon(Icons.code_rounded, color: AppTheme.textSecondary),
-              title: const Text('API Reference', style: TextStyle(color: Colors.white)),
+              title: const Text('API Reference', style: TextStyle(color: AppTheme.textPrimary)),
               onTap: () {
                 Navigator.of(context).pop();
                 context.go('/api/reactive-state');
@@ -270,7 +270,7 @@ class _GuideMobileDrawer extends StatelessWidget {
             ),
             ListTile(
               leading: const Icon(Icons.person_outline_rounded, color: AppTheme.textSecondary),
-              title: const Text('About Developer', style: TextStyle(color: Colors.white)),
+              title: const Text('About Developer', style: TextStyle(color: AppTheme.textPrimary)),
               onTap: () {
                 Navigator.of(context).pop();
                 context.go('/about');

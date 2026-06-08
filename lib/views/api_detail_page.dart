@@ -169,7 +169,7 @@ class ApiDetailPage extends GetView<DocsController> {
             fontFamily: 'Google Sans Flex',
             fontSize: 32.0,
             fontWeight: FontWeight.bold,
-            color: Colors.white,
+            color: AppTheme.textPrimary,
             letterSpacing: -1.0,
           ),
         ),
@@ -264,7 +264,7 @@ class ApiDetailPage extends GetView<DocsController> {
                   const SizedBox(height: 4.0),
                   Text(
                     nextTitle,
-                    style: const TextStyle(color: Colors.white, fontSize: 16.0, fontWeight: FontWeight.bold),
+                    style: const TextStyle(color: AppTheme.textPrimary, fontSize: 16.0, fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
@@ -352,7 +352,7 @@ class _ApiMobileDrawer extends StatelessWidget {
           children: [
             ListTile(
               leading: const Icon(Icons.bolt_rounded, color: AppTheme.googleBlue),
-              title: const Text('getx_distil API', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+              title: const Text('getx_distil API', style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.textPrimary)),
               trailing: IconButton(
                 icon: const Icon(Icons.close_rounded, color: AppTheme.textSecondary),
                 onPressed: () => Navigator.of(context).pop(),
@@ -361,7 +361,7 @@ class _ApiMobileDrawer extends StatelessWidget {
             const Divider(color: Color(0xFF1E1E2F)),
             ListTile(
               leading: const Icon(Icons.home_outlined, color: AppTheme.textSecondary),
-              title: const Text('Home', style: TextStyle(color: Colors.white)),
+              title: const Text('Home', style: TextStyle(color: AppTheme.textPrimary)),
               onTap: () {
                 Navigator.of(context).pop();
                 context.go('/');
@@ -369,7 +369,7 @@ class _ApiMobileDrawer extends StatelessWidget {
             ),
             ListTile(
               leading: const Icon(Icons.menu_book_outlined, color: AppTheme.textSecondary),
-              title: const Text('Guide', style: TextStyle(color: Colors.white)),
+              title: const Text('Guide', style: TextStyle(color: AppTheme.textPrimary)),
               onTap: () {
                 Navigator.of(context).pop();
                 context.go('/guide');
@@ -385,7 +385,7 @@ class _ApiMobileDrawer extends StatelessWidget {
                   final sec = SidebarToc.sections[index];
                   return ListTile(
                     leading: Text(sec['icon']!),
-                    title: Text(sec['title']!, style: const TextStyle(color: Colors.white, fontSize: 13.5)),
+                    title: Text(sec['title']!, style: const TextStyle(color: AppTheme.textPrimary, fontSize: 13.5)),
                     onTap: () {
                       Navigator.of(context).pop();
                       context.go('/api/${sec['path']}');

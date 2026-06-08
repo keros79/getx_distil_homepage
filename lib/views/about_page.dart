@@ -75,7 +75,7 @@ class AboutPage extends StatelessWidget {
                               fontFamily: 'Google Sans Flex',
                               fontSize: 32.0,
                               fontWeight: FontWeight.bold,
-                              color: Colors.white,
+                              color: AppTheme.textPrimary,
                               letterSpacing: -1.0,
                             ),
                           ),
@@ -165,7 +165,7 @@ class AboutPage extends StatelessWidget {
             const SizedBox(height: 12.0),
             const Text(
               'GitHub Profile',
-              style: TextStyle(color: Colors.white, fontSize: 16.0, fontWeight: FontWeight.bold),
+              style: TextStyle(color: AppTheme.textPrimary, fontSize: 16.0, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8.0),
             const Text(
@@ -191,7 +191,7 @@ class AboutPage extends StatelessWidget {
             const SizedBox(height: 12.0),
             const Text(
               'pub.dev Packages',
-              style: TextStyle(color: Colors.white, fontSize: 16.0, fontWeight: FontWeight.bold),
+              style: TextStyle(color: AppTheme.textPrimary, fontSize: 16.0, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8.0),
             const Text(
@@ -222,7 +222,7 @@ class _AboutMobileDrawer extends StatelessWidget {
           children: [
             ListTile(
               leading: const Icon(Icons.bolt_rounded, color: AppTheme.googleBlue),
-              title: const Text('getx_distil', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+              title: const Text('getx_distil', style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.textPrimary)),
               trailing: IconButton(
                 icon: const Icon(Icons.close_rounded, color: AppTheme.textSecondary),
                 onPressed: () => Navigator.of(context).pop(),
@@ -231,7 +231,7 @@ class _AboutMobileDrawer extends StatelessWidget {
             const Divider(color: Color(0xFF1E1E2F)),
             ListTile(
               leading: const Icon(Icons.home_outlined, color: AppTheme.textSecondary),
-              title: const Text('Home', style: TextStyle(color: Colors.white)),
+              title: const Text('Home', style: TextStyle(color: AppTheme.textPrimary)),
               onTap: () {
                 Navigator.of(context).pop();
                 context.go('/');
@@ -239,7 +239,7 @@ class _AboutMobileDrawer extends StatelessWidget {
             ),
             ListTile(
               leading: const Icon(Icons.menu_book_outlined, color: AppTheme.textSecondary),
-              title: const Text('Guide', style: TextStyle(color: Colors.white)),
+              title: const Text('Guide', style: TextStyle(color: AppTheme.textPrimary)),
               onTap: () {
                 Navigator.of(context).pop();
                 context.go('/guide');
@@ -247,7 +247,7 @@ class _AboutMobileDrawer extends StatelessWidget {
             ),
             ListTile(
               leading: const Icon(Icons.code_rounded, color: AppTheme.textSecondary),
-              title: const Text('API Reference', style: TextStyle(color: Colors.white)),
+              title: const Text('API Reference', style: TextStyle(color: AppTheme.textPrimary)),
               onTap: () {
                 Navigator.of(context).pop();
                 context.go('/api/reactive-state');
@@ -255,7 +255,7 @@ class _AboutMobileDrawer extends StatelessWidget {
             ),
             ListTile(
               leading: const Icon(Icons.person_outline_rounded, color: AppTheme.textSecondary),
-              title: const Text('About Developer', style: TextStyle(color: Colors.white)),
+              title: const Text('About Developer', style: TextStyle(color: AppTheme.textPrimary)),
               onTap: () {
                 Navigator.of(context).pop();
               },

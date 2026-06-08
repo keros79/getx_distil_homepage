@@ -39,7 +39,7 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
             color: AppTheme.bg.withOpacity(opacity),
             border: Border(
               bottom: BorderSide(
-                color: Colors.white.withOpacity(scrollOffset > 50 ? 0.08 : 0.0),
+                color: Colors.black.withOpacity(scrollOffset > 50 ? 0.06 : 0.0),
                 width: 1.0,
               ),
             ),
@@ -71,7 +71,7 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
                         fontSize: 20.0,
                         fontWeight: FontWeight.w800,
                         letterSpacing: -0.5,
-                        color: Colors.white,
+                        color: AppTheme.textPrimary,
                       ),
                     ),
                   ],
@@ -110,13 +110,13 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
                       icon: const Icon(Icons.code_rounded, size: 16.0),
                       label: const Text('GitHub'),
                       style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        backgroundColor: Colors.white.withOpacity(0.08),
+                        foregroundColor: AppTheme.textPrimary,
+                        backgroundColor: Colors.black.withOpacity(0.04),
                         elevation: 0,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20.0),
                           side: BorderSide(
-                            color: Colors.white.withOpacity(0.12),
+                            color: Colors.black.withOpacity(0.08),
                             width: 1.0,
                           ),
                         ),
@@ -128,7 +128,7 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
               else
                 // Mobile menu triggers drawer (handled in home_page/pages scaffolds)
                 IconButton(
-                  icon: const Icon(Icons.menu_rounded, color: Colors.white),
+                  icon: const Icon(Icons.menu_rounded, color: AppTheme.textPrimary),
                   onPressed: () {
                     Scaffold.of(context).openEndDrawer();
                   },
@@ -168,8 +168,8 @@ class _NavLinkState extends State<_NavLink> {
         onPressed: widget.onPressed,
         style: TextButton.styleFrom(
           foregroundColor: widget.isActive 
-              ? Colors.white 
-              : (_isHovered ? Colors.white : AppTheme.textSecondary),
+              ? AppTheme.textPrimary 
+              : (_isHovered ? AppTheme.textPrimary : AppTheme.textSecondary),
           padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 12.0),
         ),
         child: Column(

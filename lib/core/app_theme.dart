@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  // Antigravity.google style palette
-  static const Color bg = Color(0xFF030307);
-  static const Color surface = Color(0xFF0C0C14);
-  static const Color surfaceLight = Color(0xFF131322);
-  static const Color border = Color(0xFF1E1E2F);
+  // Antigravity.google style palette (Light Theme)
+  static const Color bg = Color(0xFFFAFAFC);
+  static const Color surface = Color(0xFFFFFFFF);
+  static const Color surfaceLight = Color(0xFFF1F3F4);
+  static const Color border = Color(0xFFE8EAED);
   
   // Google Brand Colors (Used as subtle gradients and accents)
   static const Color googleBlue = Color(0xFF4285F4);
@@ -14,15 +14,15 @@ class AppTheme {
   static const Color googleYellow = Color(0xFFFBBC04);
   
   // Text Colors
-  static const Color textPrimary = Color(0xFFE8EAED);
-  static const Color textSecondary = Color(0xFF9AA0A6);
-  static const Color textMuted = Color(0xFF5F6368);
+  static const Color textPrimary = Color(0xFF202124);
+  static const Color textSecondary = Color(0xFF5F6368);
+  static const Color textMuted = Color(0xFF70757A);
 
-  static ThemeData get darkTheme {
+  static ThemeData get lightTheme {
     return ThemeData(
-      brightness: Brightness.dark,
+      brightness: Brightness.light,
       scaffoldBackgroundColor: bg,
-      colorScheme: const ColorScheme.dark(
+      colorScheme: const ColorScheme.light(
         primary: googleBlue,
         secondary: googleGreen,
         surface: surface,
@@ -58,8 +58,8 @@ class AppTheme {
 
   static const LinearGradient borderGradient = LinearGradient(
     colors: [
-      Color(0x22FFFFFF),
-      Color(0x05FFFFFF),
+      Color(0x1F000000),
+      Color(0x0A000000),
     ],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,

@@ -34,14 +34,14 @@ class HomePage extends GetView<HomeController> {
           // 1. Particle Background
           const ParticleField(),
 
-          // 2. Glowing Orbs (Fluid Antigravity style)
+          // 2. Glowing Orbs (Fluid pastel colors for Light Theme)
           Positioned(
             top: -150,
             right: -100,
             child: const AnimatedOrb(
               width: 500,
               height: 500,
-              colors: [Color(0x334285F4), Color(0x0034A853)],
+              colors: [Color(0x1A4285F4), Color(0x0034A853)],
               duration: Duration(seconds: 18),
             ),
           ),
@@ -51,7 +51,7 @@ class HomePage extends GetView<HomeController> {
             child: const AnimatedOrb(
               width: 600,
               height: 600,
-              colors: [Color(0x22EA4335), Color(0x00FBBC04)],
+              colors: [Color(0x12EA4335), Color(0x00FBBC04)],
               duration: Duration(seconds: 22),
             ),
           ),
@@ -115,9 +115,9 @@ class HomePage extends GetView<HomeController> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 6.0),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.04),
+              color: Colors.black.withOpacity(0.03),
               borderRadius: BorderRadius.circular(20.0),
-              border: Border.all(color: Colors.white.withOpacity(0.08), width: 1.0),
+              border: Border.all(color: Colors.black.withOpacity(0.06), width: 1.0),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -145,10 +145,10 @@ class HomePage extends GetView<HomeController> {
           ),
           const SizedBox(height: 24.0),
 
-          // Main Header Text (Flexible font style)
+          // Main Header Text (Dark Gradient for Light Theme)
           ShaderMask(
             shaderCallback: (bounds) => const LinearGradient(
-              colors: [Colors.white, Color(0xFF9AA0A6)],
+              colors: [Color(0xFF1C1D21), Color(0xFF5F6368)],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
             ).createShader(bounds),
@@ -161,7 +161,7 @@ class HomePage extends GetView<HomeController> {
                 fontWeight: FontWeight.w900,
                 letterSpacing: -1.5,
                 height: 1.1,
-                color: Colors.white,
+                color: Colors.white, // Masked by shader
               ),
             ),
           ),
@@ -174,7 +174,7 @@ class HomePage extends GetView<HomeController> {
               style: TextStyle(
                 fontFamily: 'Google Sans Flex',
                 fontSize: isMobile ? 18.0 : 22.0,
-                fontWeight: FontWeight.w400,
+                fontWeight: FontWeight.w500,
                 color: AppTheme.googleBlue,
               ),
               child: AnimatedTextKit(
@@ -200,7 +200,7 @@ class HomePage extends GetView<HomeController> {
                 fontFamily: 'Google Sans Flex',
                 fontSize: isMobile ? 14.5 : 17.0,
                 height: 1.6,
-                fontWeight: FontWeight.w300,
+                fontWeight: FontWeight.w400,
                 color: AppTheme.textSecondary,
               ),
             ),
@@ -220,8 +220,8 @@ class HomePage extends GetView<HomeController> {
                   borderRadius: BorderRadius.circular(30.0),
                   boxShadow: [
                     BoxShadow(
-                      color: AppTheme.googleBlue.withOpacity(0.3),
-                      blurRadius: 20.0,
+                      color: AppTheme.googleBlue.withOpacity(0.2),
+                      blurRadius: 16.0,
                       offset: const Offset(0, 4),
                     ),
                   ],
@@ -256,11 +256,11 @@ class HomePage extends GetView<HomeController> {
                 icon: const Icon(Icons.menu_book_rounded, size: 18.0),
                 label: const Text('API Reference'),
                 style: OutlinedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  side: BorderSide(color: Colors.white.withOpacity(0.12), width: 1.2),
+                  foregroundColor: AppTheme.textPrimary,
+                  side: BorderSide(color: Colors.black.withOpacity(0.12), width: 1.2),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
                   padding: const EdgeInsets.symmetric(horizontal: 28.0, vertical: 20.0),
-                  backgroundColor: Colors.white.withOpacity(0.02),
+                  backgroundColor: Colors.black.withOpacity(0.01),
                 ),
               ),
             ],
@@ -270,7 +270,7 @@ class HomePage extends GetView<HomeController> {
     );
   }
 
-  // Interactive Live Playground (Real-time reactivity showcase)
+  // Interactive Live Playground
   Widget _buildPlayground(BuildContext context, bool isMobile) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -293,7 +293,7 @@ class HomePage extends GetView<HomeController> {
             'Try the micro-state engine live',
             style: TextStyle(
               fontFamily: 'Google Sans Flex',
-              color: Colors.white,
+              color: AppTheme.textPrimary,
               fontSize: 28.0,
               fontWeight: FontWeight.w700,
               letterSpacing: -0.5,
@@ -335,7 +335,7 @@ class HomePage extends GetView<HomeController> {
             fontFamily: 'Google Sans Flex',
             fontSize: 18.0,
             fontWeight: FontWeight.bold,
-            color: Colors.white,
+            color: AppTheme.textPrimary,
           ),
         ),
         const SizedBox(height: 12.0),
@@ -351,8 +351,9 @@ class HomePage extends GetView<HomeController> {
             ElevatedButton(
               onPressed: controller.increment,
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppTheme.googleBlue.withOpacity(0.1),
+                backgroundColor: AppTheme.googleBlue.withOpacity(0.08),
                 foregroundColor: AppTheme.googleBlue,
+                elevation: 0,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
                 padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
               ),
@@ -369,7 +370,7 @@ class HomePage extends GetView<HomeController> {
               onPressed: controller.decrement,
               style: OutlinedButton.styleFrom(
                 foregroundColor: AppTheme.textSecondary,
-                side: BorderSide(color: Colors.white.withOpacity(0.1)),
+                side: BorderSide(color: Colors.black.withOpacity(0.1)),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
                 padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
               ),
@@ -391,8 +392,9 @@ class HomePage extends GetView<HomeController> {
             ElevatedButton(
               onPressed: controller.addPlaygroundItem,
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppTheme.googleGreen.withOpacity(0.1),
+                backgroundColor: AppTheme.googleGreen.withOpacity(0.08),
                 foregroundColor: AppTheme.googleGreen,
+                elevation: 0,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
                 padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
               ),
@@ -417,15 +419,15 @@ class HomePage extends GetView<HomeController> {
         // Input Control
         TextField(
           onChanged: (val) => controller.textInput.value = val,
-          style: const TextStyle(color: Colors.white),
+          style: const TextStyle(color: AppTheme.textPrimary),
           decoration: InputDecoration(
             hintText: 'Type reactive text...',
             hintStyle: const TextStyle(color: AppTheme.textMuted),
             filled: true,
-            fillColor: Colors.black.withOpacity(0.3),
+            fillColor: Colors.black.withOpacity(0.03),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10.0),
-              borderSide: BorderSide(color: Colors.white.withOpacity(0.08)),
+              borderSide: BorderSide(color: Colors.black.withOpacity(0.06)),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10.0),
@@ -442,9 +444,9 @@ class HomePage extends GetView<HomeController> {
     return Container(
       padding: const EdgeInsets.all(20.0),
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.2),
+        color: Colors.black.withOpacity(0.02),
         borderRadius: BorderRadius.circular(12.0),
-        border: Border.all(color: Colors.white.withOpacity(0.04)),
+        border: Border.all(color: Colors.black.withOpacity(0.04)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -483,14 +485,14 @@ class HomePage extends GetView<HomeController> {
                       style: const TextStyle(
                         fontSize: 22.0,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: AppTheme.textPrimary,
                         fontFamily: 'Google Sans Mono',
                       ),
                     ),
                   )),
             ],
           ),
-          const Divider(height: 24.0, color: Color(0xFF1E1E2F)),
+          const Divider(height: 24.0, color: Color(0xFFDADCE0)),
 
           // Text Display
           Column(
@@ -508,7 +510,7 @@ class HomePage extends GetView<HomeController> {
                   )),
             ],
           ),
-          const Divider(height: 24.0, color: Color(0xFF1E1E2F)),
+          const Divider(height: 24.0, color: Color(0xFFDADCE0)),
 
           // List Display
           Column(
@@ -523,8 +525,8 @@ class HomePage extends GetView<HomeController> {
                       runSpacing: 6.0,
                       children: controller.demoItems.map((item) {
                         return Chip(
-                          label: Text(item, style: const TextStyle(fontSize: 11.0, color: Colors.white)),
-                          backgroundColor: AppTheme.surfaceLight,
+                          label: Text(item, style: const TextStyle(fontSize: 11.0, color: AppTheme.textPrimary)),
+                          backgroundColor: Colors.black.withOpacity(0.04),
                           side: BorderSide.none,
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6.0)),
                           padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 0),
@@ -556,7 +558,7 @@ class HomePage extends GetView<HomeController> {
         'path': 'global-di',
       },
       {
-        'title': 'Tree-Scoped Lifecycle (BindingWidget)',
+        'title': 'Tree-Scoped Lifecycle',
         'description': 'Isolate views and controller instances cleanly. Bind controllers directly to screens and let them Auto-GC upon unmounting.',
         'icon': Icons.account_tree_rounded,
         'color': AppTheme.googleRed,
@@ -614,7 +616,7 @@ class HomePage extends GetView<HomeController> {
             textAlign: TextAlign.center,
             style: TextStyle(
               fontFamily: 'Google Sans Flex',
-              color: Colors.white,
+              color: AppTheme.textPrimary,
               fontSize: 32.0,
               fontWeight: FontWeight.bold,
               letterSpacing: -1.0,
@@ -653,7 +655,7 @@ class HomePage extends GetView<HomeController> {
                             fontFamily: 'Google Sans Flex',
                             fontSize: 18.0,
                             fontWeight: FontWeight.w700,
-                            color: Colors.white,
+                            color: AppTheme.textPrimary,
                           ),
                         ),
                         const SizedBox(height: 8.0),
@@ -722,9 +724,9 @@ class HomePage extends GetView<HomeController> {
                     child: Container(
                       padding: const EdgeInsets.all(24.0),
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.02),
+                        color: Colors.black.withOpacity(0.01),
                         borderRadius: BorderRadius.circular(16.0),
-                        border: Border.all(color: Colors.white.withOpacity(0.05)),
+                        border: Border.all(color: Colors.black.withOpacity(0.05)),
                       ),
                       child: const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -763,7 +765,7 @@ class HomePage extends GetView<HomeController> {
         'Aligned with Declarative Flutter',
         style: TextStyle(
           fontFamily: 'Google Sans Flex',
-          color: Colors.white,
+          color: AppTheme.textPrimary,
           fontSize: 26.0,
           fontWeight: FontWeight.bold,
         ),
@@ -777,8 +779,9 @@ class HomePage extends GetView<HomeController> {
       ElevatedButton(
         onPressed: () => context.go('/guide'),
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppTheme.googleRed.withOpacity(0.1),
+          backgroundColor: AppTheme.googleRed.withOpacity(0.08),
           foregroundColor: AppTheme.googleRed,
+          elevation: 0,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
           padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
         ),
@@ -792,8 +795,8 @@ class HomePage extends GetView<HomeController> {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: const Color(0xFF07070F),
-        border: Border(top: BorderSide(color: Colors.white.withOpacity(0.04), width: 1.0)),
+        color: const Color(0xFFF1F3F4),
+        border: Border(top: BorderSide(color: Colors.black.withOpacity(0.06), width: 1.0)),
       ),
       padding: const EdgeInsets.symmetric(vertical: 48.0, horizontal: 24.0),
       child: Center(
@@ -817,7 +820,7 @@ class HomePage extends GetView<HomeController> {
                           fontFamily: 'Google Sans Flex',
                           fontSize: 16.0,
                           fontWeight: FontWeight.w800,
-                          color: Colors.white,
+                          color: AppTheme.textPrimary,
                         ),
                       ),
                     ],
@@ -839,7 +842,7 @@ class HomePage extends GetView<HomeController> {
                   ),
                 ],
               ),
-              const Divider(height: 32.0, color: Color(0xFF1E1E2F)),
+              const Divider(height: 32.0, color: Color(0xFFDADCE0)),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -879,9 +882,9 @@ class _ArchitectureBadge extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.06),
+        color: color.withOpacity(0.05),
         borderRadius: BorderRadius.circular(10.0),
-        border: Border.all(color: color.withOpacity(0.12)),
+        border: Border.all(color: color.withOpacity(0.1)),
       ),
       child: Row(
         children: [
@@ -897,7 +900,7 @@ class _ArchitectureBadge extends StatelessWidget {
               fontFamily: 'Google Sans Flex',
               fontWeight: FontWeight.w600,
               fontSize: 14.0,
-              color: Colors.white,
+              color: AppTheme.textPrimary,
             ),
           ),
         ],
@@ -926,16 +929,16 @@ class _MobileDrawer extends StatelessWidget {
           children: [
             ListTile(
               leading: const Icon(Icons.bolt_rounded, color: AppTheme.googleBlue),
-              title: const Text('getx_distil', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+              title: const Text('getx_distil', style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.textPrimary)),
               trailing: IconButton(
                 icon: const Icon(Icons.close_rounded, color: AppTheme.textSecondary),
                 onPressed: () => Navigator.of(context).pop(),
               ),
             ),
-            const Divider(color: Color(0xFF1E1E2F)),
+            const Divider(color: Color(0xFFDADCE0)),
             ListTile(
               leading: const Icon(Icons.home_outlined, color: AppTheme.textSecondary),
-              title: const Text('Home', style: TextStyle(color: Colors.white)),
+              title: const Text('Home', style: TextStyle(color: AppTheme.textPrimary)),
               onTap: () {
                 Navigator.of(context).pop();
                 context.go('/');
@@ -943,7 +946,7 @@ class _MobileDrawer extends StatelessWidget {
             ),
             ListTile(
               leading: const Icon(Icons.menu_book_outlined, color: AppTheme.textSecondary),
-              title: const Text('Guide', style: TextStyle(color: Colors.white)),
+              title: const Text('Guide', style: TextStyle(color: AppTheme.textPrimary)),
               onTap: () {
                 Navigator.of(context).pop();
                 context.go('/guide');
@@ -951,7 +954,7 @@ class _MobileDrawer extends StatelessWidget {
             ),
             ListTile(
               leading: const Icon(Icons.code_rounded, color: AppTheme.textSecondary),
-              title: const Text('API Reference', style: TextStyle(color: Colors.white)),
+              title: const Text('API Reference', style: TextStyle(color: AppTheme.textPrimary)),
               onTap: () {
                 Navigator.of(context).pop();
                 context.go('/api/reactive-state');
@@ -959,7 +962,7 @@ class _MobileDrawer extends StatelessWidget {
             ),
             ListTile(
               leading: const Icon(Icons.person_outline_rounded, color: AppTheme.textSecondary),
-              title: const Text('About Developer', style: TextStyle(color: Colors.white)),
+              title: const Text('About Developer', style: TextStyle(color: AppTheme.textPrimary)),
               onTap: () {
                 Navigator.of(context).pop();
                 context.go('/about');
@@ -974,7 +977,7 @@ class _MobileDrawer extends StatelessWidget {
                 label: const Text('GitHub Repository'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppTheme.surfaceLight,
-                  foregroundColor: Colors.white,
+                  foregroundColor: AppTheme.textPrimary,
                   minimumSize: const Size.fromHeight(50.0),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
                 ),

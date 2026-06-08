@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       routerConfig: router,
-      theme: AppTheme.darkTheme,
+      theme: AppTheme.lightTheme,
     );
   }
 }
