@@ -26,9 +26,11 @@ class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final currentLocation = GoRouterState.of(context).uri.toString();
+    final screenWidth = MediaQuery.of(context).size.width;
 
     return Drawer(
       backgroundColor: AppTheme.bg,
+      width: screenWidth,
       child: SafeArea(
         child: Theme(
           data: Theme.of(context).copyWith(
@@ -44,106 +46,145 @@ class AppDrawer extends StatelessWidget {
               iconColor: Colors.black,
             ),
           ),
-          child: ListView(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 16.0,
-              vertical: 20.0,
-            ),
+          child: Column(
             children: [
-              // Home
-              ListTile(
-                title: const Text(
-                  'Home',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w400),
+              // Close button bar
+              Padding(
+                padding: const EdgeInsets.only(top: 16.0, right: 16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.close_rounded),
+                      color: Colors.black87,
+                      iconSize: 28.0,
+                      onPressed: () => Navigator.of(context).pop(),
+                    ),
+                  ],
                 ),
-                onTap: currentLocation == '/'
-                    ? null
-                    : () {
-                        Navigator.of(context).pop();
-                        context.go('/');
-                      },
-                contentPadding: EdgeInsets.zero,
               ),
-
-              // Guide
-              ListTile(
-                title: const Text(
-                  'Guide',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w400),
-                ),
-                onTap: currentLocation == '/guide'
-                    ? null
-                    : () {
-                        Navigator.of(context).pop();
-                        context.go('/guide');
-                      },
-                contentPadding: EdgeInsets.zero,
-              ),
-
-              // Api detail ExpansionTile
-              Theme(
-                data: Theme.of(context).copyWith(
-                  splashColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  hoverColor: Colors.transparent,
-                  focusColor: Colors.transparent,
-                  splashFactory: NoSplash.splashFactory,
-                ),
-                child: ExpansionTile(
-                  title: const Text(
-                    'Api detail',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w400),
+              // Menu items
+              Expanded(
+                child: ListView(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16.0,
+                    vertical: 8.0,
                   ),
-                  tilePadding: EdgeInsets.zero,
-                  childrenPadding: const EdgeInsets.only(left: 16.0),
-                  initiallyExpanded: currentLocation.startsWith('/api/'),
-                  children: _apiSections.map((section) {
-                    final targetPath = '/api/${section['path']}';
-                    return ListTile(
-                      title: Text(
-                        section['title']!,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          color: Colors.black87,
+                  children: [
+                    // Home
+                    ListTile(
+                      title: const Text(
+                        'Home',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w400,
                         ),
                       ),
-                      onTap: currentLocation == targetPath
+                      onTap: currentLocation == '/'
                           ? null
                           : () {
                               Navigator.of(context).pop();
-                              context.go(targetPath);
+                              context.go('/');
                             },
-                    );
-                  }).toList(),
-                ),
-              ),
+                      contentPadding: EdgeInsets.zero,
+                    ),
 
-              // About Developer
-              ListTile(
-                title: const Text(
-                  'About Developer',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w400),
-                ),
-                onTap: currentLocation == '/about'
-                    ? null
-                    : () {
+                    // Guide
+                    ListTile(
+                      title: const Text(
+                        'Guide',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      onTap: currentLocation == '/guide'
+                          ? null
+                          : () {
+                              Navigator.of(context).pop();
+                              context.go('/guide');
+                            },
+                      contentPadding: EdgeInsets.zero,
+                    ),
+
+                    // Api detail ExpansionTile
+                    Theme(
+                      data: Theme.of(context).copyWith(
+                        splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        focusColor: Colors.transparent,
+                        splashFactory: NoSplash.splashFactory,
+                      ),
+                      child: ExpansionTile(
+                        title: const Text(
+                          'Api detail',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        tilePadding: EdgeInsets.zero,
+                        childrenPadding: const EdgeInsets.only(left: 16.0),
+                        initiallyExpanded: currentLocation.startsWith('/api/'),
+                        iconColor: Colors.black,
+                        collapsedIconColor: Colors.black,
+                        children: _apiSections.map((section) {
+                          final targetPath = '/api/${section['path']}';
+                          return ListTile(
+                            title: Text(
+                              section['title']!,
+                              style: const TextStyle(
+                                fontSize: 18,
+                                color: Colors.black87,
+                              ),
+                            ),
+                            onTap: currentLocation == targetPath
+                                ? null
+                                : () {
+                                    Navigator.of(context).pop();
+                                    context.go(targetPath);
+                                  },
+                          );
+                        }).toList(),
+                      ),
+                    ),
+
+                    // About Developer
+                    ListTile(
+                      title: const Text(
+                        'About Developer',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      onTap: currentLocation == '/about'
+                          ? null
+                          : () {
+                              Navigator.of(context).pop();
+                              context.go('/about');
+                            },
+                      contentPadding: EdgeInsets.zero,
+                    ),
+
+                    // pub.dev
+                    ListTile(
+                      title: const Text(
+                        'pub.dev',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      onTap: () {
                         Navigator.of(context).pop();
-                        context.go('/about');
+                        _launchPubDev();
                       },
-                contentPadding: EdgeInsets.zero,
-              ),
-
-              // pub.dev
-              ListTile(
-                title: const Text(
-                  'pub.dev',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w400),
+                      contentPadding: EdgeInsets.zero,
+                    ),
+                  ],
                 ),
-                onTap: () {
-                  Navigator.of(context).pop();
-                  _launchPubDev();
-                },
-                contentPadding: EdgeInsets.zero,
               ),
             ],
           ),
