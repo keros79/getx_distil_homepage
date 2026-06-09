@@ -1037,6 +1037,10 @@ Obx(() => Wrap(
                     '© 2026 getx_distil. Open source under MIT License.',
                     style: TextStyle(color: AppTheme.textMuted, fontSize: 12.0),
                   ),
+                  const Text(
+                    'v1.2.2+4',
+                    style: TextStyle(color: AppTheme.textMuted, fontSize: 12.0),
+                  ),
                 ],
               ),
             ],
