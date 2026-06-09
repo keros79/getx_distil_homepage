@@ -22,15 +22,15 @@ class AnimatedOrb extends StatefulWidget {
 class _AnimatedOrbState extends State<AnimatedOrb>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
-  late Animation<double> _animation;
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(vsync: this, duration: widget.duration)
-      ..repeat(reverse: true);
-
-    _animation = CurvedAnimation(parent: _controller, curve: Curves.easeInOut);
+    // Use a 2x shorter duration and avoid reverse to reduce compute cycles
+    _controller = AnimationController(
+      vsync: this,
+      duration: widget.duration * 0.5,
+    )..repeat();
   }
 
   @override
@@ -42,40 +42,42 @@ class _AnimatedOrbState extends State<AnimatedOrb>
   @override
   Widget build(BuildContext context) {
     return ListenableBuilder(
-      listenable: _animation,
+      listenable: _controller,
       builder: (context, child) {
-        final double animValue = _animation.value;
+        final double animValue = _controller.value;
         final double scale = 0.85 + (animValue * 0.3);
         final double rotation = animValue * 2 * pi;
         final double dx = sin(animValue * pi * 2) * 25;
         final double dy = cos(animValue * pi * 2) * 25;
 
-        return Transform(
-          transform: Matrix4.identity()
-            ..setEntry(0, 3, dx)
-            ..setEntry(1, 3, dy)
-            ..rotateZ(rotation)
-            ..scaleByDouble(scale, scale, 1, 1),
-          alignment: Alignment.center,
-          child: Container(
-            width: widget.width,
-            height: widget.height,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              gradient: RadialGradient(
-                center: const Alignment(-0.3, -0.3),
-                radius: 0.85,
-                colors: [
-                  widget.colors[0],
-                  widget.colors[1].withValues(alpha: 0.5),
-                  Colors.transparent,
-                ],
-                stops: const [0.0, 0.4, 1.0],
-              ),
-            ),
+        // Separate Transform widgets allow the GPU to optimize
+        // each transform independently instead of multiplying a full Matrix4.
+        return Transform.translate(
+          offset: Offset(dx, dy),
+          child: Transform.rotate(
+            angle: rotation,
+            child: Transform.scale(scale: scale, child: child),
           ),
         );
       },
+      // Pre-build the gradient container once; transforms animate on top
+      child: Container(
+        width: widget.width,
+        height: widget.height,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          gradient: RadialGradient(
+            center: const Alignment(-0.3, -0.3),
+            radius: 0.85,
+            colors: [
+              widget.colors[0],
+              widget.colors[1].withValues(alpha: 0.5),
+              Colors.transparent,
+            ],
+            stops: const [0.0, 0.4, 1.0],
+          ),
+        ),
+      ),
     );
   }
 }
