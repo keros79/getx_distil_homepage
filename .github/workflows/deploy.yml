@@ -19,7 +19,7 @@ jobs:
         with:
           channel: 'stable'
           cache: false
-          flutter-version: '3.12.0'
+          flutter-version: 'stable'
       
       - name: Build Flutter Web
         run: |
