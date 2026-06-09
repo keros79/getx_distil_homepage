@@ -85,10 +85,11 @@ class _AboutPageState extends State<AboutPage> {
                             ),
                             child: ClipOval(
                               child: Image.asset(
-                                'assets/image/mypicture.jpg',
+                                'assets/image/mypicture.png',
                                 fit: BoxFit.cover,
                                 filterQuality: FilterQuality.high,
                                 errorBuilder: (context, error, stackTrace) {
+                                  debugPrint('Image load error: $error');
                                   return Container(
                                     decoration: const BoxDecoration(
                                       shape: BoxShape.circle,

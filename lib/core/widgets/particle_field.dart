@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class ParticleField extends StatefulWidget {
   final int numberOfParticles;
-  const ParticleField({super.key, this.numberOfParticles = 60});
+  const ParticleField({super.key, this.numberOfParticles = 30});
 
   @override
   State<ParticleField> createState() => _ParticleFieldState();
@@ -14,7 +14,6 @@ class _ParticleFieldState extends State<ParticleField>
   late List<Particle> particles;
   late AnimationController _controller;
   final Random random = Random();
-  int _frameSkip = 0;
 
   @override
   void initState() {
@@ -23,21 +22,10 @@ class _ParticleFieldState extends State<ParticleField>
       widget.numberOfParticles,
       (index) => Particle.random(random),
     );
-    _controller =
-        AnimationController(vsync: this, duration: const Duration(seconds: 10))
-          ..addListener(() {
-            // Update particles every frame for smooth motion
-            for (var particle in particles) {
-              particle.update();
-            }
-            // Only setState every 3rd frame to reduce CPU while maintaining smoothness
-            _frameSkip++;
-            if (_frameSkip >= 3) {
-              _frameSkip = 0;
-              setState(() {});
-            }
-          })
-          ..repeat();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 10),
+    )..repeat();
   }
 
   @override
@@ -49,8 +37,10 @@ class _ParticleFieldState extends State<ParticleField>
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
-      painter: ParticlePainter(particles),
+      painter: ParticlePainter(particles, _controller),
       size: Size.infinite,
+      isComplex: false,
+      willChange: false,
     );
   }
 }
@@ -111,13 +101,16 @@ class Particle {
 
 class ParticlePainter extends CustomPainter {
   final List<Particle> particles;
-  ParticlePainter(this.particles);
+  ParticlePainter(this.particles, Listenable repaint) : super(repaint: repaint);
 
   @override
   void paint(Canvas canvas, Size size) {
     final Paint paint = Paint()..style = PaintingStyle.fill;
 
     for (var particle in particles) {
+      // Update particle position during paint
+      particle.update();
+
       // Map coordinates to local canvas size
       final double px = (particle.x / 1000) * size.width;
       final double py = (particle.y / 1000) * size.height;
@@ -128,5 +121,5 @@ class ParticlePainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }
