@@ -11,6 +11,7 @@ import '../core/widgets/particle_field.dart';
 import '../core/widgets/animated_orb.dart';
 import '../core/widgets/glass_card.dart';
 import '../core/widgets/code_block.dart';
+import '../core/widgets/app_drawer.dart';
 
 class HomePage extends GetView<HomeController> {
   const HomePage({super.key});
@@ -29,7 +30,7 @@ class HomePage extends GetView<HomeController> {
 
     return Scaffold(
       backgroundColor: AppTheme.bg,
-      endDrawer: isMobile ? const _MobileDrawer() : null,
+      endDrawer: isMobile ? const AppDrawer() : null,
       body: Stack(
         children: [
           // 1. Particle Background
@@ -64,10 +65,9 @@ class HomePage extends GetView<HomeController> {
               child: Column(
                 children: [
                   const SizedBox(height: 120.0), // Space for NavBar
-                  
                   // --- HERO SECTION ---
                   _buildHero(context, isMobile),
-                  
+
                   const SizedBox(height: 100.0),
 
                   // --- INTERACTIVE PLAYGROUND ---
@@ -97,7 +97,9 @@ class HomePage extends GetView<HomeController> {
             top: 0,
             left: 0,
             right: 0,
-            child: Obx(() => NavBar(scrollOffset: controller.scrollOffset.value)),
+            child: Obx(
+              () => NavBar(scrollOffset: controller.scrollOffset.value),
+            ),
           ),
         ],
       ),
@@ -112,8 +114,6 @@ class HomePage extends GetView<HomeController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-
-
           // Main Header Text (Dark Gradient for Light Theme)
           ShaderMask(
             shaderCallback: (bounds) => const LinearGradient(
@@ -122,7 +122,9 @@ class HomePage extends GetView<HomeController> {
               end: Alignment.bottomCenter,
             ).createShader(bounds),
             child: Text(
-              isMobile ? 'Flutter State\nManagement' : 'Flutter State Management\nDistilled & Refined',
+              isMobile
+                  ? 'Flutter State\nManagement'
+                  : 'Flutter State Management\nDistilled & Refined',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: 'Google Sans Flex',
@@ -149,7 +151,9 @@ class HomePage extends GetView<HomeController> {
               child: AnimatedTextKit(
                 repeatForever: true,
                 animatedTexts: [
-                  TypewriterAnimatedText('Same Developer Experience. Zero Overhead.'),
+                  TypewriterAnimatedText(
+                    'Same Developer Experience. Zero Overhead.',
+                  ),
                   TypewriterAnimatedText('Tree-Scoped Lifecycle & GC.'),
                   TypewriterAnimatedText('Self-Healing Post-Frame Rebuilds.'),
                   TypewriterAnimatedText('Fast-Path Reactive Engine.'),
@@ -202,15 +206,24 @@ class HomePage extends GetView<HomeController> {
                     backgroundColor: Colors.transparent,
                     shadowColor: Colors.transparent,
                     elevation: 0,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-                    padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 20.0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 32.0,
+                      vertical: 20.0,
+                    ),
                   ),
                   child: const Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
                         'Get Started',
-                        style: TextStyle(fontFamily: 'Google Sans Flex', fontWeight: FontWeight.bold, fontSize: 16.0),
+                        style: TextStyle(
+                          fontFamily: 'Google Sans Flex',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16.0,
+                        ),
                       ),
                       SizedBox(width: 8.0),
                       Icon(Icons.arrow_forward_rounded, size: 18.0),
@@ -226,9 +239,17 @@ class HomePage extends GetView<HomeController> {
                 label: const Text('API Reference'),
                 style: OutlinedButton.styleFrom(
                   foregroundColor: AppTheme.textPrimary,
-                  side: BorderSide(color: Colors.black.withOpacity(0.12), width: 1.2),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-                  padding: const EdgeInsets.symmetric(horizontal: 28.0, vertical: 20.0),
+                  side: BorderSide(
+                    color: Colors.black.withOpacity(0.12),
+                    width: 1.2,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 28.0,
+                    vertical: 20.0,
+                  ),
                   backgroundColor: Colors.black.withOpacity(0.01),
                 ),
               ),
@@ -291,7 +312,7 @@ Obx(() => Wrap(
             ),
           ),
           const SizedBox(height: 24.0),
-          
+
           GlassCard(
             glowColor: AppTheme.googleBlue,
             child: isMobile
@@ -314,10 +335,7 @@ Obx(() => Wrap(
           const SizedBox(height: 32.0),
           const SizedBox(
             width: double.infinity,
-            child: CodeBlock(
-              code: playgroundCode,
-              language: 'dart',
-            ),
+            child: CodeBlock(code: playgroundCode, language: 'dart'),
           ),
         ],
       ),
@@ -343,7 +361,7 @@ Obx(() => Wrap(
           style: TextStyle(color: AppTheme.textSecondary, height: 1.4),
         ),
         const SizedBox(height: 24.0),
-        
+
         // Count Control
         Row(
           children: [
@@ -353,8 +371,13 @@ Obx(() => Wrap(
                 backgroundColor: AppTheme.googleBlue.withOpacity(0.08),
                 foregroundColor: AppTheme.googleBlue,
                 elevation: 0,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                  vertical: 12.0,
+                ),
               ),
               child: const Row(
                 children: [
@@ -370,8 +393,13 @@ Obx(() => Wrap(
               style: OutlinedButton.styleFrom(
                 foregroundColor: AppTheme.textSecondary,
                 side: BorderSide(color: Colors.black.withOpacity(0.1)),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                  vertical: 12.0,
+                ),
               ),
               child: const Row(
                 children: [
@@ -394,8 +422,13 @@ Obx(() => Wrap(
                 backgroundColor: AppTheme.googleGreen.withOpacity(0.08),
                 foregroundColor: AppTheme.googleGreen,
                 elevation: 0,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                  vertical: 12.0,
+                ),
               ),
               child: const Row(
                 children: [
@@ -414,7 +447,7 @@ Obx(() => Wrap(
           ],
         ),
         const SizedBox(height: 24.0),
-        
+
         // Input Control
         TextField(
           onChanged: (val) => controller.textInput.value = val,
@@ -432,7 +465,10 @@ Obx(() => Wrap(
               borderRadius: BorderRadius.circular(10.0),
               borderSide: const BorderSide(color: AppTheme.googleBlue),
             ),
-            contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 14.0),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 16.0,
+              vertical: 14.0,
+            ),
           ),
         ),
       ],
@@ -462,10 +498,16 @@ Obx(() => Wrap(
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Obx(() => Text(
-                'Mutations: ${controller.clicks.value}',
-                style: const TextStyle(fontFamily: 'Google Sans Mono', color: AppTheme.textMuted, fontSize: 12),
-              )),
+              Obx(
+                () => Text(
+                  'Mutations: ${controller.clicks.value}',
+                  style: const TextStyle(
+                    fontFamily: 'Google Sans Mono',
+                    color: AppTheme.textMuted,
+                    fontSize: 12,
+                  ),
+                ),
+              ),
             ],
           ),
           const SizedBox(height: 20.0),
@@ -474,21 +516,30 @@ Obx(() => Wrap(
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('controller.count:', style: TextStyle(color: AppTheme.textSecondary, fontFamily: 'Google Sans Mono')),
-              Obx(() => AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 200),
-                    transitionBuilder: (child, animation) => ScaleTransition(scale: animation, child: child),
-                    child: Text(
-                      '${controller.counter.value}',
-                      key: ValueKey(controller.counter.value),
-                      style: const TextStyle(
-                        fontSize: 22.0,
-                        fontWeight: FontWeight.bold,
-                        color: AppTheme.textPrimary,
-                        fontFamily: 'Google Sans Mono',
-                      ),
+              const Text(
+                'controller.count:',
+                style: TextStyle(
+                  color: AppTheme.textSecondary,
+                  fontFamily: 'Google Sans Mono',
+                ),
+              ),
+              Obx(
+                () => AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 200),
+                  transitionBuilder: (child, animation) =>
+                      ScaleTransition(scale: animation, child: child),
+                  child: Text(
+                    '${controller.counter.value}',
+                    key: ValueKey(controller.counter.value),
+                    style: const TextStyle(
+                      fontSize: 22.0,
+                      fontWeight: FontWeight.bold,
+                      color: AppTheme.textPrimary,
+                      fontFamily: 'Google Sans Mono',
                     ),
-                  )),
+                  ),
+                ),
+              ),
             ],
           ),
           const Divider(height: 24.0, color: Color(0xFFDADCE0)),
@@ -497,16 +548,24 @@ Obx(() => Wrap(
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('controller.textInput.value:', style: TextStyle(color: AppTheme.textSecondary, fontFamily: 'Google Sans Mono')),
+              const Text(
+                'controller.textInput.value:',
+                style: TextStyle(
+                  color: AppTheme.textSecondary,
+                  fontFamily: 'Google Sans Mono',
+                ),
+              ),
               const SizedBox(height: 6.0),
-              Obx(() => Text(
-                    controller.textInput.value,
-                    style: const TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w500,
-                      color: AppTheme.googleBlue,
-                    ),
-                  )),
+              Obx(
+                () => Text(
+                  controller.textInput.value,
+                  style: const TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.w500,
+                    color: AppTheme.googleBlue,
+                  ),
+                ),
+              ),
             ],
           ),
           const Divider(height: 24.0, color: Color(0xFFDADCE0)),
@@ -515,23 +574,48 @@ Obx(() => Wrap(
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('controller.items (RxList):', style: TextStyle(color: AppTheme.textSecondary, fontFamily: 'Google Sans Mono')),
+              const Text(
+                'controller.items (RxList):',
+                style: TextStyle(
+                  color: AppTheme.textSecondary,
+                  fontFamily: 'Google Sans Mono',
+                ),
+              ),
               const SizedBox(height: 8.0),
-              Obx(() => controller.demoItems.isEmpty
-                  ? const Text('List is empty.', style: TextStyle(color: AppTheme.textMuted, fontSize: 13.0))
-                  : Wrap(
-                      spacing: 6.0,
-                      runSpacing: 6.0,
-                      children: controller.demoItems.map((item) {
-                        return Chip(
-                          label: Text(item, style: const TextStyle(fontSize: 11.0, color: AppTheme.textPrimary)),
-                          backgroundColor: Colors.black.withOpacity(0.04),
-                          side: BorderSide.none,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6.0)),
-                          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 0),
-                        );
-                      }).toList(),
-                    )),
+              Obx(
+                () => controller.demoItems.isEmpty
+                    ? const Text(
+                        'List is empty.',
+                        style: TextStyle(
+                          color: AppTheme.textMuted,
+                          fontSize: 13.0,
+                        ),
+                      )
+                    : Wrap(
+                        spacing: 6.0,
+                        runSpacing: 6.0,
+                        children: controller.demoItems.map((item) {
+                          return Chip(
+                            label: Text(
+                              item,
+                              style: const TextStyle(
+                                fontSize: 11.0,
+                                color: AppTheme.textPrimary,
+                              ),
+                            ),
+                            backgroundColor: Colors.black.withOpacity(0.04),
+                            side: BorderSide.none,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(6.0),
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 4,
+                              vertical: 0,
+                            ),
+                          );
+                        }).toList(),
+                      ),
+              ),
             ],
           ),
         ],
@@ -544,49 +628,56 @@ Obx(() => Wrap(
     final List<Map<String, dynamic>> features = [
       {
         'title': 'Reactive State (Rx & Obx)',
-        'description': 'Declare states with simple .obs and build lightweight reactive widgets that listen only to target properties.',
+        'description':
+            'Declare states with simple .obs and build lightweight reactive widgets that listen only to target properties.',
         'icon': Icons.track_changes_rounded,
         'color': AppTheme.googleBlue,
         'path': 'reactive-state',
       },
       {
         'title': 'Global & Scoped DI',
-        'description': 'Access components anywhere without contexts. Fallback pipelines search for scoped instances before searching global registries.',
+        'description':
+            'Access components anywhere without contexts. Fallback pipelines search for scoped instances before searching global registries.',
         'icon': Icons.settings_input_component_rounded,
         'color': AppTheme.googleGreen,
         'path': 'global-di',
       },
       {
         'title': 'Tree-Scoped Lifecycle',
-        'description': 'Isolate views and controller instances cleanly. Bind controllers directly to screens and let them Auto-GC upon unmounting.',
+        'description':
+            'Isolate views and controller instances cleanly. Bind controllers directly to screens and let them Auto-GC upon unmounting.',
         'icon': Icons.account_tree_rounded,
         'color': AppTheme.googleRed,
         'path': 'binding-widget',
       },
       {
         'title': 'Global Persistent Services',
-        'description': 'Keep vital background resources (like databases or APIs) permanently in memory as Immortal Singletons.',
+        'description':
+            'Keep vital background resources (like databases or APIs) permanently in memory as Immortal Singletons.',
         'icon': Icons.cloud_done_rounded,
         'color': AppTheme.googleYellow,
         'path': 'getx-service',
       },
       {
         'title': 'Background Workers',
-        'description': 'Configure reactive pipelines with debouncing and throttling algorithms that trigger background procedures safely.',
+        'description':
+            'Configure reactive pipelines with debouncing and throttling algorithms that trigger background procedures safely.',
         'icon': Icons.alarm_on_rounded,
         'color': AppTheme.googleBlue,
         'path': 'worker',
       },
       {
         'title': 'StateMixin Framework',
-        'description': 'Handle async payloads with high-level builders that structure loading, success, empty, and failure layout branches cleanly.',
+        'description':
+            'Handle async payloads with high-level builders that structure loading, success, empty, and failure layout branches cleanly.',
         'icon': Icons.swap_horiz_rounded,
         'color': AppTheme.googleGreen,
         'path': 'state-mixin',
       },
       {
         'title': 'Reactive Internationalization',
-        'description': 'Swap languages instantly without triggering complex rebuild processes. Translates values on-the-fly dynamically.',
+        'description':
+            'Swap languages instantly without triggering complex rebuild processes. Translates values on-the-fly dynamically.',
         'icon': Icons.translate_rounded,
         'color': AppTheme.googleYellow,
         'path': 'i18n',
@@ -668,7 +759,11 @@ Obx(() => Wrap(
                               ),
                             ),
                             SizedBox(width: 4.0),
-                            Icon(Icons.arrow_forward_rounded, size: 14.0, color: AppTheme.textSecondary),
+                            Icon(
+                              Icons.arrow_forward_rounded,
+                              size: 14.0,
+                              color: AppTheme.textSecondary,
+                            ),
                           ],
                         ),
                       ],
@@ -736,7 +831,11 @@ Obx(() => Wrap(
                             ),
                           ),
                           SizedBox(width: 4.0),
-                          Icon(Icons.arrow_forward_rounded, size: 14.0, color: AppTheme.textSecondary),
+                          Icon(
+                            Icons.arrow_forward_rounded,
+                            size: 14.0,
+                            color: AppTheme.textSecondary,
+                          ),
                         ],
                       ),
                     ],
@@ -779,18 +878,32 @@ Obx(() => Wrap(
                       decoration: BoxDecoration(
                         color: Colors.black.withOpacity(0.01),
                         borderRadius: BorderRadius.circular(16.0),
-                        border: Border.all(color: Colors.black.withOpacity(0.05)),
+                        border: Border.all(
+                          color: Colors.black.withOpacity(0.05),
+                        ),
                       ),
                       child: const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _ArchitectureBadge(text: 'GetMaterialApp', color: AppTheme.googleBlue),
+                          _ArchitectureBadge(
+                            text: 'GetMaterialApp',
+                            color: AppTheme.googleBlue,
+                          ),
                           SizedBox(height: 10),
-                          _ArchitectureBadge(text: 'GoRouter Config', color: AppTheme.googleGreen),
+                          _ArchitectureBadge(
+                            text: 'GoRouter Config',
+                            color: AppTheme.googleGreen,
+                          ),
                           SizedBox(height: 10),
-                          _ArchitectureBadge(text: 'BindingWidget Scopes', color: AppTheme.googleRed),
+                          _ArchitectureBadge(
+                            text: 'BindingWidget Scopes',
+                            color: AppTheme.googleRed,
+                          ),
                           SizedBox(height: 10),
-                          _ArchitectureBadge(text: 'GetView Page', color: AppTheme.googleYellow),
+                          _ArchitectureBadge(
+                            text: 'GetView Page',
+                            color: AppTheme.googleYellow,
+                          ),
                         ],
                       ),
                     ),
@@ -826,7 +939,11 @@ Obx(() => Wrap(
       const SizedBox(height: 16.0),
       const Text(
         'Incorporating GetX DX patterns into standard declarative routers (like GoRouter) is simplified with getx_distil. Bind controllers and views cleanly to widget tree life cycles without global route engine overheads.',
-        style: TextStyle(color: AppTheme.textSecondary, height: 1.5, fontSize: 14.5),
+        style: TextStyle(
+          color: AppTheme.textSecondary,
+          height: 1.5,
+          fontSize: 14.5,
+        ),
       ),
       const SizedBox(height: 24.0),
       ElevatedButton(
@@ -835,7 +952,9 @@ Obx(() => Wrap(
           backgroundColor: AppTheme.googleRed.withOpacity(0.08),
           foregroundColor: AppTheme.googleRed,
           elevation: 0,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          ),
           padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
         ),
         child: const Text('Read Architecture Guide'),
@@ -849,7 +968,9 @@ Obx(() => Wrap(
       width: double.infinity,
       decoration: BoxDecoration(
         color: const Color(0xFFF1F3F4),
-        border: Border(top: BorderSide(color: Colors.black.withOpacity(0.06), width: 1.0)),
+        border: Border(
+          top: BorderSide(color: Colors.black.withOpacity(0.06), width: 1.0),
+        ),
       ),
       padding: const EdgeInsets.symmetric(vertical: 48.0, horizontal: 24.0),
       child: Center(
@@ -863,8 +984,13 @@ Obx(() => Wrap(
                   Row(
                     children: [
                       ShaderMask(
-                        shaderCallback: (bounds) => AppTheme.primaryGradient.createShader(bounds),
-                        child: const Icon(Icons.bolt_rounded, size: 24.0, color: Colors.white),
+                        shaderCallback: (bounds) =>
+                            AppTheme.primaryGradient.createShader(bounds),
+                        child: const Icon(
+                          Icons.bolt_rounded,
+                          size: 24.0,
+                          color: Colors.white,
+                        ),
                       ),
                       const SizedBox(width: 8.0),
                       const Text(
@@ -881,13 +1007,21 @@ Obx(() => Wrap(
                   Row(
                     children: [
                       IconButton(
-                        icon: const Icon(Icons.code_rounded, color: AppTheme.textSecondary, size: 20),
+                        icon: const Icon(
+                          Icons.code_rounded,
+                          color: AppTheme.textSecondary,
+                          size: 20,
+                        ),
                         onPressed: _launchGitHub,
                         tooltip: 'GitHub Repository',
                       ),
                       const SizedBox(width: 12.0),
                       IconButton(
-                        icon: const Icon(Icons.person_outline_rounded, color: AppTheme.textSecondary, size: 20),
+                        icon: const Icon(
+                          Icons.person_outline_rounded,
+                          color: AppTheme.textSecondary,
+                          size: 20,
+                        ),
                         onPressed: () => context.go('/about'),
                         tooltip: 'About Developer',
                       ),
@@ -917,10 +1051,7 @@ class _ArchitectureBadge extends StatelessWidget {
   final String text;
   final Color color;
 
-  const _ArchitectureBadge({
-    required this.text,
-    required this.color,
-  });
+  const _ArchitectureBadge({required this.text, required this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -952,87 +1083,6 @@ class _ArchitectureBadge extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-// Mobile End Drawer
-class _MobileDrawer extends StatelessWidget {
-  const _MobileDrawer();
-
-  void _launchPubDev() async {
-    final Uri url = Uri.parse('https://pub.dev/packages/getx_distil');
-    if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
-      throw Exception('Could not launch $url');
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Drawer(
-      backgroundColor: AppTheme.bg,
-      child: SafeArea(
-        child: Column(
-          children: [
-            ListTile(
-              leading: const Icon(Icons.bolt_rounded, color: AppTheme.googleBlue),
-              title: const Text('getx_distil', style: TextStyle(fontWeight: FontWeight.bold, color: AppTheme.textPrimary)),
-              trailing: IconButton(
-                icon: const Icon(Icons.close_rounded, color: AppTheme.textSecondary),
-                onPressed: () => Navigator.of(context).pop(),
-              ),
-            ),
-            const Divider(color: Color(0xFFDADCE0)),
-            ListTile(
-              leading: const Icon(Icons.home_outlined, color: AppTheme.textSecondary),
-              title: const Text('Home', style: TextStyle(color: AppTheme.textPrimary)),
-              onTap: () {
-                Navigator.of(context).pop();
-                context.go('/');
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.menu_book_outlined, color: AppTheme.textSecondary),
-              title: const Text('Guide', style: TextStyle(color: AppTheme.textPrimary)),
-              onTap: () {
-                Navigator.of(context).pop();
-                context.go('/guide');
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.code_rounded, color: AppTheme.textSecondary),
-              title: const Text('API Reference', style: TextStyle(color: AppTheme.textPrimary)),
-              onTap: () {
-                Navigator.of(context).pop();
-                context.go('/api/reactive-state');
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.person_outline_rounded, color: AppTheme.textSecondary),
-              title: const Text('About Developer', style: TextStyle(color: AppTheme.textPrimary)),
-              onTap: () {
-                Navigator.of(context).pop();
-                context.go('/about');
-              },
-            ),
-            const Spacer(),
-            Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: ElevatedButton.icon(
-                onPressed: _launchPubDev,
-                icon: const Icon(Icons.layers_rounded, color: AppTheme.googleYellow),
-                label: const Text('pub.dev'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppTheme.surfaceLight,
-                  foregroundColor: AppTheme.textPrimary,
-                  minimumSize: const Size.fromHeight(50.0),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-                ),
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }

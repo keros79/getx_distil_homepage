@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../core/app_theme.dart';
 import '../core/widgets/nav_bar.dart';
 import '../core/widgets/particle_field.dart';
 import '../core/widgets/glass_card.dart';
+import '../core/widgets/app_drawer.dart';
 
 class AboutPage extends StatefulWidget {
   const AboutPage({super.key});
@@ -49,7 +49,7 @@ class _AboutPageState extends State<AboutPage> {
 
     return Scaffold(
       backgroundColor: AppTheme.bg,
-      endDrawer: isMobile ? const _AboutMobileDrawer() : null,
+      endDrawer: isMobile ? const AppDrawer() : null,
       body: Stack(
         children: [
           // Background particles
@@ -285,8 +285,7 @@ class _AboutPageState extends State<AboutPage> {
           ),
           const SizedBox(height: 16.0),
           TextButton(
-            onPressed: () =>
-                _launchUrl('https://pub.dev/packages/getx_distil'),
+            onPressed: () => _launchUrl('https://pub.dev/packages/getx_distil'),
             child: const Text(
               'Visit pub.dev ->',
               style: TextStyle(
@@ -296,121 +295,6 @@ class _AboutPageState extends State<AboutPage> {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _AboutMobileDrawer extends StatelessWidget {
-  const _AboutMobileDrawer();
-
-  void _launchPubDev() async {
-    final Uri url = Uri.parse('https://pub.dev/packages/getx_distil');
-    if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
-      throw Exception('Could not launch $url');
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Drawer(
-      backgroundColor: AppTheme.bg,
-      child: SafeArea(
-        child: Column(
-          children: [
-            ListTile(
-              leading: const Icon(
-                Icons.bolt_rounded,
-                color: AppTheme.googleBlue,
-              ),
-              title: const Text(
-                'getx_distil',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: AppTheme.textPrimary,
-                ),
-              ),
-              trailing: IconButton(
-                icon: const Icon(
-                  Icons.close_rounded,
-                  color: AppTheme.textSecondary,
-                ),
-                onPressed: () => Navigator.of(context).pop(),
-              ),
-            ),
-            const Divider(color: Color(0xFF1E1E2F)),
-            ListTile(
-              leading: const Icon(
-                Icons.home_outlined,
-                color: AppTheme.textSecondary,
-              ),
-              title: const Text(
-                'Home',
-                style: TextStyle(color: AppTheme.textPrimary),
-              ),
-              onTap: () {
-                Navigator.of(context).pop();
-                context.go('/');
-              },
-            ),
-            ListTile(
-              leading: const Icon(
-                Icons.menu_book_outlined,
-                color: AppTheme.textSecondary,
-              ),
-              title: const Text(
-                'Guide',
-                style: TextStyle(color: AppTheme.textPrimary),
-              ),
-              onTap: () {
-                Navigator.of(context).pop();
-                context.go('/guide');
-              },
-            ),
-            ListTile(
-              leading: const Icon(
-                Icons.code_rounded,
-                color: AppTheme.textSecondary,
-              ),
-              title: const Text(
-                'API Reference',
-                style: TextStyle(color: AppTheme.textPrimary),
-              ),
-              onTap: () {
-                Navigator.of(context).pop();
-                context.go('/api/reactive-state');
-              },
-            ),
-            ListTile(
-              leading: const Icon(
-                Icons.person_outline_rounded,
-                color: AppTheme.textSecondary,
-              ),
-              title: const Text(
-                'About Developer',
-                style: TextStyle(color: AppTheme.textPrimary),
-              ),
-              onTap: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            const Spacer(),
-            Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: ElevatedButton.icon(
-                onPressed: _launchPubDev,
-                icon: const Icon(Icons.layers_rounded, color: AppTheme.googleYellow),
-                label: const Text('pub.dev'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppTheme.surfaceLight,
-                  foregroundColor: AppTheme.textPrimary,
-                  minimumSize: const Size.fromHeight(50.0),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-                ),
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
