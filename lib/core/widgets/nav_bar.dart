@@ -7,10 +7,7 @@ import '../app_theme.dart';
 class NavBar extends StatelessWidget implements PreferredSizeWidget {
   final double scrollOffset;
 
-  const NavBar({
-    super.key,
-    required this.scrollOffset,
-  });
+  const NavBar({super.key, required this.scrollOffset});
 
   @override
   Size get preferredSize => const Size.fromHeight(70.0);
@@ -56,7 +53,8 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
                   children: [
                     // Spark/Shield logo design
                     ShaderMask(
-                      shaderCallback: (bounds) => AppTheme.primaryGradient.createShader(bounds),
+                      shaderCallback: (bounds) =>
+                          AppTheme.primaryGradient.createShader(bounds),
                       child: const Icon(
                         Icons.bolt_rounded,
                         size: 30.0,
@@ -95,40 +93,29 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
                     _NavLink(
                       label: 'API Reference',
                       onPressed: () => context.go('/api/reactive-state'),
-                      isActive: GoRouterState.of(context).uri.path.startsWith('/api'),
+                      isActive: GoRouterState.of(
+                        context,
+                      ).uri.path.startsWith('/api'),
                     ),
                     _NavLink(
                       label: 'About',
                       onPressed: () => context.go('/about'),
                       isActive: GoRouterState.of(context).uri.path == '/about',
                     ),
-                    const SizedBox(width: 16.0),
-                    
-                    // pub.dev Button
-                    ElevatedButton.icon(
+                    _NavLink(
+                      label: 'pub.dev',
                       onPressed: _launchPubDev,
-                      icon: const Icon(Icons.layers_rounded, size: 16.0, color: AppTheme.googleYellow),
-                      label: const Text('pub.dev'),
-                      style: ElevatedButton.styleFrom(
-                        foregroundColor: AppTheme.textPrimary,
-                        backgroundColor: Colors.black.withOpacity(0.04),
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                          side: BorderSide(
-                            color: Colors.black.withOpacity(0.08),
-                            width: 1.0,
-                          ),
-                        ),
-                        padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 12.0),
-                      ),
+                      isActive: false,
                     ),
                   ],
                 )
               else
                 // Mobile menu triggers drawer (handled in home_page/pages scaffolds)
                 IconButton(
-                  icon: const Icon(Icons.menu_rounded, color: AppTheme.textPrimary),
+                  icon: const Icon(
+                    Icons.menu_rounded,
+                    color: AppTheme.textPrimary,
+                  ),
                   onPressed: () {
                     Scaffold.of(context).openEndDrawer();
                   },
@@ -157,44 +144,40 @@ class _NavLink extends StatefulWidget {
 }
 
 class _NavLinkState extends State<_NavLink> {
-  bool _isHovered = false;
-
   @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-      onEnter: (_) => setState(() => _isHovered = true),
-      onExit: (_) => setState(() => _isHovered = false),
-      child: TextButton(
-        onPressed: widget.onPressed,
-        style: TextButton.styleFrom(
-          foregroundColor: widget.isActive 
-              ? AppTheme.textPrimary 
-              : (_isHovered ? AppTheme.textPrimary : AppTheme.textSecondary),
-          padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 12.0),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              widget.label,
-              style: const TextStyle(
-                fontFamily: 'Google Sans Flex',
-                fontSize: 14.5,
-                fontWeight: FontWeight.w500,
-              ),
+    return TextButton(
+      onPressed: widget.onPressed,
+      style: TextButton.styleFrom(
+        foregroundColor: widget.isActive
+            ? AppTheme.textPrimary
+            : AppTheme.textSecondary,
+        padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 12.0),
+        overlayColor: Colors.transparent,
+        splashFactory: NoSplash.splashFactory,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            widget.label,
+            style: const TextStyle(
+              fontFamily: 'Google Sans Flex',
+              fontSize: 14.5,
+              fontWeight: FontWeight.w500,
             ),
-            const SizedBox(height: 3),
-            AnimatedContainer(
-              duration: const Duration(milliseconds: 200),
-              height: 2.0,
-              width: widget.isActive ? 16.0 : 0.0,
-              decoration: BoxDecoration(
-                color: AppTheme.googleBlue,
-                borderRadius: BorderRadius.circular(1.0),
-              ),
+          ),
+          const SizedBox(height: 3),
+          AnimatedContainer(
+            duration: const Duration(milliseconds: 200),
+            height: 2.0,
+            width: widget.isActive ? 16.0 : 0.0,
+            decoration: BoxDecoration(
+              color: AppTheme.googleBlue,
+              borderRadius: BorderRadius.circular(1.0),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

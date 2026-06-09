@@ -31,6 +31,7 @@ class AppDrawer extends StatelessWidget {
     return Drawer(
       backgroundColor: AppTheme.bg,
       width: screenWidth,
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
       child: SafeArea(
         child: Theme(
           data: Theme.of(context).copyWith(
