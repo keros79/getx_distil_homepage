@@ -1038,7 +1038,7 @@ Obx(() => Wrap(
                     style: TextStyle(color: AppTheme.textMuted, fontSize: 12.0),
                   ),
                   const Text(
-                    'v1.2.5+7',
+                    'v1.2.6+8',
                     style: TextStyle(color: AppTheme.textMuted, fontSize: 12.0),
                   ),
                 ],
