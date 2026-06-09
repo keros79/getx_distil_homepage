@@ -9,25 +9,35 @@ class ParticleField extends StatefulWidget {
   State<ParticleField> createState() => _ParticleFieldState();
 }
 
-class _ParticleFieldState extends State<ParticleField> with SingleTickerProviderStateMixin {
+class _ParticleFieldState extends State<ParticleField>
+    with SingleTickerProviderStateMixin {
   late List<Particle> particles;
   late AnimationController _controller;
   final Random random = Random();
+  int _frameSkip = 0;
 
   @override
   void initState() {
     super.initState();
-    particles = List.generate(widget.numberOfParticles, (index) => Particle.random(random));
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 10),
-    )..addListener(() {
-        setState(() {
-          for (var particle in particles) {
-            particle.update();
-          }
-        });
-      })..repeat();
+    particles = List.generate(
+      widget.numberOfParticles,
+      (index) => Particle.random(random),
+    );
+    _controller =
+        AnimationController(vsync: this, duration: const Duration(seconds: 10))
+          ..addListener(() {
+            // Update particles every frame for smooth motion
+            for (var particle in particles) {
+              particle.update();
+            }
+            // Only setState every 3rd frame to reduce CPU while maintaining smoothness
+            _frameSkip++;
+            if (_frameSkip >= 3) {
+              _frameSkip = 0;
+              setState(() {});
+            }
+          })
+          ..repeat();
   }
 
   @override
@@ -118,5 +128,5 @@ class ParticlePainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
