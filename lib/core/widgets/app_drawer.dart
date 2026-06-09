@@ -77,7 +77,7 @@ class AppDrawer extends StatelessWidget {
                       title: const Text(
                         'Home',
                         style: TextStyle(
-                          fontSize: 24,
+                          fontSize: 30,
                           fontWeight: FontWeight.w400,
                         ),
                       ),
@@ -95,7 +95,7 @@ class AppDrawer extends StatelessWidget {
                       title: const Text(
                         'Guide',
                         style: TextStyle(
-                          fontSize: 24,
+                          fontSize: 30,
                           fontWeight: FontWeight.w400,
                         ),
                       ),
@@ -121,7 +121,7 @@ class AppDrawer extends StatelessWidget {
                         title: const Text(
                           'Api detail',
                           style: TextStyle(
-                            fontSize: 24,
+                            fontSize: 30,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
@@ -156,7 +156,7 @@ class AppDrawer extends StatelessWidget {
                       title: const Text(
                         'About Developer',
                         style: TextStyle(
-                          fontSize: 24,
+                          fontSize: 30,
                           fontWeight: FontWeight.w400,
                         ),
                       ),
@@ -174,7 +174,7 @@ class AppDrawer extends StatelessWidget {
                       title: const Text(
                         'pub.dev',
                         style: TextStyle(
-                          fontSize: 24,
+                          fontSize: 30,
                           fontWeight: FontWeight.w400,
                         ),
                       ),
