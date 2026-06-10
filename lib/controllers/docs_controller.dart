@@ -22,6 +22,7 @@ class DocsController extends GetxController with StateMixin<Map<String, String>>
         'worker',
         'state_mixin',
         'i18n',
+        'rxs',
       ];
 
       for (var key in keys) {
@@ -75,6 +76,24 @@ BindingWidget(
   bindings: [Bind<Controller>(() => Controller())],
   child: MyPage(),
 );''';
+      case 'rxs':
+        return '''
+// 1. RxSList (Status-Aware List)
+final items = RxSList<String>();
+Obx(() => items.on(
+  loading: () => CircularProgressIndicator(),
+  loaded: (data) => ListView(children: data.map((e) => Text(e)).toList()),
+  empty: () => Text('Empty'),
+  error: (err) => Text('Error: \$err'),
+));
+
+// 2. RxS (Status-Aware Value)
+final user = RxS<String?>(null);
+Obx(() => user.on(
+  loading: () => CircularProgressIndicator(),
+  loaded: (data) => Text('User: \$data'),
+  error: (err) => Text('Error: \$err'),
+));''';
       default:
         return '// Fallback sample code';
     }

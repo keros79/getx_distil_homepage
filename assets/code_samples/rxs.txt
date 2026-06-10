@@ -1,0 +1,44 @@
+// ==========================================
+// 1. RxSList (Status-Aware List)
+// ==========================================
+final items = RxSList<String>(); // Starts as loading status
+
+// UI Binding using items.on(...) inside Obx
+Obx(() => items.on(
+  loading: () => const CircularProgressIndicator(),
+  loaded: (data) => ListView(children: data.map((e) => Text(e)).toList()),
+  empty: () => const Text('No items found.'),
+  error: (err) => Text('Error: $err'),
+));
+
+void fetchItems() async {
+  try {
+    final res = await api.getItems();
+    items.assignAll(res); // Automatically transitions to loaded (or empty if empty list)
+  } catch (e) {
+    items.error = e.toString();
+    items.status = RxListStatus.error; // Preserves items, transitions status to error
+  }
+}
+
+// ==========================================
+// 2. RxS (Status-Aware Nullable Value)
+// ==========================================
+final user = RxS<User?>(null); // Starts as loading status
+
+// UI Binding using user.on(...) inside Obx
+Obx(() => user.on(
+  loading: () => const CircularProgressIndicator(),
+  loaded: (data) => Text('Hello, ${data?.name ?? "Guest"}'),
+  error: (err) => Text('Error: $err'),
+));
+
+void fetchUser() async {
+  try {
+    final res = await api.getUser();
+    user.value = res; // Automatically transitions to loaded
+  } catch (e) {
+    user.error = e.toString();
+    user.status = RxDataStatus.error; // Preserves data, transitions status to error
+  }
+}

@@ -16,27 +16,31 @@ class SidebarToc extends StatelessWidget {
       'path': 'reactive-state',
     },
     {
-      'title': '2. Global Dependency Injection',
+      'title': '2. Status-Aware (RxSList & RxS)',
+      'path': 'rxs',
+    },
+    {
+      'title': '3. Global Dependency Injection',
       'path': 'global-di',
     },
     {
-      'title': '3. Widget Tree Scoped DI',
+      'title': '4. Widget Tree Scoped DI',
       'path': 'binding-widget',
     },
     {
-      'title': '4. Global Persistent Services',
+      'title': '5. Global Persistent Services',
       'path': 'getx-service',
     },
     {
-      'title': '5. Background Side-Effects',
+      'title': '6. Background Side-Effects',
       'path': 'worker',
     },
     {
-      'title': '6. Declarative Async Branching',
+      'title': '7. Declarative Async Branching',
       'path': 'state-mixin',
     },
     {
-      'title': '7. Internationalization (i18n)',
+      'title': '8. Reactive Localization',
       'path': 'i18n',
     },
   ];
@@ -78,7 +82,7 @@ class SidebarToc extends StatelessWidget {
               itemBuilder: (context, index) {
                 final section = sections[index];
                 final isSelected = activePath == section['path'];
-                
+
                 return _TocItem(
                   title: section['title']!,
                   isSelected: isSelected,
@@ -121,7 +125,9 @@ class _TocItemState extends State<_TocItem> {
         child: Material(
           color: widget.isSelected
               ? AppTheme.googleBlue.withOpacity(0.08)
-              : (_isHovered ? Colors.black.withOpacity(0.03) : Colors.transparent),
+              : (_isHovered
+                  ? Colors.black.withOpacity(0.03)
+                  : Colors.transparent),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0),
             side: BorderSide(
@@ -135,14 +141,18 @@ class _TocItemState extends State<_TocItem> {
           child: ListTile(
             onTap: widget.onTap,
             dense: true,
-            contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
             title: Text(
               widget.title,
               style: TextStyle(
                 fontFamily: 'Google Sans Flex',
                 fontSize: 14.0,
-                fontWeight: widget.isSelected ? FontWeight.w600 : FontWeight.w400,
-                color: widget.isSelected ? AppTheme.textPrimary : AppTheme.textSecondary,
+                fontWeight:
+                    widget.isSelected ? FontWeight.w600 : FontWeight.w400,
+                color: widget.isSelected
+                    ? AppTheme.textPrimary
+                    : AppTheme.textSecondary,
               ),
             ),
           ),

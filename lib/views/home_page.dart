@@ -262,19 +262,35 @@ class HomePage extends GetView<HomeController> {
 
   Widget _buildPlayground(BuildContext context, bool isMobile) {
     const String playgroundCode = '''
-// 1. Declare reactive variables inside Controller
+// === 1. Classic Rx States & Obx ===
 final counter = 0.obs;
-final textInput = 'Type something...'.obs;
-final demoItems = <String>[].obs;
+final textInput = 'Hello'.obs;
 
-// 2. Wrap UI widgets with Obx() for pinpoint reactive rebuilds
-Obx(() => Text('\${controller.counter.value}'))
+Obx(() => Text('Count: \${controller.counter.value}'));
+Obx(() => Text('Input: \${controller.textInput.value}'));
 
-Obx(() => Text(controller.textInput.value))
+// === 2. Status-Aware Rx States (RxSList, RxS) ===
+final demoItems = RxSList<String>(); // Auto-syncs loading/loaded/empty/error
+final rxUser = RxS<String?>(null);   // Auto-syncs loading/loaded/error
 
-Obx(() => Wrap(
-  children: controller.demoItems.map((item) => Chip(label: Text(item))).toList(),
-))''';
+// Mutating status-aware states automatically syncs status
+void loadDemoList() {
+  demoItems.assignAll(['Apple 🍎', 'Banana 🍌']); // status -> loaded
+}
+
+// Bind UI with .on() inside Obx
+Obx(() => demoItems.on(
+  loading: () => const CircularProgressIndicator(),
+  loaded: (data) => Wrap(children: data.map((item) => Text(item)).toList()),
+  empty: () => const Text('Empty'),
+  error: (err) => Text('Error: \$err'),
+));
+
+Obx(() => rxUser.on(
+  loading: () => const CircularProgressIndicator(),
+  loaded: (name) => Text('User: \$name'),
+  error: (err) => Text('Error: \$err'),
+));''';
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -355,14 +371,25 @@ Obx(() => Wrap(
             color: AppTheme.textPrimary,
           ),
         ),
-        const SizedBox(height: 12.0),
+        const SizedBox(height: 8.0),
         const Text(
-          'Trigger state mutations. Obx UI elements on the right update instantly with zero lagging or full widget rebuilds.',
-          style: TextStyle(color: AppTheme.textSecondary, height: 1.4),
+          'Mutate states below. Status-Aware observables automatically transition state and refresh bound Obx widgets.',
+          style: TextStyle(color: AppTheme.textSecondary, fontSize: 13.5, height: 1.4),
         ),
         const SizedBox(height: 24.0),
 
-        // Count Control
+        // 1. Classic Rx Section
+        const Text(
+          '1. CLASSIC RX STATE',
+          style: TextStyle(
+            fontFamily: 'Google Sans Mono',
+            fontSize: 11.0,
+            fontWeight: FontWeight.bold,
+            color: AppTheme.googleBlue,
+            letterSpacing: 1.0,
+          ),
+        ),
+        const SizedBox(height: 8.0),
         Row(
           children: [
             ElevatedButton(
@@ -371,13 +398,8 @@ Obx(() => Wrap(
                 backgroundColor: AppTheme.googleBlue.withOpacity(0.08),
                 foregroundColor: AppTheme.googleBlue,
                 elevation: 0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16.0,
-                  vertical: 12.0,
-                ),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+                padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 12.0),
               ),
               child: const Row(
                 children: [
@@ -387,19 +409,14 @@ Obx(() => Wrap(
                 ],
               ),
             ),
-            const SizedBox(width: 12.0),
+            const SizedBox(width: 8.0),
             OutlinedButton(
               onPressed: controller.decrement,
               style: OutlinedButton.styleFrom(
                 foregroundColor: AppTheme.textSecondary,
                 side: BorderSide(color: Colors.black.withOpacity(0.1)),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16.0,
-                  vertical: 12.0,
-                ),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+                padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 12.0),
               ),
               child: const Row(
                 children: [
@@ -411,64 +428,149 @@ Obx(() => Wrap(
             ),
           ],
         ),
-        const SizedBox(height: 20.0),
-
-        // List Control
-        Row(
-          children: [
-            ElevatedButton(
-              onPressed: controller.addPlaygroundItem,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppTheme.googleGreen.withOpacity(0.08),
-                foregroundColor: AppTheme.googleGreen,
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16.0,
-                  vertical: 12.0,
-                ),
-              ),
-              child: const Row(
-                children: [
-                  Icon(Icons.playlist_add_rounded, size: 18),
-                  SizedBox(width: 4.0),
-                  Text('Add List Item'),
-                ],
-              ),
-            ),
-            const SizedBox(width: 12.0),
-            TextButton(
-              onPressed: controller.resetDemo,
-              style: TextButton.styleFrom(foregroundColor: AppTheme.googleRed),
-              child: const Text('Reset Demo'),
-            ),
-          ],
-        ),
-        const SizedBox(height: 24.0),
-
-        // Input Control
+        const SizedBox(height: 12.0),
         TextField(
           onChanged: (val) => controller.textInput.value = val,
-          style: const TextStyle(color: AppTheme.textPrimary),
+          style: const TextStyle(color: AppTheme.textPrimary, fontSize: 14.0),
           decoration: InputDecoration(
             hintText: 'Type reactive text...',
             hintStyle: const TextStyle(color: AppTheme.textMuted),
             filled: true,
             fillColor: Colors.black.withOpacity(0.03),
             enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.0),
+              borderRadius: BorderRadius.circular(8.0),
               borderSide: BorderSide(color: Colors.black.withOpacity(0.06)),
             ),
             focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.0),
+              borderRadius: BorderRadius.circular(8.0),
               borderSide: const BorderSide(color: AppTheme.googleBlue),
             ),
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 16.0,
-              vertical: 14.0,
+            contentPadding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 12.0),
+          ),
+        ),
+        const SizedBox(height: 24.0),
+
+        // 2. RxSList Section
+        const Text(
+          '2. STATUS-AWARE LIST (RxSList)',
+          style: TextStyle(
+            fontFamily: 'Google Sans Mono',
+            fontSize: 11.0,
+            fontWeight: FontWeight.bold,
+            color: AppTheme.googleGreen,
+            letterSpacing: 1.0,
+          ),
+        ),
+        const SizedBox(height: 8.0),
+        Wrap(
+          spacing: 8.0,
+          runSpacing: 8.0,
+          children: [
+            ElevatedButton(
+              onPressed: controller.loadDemoList,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppTheme.googleGreen.withOpacity(0.08),
+                foregroundColor: AppTheme.googleGreen,
+                elevation: 0,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+                padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 12.0),
+              ),
+              child: const Text('Load Items'),
             ),
+            ElevatedButton(
+              onPressed: controller.addPlaygroundItem,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppTheme.googleGreen.withOpacity(0.08),
+                foregroundColor: AppTheme.googleGreen,
+                elevation: 0,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+                padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 12.0),
+              ),
+              child: const Text('Add Item'),
+            ),
+            OutlinedButton(
+              onPressed: controller.triggerDemoListError,
+              style: OutlinedButton.styleFrom(
+                foregroundColor: AppTheme.googleRed,
+                side: BorderSide(color: AppTheme.googleRed.withOpacity(0.2)),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+                padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 12.0),
+              ),
+              child: const Text('Simulate Error'),
+            ),
+            OutlinedButton(
+              onPressed: controller.clearDemoList,
+              style: OutlinedButton.styleFrom(
+                foregroundColor: AppTheme.textSecondary,
+                side: BorderSide(color: Colors.black.withOpacity(0.1)),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+                padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 12.0),
+              ),
+              child: const Text('Clear List'),
+            ),
+          ],
+        ),
+        const SizedBox(height: 24.0),
+
+        // 3. RxS Section
+        const Text(
+          '3. STATUS-AWARE VALUE (RxS)',
+          style: TextStyle(
+            fontFamily: 'Google Sans Mono',
+            fontSize: 11.0,
+            fontWeight: FontWeight.bold,
+            color: AppTheme.googleYellow,
+            letterSpacing: 1.0,
+          ),
+        ),
+        const SizedBox(height: 8.0),
+        Wrap(
+          spacing: 8.0,
+          runSpacing: 8.0,
+          children: [
+            ElevatedButton(
+              onPressed: controller.loadUser,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppTheme.googleYellow.withOpacity(0.08),
+                foregroundColor: AppTheme.googleYellow,
+                elevation: 0,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+                padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 12.0),
+              ),
+              child: const Text('Load User'),
+            ),
+            OutlinedButton(
+              onPressed: controller.triggerUserError,
+              style: OutlinedButton.styleFrom(
+                foregroundColor: AppTheme.googleRed,
+                side: BorderSide(color: AppTheme.googleRed.withOpacity(0.2)),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+                padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 12.0),
+              ),
+              child: const Text('Simulate Error'),
+            ),
+            OutlinedButton(
+              onPressed: controller.resetUser,
+              style: OutlinedButton.styleFrom(
+                foregroundColor: AppTheme.textSecondary,
+                side: BorderSide(color: Colors.black.withOpacity(0.1)),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+                padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 12.0),
+              ),
+              child: const Text('Reset Loading'),
+            ),
+          ],
+        ),
+        const SizedBox(height: 24.0),
+        const Divider(height: 1, color: Color(0xFFDADCE0)),
+        const SizedBox(height: 16.0),
+        TextButton.icon(
+          onPressed: controller.resetDemo,
+          icon: const Icon(Icons.refresh_rounded, size: 18),
+          label: const Text('Reset All Controls'),
+          style: TextButton.styleFrom(
+            foregroundColor: AppTheme.googleRed,
+            padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
           ),
         ),
       ],
@@ -490,7 +592,7 @@ Obx(() => Wrap(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text(
-                '🟢 LIVE STATE',
+                '🟢 LIVE STATE VIEWS',
                 style: TextStyle(
                   fontFamily: 'Google Sans Mono',
                   fontSize: 12.0,
@@ -512,14 +614,15 @@ Obx(() => Wrap(
           ),
           const SizedBox(height: 20.0),
 
-          // Count Display
+          // 1. Classic Rx Displays
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text(
-                'controller.count:',
+                'counter (RxInt):',
                 style: TextStyle(
                   color: AppTheme.textSecondary,
+                  fontSize: 13.0,
                   fontFamily: 'Google Sans Mono',
                 ),
               ),
@@ -532,7 +635,7 @@ Obx(() => Wrap(
                     '${controller.counter.value}',
                     key: ValueKey(controller.counter.value),
                     style: const TextStyle(
-                      fontSize: 22.0,
+                      fontSize: 18.0,
                       fontWeight: FontWeight.bold,
                       color: AppTheme.textPrimary,
                       fontFamily: 'Google Sans Mono',
@@ -542,25 +645,24 @@ Obx(() => Wrap(
               ),
             ],
           ),
-          const Divider(height: 24.0, color: Color(0xFFDADCE0)),
-
-          // Text Display
+          const SizedBox(height: 10.0),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                'controller.textInput.value:',
+                'textInput (RxString):',
                 style: TextStyle(
                   color: AppTheme.textSecondary,
+                  fontSize: 13.0,
                   fontFamily: 'Google Sans Mono',
                 ),
               ),
-              const SizedBox(height: 6.0),
+              const SizedBox(height: 4.0),
               Obx(
                 () => Text(
-                  controller.textInput.value,
+                  '"${controller.textInput.value}"',
                   style: const TextStyle(
-                    fontSize: 16.0,
+                    fontSize: 14.5,
                     fontWeight: FontWeight.w500,
                     color: AppTheme.googleBlue,
                   ),
@@ -570,57 +672,219 @@ Obx(() => Wrap(
           ),
           const Divider(height: 24.0, color: Color(0xFFDADCE0)),
 
-          // List Display
+          // 2. RxSList (demoItems) Display
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'controller.items (RxList):',
-                style: TextStyle(
-                  color: AppTheme.textSecondary,
-                  fontFamily: 'Google Sans Mono',
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'demoItems (RxSList):',
+                    style: TextStyle(
+                      color: AppTheme.textSecondary,
+                      fontSize: 13.0,
+                      fontFamily: 'Google Sans Mono',
+                    ),
+                  ),
+                  Obx(
+                    () => Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 2.0),
+                      decoration: BoxDecoration(
+                        color: _getRxListStatusColor(controller.demoItems.status).withOpacity(0.08),
+                        borderRadius: BorderRadius.circular(4.0),
+                        border: Border.all(color: _getRxListStatusColor(controller.demoItems.status).withOpacity(0.2)),
+                      ),
+                      child: Text(
+                        controller.demoItems.status.name.toUpperCase(),
+                        style: TextStyle(
+                          fontFamily: 'Google Sans Mono',
+                          fontSize: 10.0,
+                          fontWeight: FontWeight.bold,
+                          color: _getRxListStatusColor(controller.demoItems.status),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(height: 8.0),
               Obx(
-                () => controller.demoItems.isEmpty
-                    ? const Text(
-                        'List is empty.',
-                        style: TextStyle(
-                          color: AppTheme.textMuted,
-                          fontSize: 13.0,
+                () => controller.demoItems.on(
+                  loading: () => Container(
+                    height: 48,
+                    alignment: Alignment.center,
+                    child: const SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(strokeWidth: 2, color: AppTheme.googleGreen),
+                    ),
+                  ),
+                  loaded: (data) => Wrap(
+                    spacing: 6.0,
+                    runSpacing: 6.0,
+                    children: data.map((item) {
+                      return Chip(
+                        label: Text(
+                          item,
+                          style: const TextStyle(fontSize: 11.0, color: AppTheme.textPrimary),
                         ),
-                      )
-                    : Wrap(
-                        spacing: 6.0,
-                        runSpacing: 6.0,
-                        children: controller.demoItems.map((item) {
-                          return Chip(
-                            label: Text(
-                              item,
-                              style: const TextStyle(
-                                fontSize: 11.0,
-                                color: AppTheme.textPrimary,
-                              ),
-                            ),
-                            backgroundColor: Colors.black.withOpacity(0.04),
-                            side: BorderSide.none,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(6.0),
-                            ),
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 4,
-                              vertical: 0,
-                            ),
-                          );
-                        }).toList(),
+                        backgroundColor: Colors.black.withOpacity(0.04),
+                        side: BorderSide.none,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6.0)),
+                        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 0),
+                      );
+                    }).toList(),
+                  ),
+                  empty: () => const Text(
+                    'List status is Empty.',
+                    style: TextStyle(color: AppTheme.textMuted, fontSize: 13.0, fontStyle: FontStyle.italic),
+                  ),
+                  error: (error) => Container(
+                    padding: const EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      color: AppTheme.googleRed.withOpacity(0.05),
+                      borderRadius: BorderRadius.circular(6.0),
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.error_outline_rounded, color: AppTheme.googleRed, size: 16),
+                        const SizedBox(width: 8.0),
+                        Expanded(
+                          child: Text(
+                            '$error',
+                            style: const TextStyle(color: AppTheme.googleRed, fontSize: 12.0),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const Divider(height: 24.0, color: Color(0xFFDADCE0)),
+
+          // 3. RxS (rxUser) Display
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'rxUser (RxS):',
+                    style: TextStyle(
+                      color: AppTheme.textSecondary,
+                      fontSize: 13.0,
+                      fontFamily: 'Google Sans Mono',
+                    ),
+                  ),
+                  Obx(
+                    () => Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 2.0),
+                      decoration: BoxDecoration(
+                        color: _getRxDataStatusColor(controller.rxUser.status).withOpacity(0.08),
+                        borderRadius: BorderRadius.circular(4.0),
+                        border: Border.all(color: _getRxDataStatusColor(controller.rxUser.status).withOpacity(0.2)),
                       ),
+                      child: Text(
+                        controller.rxUser.status.name.toUpperCase(),
+                        style: TextStyle(
+                          fontFamily: 'Google Sans Mono',
+                          fontSize: 10.0,
+                          fontWeight: FontWeight.bold,
+                          color: _getRxDataStatusColor(controller.rxUser.status),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8.0),
+              Obx(
+                () => controller.rxUser.on(
+                  loading: () => Container(
+                    height: 48,
+                    alignment: Alignment.center,
+                    child: const SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(strokeWidth: 2, color: AppTheme.googleYellow),
+                    ),
+                  ),
+                  loaded: (data) => Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 10.0),
+                    decoration: BoxDecoration(
+                      color: AppTheme.googleYellow.withOpacity(0.05),
+                      borderRadius: BorderRadius.circular(8.0),
+                      border: Border.all(color: AppTheme.googleYellow.withOpacity(0.1)),
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.person_rounded, color: AppTheme.googleYellow, size: 20),
+                        const SizedBox(width: 8.0),
+                        Text(
+                          data ?? 'Null / Guest User',
+                          style: const TextStyle(
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.bold,
+                            color: AppTheme.textPrimary,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  error: (error) => Container(
+                    padding: const EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      color: AppTheme.googleRed.withOpacity(0.05),
+                      borderRadius: BorderRadius.circular(6.0),
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.error_outline_rounded, color: AppTheme.googleRed, size: 16),
+                        const SizedBox(width: 8.0),
+                        Expanded(
+                          child: Text(
+                            '$error',
+                            style: const TextStyle(color: AppTheme.googleRed, fontSize: 12.0),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
         ],
       ),
     );
+  }
+
+  Color _getRxListStatusColor(RxListStatus status) {
+    switch (status) {
+      case RxListStatus.loading:
+        return AppTheme.googleBlue;
+      case RxListStatus.loaded:
+        return AppTheme.googleGreen;
+      case RxListStatus.empty:
+        return AppTheme.textMuted;
+      case RxListStatus.error:
+        return AppTheme.googleRed;
+    }
+  }
+
+  Color _getRxDataStatusColor(RxDataStatus status) {
+    switch (status) {
+      case RxDataStatus.loading:
+        return AppTheme.googleYellow;
+      case RxDataStatus.loaded:
+        return AppTheme.googleGreen;
+      case RxDataStatus.error:
+        return AppTheme.googleRed;
+    }
   }
 
   // Features Grid Section
@@ -633,6 +897,14 @@ Obx(() => Wrap(
         'icon': Icons.track_changes_rounded,
         'color': AppTheme.googleBlue,
         'path': 'reactive-state',
+      },
+      {
+        'title': 'Status-Aware (RxSList & RxS)',
+        'description':
+            'Simplify async state lifecycle handling. Carry loading, loaded, empty, and error status directly inside your reactive observables.',
+        'icon': Icons.playlist_add_check_rounded,
+        'color': AppTheme.googleBlue,
+        'path': 'rxs',
       },
       {
         'title': 'Global & Scoped DI',
@@ -675,7 +947,7 @@ Obx(() => Wrap(
         'path': 'state-mixin',
       },
       {
-        'title': 'Reactive Internationalization',
+        'title': 'Reactive Localization',
         'description':
             'Swap languages instantly without triggering complex rebuild processes. Translates values on-the-fly dynamically.',
         'icon': Icons.translate_rounded,

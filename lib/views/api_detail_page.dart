@@ -65,6 +65,21 @@ class _ApiDetailPageState extends State<ApiDetailPage> {
         'Fast-Path Evaluation: Bypasses proxy overhead lookup when tracking is idle, maximizing computation speed.',
         'Batched Mutations: Groups updates dynamically inside loops, triggering single-microtask UI updates.',
       ],
+      'next': 'rxs',
+      'nextTitle': 'Status-Aware Observables',
+      'color': AppTheme.googleBlue,
+    },
+    'rxs': {
+      'title': 'Status-Aware Observables (RxSList & RxS)',
+      'codeKey': 'rxs',
+      'description':
+          'Simplify async state lifecycle handling. RxSList and RxS bundle loading, loaded, empty, and error states directly with state mutations, eliminating extra boilerplate flags.',
+      'points': [
+        '1. RxSList (Reactive List): Extends RxList to auto-sync status (loading, loaded, empty) with mutations like add, assignAll, and clear.',
+        '2. RxS (Reactive Value): Extends Rxn to carry async status (loading, loaded, error) for single-object models like user profiles.',
+        'Declarative UI Binding: Use the on() builder inside Obx to write clean layout branches for different async states.',
+        'Resilient Data Retention: Assigning error preserves existing data underneath, allowing retry options without visual flickers.',
+      ],
       'next': 'global-di',
       'nextTitle': 'Global Dependency Injection',
       'color': AppTheme.googleBlue,
@@ -136,11 +151,11 @@ class _ApiDetailPageState extends State<ApiDetailPage> {
         'Minimal boilerplate: Eliminates nested if-else checks inside build routines.',
       ],
       'next': 'i18n',
-      'nextTitle': 'Reactive Internationalization',
+      'nextTitle': 'Reactive Localization',
       'color': AppTheme.googleGreen,
     },
     'i18n': {
-      'title': 'Reactive Internationalization',
+      'title': 'Reactive Localization',
       'codeKey': 'i18n',
       'description':
           'Swap languages on-the-fly reactively. Distilled translation dictionary structures allow seamless localization updates.',
@@ -151,7 +166,7 @@ class _ApiDetailPageState extends State<ApiDetailPage> {
       ],
       'next': 'guide',
       'nextTitle': 'Back to Guide',
-      'color': AppTheme.googleYellow,
+      'color': AppTheme.googleGreen,
     },
   };
 

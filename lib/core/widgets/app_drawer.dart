@@ -15,12 +15,13 @@ class AppDrawer extends StatelessWidget {
 
   static const List<Map<String, String>> _apiSections = [
     {'title': 'Reactive State (Rx & Obx)', 'path': 'reactive-state'},
+    {'title': 'Status-Aware (RxSList & RxS)', 'path': 'rxs'},
     {'title': 'Global Dependency Injection', 'path': 'global-di'},
     {'title': 'Widget Tree Scoped DI', 'path': 'binding-widget'},
     {'title': 'Global Persistent Services', 'path': 'getx-service'},
     {'title': 'Background Side-Effects', 'path': 'worker'},
     {'title': 'Declarative Async Branching', 'path': 'state-mixin'},
-    {'title': 'Internationalization (i18n)', 'path': 'i18n'},
+    {'title': 'Reactive Localization', 'path': 'i18n'},
   ];
 
   @override
