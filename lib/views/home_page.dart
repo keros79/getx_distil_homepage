@@ -328,7 +328,6 @@ Obx(() => rxUser.on(
             ),
           ),
           const SizedBox(height: 24.0),
-
           GlassCard(
             glowColor: AppTheme.googleBlue,
             child: isMobile
@@ -374,7 +373,8 @@ Obx(() => rxUser.on(
         const SizedBox(height: 8.0),
         const Text(
           'Mutate states below. Status-Aware observables automatically transition state and refresh bound Obx widgets.',
-          style: TextStyle(color: AppTheme.textSecondary, fontSize: 13.5, height: 1.4),
+          style: TextStyle(
+              color: AppTheme.textSecondary, fontSize: 13.5, height: 1.4),
         ),
         const SizedBox(height: 24.0),
 
@@ -398,8 +398,10 @@ Obx(() => rxUser.on(
                 backgroundColor: AppTheme.googleBlue.withOpacity(0.08),
                 foregroundColor: AppTheme.googleBlue,
                 elevation: 0,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-                padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 12.0),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0)),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 14.0, vertical: 12.0),
               ),
               child: const Row(
                 children: [
@@ -415,8 +417,10 @@ Obx(() => rxUser.on(
               style: OutlinedButton.styleFrom(
                 foregroundColor: AppTheme.textSecondary,
                 side: BorderSide(color: Colors.black.withOpacity(0.1)),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-                padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 12.0),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0)),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 14.0, vertical: 12.0),
               ),
               child: const Row(
                 children: [
@@ -445,7 +449,8 @@ Obx(() => rxUser.on(
               borderRadius: BorderRadius.circular(8.0),
               borderSide: const BorderSide(color: AppTheme.googleBlue),
             ),
-            contentPadding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 12.0),
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 14.0, vertical: 12.0),
           ),
         ),
         const SizedBox(height: 24.0),
@@ -472,8 +477,10 @@ Obx(() => rxUser.on(
                 backgroundColor: AppTheme.googleGreen.withOpacity(0.08),
                 foregroundColor: AppTheme.googleGreen,
                 elevation: 0,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-                padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 12.0),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0)),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 14.0, vertical: 12.0),
               ),
               child: const Text('Load Items'),
             ),
@@ -483,8 +490,10 @@ Obx(() => rxUser.on(
                 backgroundColor: AppTheme.googleGreen.withOpacity(0.08),
                 foregroundColor: AppTheme.googleGreen,
                 elevation: 0,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-                padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 12.0),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0)),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 14.0, vertical: 12.0),
               ),
               child: const Text('Add Item'),
             ),
@@ -493,8 +502,10 @@ Obx(() => rxUser.on(
               style: OutlinedButton.styleFrom(
                 foregroundColor: AppTheme.googleRed,
                 side: BorderSide(color: AppTheme.googleRed.withOpacity(0.2)),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-                padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 12.0),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0)),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 14.0, vertical: 12.0),
               ),
               child: const Text('Simulate Error'),
             ),
@@ -503,8 +514,10 @@ Obx(() => rxUser.on(
               style: OutlinedButton.styleFrom(
                 foregroundColor: AppTheme.textSecondary,
                 side: BorderSide(color: Colors.black.withOpacity(0.1)),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-                padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 12.0),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0)),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 14.0, vertical: 12.0),
               ),
               child: const Text('Clear List'),
             ),
@@ -534,8 +547,10 @@ Obx(() => rxUser.on(
                 backgroundColor: AppTheme.googleYellow.withOpacity(0.08),
                 foregroundColor: AppTheme.googleYellow,
                 elevation: 0,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-                padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 12.0),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0)),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 14.0, vertical: 12.0),
               ),
               child: const Text('Load User'),
             ),
@@ -544,8 +559,10 @@ Obx(() => rxUser.on(
               style: OutlinedButton.styleFrom(
                 foregroundColor: AppTheme.googleRed,
                 side: BorderSide(color: AppTheme.googleRed.withOpacity(0.2)),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-                padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 12.0),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0)),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 14.0, vertical: 12.0),
               ),
               child: const Text('Simulate Error'),
             ),
@@ -554,8 +571,10 @@ Obx(() => rxUser.on(
               style: OutlinedButton.styleFrom(
                 foregroundColor: AppTheme.textSecondary,
                 side: BorderSide(color: Colors.black.withOpacity(0.1)),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-                padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 12.0),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0)),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 14.0, vertical: 12.0),
               ),
               child: const Text('Reset Loading'),
             ),
@@ -570,7 +589,8 @@ Obx(() => rxUser.on(
           label: const Text('Reset All Controls'),
           style: TextButton.styleFrom(
             foregroundColor: AppTheme.googleRed,
-            padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
           ),
         ),
       ],
@@ -689,11 +709,17 @@ Obx(() => rxUser.on(
                   ),
                   Obx(
                     () => Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 2.0),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 6.0, vertical: 2.0),
                       decoration: BoxDecoration(
-                        color: _getRxListStatusColor(controller.demoItems.status).withOpacity(0.08),
+                        color:
+                            _getRxListStatusColor(controller.demoItems.status)
+                                .withOpacity(0.08),
                         borderRadius: BorderRadius.circular(4.0),
-                        border: Border.all(color: _getRxListStatusColor(controller.demoItems.status).withOpacity(0.2)),
+                        border: Border.all(
+                            color: _getRxListStatusColor(
+                                    controller.demoItems.status)
+                                .withOpacity(0.2)),
                       ),
                       child: Text(
                         controller.demoItems.status.name.toUpperCase(),
@@ -701,7 +727,8 @@ Obx(() => rxUser.on(
                           fontFamily: 'Google Sans Mono',
                           fontSize: 10.0,
                           fontWeight: FontWeight.bold,
-                          color: _getRxListStatusColor(controller.demoItems.status),
+                          color: _getRxListStatusColor(
+                              controller.demoItems.status),
                         ),
                       ),
                     ),
@@ -717,7 +744,8 @@ Obx(() => rxUser.on(
                     child: const SizedBox(
                       width: 20,
                       height: 20,
-                      child: CircularProgressIndicator(strokeWidth: 2, color: AppTheme.googleGreen),
+                      child: CircularProgressIndicator(
+                          strokeWidth: 2, color: AppTheme.googleGreen),
                     ),
                   ),
                   loaded: (data) => Wrap(
@@ -727,18 +755,24 @@ Obx(() => rxUser.on(
                       return Chip(
                         label: Text(
                           item,
-                          style: const TextStyle(fontSize: 11.0, color: AppTheme.textPrimary),
+                          style: const TextStyle(
+                              fontSize: 11.0, color: AppTheme.textPrimary),
                         ),
                         backgroundColor: Colors.black.withOpacity(0.04),
                         side: BorderSide.none,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6.0)),
-                        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 0),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(6.0)),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 4, vertical: 0),
                       );
                     }).toList(),
                   ),
                   empty: () => const Text(
                     'List status is Empty.',
-                    style: TextStyle(color: AppTheme.textMuted, fontSize: 13.0, fontStyle: FontStyle.italic),
+                    style: TextStyle(
+                        color: AppTheme.textMuted,
+                        fontSize: 13.0,
+                        fontStyle: FontStyle.italic),
                   ),
                   error: (error) => Container(
                     padding: const EdgeInsets.all(8.0),
@@ -748,12 +782,14 @@ Obx(() => rxUser.on(
                     ),
                     child: Row(
                       children: [
-                        const Icon(Icons.error_outline_rounded, color: AppTheme.googleRed, size: 16),
+                        const Icon(Icons.error_outline_rounded,
+                            color: AppTheme.googleRed, size: 16),
                         const SizedBox(width: 8.0),
                         Expanded(
                           child: Text(
                             '$error',
-                            style: const TextStyle(color: AppTheme.googleRed, fontSize: 12.0),
+                            style: const TextStyle(
+                                color: AppTheme.googleRed, fontSize: 12.0),
                           ),
                         ),
                       ],
@@ -782,11 +818,16 @@ Obx(() => rxUser.on(
                   ),
                   Obx(
                     () => Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 2.0),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 6.0, vertical: 2.0),
                       decoration: BoxDecoration(
-                        color: _getRxDataStatusColor(controller.rxUser.status).withOpacity(0.08),
+                        color: _getRxDataStatusColor(controller.rxUser.status)
+                            .withOpacity(0.08),
                         borderRadius: BorderRadius.circular(4.0),
-                        border: Border.all(color: _getRxDataStatusColor(controller.rxUser.status).withOpacity(0.2)),
+                        border: Border.all(
+                            color:
+                                _getRxDataStatusColor(controller.rxUser.status)
+                                    .withOpacity(0.2)),
                       ),
                       child: Text(
                         controller.rxUser.status.name.toUpperCase(),
@@ -794,7 +835,8 @@ Obx(() => rxUser.on(
                           fontFamily: 'Google Sans Mono',
                           fontSize: 10.0,
                           fontWeight: FontWeight.bold,
-                          color: _getRxDataStatusColor(controller.rxUser.status),
+                          color:
+                              _getRxDataStatusColor(controller.rxUser.status),
                         ),
                       ),
                     ),
@@ -810,19 +852,23 @@ Obx(() => rxUser.on(
                     child: const SizedBox(
                       width: 20,
                       height: 20,
-                      child: CircularProgressIndicator(strokeWidth: 2, color: AppTheme.googleYellow),
+                      child: CircularProgressIndicator(
+                          strokeWidth: 2, color: AppTheme.googleYellow),
                     ),
                   ),
                   loaded: (data) => Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 10.0),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 12.0, vertical: 10.0),
                     decoration: BoxDecoration(
                       color: AppTheme.googleYellow.withOpacity(0.05),
                       borderRadius: BorderRadius.circular(8.0),
-                      border: Border.all(color: AppTheme.googleYellow.withOpacity(0.1)),
+                      border: Border.all(
+                          color: AppTheme.googleYellow.withOpacity(0.1)),
                     ),
                     child: Row(
                       children: [
-                        const Icon(Icons.person_rounded, color: AppTheme.googleYellow, size: 20),
+                        const Icon(Icons.person_rounded,
+                            color: AppTheme.googleYellow, size: 20),
                         const SizedBox(width: 8.0),
                         Text(
                           data ?? 'Null / Guest User',
@@ -843,12 +889,14 @@ Obx(() => rxUser.on(
                     ),
                     child: Row(
                       children: [
-                        const Icon(Icons.error_outline_rounded, color: AppTheme.googleRed, size: 16),
+                        const Icon(Icons.error_outline_rounded,
+                            color: AppTheme.googleRed, size: 16),
                         const SizedBox(width: 8.0),
                         Expanded(
                           child: Text(
                             '$error',
-                            style: const TextStyle(color: AppTheme.googleRed, fontSize: 12.0),
+                            style: const TextStyle(
+                                color: AppTheme.googleRed, fontSize: 12.0),
                           ),
                         ),
                       ],
@@ -1310,7 +1358,7 @@ Obx(() => rxUser.on(
                     style: TextStyle(color: AppTheme.textMuted, fontSize: 12.0),
                   ),
                   const Text(
-                    'v1.2.6+8',
+                    'v1.3.0+9',
                     style: TextStyle(color: AppTheme.textMuted, fontSize: 12.0),
                   ),
                 ],
