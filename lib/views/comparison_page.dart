@@ -10,7 +10,7 @@ import '../core/widgets/particle_field.dart';
 import '../core/widgets/app_drawer.dart';
 
 // ──────────────────────────────────────────────
-// Section Meta — 모든 콘텐츠 데이터를 맵으로 관리
+// Section Meta — all content data managed as maps
 // ──────────────────────────────────────────────
 Map<String, dynamic> _ok(String text) => {'type': 'success', 'text': text};
 Map<String, dynamic> _del(String text) => {'type': 'delete', 'text': text};
@@ -20,285 +20,354 @@ final Map<String, Map<String, dynamic>> _sectionMeta = {
   // ── Overview ──
   'overview': {
     'type': 'overview',
-    'title': '종합 평가 및 비교 분석',
+    'title': 'Comprehensive Evaluation & Comparison',
     'infoBadges': [
-      '대상 버전: getx_distil v1.1.3',
-      '비교 대상: GetX (pub.dev/packages/get), Riverpod 3.0',
+      'Target version: getx_distil v1.1.3',
+      'Compared with: GetX (pub.dev/packages/get), Riverpod 3.0',
     ],
-    'sectionTitle': '1. getx_distil 프로젝트 개요',
-    'tableHeaders': ['항목', 'getx_distil', 'GetX'],
+    'sectionTitle': '1. getx_distil Project Overview',
+    'tableHeaders': ['Category', 'getx_distil', 'GetX'],
     'tableRows': [
-      _row(['버전', '1.1.3 (Stable)', '4.6.6']),
+      _row(['Version', '1.1.3 (Stable)', '4.6.6']),
       _row(['SDK', 'Dart ^3.12.0', 'Dart >=2.14.0']),
-      _row(['외부 의존성', '0개 (Flutter SDK만)', '수십 개 (collection, web, js 등)']),
-      _row(['소스 파일', '15개', '100개 이상']),
-      _row(['핵심 로직', '~1,200줄', '~15,000줄 이상']),
-      _row(['라우팅', _del('❌ 제거'), _ok('✅ 내장 (GetPageRoute 등)')]),
-      _row(['다국어', _ok('✅ 유지 (간소화)'), _ok('✅ 유지')]),
-      _row(['상태관리', _ok('✅ 핵심 강화'), _ok('✅ 기본')]),
-      _row(['DI', _ok('✅ 하이브리드 (트리+전역)'), _ok('✅ 전역 위주')]),
+      _row([
+        'External Dependencies',
+        '0 (Flutter SDK only)',
+        'Dozens (collection, web, js, etc.)'
+      ]),
+      _row(['Source Files', '15', '100+']),
+      _row(['Core Logic', '~1,200 lines', '~15,000+ lines']),
+      _row([
+        'Routing',
+        _del('❌ Removed'),
+        _ok('✅ Built-in (GetPageRoute, etc.)')
+      ]),
+      _row(['Internationalization', _ok('✅ Kept (simplified)'), _ok('✅ Kept')]),
+      _row(['State Management', _ok('✅ Core enhanced'), _ok('✅ Basic')]),
+      _row(['DI', _ok('✅ Hybrid (tree+global)'), _ok('✅ Global-centric')]),
     ],
     'nextSection': 'improvements',
-    'nextTitle': '2. GetX 대비 핵심 개선 사항',
+    'nextTitle': '2. Key Improvements over GetX',
   },
 
   // ── Improvements ──
   'improvements': {
     'type': 'improvements',
-    'title': 'GetX 대비 핵심 개선 사항',
+    'title': 'Key Improvements over GetX',
     'items': [
       {
         'number': '2.1',
         'title': 'Fast-Path Tracking (Notifier.isTracking)',
-        'subtitle': '가장 중요한 성능 개선',
-        'tableHeaders': ['구분', 'GetX', 'getx_distil'],
+        'subtitle': 'Most important performance improvement',
+        'tableHeaders': ['Category', 'GetX', 'getx_distil'],
         'tableRows': [
           _row([
-            '방식',
-            'Zone 기반 글로벌 프록시 (RxInterface.proxy)',
-            _ok('정적 부울 플래그 (Notifier.isTracking)')
+            'Approach',
+            'Zone-based global proxy (RxInterface.proxy)',
+            _ok('Static boolean flag (Notifier.isTracking)')
           ]),
           _row([
-            'Obx 외부 Rx 읽기',
-            '매번 프록시 탐색 + null 체크',
-            _ok('원천 우회 (O(1) bool 체크)')
+            'Rx reads outside Obx',
+            'Proxy lookup + null check every time',
+            _ok('Bypassed entirely (O(1) bool check)')
           ]),
-          _row(['대량 데이터 순회 시', 'CPU 오버헤드 누적', _ok('Zero-cost')]),
+          _row([
+            'Large data iteration',
+            'CPU overhead accumulates',
+            _ok('Zero-cost')
+          ]),
         ],
         'code':
-            '// getx_distil - reportRead()\nvoid reportRead() {\n  if (Notifier.isTracking) {  // ← 단순 bool 체크\n    Notifier.instance.read(this);\n  }\n}',
+            '// getx_distil - reportRead()\nvoid reportRead() {\n  if (Notifier.isTracking) {  // ← simple bool check\n    Notifier.instance.read(this);\n  }\n}',
         'evaluation':
-            'Zone 기반 접근 대비 압도적으로 가볍고, 대량 데이터 연산 시 실질적인 CPU 사이클 절감 효과가 큼. 설계가 매우 우수함.',
+            'Dramatically lighter than the Zone-based approach, with substantial CPU cycle savings during large data operations. Excellent design.',
       },
       {
         'number': '2.2',
         'title': 'Self-Healing Build-Phase Updates',
-        'subtitle': '빌드/레이아웃 단계 크래시 방지',
-        'tableHeaders': ['구분', 'GetX', 'getx_distil'],
+        'subtitle': 'Prevents crashes during build/layout phase',
+        'tableHeaders': ['Category', 'GetX', 'getx_distil'],
         'tableRows': [
           _row([
-            '빌드 중 상태 변경',
-            _del('setState() during build 크래시'),
-            _ok('PostFrameCallback으로 안전 지연')
+            'State change during build',
+            _del('setState() during build crash'),
+            _ok('Safely deferred via PostFrameCallback')
           ]),
           _row([
-            '감지 방식',
-            '없음',
-            _ok('SchedulerBinding.instance.schedulerPhase 검사')
+            'Detection method',
+            'None',
+            _ok('SchedulerBinding.instance.schedulerPhase check')
           ]),
         ],
         'code':
-            'void refresh() {\n  final phase = SchedulerBinding.instance.schedulerPhase;\n  if (phase == SchedulerPhase.persistentCallbacks || \n      phase == SchedulerPhase.midFrameMicrotasks) {\n    scheduler.addPostFrameCallback((_) { /* 안전한 업데이트 */ });\n  } else {\n    /* 즉시 업데이트 */\n  }\n}',
-        'evaluation': '실제 프로덕션에서 빈번히 발생하는 크래시를 원천 차단. 실용적 가치가 매우 높음.',
+            'void refresh() {\n  final phase = SchedulerBinding.instance.schedulerPhase;\n  if (phase == SchedulerPhase.persistentCallbacks || \n      phase == SchedulerPhase.midFrameMicrotasks) {\n    scheduler.addPostFrameCallback((_) { /* safe update */ });\n  } else {\n    /* immediate update */\n  }\n}',
+        'evaluation':
+            'Prevents crashes that frequently occur in production. Very high practical value.',
       },
       {
         'number': '2.3',
         'title': 'RxList Microtask Batching',
-        'subtitle': '성능 차별화의 핵심',
-        'tableHeaders': ['구분', 'GetX', 'getx_distil'],
+        'subtitle': 'Key performance differentiator',
+        'tableHeaders': ['Category', 'GetX', 'getx_distil'],
         'tableRows': [
-          _row(['100번 add()', '100번 리빌드', _ok('1회 리빌드')]),
+          _row(['100 add() calls', '100 rebuilds', _ok('1 rebuild')]),
           _row([
-            '방식',
-            '각 변경 연산 즉시 refresh()',
-            _ok('Dirty-Flag + Microtask 파이프라인')
+            'Approach',
+            'Immediate refresh() on each mutation',
+            _ok('Dirty-Flag + Microtask pipeline')
           ]),
           _row([
             'sort() / shuffle()',
-            'N번 알림 (ListMixin 기본)',
-            _ok('1회 알림 (오버라이드)')
+            'N notifications (ListMixin default)',
+            _ok('1 notification (overridden)')
           ]),
         ],
         'code':
             'void _autoBatchRefresh() {\n  if (_isNotificationScheduled) return;  // ← drop-path\n  _isNotificationScheduled = true;\n  scheduleMicrotask(() {\n    refresh();\n    notifyStream();\n    _isNotificationScheduled = false;\n  });\n}',
         'evaluation':
-            '10,000건 리스트 대량 추가 시 오리지널은 10,000번 리빌드 → getx_distil은 1회 리빌드. 가장 실감나는 성능 차이를 제공하는 기능.',
+            'When adding 10,000 items to a list, the original triggers 10,000 rebuilds → getx_distil triggers 1 rebuild. The most tangible performance difference.',
       },
       {
         'number': '2.4',
         'title': '100% Tree-Scoped DI (BindingWidget)',
-        'subtitle': '아키텍처 패러다임 전환',
-        'tableHeaders': ['구분', 'GetX', 'getx_distil'],
+        'subtitle': 'Architecture paradigm shift',
+        'tableHeaders': ['Category', 'GetX', 'getx_distil'],
         'tableRows': [
-          _row(['DI 범위', '전역 싱글톤 위주', _ok('위젯 트리 스코프 + 전역 하이브리드')]),
-          _row(['동일 타입 멀티 인스턴스', '충돌 발생', _ok('완벽 격리')]),
-          _row(['수명 관리', 'Get.delete() 수동 호출', _ok('위젯 dispose 시 자동 GC')]),
-          _row(['GoRouter 호환성', '낮음', _ok('완벽 호환')]),
           _row([
-            'Context 없는 접근',
+            'DI Scope',
+            'Global singleton-centric',
+            _ok('Widget tree scope + global hybrid')
+          ]),
+          _row([
+            'Same-type multi-instance',
+            'Collision',
+            _ok('Complete isolation')
+          ]),
+          _row([
+            'Lifecycle management',
+            'Manual Get.delete()',
+            _ok('Auto GC on widget dispose')
+          ]),
+          _row(['GoRouter compatibility', 'Low', _ok('Fully compatible')]),
+          _row([
+            'Context-free access',
             'Get.find<T>()',
-            _ok('Get.find<T>() (WeakReference 캐시)')
+            _ok('Get.find<T>() (WeakReference cache)')
           ]),
         ],
         'code':
             'GoRoute(\n  path: \'/settings\',\n  builder: (context, state) => BindingWidget(\n    bindings: [Bind<SettingsController>(() => SettingsController())],\n    child: const SettingsPage(),\n  ),\n)',
         'evaluation':
-            'GoRouter 시대에 완벽하게 부합하는 설계. GetX의 가장 큰 아키텍처 결함을 해결한 핵심 차별점.',
+            'A design that perfectly aligns with the GoRouter era. Solves GetX\'s biggest architectural flaw — a key differentiator.',
       },
       {
         'number': '2.5',
         'title': 'FIFO Sequential Pipeline (updateSequential)',
-        'subtitle': '고주파 비동기 레이스 컨디션 방지',
-        'tableHeaders': ['구분', 'GetX', 'getx_distil'],
+        'subtitle': 'Prevents race conditions in high-frequency async',
+        'tableHeaders': ['Category', 'GetX', 'getx_distil'],
         'tableRows': [
-          _row(['비동기 업데이트 순서', '보장 안 됨 (레이스 컨디션)', _ok('엄격한 FIFO 순차 실행')]),
-          _row(['방식', '없음', _ok('Completer 체인')]),
+          _row([
+            'Async update order',
+            'Not guaranteed (race conditions)',
+            _ok('Strict FIFO sequential execution')
+          ]),
+          _row(['Approach', 'None', _ok('Completer chain')]),
         ],
         'code':
             'Future<void> updateSequential(Future<T> Function(T currentValue) action) {\n  final completer = Completer<void>();\n  _lastUpdateFuture = _lastUpdateFuture.then((_) async {\n    final newValue = await action(value);\n    value = newValue;\n    completer.complete();\n  });\n  return completer.future;\n}',
-        'evaluation': '실시간 시세, 채팅, 센서 데이터 등 고주파 시나리오에서 필수적. 실용적 가치가 높음.',
+        'evaluation':
+            'Essential for high-frequency scenarios like real-time quotes, chat, and sensor data. High practical value.',
       },
       {
         'number': '2.6',
         'title': 'RxSList / RxS — Status-Aware Reactive Types',
-        'subtitle': '독창적 추가 기능 (오리지널에 없음)',
-        'tableHeaders': ['구분', 'GetX', 'getx_distil'],
+        'subtitle': 'Unique feature (not in original)',
+        'tableHeaders': ['Category', 'GetX', 'getx_distil'],
         'tableRows': [
           _row([
-            '리스트 상태 관리',
-            '별도 isLoading/errorMessage 옵저버블 필요',
-            _ok('리스트 자체에 내장')
+            'List status management',
+            'Separate isLoading/errorMessage observables needed',
+            _ok('Built into the list itself')
           ]),
-          _row(['단일 값 상태 관리', 'StateMixin (컨트롤러 레벨)', _ok('값 자체에 내장 (RxS)')]),
-          _row(['UI 분기 처리', '수동 if-else', _ok('.on() 빌더로 선언적 처리')]),
+          _row([
+            'Single value status',
+            'StateMixin (controller level)',
+            _ok('Built into the value (RxS)')
+          ]),
+          _row([
+            'UI branching',
+            'Manual if-else',
+            _ok('Declarative via .on() builder')
+          ]),
         ],
         'code':
             'Obx(() => items.on(\n  loading: () => const CircularProgressIndicator(),\n  loaded:  (data) => ListView.builder(...),\n  empty:   () => const Text(\'No items\'),\n  error:   (msg) => Text(\'Error: \$msg\'),\n));',
         'evaluation':
-            '별도의 isLoading / errorMessage 옵저버블이 불필요해지는 DX 혁신. 오리지널에 없는 독창적 기여.',
+            'A DX innovation that eliminates the need for separate isLoading/errorMessage observables. An original contribution not found in the original.',
       },
       {
         'number': '2.7',
         'title': 'Strict Async Obx Validation',
-        'subtitle': '비동기 Obx 안티패턴 차단',
-        'tableHeaders': ['구분', 'GetX', 'getx_distil'],
+        'subtitle': 'Blocks async Obx anti-patterns',
+        'tableHeaders': ['Category', 'GetX', 'getx_distil'],
         'tableRows': [
-          _row(['Obx 내 async/await', '조용히 오동작', _ok('즉시 FlutterError throw')]),
-          _row(['Rx 미검출 시', '예외 발생', _ok('debugPrint 경고 (v1.0.3+)')]),
+          _row([
+            'async/await inside Obx',
+            'Silent misbehavior',
+            _ok('Immediate FlutterError throw')
+          ]),
+          _row([
+            'Rx not detected',
+            'Exception thrown',
+            _ok('debugPrint warning (v1.0.3+)')
+          ]),
         ],
-        'evaluation': '디버깅 시간을 크게 절약하는 안전망. 프로덕션 안정성도 확보.',
+        'evaluation':
+            'A safety net that significantly reduces debugging time. Also ensures production stability.',
       },
       {
         'number': '2.8',
         'title': 'High-Visibility DI Debugging',
-        'subtitle': 'DI 조회 실패 시 디버그 정보',
-        'tableHeaders': ['구분', 'GetX', 'getx_distil'],
+        'subtitle': 'Detailed debug info on DI lookup failure',
+        'tableHeaders': ['Category', 'GetX', 'getx_distil'],
         'tableRows': [
           _row([
-            '에러 메시지',
+            'Error message',
             '"Controller not found"',
-            _ok('요청 위젯명 + 조상 계층 경로 + 전역/불멸 서비스 목록')
+            _ok('Requested widget name + ancestor path + global/immortal service list')
           ]),
         ],
         'code':
             '📍 Requested Context Widget: Builder\n🌳 Search Path (Ancestor Widgets):\n   Builder -> Column -> Scaffold -> ...\n🌐 Registered Global Services:\n   CounterController, AuthService\n🌟 Registered Immortal Services:\n   DatabaseService',
-        'evaluation': 'DI 문제 원인 파악 시간을 극적으로 단축. 개발자 경험(DX)의 결정적 개선.',
+        'evaluation':
+            'Dramatically reduces time to diagnose DI issues. A decisive DX improvement.',
       },
     ],
     'nextSection': 'sacrificed',
-    'nextTitle': '3. GetX 대비 희생된 기능',
+    'nextTitle': '3. Features Sacrificed vs GetX',
   },
 
   // ── Sacrificed ──
   'sacrificed': {
     'type': 'sacrificed',
-    'title': 'GetX 대비 희생된 기능',
-    'tableHeaders': ['기능', 'GetX', 'getx_distil', '영향도'],
+    'title': 'Features Sacrificed vs GetX',
+    'tableHeaders': ['Feature', 'GetX', 'getx_distil', 'Impact'],
     'tableRows': [
       _row([
-        '라우팅 엔진',
-        'GetPageRoute, Get.to(), Get.off() 등',
-        _del('❌ 제거'),
-        'GoRouter/Navigator 사용 필요'
+        'Routing Engine',
+        'GetPageRoute, Get.to(), Get.off(), etc.',
+        _del('❌ Removed'),
+        'Use GoRouter/Navigator'
       ]),
       _row([
         'GetDialog/BottomSheet',
-        '전역 오버레이 관리',
-        _del('❌ 제거'),
-        'Flutter 기본 API 사용'
+        'Global overlay management',
+        _del('❌ Removed'),
+        'Use Flutter default APIs'
       ]),
-      _row(['GetConnect', 'HTTP 클라이언트 내장', _del('❌ 제거'), 'dio/http 패키지 사용']),
-      _row(['GetStorage', '로컬 스토리지', _del('❌ 제거'), 'shared_preferences 등 사용']),
-      _row(['GetUtils', '유틸리티 함수', _del('❌ 제거'), '표준 Dart/Flutter API 사용']),
       _row([
-        'GetX Binding (클래스)',
-        'GetPage + Binding 패턴',
-        _del('❌ 제거'),
-        'BindingWidget으로 대체'
+        'GetConnect',
+        'Built-in HTTP client',
+        _del('❌ Removed'),
+        'Use dio/http package'
       ]),
-      _row(['interval Worker', '주기적 실행 워커', _del('❌ 제거'), 'Timer로 대체']),
+      _row([
+        'GetStorage',
+        'Local storage',
+        _del('❌ Removed'),
+        'Use shared_preferences, etc.'
+      ]),
+      _row([
+        'GetUtils',
+        'Utility functions',
+        _del('❌ Removed'),
+        'Use standard Dart/Flutter APIs'
+      ]),
+      _row([
+        'GetX Binding (class)',
+        'GetPage + Binding pattern',
+        _del('❌ Removed'),
+        'Replaced by BindingWidget'
+      ]),
+      _row([
+        'interval Worker',
+        'Periodic execution worker',
+        _del('❌ Removed'),
+        'Use Timer'
+      ]),
       _row([
         'SmartManagement',
-        '메모리 관리 정책',
-        _del('❌ 제거'),
-        'BindingWidget Auto-GC로 대체'
+        'Memory management policy',
+        _del('❌ Removed'),
+        'Replaced by BindingWidget Auto-GC'
       ]),
     ],
     'infoCard':
-        '라우팅/다이얼로그/네트워크/스토리지 제거는 의도적인 설계 결정이며, 현대 Flutter 생태계에서는 오히려 바람직함. 각 책임을 전문 패키지에 위임하는 것이 더 나은 아키텍처.',
+        'Removing routing/dialogs/network/storage is an intentional design decision that aligns well with the modern Flutter ecosystem. Delegating each responsibility to specialized packages results in better architecture.',
     'nextSection': 'quality',
-    'nextTitle': '4. 코드 품질 평가',
+    'nextTitle': '4. Code Quality Assessment',
   },
 
   // ── Quality ──
   'quality': {
     'type': 'quality',
-    'title': '코드 품질 평가',
+    'title': 'Code Quality Assessment',
     'goodPoints': [
-      '극도의 간결성 — 핵심 로직 ~1,200줄로 오리지널의 10% 이하. 유지보수성 압도적',
-      'Zero External Dependency — Flutter SDK만 의존. 공급망 리스크 제로',
-      '치밀한 테스트 — 1,594줄의 테스트 코드. RxList 배칭, WeakReference 좀비 방지, 형제 컨트롤러 onClose 교차 참조 등 엣지 케이스까지 커버',
-      '일관된 아키텍처 — 모든 Rx 타입이 GetListenable → RxInterface 계층을 따름. 확장성이 뛰어남',
-      '메모리 안전성 — WeakReference 캐시, dispose 순서 보장(onDelete 먼저 → weakRegistry 제거), Expando 기반 GetView 컨텍스트 관리',
-      '문서 품질 — 영문/한국어 README가 완벽하게 동기화됨. 예제 앱이 모든 기능을 커버',
+      'Extreme conciseness — core logic at ~1,200 lines, less than 10% of the original. Overwhelming maintainability.',
+      'Zero External Dependency — depends only on Flutter SDK. Zero supply chain risk.',
+      'Thorough testing — 1,594 lines of test code. Covers edge cases like RxList batching, WeakReference zombie prevention, sibling controller onClose cross-references.',
+      'Consistent architecture — all Rx types follow GetListenable → RxInterface hierarchy. Excellent extensibility.',
+      'Memory safety — WeakReference cache, guaranteed dispose order (onDelete first → weakRegistry removal), Expando-based GetView context management.',
+      'Documentation quality — English/Korean README perfectly synchronized. Example app covers all features.',
     ],
     'improvePoints': [
-      'GetxController.update() + ID 기반 리빌드 미지원 — 오리지널에서 GetBuilder와 함께 쓰이는 ID 기반 부분 리빌드가 약화됨',
-      'RxSList 초기 상태 모호성 — 생성자에 데이터를 넣어도 초기 status는 loading. 이미 데이터가 있는 경우 loaded로 시작하는 옵션이 있으면 좋겠음',
-      'interval Worker 미지원 — 주기적 실행 워커가 없어 Timer로 대체해야 함',
-      'Get.find tag + context 조합 불가 — context가 제공되면 tag가 무시됨',
-      'RxList의 operator []= 오버라이드 — 커스텀 리스트 연산이 배칭 없이 각각 알림을 발생시킬 가능성',
+      'GetxController.update() + ID-based rebuild not supported — ID-based partial rebuild used with GetBuilder in the original is weakened.',
+      'RxSList initial status ambiguity — even with data in the constructor, initial status is loading. An option to start as loaded would be nice.',
+      'interval Worker not supported — no periodic execution worker, must use Timer instead.',
+      'Get.find tag + context combination not possible — when context is provided, tag is ignored.',
+      'RxList operator []= override — custom list operations may trigger notifications without batching.',
     ],
     'scores': [
       {
-        'item': '아키텍처 설계',
+        'item': 'Architecture Design',
         'score': '⭐⭐⭐⭐⭐',
-        'note': '트리 스코프 DI + 하이브리드 폴백은 모범 사례'
+        'note': 'Tree-scoped DI + hybrid fallback is best practice'
       },
       {
-        'item': '성능 최적화',
+        'item': 'Performance Optimization',
         'score': '⭐⭐⭐⭐⭐',
-        'note': 'Fast-Path + 배칭 + FIFO 파이프라인 3종 세트'
+        'note': 'Fast-Path + Batching + FIFO pipeline triple combo'
       },
       {
-        'item': '메모리 안전성',
+        'item': 'Memory Safety',
         'score': '⭐⭐⭐⭐⭐',
-        'note': 'WeakReference, dispose 순서 보장, Expando 정리'
+        'note': 'WeakReference, guaranteed dispose order, Expando cleanup'
       },
       {
-        'item': 'DX (개발자 경험)',
+        'item': 'DX (Developer Experience)',
         'score': '⭐⭐⭐⭐½',
-        'note': 'RxSList/RxS의 .on() 패턴이 탁월. 디버그 메시지 우수'
+        'note': 'RxSList/RxS .on() pattern is excellent. Great debug messages'
       },
       {
-        'item': 'API 호환성',
+        'item': 'API Compatibility',
         'score': '⭐⭐⭐⭐',
-        'note': '.obs, Obx, Get.find 등 핵심 API는 동일'
+        'note': 'Core APIs like .obs, Obx, Get.find are identical'
       },
       {
-        'item': '테스트 커버리지',
+        'item': 'Test Coverage',
         'score': '⭐⭐⭐⭐',
-        'note': '핵심 기능은 잘 커버. 엣지 케이스 일부 보완 여지'
+        'note': 'Core features well covered. Some edge cases could be improved'
       },
       {
-        'item': '문서/예제',
+        'item': 'Documentation/Examples',
         'score': '⭐⭐⭐⭐⭐',
-        'note': '영/한 README + GoRouter 기반 예제 앱이 완벽'
+        'note': 'English/Korean README + GoRouter-based example app is perfect'
       },
       {
-        'item': '생태계 호환성',
+        'item': 'Ecosystem Compatibility',
         'score': '⭐⭐⭐⭐',
-        'note': 'GoRouter 친화적. 기존 GetX 프로젝트 마이그레이션 필요'
+        'note':
+            'GoRouter-friendly. Existing GetX projects need routing migration'
       },
     ],
     'nextSection': 'riverpod',
@@ -313,281 +382,357 @@ final Map<String, Map<String, dynamic>> _sectionMeta = {
       {
         'subtype': 'table',
         'number': '5.1',
-        'title': '철학적 차이',
-        'tableHeaders': ['차원', 'getx_distil', 'Riverpod 3.0'],
+        'title': 'Philosophical Differences',
+        'tableHeaders': ['Dimension', 'getx_distil', 'Riverpod 3.0'],
         'tableRows': [
-          _row(['패러다임', '명령형 (Imperative)', '선언형 (Declarative)']),
-          _row(['상태 생성', '런타임 new + .obs', '컴파일타임 코드 제너레이션']),
+          _row(['Paradigm', 'Imperative', 'Declarative']),
           _row([
-            'DI 방식',
-            '수동 등록 (Get.put, BindingWidget)',
-            '자동 등록 (@riverpod 어노테이션)'
+            'State Creation',
+            'Runtime new + .obs',
+            'Compile-time code generation'
           ]),
           _row([
-            '학습 곡선',
-            _ok('낮음 (GetX와 동일)'),
-            '높음 (Provider, Notifier, AsyncNotifier 등)'
+            'DI Approach',
+            'Manual registration (Get.put, BindingWidget)',
+            'Auto registration (@riverpod annotation)'
           ]),
-          _row(['보일러플레이트', _ok('최소 (.obs 한 줄)'), '중간~높음 (어노테이션 + 생성 코드)']),
-          _row(['빌드 의존성', _ok('없음'), 'build_runner 필수']),
+          _row([
+            'Learning Curve',
+            _ok('Low (same as GetX)'),
+            'High (Provider, Notifier, AsyncNotifier, etc.)'
+          ]),
+          _row([
+            'Boilerplate',
+            _ok('Minimal (.obs one-liner)'),
+            'Medium~High (annotation + generated code)'
+          ]),
+          _row(['Build Dependency', _ok('None'), 'build_runner required']),
         ],
         'evaluation':
-            'getx_distil의 명령형 패러다임은 학습 곡선이 낮고 보일러플레이트가 적어 빠른 개발에 유리. Riverpod 3.0의 선언형 접근은 체계적이지만 학습과 설정이 더 필요.',
+            'getx_distil\'s imperative paradigm offers a low learning curve and minimal boilerplate for rapid development. Riverpod 3.0\'s declarative approach is systematic but requires more learning and setup.',
       },
       {
         'subtype': 'codeCompare',
         'number': '5.2',
-        'title': '상태 관리 방식',
-        'description': 'getx_distil — 명령형 옵저버블',
+        'title': 'State Management Approach',
+        'description': 'getx_distil — Imperative Observable',
         'code1':
-            '// 컨트롤러 내부\nfinal count = 0.obs;           // RxInt\nfinal items = <String>[].ops;  // RxSList\n\n// 값 변경\ncount.value++;\nitems.add(\'new item\');\n\n// UI\nObx(() => Text(\'\${controller.count.value}\'))',
-        'description2': 'Riverpod 3.0 — 선언형 Notifier',
+            '// Inside controller\nfinal count = 0.obs;           // RxInt\nfinal items = <String>[].ops;  // RxSList\n\n// Value change\ncount.value++;\nitems.add(\'new item\');\n\n// UI\nObx(() => Text(\'\${controller.count.value}\'))',
+        'description2': 'Riverpod 3.0 — Declarative Notifier',
         'code2':
             '@riverpod\nclass Counter extends _\$Counter {\n  @override\n  int build() => 0;\n  void increment() => state++;\n}\n\n// UI\nConsumerWidget: ref.watch(counterProvider)',
-        'tableHeaders': ['비교', 'getx_distil', 'Riverpod 3.0'],
+        'tableHeaders': ['Comparison', 'getx_distil', 'Riverpod 3.0'],
         'tableRows': [
-          _row(['상태 선언', '.obs 한 줄', '클래스 + 어노테이션 + build()']),
-          _row(['상태 변경', '.value = 직접 대입', '메서드 호출로 state 변경']),
-          _row(['반응형 등록', '자동 (값 읽으면 추적)', '자동 (ref.watch 시 추적)']),
-          _row(['Nullable 상태', 'Rxn<T>', 'AsyncValue<T>']),
-          _row(['코드량', _ok('~3줄'), '~8줄']),
+          _row([
+            'State Declaration',
+            '.obs one-liner',
+            'Class + annotation + build()'
+          ]),
+          _row([
+            'State Mutation',
+            '.value = direct assignment',
+            'Method call to change state'
+          ]),
+          _row([
+            'Reactive Registration',
+            'Automatic (tracked on read)',
+            'Automatic (tracked via ref.watch)'
+          ]),
+          _row(['Nullable State', 'Rxn<T>', 'AsyncValue<T>']),
+          _row(['Code Volume', _ok('~3 lines'), '~8 lines']),
         ],
         'evaluation':
-            '단순 상태 관리의 DX는 getx_distil이 압도적으로 간결. Riverpod은 상태 변경 메서드를 명시적으로 정의해야 하지만, 이는 상태 변경 경로의 추적성 측면에서는 장점.',
+            'For simple state management, getx_distil\'s DX is overwhelmingly concise. Riverpod requires explicit state mutation methods, which is an advantage for traceability of state change paths.',
       },
       {
         'subtype': 'codeCompare',
         'number': '5.3',
-        'title': '비동기 상태 관리',
+        'title': 'Async State Management',
         'description': 'getx_distil — RxSList / RxS',
         'code1':
-            'final items = <User>[].ops; // RxSList<User>\n\n// 수동 상태 전환\nitems.assignAll(fetchedUsers);     // status → loaded\nitems.error = \'Network failure\';\nitems.status = RxListStatus.error;\n\n// UI\nObx(() => items.on(\n  loading: () => CircularProgressIndicator(),\n  loaded:  (data) => ListView.builder(...),\n  error:   (msg) => Text(\'Error: \$msg\'),\n))',
+            'final items = <User>[].ops; // RxSList<User>\n\n// Manual state transition\nitems.assignAll(fetchedUsers);     // status → loaded\nitems.error = \'Network failure\';\nitems.status = RxListStatus.error;\n\n// UI\nObx(() => items.on(\n  loading: () => CircularProgressIndicator(),\n  loaded:  (data) => ListView.builder(...),\n  error:   (msg) => Text(\'Error: \$msg\'),\n))',
         'description2': 'Riverpod 3.0 — AsyncNotifier + AsyncValue',
         'code2':
             '@riverpod\nclass Users extends _\$Users {\n  @override\n  FutureOr<List<User>> build() => _fetchUsers();\n\n  Future<void> refresh() async {\n    state = const AsyncLoading();\n    state = await AsyncValue.guard(() => _fetchUsers());\n  }\n}\n\n// UI\nref.watch(usersProvider).when(\n  loading: () => CircularProgressIndicator(),\n  data:    (users) => ListView.builder(...),\n  error:   (err, _) => Text(\'Error: \$err\'),\n)',
-        'tableHeaders': ['비교', 'getx_distil', 'Riverpod 3.0'],
+        'tableHeaders': ['Comparison', 'getx_distil', 'Riverpod 3.0'],
         'tableRows': [
           _row([
-            '비동기 상태 표현',
-            'RxSList / RxS (수동 상태 전환)',
-            'AsyncValue<T> (자동 상태 관리)'
+            'Async State Expression',
+            'RxSList / RxS (manual state transition)',
+            'AsyncValue<T> (automatic state management)'
           ]),
-          _row(['로딩→데이터 전환', '수동 assignAll()', '자동 (Future 완료 시)']),
-          _row(['에러 처리', '수동 error + status', '자동 (AsyncValue.guard)']),
-          _row(['캐싱/재시도', '수동 구현', '내장 (keepAlive, retry, invalidate)']),
-          _row(['DX', '직관적이나 수동', '자동화되나 학습 필요']),
+          _row([
+            'Loading→Data Transition',
+            'Manual assignAll()',
+            'Automatic (on Future completion)'
+          ]),
+          _row([
+            'Error Handling',
+            'Manual error + status',
+            'Automatic (AsyncValue.guard)'
+          ]),
+          _row([
+            'Caching/Retry',
+            'Manual implementation',
+            'Built-in (keepAlive, retry, invalidate)'
+          ]),
+          _row([
+            'DX',
+            'Intuitive but manual',
+            'Automated but requires learning'
+          ]),
         ],
         'evaluation':
-            '순수 비동기 API 호출 시나리오에서는 Riverpod 3.0의 AsyncNotifier가 더 안전하고 자동화됨. getx_distil은 상태 전환을 수동으로 제어해야 하지만, 그만큼 유연성이 높음.',
+            'For pure async API call scenarios, Riverpod 3.0\'s AsyncNotifier is safer and more automated. getx_distil requires manual state transition control, but offers greater flexibility.',
       },
       {
         'subtype': 'codeCompare',
         'number': '5.4',
-        'title': 'DI (의존성 주입)',
-        'description': 'getx_distil — 하이브리드 DI',
+        'title': 'DI (Dependency Injection)',
+        'description': 'getx_distil — Hybrid DI',
         'code1':
-            '// 트리 스코프\nBindingWidget(\n  bindings: [Bind<Controller>(() => Controller())],\n  child: const MyPage(),\n)\n\n// 전역\nGet.put<Controller>(Controller());\n\n// 조회\nGet.find<Controller>(context);  // 스코프 우선 → 전역 폴백\nGet.find<Controller>();         // 전역 + WeakReference 폴백',
-        'description2': 'Riverpod 3.0 — Provider 스코프',
+            '// Tree scope\nBindingWidget(\n  bindings: [Bind<Controller>(() => Controller())],\n  child: const MyPage(),\n)\n\n// Global\nGet.put<Controller>(Controller());\n\n// Lookup\nGet.find<Controller>(context);  // scope first → global fallback\nGet.find<Controller>();         // global + WeakReference fallback',
+        'description2': 'Riverpod 3.0 — Provider Scope',
         'code2':
-            '// 선언적 등록 (@riverpod 어노테이션으로 자동)\n@riverpod\nclass Controller extends _\$Controller {\n  @override\n  void build() { ... }\n}\n\n// 조회\nref.read(controllerProvider);                              // 단발 읽기\nref.watch(controllerProvider);                             // 반응형 구독\nref.watch(controllerProvider.select((s) => s.count));      // 선택적 구독',
-        'tableHeaders': ['비교', 'getx_distil', 'Riverpod 3.0'],
+            '// Declarative registration (auto via @riverpod annotation)\n@riverpod\nclass Controller extends _\$Controller {\n  @override\n  void build() { ... }\n}\n\n// Lookup\nref.read(controllerProvider);                              // one-time read\nref.watch(controllerProvider);                             // reactive subscription\nref.watch(controllerProvider.select((s) => s.count));      // selective subscription',
+        'tableHeaders': ['Comparison', 'getx_distil', 'Riverpod 3.0'],
         'tableRows': [
           _row([
-            '등록 방식',
-            '수동 (Get.put, BindingWidget)',
-            '자동 (어노테이션 + 코드 제너레이션)'
-          ]),
-          _row(['스코프', '위젯 트리 스코프 + 전역', 'Provider 스코프 (오버라이드 가능)']),
-          _row([
-            '동적 멀티 인스턴스',
-            _ok('BindingWidget 중첩으로 자연스럽게'),
-            'family 한정자 (컴파일타임)'
+            'Registration',
+            'Manual (Get.put, BindingWidget)',
+            'Automatic (annotation + code generation)'
           ]),
           _row([
-            'Context 없는 접근',
+            'Scope',
+            'Widget tree scope + global',
+            'Provider scope (overridable)'
+          ]),
+          _row([
+            'Dynamic Multi-instance',
+            _ok('Natural via BindingWidget nesting'),
+            'family modifier (compile-time)'
+          ]),
+          _row([
+            'Context-free Access',
             _ok('✅ Get.find<T>()'),
-            '❌ ref 필요 (위젯/함수 내에서만)'
+            '❌ ref required (only inside widgets/functions)'
           ]),
-          _row(['수명 관리', '위젯 dispose 시 자동 GC', 'ref.onDispose() 콜백']),
           _row([
-            '멀티 인스턴스 격리',
-            _ok('직관적 (BindingWidget 중첩)'),
-            '엄격 (family + override)'
+            'Lifecycle Management',
+            'Auto GC on widget dispose',
+            'ref.onDispose() callback'
+          ]),
+          _row([
+            'Multi-instance Isolation',
+            _ok('Intuitive (BindingWidget nesting)'),
+            'Strict (family + override)'
           ]),
         ],
         'evaluation':
-            'Context 없는 접근은 getx_distil의 확실한 장점. 컨트롤러 내부에서 다른 컨트롤러를 참조할 때 ref가 필요 없음. Riverpod의 family는 컴파일타임에 타입 안전하지만, 런타임에 동적으로 N개의 인스턴스를 생성하는 패턴에서는 getx_distil의 BindingWidget이 더 유연.',
+            'Context-free access is a clear advantage of getx_distil. No ref needed when referencing other controllers inside a controller. Riverpod\'s family is type-safe at compile-time, but getx_distil\'s BindingWidget is more flexible for patterns that dynamically create N instances at runtime.',
       },
       {
         'subtype': 'table',
         'number': '5.5',
-        'title': '성능',
-        'subtitle': 'RxList 대량 변경',
-        'tableHeaders': ['시나리오', 'getx_distil', 'Riverpod 3.0'],
+        'title': 'Performance',
+        'subtitle': 'RxList bulk mutation',
+        'tableHeaders': ['Scenario', 'getx_distil', 'Riverpod 3.0'],
         'tableRows': [
           _row([
-            '10,000건 add()',
-            _ok('1회 리빌드 (Microtask Batching)'),
-            'N회 리빌드 (상태 변경 시마다)'
+            '10,000 add() calls',
+            _ok('1 rebuild (Microtask Batching)'),
+            'N rebuilds (per state change)'
           ]),
-          _row(
-              ['for 루프 내 변경', _ok('자동 배칭'), '수동 배칭 필요 또는 단일 state = [...] 할당']),
           _row([
-            'Obx 외부 Rx 읽기',
-            _ok('Zero-cost (isTracking 플래그)'),
-            'N/A (Provider 읽기는 항상 ref 필요)'
+            'for loop mutations',
+            _ok('Automatic batching'),
+            'Manual batching needed or single state = [...] assignment'
+          ]),
+          _row([
+            'Rx reads outside Obx',
+            _ok('Zero-cost (isTracking flag)'),
+            'N/A (Provider reads always need ref)'
           ]),
         ],
         'evaluation':
-            '고빈도 리스트 변경 시나리오에서 getx_distil의 Microtask Batching이 Riverpod 대비 명확한 성능 우위. Riverpod에서 동일 효과를 얻으려면 개발자가 직접 배칭 로직을 구현하거나 단일 state = newList 할당으로 전체 교체해야 함.',
+            'In high-frequency list mutation scenarios, getx_distil\'s Microtask Batching has a clear performance advantage over Riverpod. To achieve the same effect in Riverpod, developers must implement batching logic manually or use single state = newList assignment.',
       },
       {
         'subtype': 'table',
         'number': '5.6',
-        'title': '안전 장치',
-        'tableHeaders': ['안전 기능', 'getx_distil', 'Riverpod 3.0'],
+        'title': 'Safety Features',
+        'tableHeaders': ['Safety Feature', 'getx_distil', 'Riverpod 3.0'],
         'tableRows': [
           _row([
-            '빌드 단계 상태 변경',
-            _ok('자가 치유 (PostFrameCallback 지연)'),
-            'N/A (빌드 중 ref.watch만 허용)'
+            'Build-phase state mutation',
+            _ok('Self-healing (PostFrameCallback deferral)'),
+            'N/A (only ref.watch allowed during build)'
           ]),
           _row([
-            '비동기 Obx 검증',
-            _ok('엄격 차단 (FlutterError)'),
-            'N/A (AsyncNotifier가 분리되어 있음)'
+            'Async Obx validation',
+            _ok('Strict blocking (FlutterError)'),
+            'N/A (AsyncNotifier is separate)'
           ]),
-          _row(
-              ['DI 조회 실패 메시지', _ok('상세 디버그 리포트'), 'ProviderNotFoundException']),
           _row([
-            '레이스 컨디션 방지',
-            _ok('FIFO 파이프라인 (updateSequential)'),
-            'N/A (순차 실행 보장 없음)'
+            'DI lookup failure message',
+            _ok('Detailed debug report'),
+            'ProviderNotFoundException'
           ]),
-          _row(['타입 안전성', '런타임 (동적 Get.find<T>())', _ok('컴파일타임 (코드 제너레이션)')]),
+          _row([
+            'Race condition prevention',
+            _ok('FIFO pipeline (updateSequential)'),
+            'N/A (no sequential execution guarantee)'
+          ]),
+          _row([
+            'Type Safety',
+            'Runtime (dynamic Get.find<T>())',
+            _ok('Compile-time (code generation)')
+          ]),
         ],
         'evaluation':
-            '런타임 안전망은 getx_distil이 더 풍부. 컴파일타임 타입 안전성은 Riverpod 3.0의 압도적 장점.',
+            'getx_distil has richer runtime safety nets. Compile-time type safety is Riverpod 3.0\'s overwhelming advantage.',
       },
       {
         'subtype': 'table',
         'number': '5.7',
-        'title': '코드 제너레이션 vs 제로 의존',
-        'tableHeaders': ['항목', 'getx_distil', 'Riverpod 3.0'],
+        'title': 'Code Generation vs Zero Dependency',
+        'tableHeaders': ['Category', 'getx_distil', 'Riverpod 3.0'],
         'tableRows': [
-          _row(['build_runner 필요', _ok('❌'), _ok('✅ (필수)')]),
-          _row(['생성 코드 (.g.dart)', '없음', '있음']),
-          _row(['빌드 시간 영향', _ok('없음'), '증가 (코드 제너레이션 오버헤드)']),
-          _row(['IDE 지원', '일반 Dart 분석', '생성 코드 탐색 필요']),
-          _row(['CI/CD 복잡도', _ok('낮음'), '높음 (build_runner 스텝 추가)']),
+          _row(['build_runner needed', _ok('❌'), _ok('✅ (required)')]),
+          _row(['Generated code (.g.dart)', 'None', 'Yes']),
           _row([
-            '외부 의존성',
-            _ok('0개'),
-            '여러 개 (riverpod, riverpod_annotation, build_runner 등)'
+            'Build time impact',
+            _ok('None'),
+            'Increases (code generation overhead)'
+          ]),
+          _row([
+            'IDE Support',
+            'Standard Dart analysis',
+            'Generated code exploration needed'
+          ]),
+          _row([
+            'CI/CD Complexity',
+            _ok('Low'),
+            'High (build_runner step added)'
+          ]),
+          _row([
+            'External Dependencies',
+            _ok('0'),
+            'Multiple (riverpod, riverpod_annotation, build_runner, etc.)'
           ]),
         ],
         'evaluation':
-            '소규모/개인 프로젝트에서는 getx_distil의 제로 의존이 강력한 장점. 대규모 팀 프로젝트에서는 Riverpod의 코드 제너레이션이 리팩토링 안전성을 제공.',
+            'For small/personal projects, getx_distil\'s zero dependency is a strong advantage. For large team projects, Riverpod\'s code generation provides refactoring safety.',
       },
       {
         'subtype': 'table',
         'number': '5.8',
-        'title': '테스트 용이성',
-        'tableHeaders': ['항목', 'getx_distil', 'Riverpod 3.0'],
+        'title': 'Testability',
+        'tableHeaders': ['Category', 'getx_distil', 'Riverpod 3.0'],
         'tableRows': [
           _row([
-            '단위 테스트',
+            'Unit Testing',
             'Get.put(mock) → Get.find()',
             'ProviderContainer(overrides: [...])'
           ]),
           _row([
-            '위젯 테스트',
-            'BindingWidget으로 스코프 제어',
+            'Widget Testing',
+            'Scope control via BindingWidget',
             'ProviderScope(overrides: [...])'
           ]),
-          _row(['모킹 편의성', '보통 (수동 등록/교체)', _ok('우수 (override 체계가 체계적)')]),
-          _row(['테스트 격리', 'Get.reset() 수동 호출', _ok('ProviderContainer 자동 격리')]),
+          _row([
+            'Mocking Convenience',
+            'Moderate (manual registration/replacement)',
+            _ok('Excellent (systematic override system)')
+          ]),
+          _row([
+            'Test Isolation',
+            'Manual Get.reset() call',
+            _ok('Automatic ProviderContainer isolation')
+          ]),
         ],
         'evaluation':
-            'Riverpod 3.0의 override 체계가 테스트 모킹에 더 체계적. getx_distil은 직관적이지만 전역 상태 오염 가능성 존재.',
+            'Riverpod 3.0\'s override system is more systematic for test mocking. getx_distil is intuitive but has potential for global state pollution.',
       },
     ],
     'matrix': [
-      {'item': '학습 곡선', 'g': 5, 'r': 3},
-      {'item': '보일러플레이트', 'g': 5, 'r': 3},
-      {'item': '컴파일타임 안전성', 'g': 3, 'r': 5},
-      {'item': '비동기 상태 자동화', 'g': 4, 'r': 5},
-      {'item': '리스트 대량 변경 성능', 'g': 5, 'r': 3},
-      {'item': 'DI 유연성', 'g': 5, 'r': 4},
-      {'item': 'Context 없는 접근', 'g': 5, 'r': 2},
-      {'item': '테스트/모킹 체계', 'g': 4, 'r': 5},
-      {'item': '빌드 복잡도', 'g': 5, 'r': 3},
-      {'item': '리팩토링 안전성', 'g': 3, 'r': 5},
-      {'item': '메모리 관리 정밀도', 'g': 4, 'r': 5},
-      {'item': '런타임 안전망', 'g': 5, 'r': 3},
-      {'item': '외부 의존성', 'g': 5, 'r': 3},
-      {'item': '다국어/테마', 'g': 4, 'r': 2},
+      {'item': 'Learning Curve', 'g': 5, 'r': 3},
+      {'item': 'Boilerplate', 'g': 5, 'r': 3},
+      {'item': 'Compile-time Safety', 'g': 3, 'r': 5},
+      {'item': 'Async State Automation', 'g': 4, 'r': 5},
+      {'item': 'List Bulk Mutation Performance', 'g': 5, 'r': 3},
+      {'item': 'DI Flexibility', 'g': 5, 'r': 4},
+      {'item': 'Context-free Access', 'g': 5, 'r': 2},
+      {'item': 'Test/Mocking System', 'g': 4, 'r': 5},
+      {'item': 'Build Complexity', 'g': 5, 'r': 3},
+      {'item': 'Refactoring Safety', 'g': 3, 'r': 5},
+      {'item': 'Memory Management Precision', 'g': 4, 'r': 5},
+      {'item': 'Runtime Safety Nets', 'g': 5, 'r': 3},
+      {'item': 'External Dependencies', 'g': 5, 'r': 3},
+      {'item': 'i18n/Theming', 'g': 4, 'r': 2},
     ],
     'guide': {
-      'winnerTitle': 'getx_distil이 적합한 경우',
+      'winnerTitle': 'When to choose getx_distil',
       'winnerIcon': Icons.electric_bolt_rounded,
       'winnerColor': AppTheme.googleBlue,
       'winnerItems': [
-        '🚀 빠른 프로토타이핑 / MVP — 보일러플레이트 최소, 즉시 시작',
-        '📱 소규모~중규모 앱 — 복잡한 아키텍처 오버헤드 불필요',
-        '🔄 GoRouter 기반 라우팅 — BindingWidget과 완벽 호환',
-        '📊 대량 리스트 조작 — RxList 배칭이 필수적인 데이터 헤비 앱',
-        '🧑‍💻 GetX 경험자 — 동일한 DX, 마이그레이션 비용 최소',
-        '⚡ 빌드 시간 민감 — build_runner 없이 즉시 개발'
+        '🚀 Rapid Prototyping / MVP — minimal boilerplate, start immediately',
+        '📱 Small~Medium Apps — no complex architecture overhead needed',
+        '🔄 GoRouter-based Routing — fully compatible with BindingWidget',
+        '📊 Heavy List Manipulation — RxList batching is essential for data-heavy apps',
+        '🧑‍💻 GetX Users — same DX, minimal migration cost',
+        '⚡ Build Time Sensitive — develop immediately without build_runner'
       ],
-      'loserTitle': 'Riverpod 3.0이 적합한 경우',
+      'loserTitle': 'When to choose Riverpod 3.0',
       'loserIcon': Icons.verified_rounded,
       'loserColor': AppTheme.googleGreen,
       'loserItems': [
-        '🏢 대규모 팀 프로젝트 — 컴파일타임 안전성이 리팩토링 보호',
-        '🧪 테스트 주도 개발(TDD) — override 체계가 모킹에 최적',
-        '📡 비동기 중심 앱 — API 호출/캐싱/재시도가 핵심인 앱',
-        '🔒 엄격한 상태 관리 — 상태 변경 경로를 명시적으로 통제',
-        '🏗️ 장기 유지보수 — 코드 제너레이션이 리팩토링 안전망 제공'
+        '🏢 Large Team Projects — compile-time safety protects refactoring',
+        '🧪 Test-Driven Development (TDD) — override system is optimal for mocking',
+        '📡 Async-centric Apps — API calls/caching/retry are core features',
+        '🔒 Strict State Management — explicitly control state mutation paths',
+        '🏗️ Long-term Maintenance — code generation provides refactoring safety net'
       ],
     },
     'nextSection': 'conclusion',
-    'nextTitle': '6. 종합 결론',
+    'nextTitle': '6. Conclusion',
   },
 
   // ── Conclusion ──
   'conclusion': {
     'type': 'conclusion',
-    'title': '종합 결론',
+    'title': 'Conclusion',
     'cards': [
       {
         'icon': Icons.compare_arrows_rounded,
         'color': AppTheme.googleBlue,
         'cardTitle': 'getx_distil vs GetX',
-        'quote': 'getx_distil은 GetX의 "과잉"을 정확히 제거하고 "핵심"을 정제하는 데 성공한 라이브러리입니다.',
+        'quote':
+            'getx_distil succeeds in precisely removing GetX\'s "excess" while refining its "core."',
         'paragraphs': [
-          'GetX가 "프레임워크"라면, getx_distil은 "마이크로 엔진"입니다. 라우팅, 다이얼로그, 네트워크, 스토리지를 과감히 제거하고, 상태 관리와 DI에만 집중한 설계 결정은 현대 Flutter 생태계(GoRouter, dio, shared_preferences 등)의 발전 방향과 완벽히 부합합니다.',
-          '특히 Fast-Path Tracking, RxList Microtask Batching, Tree-Scoped DI 3가지는 오리지널 대비 명확하고 측정 가능한 성능/안정성 우위를 제공하며, RxSList/RxS는 오리지널에 없는 독창적 기여입니다.',
-          '기존 GetX 사용자에게는 .obs → Obx → Get.find라는 동일한 DX를 제공하면서, GoRouter 환경에서의 메모리 누수와 스코프 충돌 문제를 근본적으로 해결합니다. 신규 프로젝트에서는 GetX 대비 분명한 우위가 있습니다.',
+          'If GetX is a "framework," getx_distil is a "micro-engine." The design decision to boldly remove routing, dialogs, networking, and storage — focusing solely on state management and DI — perfectly aligns with the modern Flutter ecosystem (GoRouter, dio, shared_preferences, etc.).',
+          'In particular, Fast-Path Tracking, RxList Microtask Batching, and Tree-Scoped DI provide clear, measurable performance/stability advantages over the original, while RxSList/RxS are original contributions not found in the original.',
+          'For existing GetX users, it provides the same DX (.obs → Obx → Get.find) while fundamentally solving memory leak and scope collision issues in GoRouter environments. For new projects, it has a clear advantage over the original GetX.',
         ],
       },
       {
         'icon': Icons.swap_horiz_rounded,
         'color': AppTheme.googleGreen,
         'cardTitle': 'getx_distil vs Riverpod 3.0',
-        'quote': 'getx_distil과 Riverpod 3.0은 경쟁 관계가 아니라 보완 관계에 가깝습니다.',
+        'quote':
+            'getx_distil and Riverpod 3.0 are complementary rather than competitive.',
         'paragraphs': [
-          'getx_distil은 "가장 적은 코드로 가장 빠르게"라는 목표에 최적화된 경량 엔진. Riverpod 3.0은 "가장 안전하게, 가장 체계적으로"라는 목표에 최적화된 프레임워크.',
-          'getx_distil의 RxList 배칭, Fast-Path Tracking, Self-Healing Build-Phase는 Riverpod에도 없는 독창적 최적화이며, 특히 고빈도 데이터 조작 시나리오에서는 Riverpod 대비 명확한 성능 우위를 가집니다.',
-          '반면 Riverpod 3.0의 컴파일타임 타입 안전성과 체계적인 비동기 상태 관리는 대규모 프로젝트에서 빛을 발합니다. 프로젝트의 규모, 팀의 성숙도, 데이터 조작 패턴에 따라 선택하면 됩니다.',
+          'getx_distil is a lightweight engine optimized for "fastest with least code." Riverpod 3.0 is a framework optimized for "safest, most systematic."',
+          'getx_distil\'s RxList batching, Fast-Path Tracking, and Self-Healing Build-Phase are unique optimizations not found in Riverpod, with a clear performance advantage especially in high-frequency data manipulation scenarios.',
+          'On the other hand, Riverpod 3.0\'s compile-time type safety and systematic async state management shine in large-scale projects. Choose based on project scale, team maturity, and data manipulation patterns.',
         ],
       },
     ],
-    'footerText': '작성일: 2026-06-10\n대상 버전: getx_distil v1.1.3',
+    'footerText': 'Written: 2026-06-10\nTarget version: getx_distil v1.1.3',
   },
 };
 
-// ── 위젯 클래스 ──
+// ── Widget Class ──
 class ComparisonPage extends StatefulWidget {
   final String section;
   const ComparisonPage({super.key, this.section = 'overview'});
@@ -847,15 +992,15 @@ class _ComparisonPageState extends State<ComparisonPage> {
       children: [
         _sectionHeader(meta['title']),
         const SizedBox(height: 32.0),
-        _sectionTitle('✅ 우수한 점'),
+        _sectionTitle('✅ Strengths'),
         const SizedBox(height: 16.0),
         _buildQualityList(meta['goodPoints'] as List<String>, warning: false),
         const SizedBox(height: 32.0),
-        _sectionTitle('⚠️ 개선 여지'),
+        _sectionTitle('⚠️ Areas for Improvement'),
         const SizedBox(height: 16.0),
         _buildQualityList(meta['improvePoints'] as List<String>, warning: true),
         const SizedBox(height: 40.0),
-        _sectionTitle('📊 종합 점수'),
+        _sectionTitle('📊 Overall Score'),
         const SizedBox(height: 16.0),
         _buildScoreTable(meta['scores'] as List, isMobile),
         const SizedBox(height: 48.0),
@@ -1075,7 +1220,7 @@ class _ComparisonPageState extends State<ComparisonPage> {
         borderRadius: BorderRadius.circular(10.0),
         border: Border.all(color: AppTheme.googleBlue.withOpacity(0.12)),
       ),
-      child: Text('평가: $text',
+      child: Text('Evaluation: $text',
           style: const TextStyle(
               color: AppTheme.textSecondary, fontSize: 13.5, height: 1.5)),
     );
@@ -1269,13 +1414,13 @@ class _ComparisonPageState extends State<ComparisonPage> {
                   columnSpacing: 32.0,
                   columns: const [
                     DataColumn(
-                        label: Text('평가 항목',
+                        label: Text('Category',
                             style: TextStyle(fontWeight: FontWeight.bold))),
                     DataColumn(
-                        label: Text('점수',
+                        label: Text('Score',
                             style: TextStyle(fontWeight: FontWeight.bold))),
                     DataColumn(
-                        label: Text('비고',
+                        label: Text('Note',
                             style: TextStyle(fontWeight: FontWeight.bold))),
                   ],
                   rows: scores.map((s) {
@@ -1302,7 +1447,7 @@ class _ComparisonPageState extends State<ComparisonPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('5.9 📊 종합 비교 매트릭스',
+        const Text('5.9 📊 Comprehensive Comparison Matrix',
             style: TextStyle(
                 fontFamily: 'Google Sans Flex',
                 fontSize: 18.0,
@@ -1367,7 +1512,7 @@ class _ComparisonPageState extends State<ComparisonPage> {
                         columnSpacing: 32.0,
                         columns: const [
                           DataColumn(
-                              label: Text('평가 항목',
+                              label: Text('Category',
                                   style:
                                       TextStyle(fontWeight: FontWeight.bold))),
                           DataColumn(
@@ -1379,7 +1524,7 @@ class _ComparisonPageState extends State<ComparisonPage> {
                                   style:
                                       TextStyle(fontWeight: FontWeight.bold))),
                           DataColumn(
-                              label: Text('승자',
+                              label: Text('Winner',
                                   style:
                                       TextStyle(fontWeight: FontWeight.bold))),
                         ],
@@ -1388,7 +1533,7 @@ class _ComparisonPageState extends State<ComparisonPage> {
                           final r = m['r'] as int;
                           final winner = g > r
                               ? 'getx_distil'
-                              : (r > g ? 'Riverpod' : '동률');
+                              : (r > g ? 'Riverpod' : 'Tie');
                           return DataRow(cells: [
                             DataCell(Text(m['item'],
                                 style: const TextStyle(fontSize: 13.0))),
@@ -1442,7 +1587,7 @@ class _ComparisonPageState extends State<ComparisonPage> {
             children: [
               Icon(Icons.route_rounded, color: AppTheme.googleGreen, size: 24),
               SizedBox(width: 12.0),
-              Text('5.10 🎯 선택 가이드',
+              Text('5.10 🎯 Selection Guide',
                   style: TextStyle(
                       fontFamily: 'Google Sans Flex',
                       fontSize: 18.0,

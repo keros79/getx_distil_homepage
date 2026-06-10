@@ -11,12 +11,12 @@ class SidebarTocComparison extends StatelessWidget {
   });
 
   static final List<Map<String, String>> sections = [
-    {'title': '1. 프로젝트 개요', 'path': 'overview'},
-    {'title': '2. 핵심 개선 사항', 'path': 'improvements'},
-    {'title': '3. 희생된 기능', 'path': 'sacrificed'},
-    {'title': '4. 코드 품질 평가', 'path': 'quality'},
+    {'title': '1. Overview', 'path': 'overview'},
+    {'title': '2. Improvements', 'path': 'improvements'},
+    {'title': '3. Features Sacrificed', 'path': 'sacrificed'},
+    {'title': '4. Code Quality Assessment', 'path': 'quality'},
     {'title': '5. vs Riverpod 3.0', 'path': 'riverpod'},
-    {'title': '6. 종합 결론', 'path': 'conclusion'},
+    {'title': '6. Conclusion', 'path': 'conclusion'},
   ];
 
   @override

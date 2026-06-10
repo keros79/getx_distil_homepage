@@ -24,6 +24,15 @@ class AppDrawer extends StatelessWidget {
     {'title': 'Reactive Localization', 'path': 'i18n'},
   ];
 
+  static const List<Map<String, String>> _comparisonSections = [
+    {'title': '1. Overview', 'path': 'overview'},
+    {'title': '2. Key Improvements', 'path': 'improvements'},
+    {'title': '3. Features Sacrificed', 'path': 'sacrificed'},
+    {'title': '4. Code Quality Assessment', 'path': 'quality'},
+    {'title': '5. vs Riverpod 3.0', 'path': 'riverpod'},
+    {'title': '6. Conclusion', 'path': 'conclusion'},
+  ];
+
   @override
   Widget build(BuildContext context) {
     final currentLocation = GoRouterState.of(context).uri.toString();
@@ -152,23 +161,48 @@ class AppDrawer extends StatelessWidget {
                       ),
                     ),
 
-                    // Comparison
-                    ListTile(
-                      title: const Text(
-                        'Comparison',
-                        style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.w400,
-                        ),
+                    // Comparison ExpansionTile
+                    Theme(
+                      data: Theme.of(context).copyWith(
+                        splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        focusColor: Colors.transparent,
+                        splashFactory: NoSplash.splashFactory,
                       ),
-                      onTap: currentLocation == '/comparison' ||
-                              currentLocation.startsWith('/comparison/')
-                          ? null
-                          : () {
-                              Navigator.of(context).pop();
-                              context.go('/comparison');
-                            },
-                      contentPadding: EdgeInsets.zero,
+                      child: ExpansionTile(
+                        title: const Text(
+                          'Comparison',
+                          style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        tilePadding: EdgeInsets.zero,
+                        childrenPadding: const EdgeInsets.only(left: 16.0),
+                        initiallyExpanded:
+                            currentLocation.startsWith('/comparison/'),
+                        iconColor: Colors.black,
+                        collapsedIconColor: Colors.black,
+                        children: _comparisonSections.map((section) {
+                          final targetPath = '/comparison/${section['path']}';
+                          return ListTile(
+                            title: Text(
+                              section['title']!,
+                              style: const TextStyle(
+                                fontSize: 18,
+                                color: Colors.black87,
+                              ),
+                            ),
+                            onTap: currentLocation == targetPath
+                                ? null
+                                : () {
+                                    Navigator.of(context).pop();
+                                    context.go(targetPath);
+                                  },
+                          );
+                        }).toList(),
+                      ),
                     ),
 
                     // About Developer
