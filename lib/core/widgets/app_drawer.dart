@@ -152,6 +152,25 @@ class AppDrawer extends StatelessWidget {
                       ),
                     ),
 
+                    // Comparison
+                    ListTile(
+                      title: const Text(
+                        'Comparison',
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      onTap: currentLocation == '/comparison' ||
+                              currentLocation.startsWith('/comparison/')
+                          ? null
+                          : () {
+                              Navigator.of(context).pop();
+                              context.go('/comparison');
+                            },
+                      contentPadding: EdgeInsets.zero,
+                    ),
+
                     // About Developer
                     ListTile(
                       title: const Text(

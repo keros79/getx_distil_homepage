@@ -8,6 +8,7 @@ import '../views/home_page.dart';
 import '../views/guide_page.dart';
 import '../views/api_detail_page.dart';
 import '../views/about_page.dart';
+import '../views/comparison_page.dart';
 
 final GoRouter router = GoRouter(
   initialLocation: '/',
@@ -45,6 +46,17 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/about',
       builder: (context, state) => const AboutPage(),
+    ),
+    GoRoute(
+      path: '/comparison',
+      builder: (context, state) => const ComparisonPage(),
+    ),
+    GoRoute(
+      path: '/comparison/:section',
+      builder: (context, state) {
+        final section = state.pathParameters['section'] ?? 'overview';
+        return ComparisonPage(section: section);
+      },
     ),
   ],
 );

@@ -98,6 +98,16 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
                       ).uri.path.startsWith('/api'),
                     ),
                     _NavLink(
+                      label: 'Comparison',
+                      onPressed: () => context.go('/comparison'),
+                      isActive:
+                          GoRouterState.of(context).uri.path == '/comparison' ||
+                              GoRouterState.of(context)
+                                  .uri
+                                  .path
+                                  .startsWith('/comparison/'),
+                    ),
+                    _NavLink(
                       label: 'About',
                       onPressed: () => context.go('/about'),
                       isActive: GoRouterState.of(context).uri.path == '/about',
@@ -149,9 +159,8 @@ class _NavLinkState extends State<_NavLink> {
     return TextButton(
       onPressed: widget.onPressed,
       style: TextButton.styleFrom(
-        foregroundColor: widget.isActive
-            ? AppTheme.textPrimary
-            : AppTheme.textSecondary,
+        foregroundColor:
+            widget.isActive ? AppTheme.textPrimary : AppTheme.textSecondary,
         padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 12.0),
         overlayColor: Colors.transparent,
         splashFactory: NoSplash.splashFactory,
