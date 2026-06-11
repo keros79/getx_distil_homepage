@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:getx_distil/get.dart';
 import 'package:go_router/go_router.dart';
 
-import '../controllers/docs_controller.dart';
+import '../controllers/api_detail_controller.dart';
 import '../core/app_theme.dart';
 import '../core/widgets/nav_bar.dart';
 import '../core/widgets/sidebar_toc.dart';
@@ -11,39 +11,10 @@ import '../core/widgets/glass_card.dart';
 import '../core/widgets/next_nav_card.dart';
 import '../core/widgets/app_drawer.dart';
 
-class ApiDetailPage extends StatefulWidget {
+class ApiDetailPage extends GetView<ApiDetailController> {
   final String section;
 
   const ApiDetailPage({super.key, required this.section});
-
-  @override
-  State<ApiDetailPage> createState() => _ApiDetailPageState();
-}
-
-class _ApiDetailPageState extends State<ApiDetailPage> {
-  late final ScrollController _scrollController;
-  late final DocsController controller;
-
-  @override
-  void initState() {
-    super.initState();
-    controller = Get.find<DocsController>();
-    _scrollController = ScrollController();
-  }
-
-  @override
-  void didUpdateWidget(ApiDetailPage oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (widget.section != oldWidget.section) {
-      _scrollController.jumpTo(0.0);
-    }
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
 
   // Section metadata mapping
   static final Map<String, Map<String, dynamic>> sectionMeta = {
@@ -60,6 +31,7 @@ class _ApiDetailPageState extends State<ApiDetailPage> {
       ],
       'next': 'rxs',
       'nextTitle': 'Status-Aware Observables',
+      'color': AppTheme.googleBlue,
     },
     'rxs': {
       'title': 'Status-Aware Observables (RxSList & RxS)',
@@ -74,6 +46,7 @@ class _ApiDetailPageState extends State<ApiDetailPage> {
       ],
       'next': 'global-di',
       'nextTitle': 'Global Dependency Injection',
+      'color': AppTheme.googleBlue,
     },
     'global-di': {
       'title': 'Global Dependency Injection',
@@ -87,6 +60,7 @@ class _ApiDetailPageState extends State<ApiDetailPage> {
       ],
       'next': 'binding-widget',
       'nextTitle': 'Widget Tree Scoped DI',
+      'color': AppTheme.googleGreen,
     },
     'binding-widget': {
       'title': 'Widget Tree Scoped DI',
@@ -100,6 +74,7 @@ class _ApiDetailPageState extends State<ApiDetailPage> {
       ],
       'next': 'getx-service',
       'nextTitle': 'Global Persistent Services',
+      'color': AppTheme.googleRed,
     },
     'getx-service': {
       'title': 'Global Persistent Services',
@@ -113,6 +88,7 @@ class _ApiDetailPageState extends State<ApiDetailPage> {
       ],
       'next': 'worker',
       'nextTitle': 'Background Side-Effects',
+      'color': AppTheme.googleYellow,
     },
     'worker': {
       'title': 'Background Side-Effects',
@@ -126,6 +102,7 @@ class _ApiDetailPageState extends State<ApiDetailPage> {
       ],
       'next': 'state-mixin',
       'nextTitle': 'Declarative Async Branching',
+      'color': AppTheme.googleBlue,
     },
     'state-mixin': {
       'title': 'Declarative Async Branching',
@@ -139,6 +116,7 @@ class _ApiDetailPageState extends State<ApiDetailPage> {
       ],
       'next': 'i18n',
       'nextTitle': 'Reactive Localization',
+      'color': AppTheme.googleGreen,
     },
     'i18n': {
       'title': 'Reactive Localization',
@@ -152,31 +130,12 @@ class _ApiDetailPageState extends State<ApiDetailPage> {
       ],
       'next': 'comparison',
       'nextTitle': 'Comparison Overview',
+      'color': AppTheme.googleGreen,
     },
   };
 
-  static Color _colorFor(String section) {
-    switch (section) {
-      case 'reactive-state':
-      case 'rxs':
-      case 'worker':
-        return AppTheme.googleBlue;
-      case 'global-di':
-      case 'state-mixin':
-      case 'i18n':
-        return AppTheme.googleGreen;
-      case 'binding-widget':
-        return AppTheme.googleRed;
-      case 'getx-service':
-        return AppTheme.googleYellow;
-      default:
-        return AppTheme.googleBlue;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    final section = widget.section;
     final double screenWidth = MediaQuery.of(context).size.width;
     final bool isMobile = screenWidth < 800;
 
@@ -187,7 +146,7 @@ class _ApiDetailPageState extends State<ApiDetailPage> {
     final List<String> points = meta['points'] as List<String>;
     final String nextSection = meta['next'] as String;
     final String nextTitle = meta['nextTitle'] as String;
-    final Color color = _colorFor(section);
+    final Color color = meta['color'] as Color;
 
     final contentBody = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -364,7 +323,7 @@ class _ApiDetailPageState extends State<ApiDetailPage> {
           // Content Area
           Expanded(
             child: SingleChildScrollView(
-              controller: _scrollController,
+              controller: controller.scrollController,
               padding: EdgeInsets.symmetric(
                 horizontal: isMobile ? 24.0 : 48.0,
                 vertical: 32.0,

@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:getx_distil/get.dart';
 import 'package:go_router/go_router.dart';
 
 import '../controllers/home_controller.dart';
-import '../controllers/docs_controller.dart';
+import '../controllers/api_detail_controller.dart';
+import '../controllers/guide_controller.dart';
 import '../views/home_page.dart';
 import '../views/guide_page.dart';
 import '../views/api_detail_page.dart';
@@ -29,7 +29,7 @@ final GoRouter router = GoRouter(
       pageBuilder: (context, state) => NoTransitionPage(
         child: BindingWidget(
           bindings: [
-            Bind<DocsController>(() => DocsController()),
+            Bind<GuideController>(() => GuideController()),
           ],
           child: const GuidePage(),
         ),
@@ -42,7 +42,7 @@ final GoRouter router = GoRouter(
         return NoTransitionPage(
           child: BindingWidget(
             bindings: [
-              Bind<DocsController>(() => DocsController()),
+              Bind<ApiDetailController>(() => ApiDetailController()),
             ],
             child: ApiDetailPage(section: section),
           ),

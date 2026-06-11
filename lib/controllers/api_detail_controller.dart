@@ -1,7 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:getx_distil/get.dart';
 
-class DocsController extends GetxController with StateMixin<Map<String, String>> {
+class ApiDetailController extends GetxController
+    with StateMixin<Map<String, String>> {
+  final ScrollController scrollController = ScrollController();
+
   // Keyed code samples
   final Map<String, String> _samples = {};
 
@@ -9,6 +13,12 @@ class DocsController extends GetxController with StateMixin<Map<String, String>>
   void onInit() {
     super.onInit();
     loadSamples();
+  }
+
+  @override
+  void onClose() {
+    scrollController.dispose();
+    super.onClose();
   }
 
   Future<void> loadSamples() async {
@@ -27,7 +37,8 @@ class DocsController extends GetxController with StateMixin<Map<String, String>>
 
       for (var key in keys) {
         try {
-          final content = await rootBundle.loadString('assets/code_samples/$key.txt');
+          final content =
+              await rootBundle.loadString('assets/code_samples/$key.txt');
           _samples[key] = content;
         } catch (e) {
           // Fallback static hardcoded code in case of bundle load delays

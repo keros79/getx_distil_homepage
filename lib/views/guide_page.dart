@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:getx_distil/get.dart';
 import 'package:go_router/go_router.dart';
 
-import '../controllers/docs_controller.dart';
+import '../controllers/guide_controller.dart';
 import '../core/app_theme.dart';
 import '../core/widgets/nav_bar.dart';
 import '../core/widgets/code_block.dart';
@@ -10,29 +10,8 @@ import '../core/widgets/glass_card.dart';
 import '../core/widgets/next_nav_card.dart';
 import '../core/widgets/app_drawer.dart';
 
-class GuidePage extends StatefulWidget {
+class GuidePage extends GetView<GuideController> {
   const GuidePage({super.key});
-
-  @override
-  State<GuidePage> createState() => _GuidePageState();
-}
-
-class _GuidePageState extends State<GuidePage> {
-  late final ScrollController _scrollController;
-  late final DocsController controller;
-
-  @override
-  void initState() {
-    super.initState();
-    controller = Get.find<DocsController>();
-    _scrollController = ScrollController();
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +23,7 @@ class _GuidePageState extends State<GuidePage> {
       endDrawer: isMobile ? const AppDrawer() : null,
       appBar: const NavBar(),
       body: SingleChildScrollView(
-        controller: _scrollController,
+        controller: controller.scrollController,
         child: Column(
           children: [
             // Contents Area
