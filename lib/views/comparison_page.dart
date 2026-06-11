@@ -810,12 +810,12 @@ class ComparisonPage extends GetView<ComparisonController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Row(
+          Row(
             children: [
-              Icon(Icons.route_rounded, color: AppTheme.googleGreen, size: 24),
-              SizedBox(width: 12.0),
-              Text('5.10 🎯 Selection Guide',
-                  style: TextStyle(
+              const Icon(Icons.route_rounded, color: AppTheme.googleGreen, size: 24),
+              const SizedBox(width: 12.0),
+              Text('comparison.selection_guide'.tr,
+                  style: const TextStyle(
                       fontFamily: 'Google Sans Flex',
                       fontSize: 18.0,
                       fontWeight: FontWeight.w700,
@@ -881,8 +881,8 @@ class ComparisonPage extends GetView<ComparisonController> {
 
   Widget _nextSectionHint(String label, String targetSection, bool isMobile, BuildContext context) {
     return NextNavCard(
-      label: 'Next section',
-      title: 'Explore $label',
+      label: 'comparison.next_section'.tr,
+      title: '${'comparison.explore'.tr} $label',
       glowColor: AppTheme.googleBlue,
       onTap: () => context.go('/comparison/$targetSection'),
     );

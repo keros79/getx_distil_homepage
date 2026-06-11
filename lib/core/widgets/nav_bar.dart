@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:getx_distil/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../app_theme.dart';
@@ -60,33 +61,33 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         if (!isMobile) ...[
           _NavLink(
-            label: 'Home',
+            label: 'nav.home'.tr,
             onPressed: () => context.go('/'),
             isActive: GoRouterState.of(context).uri.path == '/',
           ),
           _NavLink(
-            label: 'Guide',
+            label: 'nav.guide'.tr,
             onPressed: () => context.go('/guide'),
             isActive: GoRouterState.of(context).uri.path == '/guide',
           ),
           _NavLink(
-            label: 'API Reference',
+            label: 'nav.api_ref'.tr,
             onPressed: () => context.go('/api/reactive-state'),
             isActive: GoRouterState.of(context).uri.path.startsWith('/api'),
           ),
           _NavLink(
-            label: 'Comparison',
+            label: 'nav.comparison'.tr,
             onPressed: () => context.go('/comparison'),
             isActive: GoRouterState.of(context).uri.path == '/comparison' ||
                 GoRouterState.of(context).uri.path.startsWith('/comparison/'),
           ),
           _NavLink(
-            label: 'About',
+            label: 'nav.about'.tr,
             onPressed: () => context.go('/about'),
             isActive: GoRouterState.of(context).uri.path == '/about',
           ),
           _NavLink(
-            label: 'pub.dev',
+            label: 'nav.pub_dev'.tr,
             onPressed: _launchPubDev,
             isActive: false,
           ),

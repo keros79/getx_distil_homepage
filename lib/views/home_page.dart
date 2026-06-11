@@ -79,8 +79,8 @@ class HomePage extends GetView<HomeController> {
             ).createShader(bounds),
             child: Text(
               isMobile
-                  ? 'Flutter State\nManagement'
-                  : 'Flutter State Management\nDistilled & Refined',
+                  ? 'home.hero_title_mobile'.tr
+                  : 'home.hero_title_desktop'.tr,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: 'Google Sans Flex',
@@ -108,11 +108,11 @@ class HomePage extends GetView<HomeController> {
                 repeatForever: true,
                 animatedTexts: [
                   TypewriterAnimatedText(
-                    'Same Developer Experience. Zero Overhead.',
+                    'home.slogan_1'.tr,
                   ),
-                  TypewriterAnimatedText('Tree-Scoped Lifecycle & GC.'),
-                  TypewriterAnimatedText('Self-Healing Post-Frame Rebuilds.'),
-                  TypewriterAnimatedText('Fast-Path Reactive Engine.'),
+                  TypewriterAnimatedText('home.slogan_2'.tr),
+                  TypewriterAnimatedText('home.slogan_3'.tr),
+                  TypewriterAnimatedText('home.slogan_4'.tr),
                 ],
               ),
             ),
@@ -123,7 +123,7 @@ class HomePage extends GetView<HomeController> {
           SizedBox(
             width: 700.0,
             child: Text(
-              'A distilled, high-performance micro-state management and tree-scoped dependency injection (DI) engine for Flutter. Shed the legacy navigation overhead and build modern reactive architectures seamlessly.',
+              'home.hero_desc'.tr,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: 'Google Sans Flex',
@@ -170,19 +170,19 @@ class HomePage extends GetView<HomeController> {
                       vertical: 20.0,
                     ),
                   ),
-                  child: const Row(
+                  child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        'Get Started',
-                        style: TextStyle(
+                        'home.btn_get_started'.tr,
+                        style: const TextStyle(
                           fontFamily: 'Google Sans Flex',
                           fontWeight: FontWeight.bold,
                           fontSize: 16.0,
                         ),
                       ),
-                      SizedBox(width: 8.0),
-                      Icon(Icons.arrow_forward_rounded, size: 18.0),
+                      const SizedBox(width: 8.0),
+                      const Icon(Icons.arrow_forward_rounded, size: 18.0),
                     ],
                   ),
                 ),
@@ -254,12 +254,12 @@ Obx(() => rxUser.on(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Align(
+          Align(
             alignment: Alignment.center,
             child: Text(
-              'EXPERIENCE THE REACTIVITY',
+              'home.playground_label'.tr,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontFamily: 'Google Sans Flex',
                 color: AppTheme.googleBlue,
                 fontSize: 13.0,
@@ -269,10 +269,10 @@ Obx(() => rxUser.on(
             ),
           ),
           const SizedBox(height: 10.0),
-          const Align(
+          Align(
             alignment: Alignment.center,
             child: Text(
-              'Try the micro-state engine live',
+              'home.playground_title'.tr,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: 'Google Sans Flex',
@@ -317,9 +317,9 @@ Obx(() => rxUser.on(
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          '🎯 Interactive Demo Controls',
-          style: TextStyle(
+        Text(
+          'home.demo_title'.tr,
+          style: const TextStyle(
             fontFamily: 'Google Sans Flex',
             fontSize: 18.0,
             fontWeight: FontWeight.bold,
@@ -327,17 +327,17 @@ Obx(() => rxUser.on(
           ),
         ),
         const SizedBox(height: 8.0),
-        const Text(
-          'Mutate states below. Status-Aware observables automatically transition state and refresh bound Obx widgets.',
-          style: TextStyle(
+        Text(
+          'home.demo_desc'.tr,
+          style: const TextStyle(
               color: AppTheme.textSecondary, fontSize: 13.5, height: 1.4),
         ),
         const SizedBox(height: 24.0),
 
         // 1. Classic Rx Section
-        const Text(
-          '1. CLASSIC RX STATE',
-          style: TextStyle(
+        Text(
+          'home.demo_rx_label'.tr,
+          style: const TextStyle(
             fontFamily: 'Google Sans Mono',
             fontSize: 11.0,
             fontWeight: FontWeight.bold,
@@ -359,11 +359,11 @@ Obx(() => rxUser.on(
                 padding: const EdgeInsets.symmetric(
                     horizontal: 14.0, vertical: 12.0),
               ),
-              child: const Row(
+              child: Row(
                 children: [
-                  Icon(Icons.add_rounded, size: 16),
-                  SizedBox(width: 4.0),
-                  Text('Count++'),
+                  const Icon(Icons.add_rounded, size: 16),
+                  const SizedBox(width: 4.0),
+                  Text('home.btn_count_up'.tr),
                 ],
               ),
             ),
@@ -378,11 +378,11 @@ Obx(() => rxUser.on(
                 padding: const EdgeInsets.symmetric(
                     horizontal: 14.0, vertical: 12.0),
               ),
-              child: const Row(
+              child: Row(
                 children: [
-                  Icon(Icons.remove_rounded, size: 16),
-                  SizedBox(width: 4.0),
-                  Text('Count--'),
+                  const Icon(Icons.remove_rounded, size: 16),
+                  const SizedBox(width: 4.0),
+                  Text('home.btn_count_down'.tr),
                 ],
               ),
             ),
@@ -393,7 +393,7 @@ Obx(() => rxUser.on(
           onChanged: (val) => controller.textInput.value = val,
           style: const TextStyle(color: AppTheme.textPrimary, fontSize: 14.0),
           decoration: InputDecoration(
-            hintText: 'Type reactive text...',
+            hintText: 'home.demo_hint'.tr,
             hintStyle: const TextStyle(color: AppTheme.textMuted),
             filled: true,
             fillColor: Colors.black.withOpacity(0.03),
@@ -412,9 +412,9 @@ Obx(() => rxUser.on(
         const SizedBox(height: 24.0),
 
         // 2. RxSList Section
-        const Text(
-          '2. STATUS-AWARE LIST (RxSList)',
-          style: TextStyle(
+        Text(
+          'home.demo_rxslist_label'.tr,
+          style: const TextStyle(
             fontFamily: 'Google Sans Mono',
             fontSize: 11.0,
             fontWeight: FontWeight.bold,
@@ -438,7 +438,7 @@ Obx(() => rxUser.on(
                 padding: const EdgeInsets.symmetric(
                     horizontal: 14.0, vertical: 12.0),
               ),
-              child: const Text('Load Items'),
+              child: Text('home.btn_load_items'.tr),
             ),
             ElevatedButton(
               onPressed: controller.addPlaygroundItem,
@@ -451,7 +451,7 @@ Obx(() => rxUser.on(
                 padding: const EdgeInsets.symmetric(
                     horizontal: 14.0, vertical: 12.0),
               ),
-              child: const Text('Add Item'),
+              child: Text('home.btn_add_item'.tr),
             ),
             OutlinedButton(
               onPressed: controller.triggerDemoListError,
@@ -463,7 +463,7 @@ Obx(() => rxUser.on(
                 padding: const EdgeInsets.symmetric(
                     horizontal: 14.0, vertical: 12.0),
               ),
-              child: const Text('Simulate Error'),
+              child: Text('home.btn_simulate_error'.tr),
             ),
             OutlinedButton(
               onPressed: controller.clearDemoList,
@@ -475,16 +475,16 @@ Obx(() => rxUser.on(
                 padding: const EdgeInsets.symmetric(
                     horizontal: 14.0, vertical: 12.0),
               ),
-              child: const Text('Clear List'),
+              child: Text('home.btn_clear_list'.tr),
             ),
           ],
         ),
         const SizedBox(height: 24.0),
 
         // 3. RxS Section
-        const Text(
-          '3. STATUS-AWARE VALUE (RxS)',
-          style: TextStyle(
+        Text(
+          'home.demo_rxs_label'.tr,
+          style: const TextStyle(
             fontFamily: 'Google Sans Mono',
             fontSize: 11.0,
             fontWeight: FontWeight.bold,
@@ -508,7 +508,7 @@ Obx(() => rxUser.on(
                 padding: const EdgeInsets.symmetric(
                     horizontal: 14.0, vertical: 12.0),
               ),
-              child: const Text('Load User'),
+              child: Text('home.btn_load_user'.tr),
             ),
             OutlinedButton(
               onPressed: controller.triggerUserError,
@@ -520,7 +520,7 @@ Obx(() => rxUser.on(
                 padding: const EdgeInsets.symmetric(
                     horizontal: 14.0, vertical: 12.0),
               ),
-              child: const Text('Simulate Error'),
+              child: Text('home.btn_simulate_error'.tr),
             ),
             OutlinedButton(
               onPressed: controller.resetUser,
@@ -532,7 +532,7 @@ Obx(() => rxUser.on(
                 padding: const EdgeInsets.symmetric(
                     horizontal: 14.0, vertical: 12.0),
               ),
-              child: const Text('Reset Loading'),
+              child: Text('home.btn_reset_loading'.tr),
             ),
           ],
         ),
@@ -542,7 +542,7 @@ Obx(() => rxUser.on(
         TextButton.icon(
           onPressed: controller.resetDemo,
           icon: const Icon(Icons.refresh_rounded, size: 18),
-          label: const Text('Reset All Controls'),
+          label: Text('home.btn_reset_all'.tr),
           style: TextButton.styleFrom(
             foregroundColor: AppTheme.googleRed,
             padding:
@@ -567,9 +567,9 @@ Obx(() => rxUser.on(
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                '🟢 LIVE STATE VIEWS',
-                style: TextStyle(
+              Text(
+                'home.live_state_label'.tr,
+                style: const TextStyle(
                   fontFamily: 'Google Sans Mono',
                   fontSize: 12.0,
                   color: AppTheme.googleGreen,
@@ -578,7 +578,8 @@ Obx(() => rxUser.on(
               ),
               Obx(
                 () => Text(
-                  'Mutations: ${controller.clicks.value}',
+                  'home.mutations_count'
+                      .trParams({'count': '${controller.clicks.value}'}),
                   style: const TextStyle(
                     fontFamily: 'Google Sans Mono',
                     color: AppTheme.textMuted,
@@ -723,9 +724,9 @@ Obx(() => rxUser.on(
                       );
                     }).toList(),
                   ),
-                  empty: () => const Text(
-                    'List status is Empty.',
-                    style: TextStyle(
+                  empty: () => Text(
+                    'home.list_empty'.tr,
+                    style: const TextStyle(
                         color: AppTheme.textMuted,
                         fontSize: 13.0,
                         fontStyle: FontStyle.italic),
@@ -895,65 +896,57 @@ Obx(() => rxUser.on(
   Widget _buildFeatures(BuildContext context, bool isMobile) {
     final List<Map<String, dynamic>> features = [
       {
-        'title': 'Reactive State (Rx & Obx)',
-        'description':
-            'Declare states with simple .obs and build lightweight reactive widgets that listen only to target properties.',
+        'title': 'home.feat.reactive_state.title'.tr,
+        'description': 'home.feat.reactive_state.desc'.tr,
         'icon': Icons.track_changes_rounded,
         'color': AppTheme.googleBlue,
         'path': 'reactive-state',
       },
       {
-        'title': 'Status-Aware (RxSList & RxS)',
-        'description':
-            'Simplify async state lifecycle handling. Carry loading, loaded, empty, and error status directly inside your reactive observables.',
+        'title': 'home.feat.rxs.title'.tr,
+        'description': 'home.feat.rxs.desc'.tr,
         'icon': Icons.playlist_add_check_rounded,
         'color': AppTheme.googleBlue,
         'path': 'rxs',
       },
       {
-        'title': 'Global & Scoped DI',
-        'description':
-            'Access components anywhere without contexts. Fallback pipelines search for scoped instances before searching global registries.',
+        'title': 'home.feat.global_di.title'.tr,
+        'description': 'home.feat.global_di.desc'.tr,
         'icon': Icons.settings_input_component_rounded,
         'color': AppTheme.googleGreen,
         'path': 'global-di',
       },
       {
-        'title': 'Tree-Scoped Lifecycle',
-        'description':
-            'Isolate views and controller instances cleanly. Bind controllers directly to screens and let them Auto-GC upon unmounting.',
+        'title': 'home.feat.binding_widget.title'.tr,
+        'description': 'home.feat.binding_widget.desc'.tr,
         'icon': Icons.account_tree_rounded,
         'color': AppTheme.googleRed,
         'path': 'binding-widget',
       },
       {
-        'title': 'Global Persistent Services',
-        'description':
-            'Keep vital background resources (like databases or APIs) permanently in memory as Immortal Singletons.',
+        'title': 'home.feat.getx_service.title'.tr,
+        'description': 'home.feat.getx_service.desc'.tr,
         'icon': Icons.cloud_done_rounded,
         'color': AppTheme.googleYellow,
         'path': 'getx-service',
       },
       {
-        'title': 'Background Workers',
-        'description':
-            'Configure reactive pipelines with debouncing and throttling algorithms that trigger background procedures safely.',
+        'title': 'home.feat.worker.title'.tr,
+        'description': 'home.feat.worker.desc'.tr,
         'icon': Icons.alarm_on_rounded,
         'color': AppTheme.googleBlue,
         'path': 'worker',
       },
       {
-        'title': 'StateMixin Framework',
-        'description':
-            'Handle async payloads with high-level builders that structure loading, success, empty, and failure layout branches cleanly.',
+        'title': 'home.feat.state_mixin.title'.tr,
+        'description': 'home.feat.state_mixin.desc'.tr,
         'icon': Icons.swap_horiz_rounded,
         'color': AppTheme.googleGreen,
         'path': 'state-mixin',
       },
       {
-        'title': 'Reactive Localization',
-        'description':
-            'Swap languages instantly without triggering complex rebuild processes. Translates values on-the-fly dynamically.',
+        'title': 'home.feat.i18n.title'.tr,
+        'description': 'home.feat.i18n.desc'.tr,
         'icon': Icons.translate_rounded,
         'color': AppTheme.googleYellow,
         'path': 'i18n',
@@ -966,9 +959,9 @@ Obx(() => rxUser.on(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const Text(
-            'DESIGN SYSTEM FEATURES',
-            style: TextStyle(
+          Text(
+            'home.features_label'.tr,
+            style: const TextStyle(
               fontFamily: 'Google Sans Flex',
               color: AppTheme.googleGreen,
               fontSize: 13.0,
@@ -977,10 +970,10 @@ Obx(() => rxUser.on(
             ),
           ),
           const SizedBox(height: 10.0),
-          const Text(
-            'Refined Micro-Architectures',
+          Text(
+            'home.features_title'.tr,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               fontFamily: 'Google Sans Flex',
               color: AppTheme.textPrimary,
               fontSize: 32.0,
@@ -1023,19 +1016,19 @@ Obx(() => rxUser.on(
                           ),
                         ),
                         const SizedBox(height: 20.0),
-                        const Row(
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Text(
-                              'Learn More',
-                              style: TextStyle(
+                              'home.btn_learn_more'.tr,
+                              style: const TextStyle(
                                 color: AppTheme.textSecondary,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 12.0,
                               ),
                             ),
-                            SizedBox(width: 4.0),
-                            Icon(
+                            const SizedBox(width: 4.0),
+                            const Icon(
                               Icons.arrow_forward_rounded,
                               size: 14.0,
                               color: AppTheme.textSecondary,
@@ -1095,19 +1088,19 @@ Obx(() => rxUser.on(
                           ),
                         ],
                       ),
-                      const Row(
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(
-                            'Learn More',
-                            style: TextStyle(
+                            'home.btn_learn_more'.tr,
+                            style: const TextStyle(
                               color: AppTheme.textSecondary,
                               fontWeight: FontWeight.bold,
                               fontSize: 12.0,
                             ),
                           ),
-                          SizedBox(width: 4.0),
-                          Icon(
+                          const SizedBox(width: 4.0),
+                          const Icon(
                             Icons.arrow_forward_rounded,
                             size: 14.0,
                             color: AppTheme.textSecondary,
@@ -1158,26 +1151,26 @@ Obx(() => rxUser.on(
                           color: Colors.black.withOpacity(0.05),
                         ),
                       ),
-                      child: const Column(
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           _ArchitectureBadge(
-                            text: 'GetMaterialApp',
+                            text: 'home.badge_material_app'.tr,
                             color: AppTheme.googleBlue,
                           ),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                           _ArchitectureBadge(
-                            text: 'GoRouter Config',
+                            text: 'home.badge_go_router'.tr,
                             color: AppTheme.googleGreen,
                           ),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                           _ArchitectureBadge(
-                            text: 'BindingWidget Scopes',
+                            text: 'home.badge_binding_widget'.tr,
                             color: AppTheme.googleRed,
                           ),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                           _ArchitectureBadge(
-                            text: 'GetView Page',
+                            text: 'home.badge_get_view'.tr,
                             color: AppTheme.googleYellow,
                           ),
                         ],
@@ -1192,9 +1185,9 @@ Obx(() => rxUser.on(
 
   List<Widget> _buildArchitectureContent(BuildContext context, bool isMobile) {
     return [
-      const Text(
-        'ARCHITECTURE PATTERN',
-        style: TextStyle(
+      Text(
+        'home.arch_label'.tr,
+        style: const TextStyle(
           fontFamily: 'Google Sans Flex',
           color: AppTheme.googleRed,
           fontSize: 12.0,
@@ -1203,9 +1196,9 @@ Obx(() => rxUser.on(
         ),
       ),
       const SizedBox(height: 12.0),
-      const Text(
-        'Aligned with Declarative Flutter',
-        style: TextStyle(
+      Text(
+        'home.arch_title'.tr,
+        style: const TextStyle(
           fontFamily: 'Google Sans Flex',
           color: AppTheme.textPrimary,
           fontSize: 26.0,
@@ -1213,9 +1206,9 @@ Obx(() => rxUser.on(
         ),
       ),
       const SizedBox(height: 16.0),
-      const Text(
-        'Incorporating GetX DX patterns into standard declarative routers (like GoRouter) is simplified with getx_distil. Bind controllers and views cleanly to widget tree life cycles without global route engine overheads.',
-        style: TextStyle(
+      Text(
+        'home.arch_desc'.tr,
+        style: const TextStyle(
           color: AppTheme.textSecondary,
           height: 1.5,
           fontSize: 14.5,
@@ -1233,7 +1226,7 @@ Obx(() => rxUser.on(
           ),
           padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
         ),
-        child: const Text('Read Architecture Guide'),
+        child: Text('home.btn_arch_guide'.tr),
       ),
     ];
   }
@@ -1289,7 +1282,7 @@ Obx(() => rxUser.on(
                           size: 20,
                         ),
                         onPressed: _launchGitHub,
-                        tooltip: 'GitHub Repository',
+                        tooltip: 'home.tooltip_github'.tr,
                       ),
                       const SizedBox(width: 12.0),
                       IconButton(
@@ -1299,7 +1292,7 @@ Obx(() => rxUser.on(
                           size: 20,
                         ),
                         onPressed: () => context.go('/about'),
-                        tooltip: 'About Developer',
+                        tooltip: 'home.tooltip_about'.tr,
                       ),
                     ],
                   ),
@@ -1309,13 +1302,13 @@ Obx(() => rxUser.on(
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    '© 2026 getx_distil. Open source under MIT License.',
-                    style: TextStyle(color: AppTheme.textMuted, fontSize: 12.0),
+                  Text(
+                    'home.footer_copy'.tr,
+                    style: const TextStyle(color: AppTheme.textMuted, fontSize: 12.0),
                   ),
-                  const Text(
-                    'v1.4.1+12',
-                    style: TextStyle(color: AppTheme.textMuted, fontSize: 12.0),
+                  Text(
+                    'home.footer_version'.tr,
+                    style: const TextStyle(color: AppTheme.textMuted, fontSize: 12.0),
                   ),
                 ],
               ),

@@ -36,9 +36,9 @@ class ApiDetailPage extends GetView<ApiDetailController> {
         // Category / Breadcrumb
         Row(
           children: [
-            const Text(
-              'API REFERENCE',
-              style: TextStyle(
+            Text(
+              'api.breadcrumb'.tr,
+              style: const TextStyle(
                 fontFamily: 'Google Sans Flex',
                 fontSize: 12.0,
                 fontWeight: FontWeight.bold,
@@ -90,8 +90,8 @@ class ApiDetailPage extends GetView<ApiDetailController> {
         const SizedBox(height: 32.0),
 
         // Points
-        const Text(
-          'KEY ENHANCEMENTS',
+        Text(
+          'api.key_enhancements'.tr,
           style: TextStyle(
             fontFamily: 'Google Sans Flex',
             fontSize: 12.0,
@@ -144,8 +144,8 @@ class ApiDetailPage extends GetView<ApiDetailController> {
         const SizedBox(height: 32.0),
 
         // Live Demo Code
-        const Text(
-          'IMPLEMENTATION EXAMPLE',
+        Text(
+          'api.impl_example'.tr,
           style: TextStyle(
             fontFamily: 'Google Sans Flex',
             fontSize: 12.0,
@@ -177,8 +177,8 @@ class ApiDetailPage extends GetView<ApiDetailController> {
 
         // Next Card
         NextNavCard(
-          label: 'Next up',
-          title: 'Explore $nextTitle',
+          label: 'api.next_up'.tr,
+          title: '${'api.next_explore'.tr} $nextTitle',
           glowColor: color,
           onTap: () {
             if (nextSection == 'comparison') {

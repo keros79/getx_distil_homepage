@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:getx_distil/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../app_theme.dart';
@@ -92,9 +93,9 @@ class _AppDrawerState extends State<AppDrawer> {
                   children: [
                     // Home
                     ListTile(
-                      title: const Text(
-                        'Home',
-                        style: TextStyle(
+                      title: Text(
+                        'nav.home'.tr,
+                        style: const TextStyle(
                           fontSize: 30,
                           fontWeight: FontWeight.w400,
                         ),
@@ -110,9 +111,9 @@ class _AppDrawerState extends State<AppDrawer> {
 
                     // Guide
                     ListTile(
-                      title: const Text(
-                        'Guide',
-                        style: TextStyle(
+                      title: Text(
+                        'nav.guide'.tr,
+                        style: const TextStyle(
                           fontSize: 30,
                           fontWeight: FontWeight.w400,
                         ),
@@ -137,9 +138,9 @@ class _AppDrawerState extends State<AppDrawer> {
                       ),
                       child: ExpansionTile(
                         controller: _apiController,
-                        title: const Text(
-                          'Api detail',
-                          style: TextStyle(
+                        title: Text(
+                          'nav.api_ref'.tr,
+                          style: const TextStyle(
                             fontSize: 30,
                             fontWeight: FontWeight.w400,
                           ),
@@ -186,9 +187,9 @@ class _AppDrawerState extends State<AppDrawer> {
                       ),
                       child: ExpansionTile(
                         controller: _comparisonController,
-                        title: const Text(
-                          'Comparison',
-                          style: TextStyle(
+                        title: Text(
+                          'nav.comparison'.tr,
+                          style: const TextStyle(
                             fontSize: 30,
                             fontWeight: FontWeight.w400,
                           ),
@@ -227,9 +228,9 @@ class _AppDrawerState extends State<AppDrawer> {
 
                     // About Developer
                     ListTile(
-                      title: const Text(
-                        'About Developer',
-                        style: TextStyle(
+                      title: Text(
+                        'nav.about_dev'.tr,
+                        style: const TextStyle(
                           fontSize: 30,
                           fontWeight: FontWeight.w400,
                         ),
@@ -245,9 +246,9 @@ class _AppDrawerState extends State<AppDrawer> {
 
                     // pub.dev
                     ListTile(
-                      title: const Text(
-                        'pub.dev',
-                        style: TextStyle(
+                      title: Text(
+                        'nav.pub_dev'.tr,
+                        style: const TextStyle(
                           fontSize: 30,
                           fontWeight: FontWeight.w400,
                         ),
