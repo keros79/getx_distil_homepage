@@ -6,6 +6,7 @@ import '../core/widgets/nav_bar.dart';
 import '../core/widgets/sidebar_toc_comparison.dart';
 import '../core/widgets/code_block.dart';
 import '../core/widgets/glass_card.dart';
+import '../core/widgets/next_nav_card.dart';
 import '../core/widgets/app_drawer.dart';
 
 // ──────────────────────────────────────────────
@@ -1627,34 +1628,11 @@ class _ComparisonPageState extends State<ComparisonPage> {
   }
 
   Widget _nextSectionHint(String label, String targetSection, bool isMobile) {
-    return GlassCard(
+    return NextNavCard(
+      label: 'Next section',
+      title: 'Explore $label',
       glowColor: AppTheme.googleBlue,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text('Next section',
-                  style: TextStyle(
-                      color: AppTheme.textMuted,
-                      fontSize: 13.0,
-                      fontWeight: FontWeight.bold)),
-              const SizedBox(height: 4.0),
-              Text('Explore $label',
-                  style: const TextStyle(
-                      color: AppTheme.textPrimary,
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold)),
-            ],
-          ),
-          IconButton(
-            icon: const Icon(Icons.arrow_forward_rounded,
-                color: AppTheme.googleBlue),
-            onPressed: () => context.go('/comparison/$targetSection'),
-          ),
-        ],
-      ),
+      onTap: () => context.go('/comparison/$targetSection'),
     );
   }
 }

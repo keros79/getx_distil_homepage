@@ -7,6 +7,7 @@ import '../core/app_theme.dart';
 import '../core/widgets/nav_bar.dart';
 import '../core/widgets/code_block.dart';
 import '../core/widgets/glass_card.dart';
+import '../core/widgets/next_nav_card.dart';
 import '../core/widgets/app_drawer.dart';
 
 class GuidePage extends StatefulWidget {
@@ -195,42 +196,11 @@ class MyApp extends StatelessWidget {
                     const SizedBox(height: 48.0),
 
                     // Bottom Navigation Card
-                    GlassCard(
+                    NextNavCard(
+                      label: 'Next up',
+                      title: 'Explore Reactive State (Rx & Obx)',
                       glowColor: AppTheme.googleGreen,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'Next up',
-                                style: TextStyle(
-                                  color: AppTheme.textMuted,
-                                  fontSize: 13.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              const SizedBox(height: 4.0),
-                              const Text(
-                                'Explore Reactive State (Rx & Obx)',
-                                style: TextStyle(
-                                  color: AppTheme.textPrimary,
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                          IconButton(
-                            icon: const Icon(
-                              Icons.arrow_forward_rounded,
-                              color: AppTheme.googleGreen,
-                            ),
-                            onPressed: () => context.go('/api/reactive-state'),
-                          ),
-                        ],
-                      ),
+                      onTap: () => context.go('/api/reactive-state'),
                     ),
                     const SizedBox(height: 80.0),
                   ],
