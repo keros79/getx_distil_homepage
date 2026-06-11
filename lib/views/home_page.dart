@@ -8,7 +8,6 @@ import '../controllers/home_controller.dart';
 import '../core/app_theme.dart';
 import '../core/widgets/nav_bar.dart';
 import '../core/widgets/particle_field.dart';
-import '../core/widgets/animated_orb.dart';
 import '../core/widgets/glass_card.dart';
 import '../core/widgets/code_block.dart';
 import '../core/widgets/app_drawer.dart';
@@ -35,28 +34,6 @@ class HomePage extends GetView<HomeController> {
         children: [
           // 1. Particle Background
           const ParticleField(),
-
-          // 2. Glowing Orbs (Fluid pastel colors for Light Theme)
-          Positioned(
-            top: -150,
-            right: -100,
-            child: const AnimatedOrb(
-              width: 500,
-              height: 500,
-              colors: [Color(0x1A4285F4), Color(0x0034A853)],
-              duration: Duration(seconds: 18),
-            ),
-          ),
-          Positioned(
-            bottom: -200,
-            left: -150,
-            child: const AnimatedOrb(
-              width: 600,
-              height: 600,
-              colors: [Color(0x12EA4335), Color(0x00FBBC04)],
-              duration: Duration(seconds: 22),
-            ),
-          ),
 
           // 3. Scrollable Contents
           Positioned.fill(
