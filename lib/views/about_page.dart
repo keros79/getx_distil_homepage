@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:getx_distil/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../core/app_theme.dart';
@@ -73,9 +74,9 @@ class AboutPage extends StatelessWidget {
                     const SizedBox(height: 24.0),
 
                     // Name
-                    const Text(
-                      'Danny Kang',
-                      style: TextStyle(
+                    Text(
+                      'about.name'.tr,
+                      style: const TextStyle(
                         fontFamily: 'Google Sans Flex',
                         fontSize: 32.0,
                         fontWeight: FontWeight.bold,
@@ -84,9 +85,9 @@ class AboutPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 8.0),
-                    const Text(
-                      'Flutter Framework & Architecture Engineer',
-                      style: TextStyle(
+                    Text(
+                      'about.role'.tr,
+                      style: const TextStyle(
                         fontFamily: 'Google Sans Flex',
                         fontSize: 16.0,
                         fontWeight: FontWeight.w400,
@@ -101,9 +102,9 @@ class AboutPage extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            'ABOUT THE DEVELOPER',
-                            style: TextStyle(
+                          Text(
+                            'about.section_title'.tr,
+                            style: const TextStyle(
                               fontFamily: 'Google Sans Flex',
                               fontSize: 12.0,
                               fontWeight: FontWeight.bold,
@@ -112,18 +113,18 @@ class AboutPage extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 16.0),
-                          const Text(
-                            'Hello! I am a passionate mobile and web framework engineer interested in Flutter, state machines, reactive programming, and modular Dependency Injection (DI) system design. My goal is to build tools that maximize developer productivity and maintain high visual excellence.',
-                            style: TextStyle(
+                          Text(
+                            'about.intro_1'.tr,
+                            style: const TextStyle(
                               color: AppTheme.textSecondary,
                               fontSize: 14.5,
                               height: 1.6,
                             ),
                           ),
                           const SizedBox(height: 16.0),
-                          const Text(
-                            'I pioneered "getx_distil" out of a practical need to integrate the reactive DX paradigms of GetX with modern declarative routers like GoRouter, completely removing unnecessary legacy global overlays and fixing concurrency issues.',
-                            style: TextStyle(
+                          Text(
+                            'about.intro_2'.tr,
+                            style: const TextStyle(
                               color: AppTheme.textSecondary,
                               fontSize: 14.5,
                               height: 1.6,
@@ -175,18 +176,18 @@ class AboutPage extends StatelessWidget {
             size: 28.0,
           ),
           const SizedBox(height: 12.0),
-          const Text(
-            'GitHub Profile',
-            style: TextStyle(
+          Text(
+            'about.github_title'.tr,
+            style: const TextStyle(
               color: AppTheme.textPrimary,
               fontSize: 16.0,
               fontWeight: FontWeight.bold,
             ),
           ),
           const SizedBox(height: 8.0),
-          const Text(
-            'Checkout repositories, open-source utilities, and contribute to getx_distil packages.',
-            style: TextStyle(
+          Text(
+            'about.github_desc'.tr,
+            style: const TextStyle(
               color: AppTheme.textSecondary,
               fontSize: 13.0,
               height: 1.4,
@@ -195,9 +196,9 @@ class AboutPage extends StatelessWidget {
           const SizedBox(height: 16.0),
           TextButton(
             onPressed: () => _launchUrl('https://github.com/keros79'),
-            child: const Text(
-              'Visit GitHub ->',
-              style: TextStyle(
+            child: Text(
+              'about.github_link'.tr,
+              style: const TextStyle(
                 color: AppTheme.googleGreen,
                 fontWeight: FontWeight.bold,
               ),
@@ -221,18 +222,18 @@ class AboutPage extends StatelessWidget {
             size: 28.0,
           ),
           const SizedBox(height: 12.0),
-          const Text(
-            'pub.dev Packages',
-            style: TextStyle(
+          Text(
+            'about.pub_title'.tr,
+            style: const TextStyle(
               color: AppTheme.textPrimary,
               fontSize: 16.0,
               fontWeight: FontWeight.bold,
             ),
           ),
           const SizedBox(height: 8.0),
-          const Text(
-            'Explore published packages, benchmarks, documentation scoring, and installations.',
-            style: TextStyle(
+          Text(
+            'about.pub_desc'.tr,
+            style: const TextStyle(
               color: AppTheme.textSecondary,
               fontSize: 13.0,
               height: 1.4,
@@ -241,9 +242,9 @@ class AboutPage extends StatelessWidget {
           const SizedBox(height: 16.0),
           TextButton(
             onPressed: () => _launchUrl('https://pub.dev/packages/getx_distil'),
-            child: const Text(
-              'Visit pub.dev ->',
-              style: TextStyle(
+            child: Text(
+              'about.pub_link'.tr,
+              style: const TextStyle(
                 color: AppTheme.googleYellow,
                 fontWeight: FontWeight.bold,
               ),

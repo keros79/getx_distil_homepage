@@ -60,7 +60,6 @@ class _ApiDetailPageState extends State<ApiDetailPage> {
       ],
       'next': 'rxs',
       'nextTitle': 'Status-Aware Observables',
-      'color': AppTheme.googleBlue,
     },
     'rxs': {
       'title': 'Status-Aware Observables (RxSList & RxS)',
@@ -75,7 +74,6 @@ class _ApiDetailPageState extends State<ApiDetailPage> {
       ],
       'next': 'global-di',
       'nextTitle': 'Global Dependency Injection',
-      'color': AppTheme.googleBlue,
     },
     'global-di': {
       'title': 'Global Dependency Injection',
@@ -89,7 +87,6 @@ class _ApiDetailPageState extends State<ApiDetailPage> {
       ],
       'next': 'binding-widget',
       'nextTitle': 'Widget Tree Scoped DI',
-      'color': AppTheme.googleGreen,
     },
     'binding-widget': {
       'title': 'Widget Tree Scoped DI',
@@ -103,7 +100,6 @@ class _ApiDetailPageState extends State<ApiDetailPage> {
       ],
       'next': 'getx-service',
       'nextTitle': 'Global Persistent Services',
-      'color': AppTheme.googleRed,
     },
     'getx-service': {
       'title': 'Global Persistent Services',
@@ -117,7 +113,6 @@ class _ApiDetailPageState extends State<ApiDetailPage> {
       ],
       'next': 'worker',
       'nextTitle': 'Background Side-Effects',
-      'color': AppTheme.googleYellow,
     },
     'worker': {
       'title': 'Background Side-Effects',
@@ -131,7 +126,6 @@ class _ApiDetailPageState extends State<ApiDetailPage> {
       ],
       'next': 'state-mixin',
       'nextTitle': 'Declarative Async Branching',
-      'color': AppTheme.googleBlue,
     },
     'state-mixin': {
       'title': 'Declarative Async Branching',
@@ -145,7 +139,6 @@ class _ApiDetailPageState extends State<ApiDetailPage> {
       ],
       'next': 'i18n',
       'nextTitle': 'Reactive Localization',
-      'color': AppTheme.googleGreen,
     },
     'i18n': {
       'title': 'Reactive Localization',
@@ -159,9 +152,27 @@ class _ApiDetailPageState extends State<ApiDetailPage> {
       ],
       'next': 'comparison',
       'nextTitle': 'Comparison Overview',
-      'color': AppTheme.googleGreen,
     },
   };
+
+  static Color _colorFor(String section) {
+    switch (section) {
+      case 'reactive-state':
+      case 'rxs':
+      case 'worker':
+        return AppTheme.googleBlue;
+      case 'global-di':
+      case 'state-mixin':
+      case 'i18n':
+        return AppTheme.googleGreen;
+      case 'binding-widget':
+        return AppTheme.googleRed;
+      case 'getx-service':
+        return AppTheme.googleYellow;
+      default:
+        return AppTheme.googleBlue;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -176,7 +187,7 @@ class _ApiDetailPageState extends State<ApiDetailPage> {
     final List<String> points = meta['points'] as List<String>;
     final String nextSection = meta['next'] as String;
     final String nextTitle = meta['nextTitle'] as String;
-    final Color color = meta['color'] as Color;
+    final Color color = _colorFor(section);
 
     final contentBody = Column(
       crossAxisAlignment: CrossAxisAlignment.start,

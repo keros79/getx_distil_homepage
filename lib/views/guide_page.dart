@@ -59,8 +59,8 @@ class _GuidePageState extends State<GuidePage> {
                     Row(
                       children: [
                         Text(
-                          'DOCUMENTATION',
-                          style: TextStyle(
+                          'guide.breadcrumb_1'.tr,
+                          style: const TextStyle(
                             fontFamily: 'Google Sans Flex',
                             fontSize: 12.0,
                             fontWeight: FontWeight.bold,
@@ -75,9 +75,9 @@ class _GuidePageState extends State<GuidePage> {
                           size: 16.0,
                         ),
                         const SizedBox(width: 8.0),
-                        const Text(
-                          'GETTING STARTED',
-                          style: TextStyle(
+                        Text(
+                          'guide.breadcrumb_2'.tr,
+                          style: const TextStyle(
                             fontFamily: 'Google Sans Flex',
                             fontSize: 12.0,
                             fontWeight: FontWeight.bold,
@@ -90,9 +90,9 @@ class _GuidePageState extends State<GuidePage> {
                     const SizedBox(height: 16.0),
 
                     // Header Title
-                    const Text(
-                      'Quick Start Guide',
-                      style: TextStyle(
+                    Text(
+                      'guide.title'.tr,
+                      style: const TextStyle(
                         fontFamily: 'Google Sans Flex',
                         fontSize: 38.0,
                         fontWeight: FontWeight.w800,
@@ -101,9 +101,9 @@ class _GuidePageState extends State<GuidePage> {
                       ),
                     ),
                     const SizedBox(height: 12.0),
-                    const Text(
-                      'Learn how to integrate getx_distil and deploy high-performance reactive architectures in under 5 minutes.',
-                      style: TextStyle(
+                    Text(
+                      'guide.description'.tr,
+                      style: const TextStyle(
                         color: AppTheme.textSecondary,
                         fontSize: 16.0,
                         height: 1.5,
@@ -112,10 +112,10 @@ class _GuidePageState extends State<GuidePage> {
                     const SizedBox(height: 40.0),
 
                     // Step 1: Installation
-                    _buildSectionTitle('1. Add getx_distil dependency'),
-                    const Text(
-                      'Add getx_distil to your Flutter project using command line or configure it in pubspec.yaml file.',
-                      style: TextStyle(
+                    _buildSectionTitle('guide.step1_title'.tr),
+                    Text(
+                      'guide.step1_desc'.tr,
+                      style: const TextStyle(
                         color: AppTheme.textSecondary,
                         height: 1.5,
                       ),
@@ -128,10 +128,10 @@ class _GuidePageState extends State<GuidePage> {
                     const SizedBox(height: 32.0),
 
                     // Step 2: Main Application Config
-                    _buildSectionTitle('2. Set up GetMaterialApp'),
-                    const Text(
-                      'Configure the router and theme systems inside your core entry point using GetMaterialApp.',
-                      style: TextStyle(
+                    _buildSectionTitle('guide.step2_title'.tr),
+                    Text(
+                      'guide.step2_desc'.tr,
+                      style: const TextStyle(
                         color: AppTheme.textSecondary,
                         height: 1.5,
                       ),
@@ -161,10 +161,10 @@ class MyApp extends StatelessWidget {
                     const SizedBox(height: 32.0),
 
                     // Step 3: Implement Reactive State (Using controller.obx for lazy asset state load)
-                    _buildSectionTitle('3. Create a Controller & View'),
-                    const Text(
-                      'Structure your controller classes with .obs properties. Bind the view elements with Obx wrappers to catch updates reactively.',
-                      style: TextStyle(
+                    _buildSectionTitle('guide.step3_title'.tr),
+                    Text(
+                      'guide.step3_desc'.tr,
+                      style: const TextStyle(
                         color: AppTheme.textSecondary,
                         height: 1.5,
                       ),
@@ -197,8 +197,8 @@ class MyApp extends StatelessWidget {
 
                     // Bottom Navigation Card
                     NextNavCard(
-                      label: 'Next up',
-                      title: 'Explore Reactive State (Rx & Obx)',
+                      label: 'guide.next_label'.tr,
+                      title: 'guide.next_title'.tr,
                       glowColor: AppTheme.googleGreen,
                       onTap: () => context.go('/api/reactive-state'),
                     ),
