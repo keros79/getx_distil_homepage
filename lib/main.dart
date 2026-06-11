@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:getx_distil/get.dart';
 import 'core/app_router.dart';
 import 'core/app_theme.dart';
 
 void main() {
+  usePathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
