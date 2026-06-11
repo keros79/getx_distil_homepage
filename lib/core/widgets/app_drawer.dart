@@ -3,8 +3,16 @@ import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../app_theme.dart';
 
-class AppDrawer extends StatelessWidget {
+class AppDrawer extends StatefulWidget {
   const AppDrawer({super.key});
+
+  @override
+  State<AppDrawer> createState() => _AppDrawerState();
+}
+
+class _AppDrawerState extends State<AppDrawer> {
+  final ExpansionTileController _apiController = ExpansionTileController();
+  final ExpansionTileController _comparisonController = ExpansionTileController();
 
   void _launchPubDev() async {
     final Uri url = Uri.parse('https://pub.dev/packages/getx_distil');
@@ -128,6 +136,7 @@ class AppDrawer extends StatelessWidget {
                         splashFactory: NoSplash.splashFactory,
                       ),
                       child: ExpansionTile(
+                        controller: _apiController,
                         title: const Text(
                           'Api detail',
                           style: TextStyle(
@@ -140,6 +149,11 @@ class AppDrawer extends StatelessWidget {
                         initiallyExpanded: currentLocation.startsWith('/api/'),
                         iconColor: Colors.black,
                         collapsedIconColor: Colors.black,
+                        onExpansionChanged: (expanded) {
+                          if (expanded) {
+                            _comparisonController.collapse();
+                          }
+                        },
                         children: _apiSections.map((section) {
                           final targetPath = '/api/${section['path']}';
                           return ListTile(
@@ -171,6 +185,7 @@ class AppDrawer extends StatelessWidget {
                         splashFactory: NoSplash.splashFactory,
                       ),
                       child: ExpansionTile(
+                        controller: _comparisonController,
                         title: const Text(
                           'Comparison',
                           style: TextStyle(
@@ -184,6 +199,11 @@ class AppDrawer extends StatelessWidget {
                             currentLocation.startsWith('/comparison/'),
                         iconColor: Colors.black,
                         collapsedIconColor: Colors.black,
+                        onExpansionChanged: (expanded) {
+                          if (expanded) {
+                            _apiController.collapse();
+                          }
+                        },
                         children: _comparisonSections.map((section) {
                           final targetPath = '/comparison/${section['path']}';
                           return ListTile(
