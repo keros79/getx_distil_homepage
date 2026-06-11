@@ -31,8 +31,6 @@ class HomePage extends GetView<HomeController> {
       endDrawer: isMobile ? const AppDrawer() : null,
       body: Stack(
         children: [
-
-
           // 3. Scrollable Contents
           Positioned.fill(
             child: SingleChildScrollView(
@@ -1333,7 +1331,7 @@ Obx(() => rxUser.on(
                     style: TextStyle(color: AppTheme.textMuted, fontSize: 12.0),
                   ),
                   const Text(
-                    'v1.4.0+11',
+                    'v1.4.1+12',
                     style: TextStyle(color: AppTheme.textMuted, fontSize: 12.0),
                   ),
                 ],
