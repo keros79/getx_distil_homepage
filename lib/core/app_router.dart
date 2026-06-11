@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../controllers/home_controller.dart';
 import '../controllers/api_detail_controller.dart';
 import '../controllers/guide_controller.dart';
+import '../controllers/comparison_controller.dart';
 import '../views/home_page.dart';
 import '../views/guide_page.dart';
 import '../views/api_detail_page.dart';
@@ -57,8 +58,13 @@ final GoRouter router = GoRouter(
     ),
     GoRoute(
       path: '/comparison',
-      pageBuilder: (context, state) => const NoTransitionPage(
-        child: ComparisonPage(),
+      pageBuilder: (context, state) => NoTransitionPage(
+        child: BindingWidget(
+          bindings: [
+            Bind<ComparisonController>(() => ComparisonController()),
+          ],
+          child: const ComparisonPage(),
+        ),
       ),
     ),
     GoRoute(
@@ -66,7 +72,12 @@ final GoRouter router = GoRouter(
       pageBuilder: (context, state) {
         final section = state.pathParameters['section'] ?? 'overview';
         return NoTransitionPage(
-          child: ComparisonPage(section: section),
+          child: BindingWidget(
+            bindings: [
+              Bind<ComparisonController>(() => ComparisonController()),
+            ],
+            child: ComparisonPage(section: section),
+          ),
         );
       },
     ),
