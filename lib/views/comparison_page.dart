@@ -6,7 +6,6 @@ import '../core/widgets/nav_bar.dart';
 import '../core/widgets/sidebar_toc_comparison.dart';
 import '../core/widgets/code_block.dart';
 import '../core/widgets/glass_card.dart';
-import '../core/widgets/particle_field.dart';
 import '../core/widgets/app_drawer.dart';
 
 // ──────────────────────────────────────────────
@@ -780,7 +779,6 @@ class _ComparisonPageState extends State<ComparisonPage> {
       endDrawer: isMobile ? const AppDrawer() : null,
       body: Stack(
         children: [
-          const ParticleField(),
           Positioned.fill(
             child: Column(
               children: [

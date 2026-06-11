@@ -3,7 +3,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../core/app_theme.dart';
 import '../core/widgets/nav_bar.dart';
-import '../core/widgets/particle_field.dart';
 import '../core/widgets/glass_card.dart';
 import '../core/widgets/app_drawer.dart';
 
@@ -52,8 +51,7 @@ class _AboutPageState extends State<AboutPage> {
       endDrawer: isMobile ? const AppDrawer() : null,
       body: Stack(
         children: [
-          // Background particles
-          const ParticleField(),
+
 
           // Main contents scroll view
           Positioned.fill(

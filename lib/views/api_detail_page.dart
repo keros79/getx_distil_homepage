@@ -8,7 +8,6 @@ import '../core/widgets/nav_bar.dart';
 import '../core/widgets/sidebar_toc.dart';
 import '../core/widgets/code_block.dart';
 import '../core/widgets/glass_card.dart';
-import '../core/widgets/particle_field.dart';
 import '../core/widgets/app_drawer.dart';
 
 class ApiDetailPage extends StatefulWidget {
@@ -380,9 +379,6 @@ class _ApiDetailPageState extends State<ApiDetailPage> {
       endDrawer: isMobile ? const AppDrawer() : null,
       body: Stack(
         children: [
-          // Background particles
-          const ParticleField(),
-
           Positioned.fill(
             child: Column(
               children: [

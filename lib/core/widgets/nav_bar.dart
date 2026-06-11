@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -21,26 +20,19 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Dynamic styling based on scroll
-    final double opacity = (scrollOffset / 150).clamp(0.0, 0.85);
-    final double blur = (scrollOffset / 150).clamp(0.0, 15.0);
     final bool isMobile = MediaQuery.of(context).size.width < 800;
 
-    return ClipRRect(
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur),
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 100),
-          height: 70.0,
-          decoration: BoxDecoration(
-            color: AppTheme.bg.withOpacity(opacity),
-            border: Border(
-              bottom: BorderSide(
-                color: Colors.black.withOpacity(scrollOffset > 50 ? 0.06 : 0.0),
-                width: 1.0,
-              ),
-            ),
+    return Container(
+      height: 70.0,
+      decoration: const BoxDecoration(
+        color: AppTheme.bg,
+        border: Border(
+          bottom: BorderSide(
+            color: AppTheme.border,
+            width: 1.0,
           ),
+        ),
+      ),
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -132,8 +124,6 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
                 ),
             ],
           ),
-        ),
-      ),
     );
   }
 }

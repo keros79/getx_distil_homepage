@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import '../app_theme.dart';
 
@@ -61,25 +60,20 @@ class _GlassCardState extends State<GlassCard> {
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(widget.borderRadius),
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 12.0, sigmaY: 12.0),
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 250),
-                  padding: widget.padding,
-                  decoration: BoxDecoration(
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 250),
+                padding: widget.padding,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(widget.borderRadius),
+                  border: Border.all(
                     color: _isHovered 
-                        ? Colors.white.withOpacity(0.9) 
-                        : Colors.white.withOpacity(0.65),
-                    borderRadius: BorderRadius.circular(widget.borderRadius),
-                    border: Border.all(
-                      color: _isHovered 
-                          ? activeGlowColor.withOpacity(0.4) 
-                          : Colors.black.withOpacity(0.06),
-                      width: 1.0,
-                    ),
+                        ? activeGlowColor.withOpacity(0.4) 
+                        : Colors.black.withOpacity(0.06),
+                    width: 1.0,
                   ),
-                  child: widget.child,
                 ),
+                child: widget.child,
               ),
             ),
           ),

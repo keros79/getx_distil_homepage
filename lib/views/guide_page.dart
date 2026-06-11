@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import '../controllers/docs_controller.dart';
 import '../core/app_theme.dart';
 import '../core/widgets/nav_bar.dart';
-import '../core/widgets/particle_field.dart';
 import '../core/widgets/code_block.dart';
 import '../core/widgets/glass_card.dart';
 import '../core/widgets/app_drawer.dart';
@@ -50,8 +49,7 @@ class _GuidePageState extends State<GuidePage> {
       endDrawer: isMobile ? const AppDrawer() : null,
       body: Stack(
         children: [
-          // Background Particles
-          const ParticleField(),
+
 
           // Main contents
           Positioned.fill(

@@ -7,7 +7,6 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import '../controllers/home_controller.dart';
 import '../core/app_theme.dart';
 import '../core/widgets/nav_bar.dart';
-import '../core/widgets/particle_field.dart';
 import '../core/widgets/glass_card.dart';
 import '../core/widgets/code_block.dart';
 import '../core/widgets/app_drawer.dart';
@@ -32,8 +31,7 @@ class HomePage extends GetView<HomeController> {
       endDrawer: isMobile ? const AppDrawer() : null,
       body: Stack(
         children: [
-          // 1. Particle Background
-          const ParticleField(),
+
 
           // 3. Scrollable Contents
           Positioned.fill(
