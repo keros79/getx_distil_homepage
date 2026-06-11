@@ -15,47 +15,59 @@ final GoRouter router = GoRouter(
   routes: [
     GoRoute(
       path: '/',
-      builder: (context, state) => BindingWidget(
-        bindings: [
-          Bind<HomeController>(() => HomeController()),
-        ],
-        child: const HomePage(),
+      pageBuilder: (context, state) => NoTransitionPage(
+        child: BindingWidget(
+          bindings: [
+            Bind<HomeController>(() => HomeController()),
+          ],
+          child: const HomePage(),
+        ),
       ),
     ),
     GoRoute(
       path: '/guide',
-      builder: (context, state) => BindingWidget(
-        bindings: [
-          Bind<DocsController>(() => DocsController()),
-        ],
-        child: const GuidePage(),
+      pageBuilder: (context, state) => NoTransitionPage(
+        child: BindingWidget(
+          bindings: [
+            Bind<DocsController>(() => DocsController()),
+          ],
+          child: const GuidePage(),
+        ),
       ),
     ),
     GoRoute(
       path: '/api/:section',
-      builder: (context, state) {
+      pageBuilder: (context, state) {
         final section = state.pathParameters['section'] ?? 'reactive-state';
-        return BindingWidget(
-          bindings: [
-            Bind<DocsController>(() => DocsController()),
-          ],
-          child: ApiDetailPage(section: section),
+        return NoTransitionPage(
+          child: BindingWidget(
+            bindings: [
+              Bind<DocsController>(() => DocsController()),
+            ],
+            child: ApiDetailPage(section: section),
+          ),
         );
       },
     ),
     GoRoute(
       path: '/about',
-      builder: (context, state) => const AboutPage(),
+      pageBuilder: (context, state) => const NoTransitionPage(
+        child: AboutPage(),
+      ),
     ),
     GoRoute(
       path: '/comparison',
-      builder: (context, state) => const ComparisonPage(),
+      pageBuilder: (context, state) => const NoTransitionPage(
+        child: ComparisonPage(),
+      ),
     ),
     GoRoute(
       path: '/comparison/:section',
-      builder: (context, state) {
+      pageBuilder: (context, state) {
         final section = state.pathParameters['section'] ?? 'overview';
-        return ComparisonPage(section: section);
+        return NoTransitionPage(
+          child: ComparisonPage(section: section),
+        );
       },
     ),
   ],
