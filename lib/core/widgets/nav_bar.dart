@@ -91,8 +91,10 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
             onPressed: _launchPubDev,
             isActive: false,
           ),
+          const _LanguageSwitcher(),
           const SizedBox(width: 8.0),
-        ] else
+        ] else ...[
+          const _LanguageSwitcher(),
           IconButton(
             icon: const Icon(
               Icons.menu_rounded,
@@ -102,8 +104,62 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
               Scaffold.of(context).openEndDrawer();
             },
           ),
+        ],
       ],
     );
+  }
+}
+
+class _LanguageSwitcher extends StatelessWidget {
+  const _LanguageSwitcher();
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() {
+      final locale = Get.locale ?? const Locale('en', 'US');
+      final isKorean = locale.languageCode == 'ko';
+
+      return Container(
+        margin: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 12.0),
+        decoration: BoxDecoration(
+          border: Border.all(color: AppTheme.textMuted.withOpacity(0.15)),
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        child: InkWell(
+          onTap: () {
+            if (isKorean) {
+              Get.locale = const Locale('en', 'US');
+            } else {
+              Get.locale = const Locale('ko', 'KR');
+            }
+          },
+          borderRadius: BorderRadius.circular(20.0),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 4.0),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.language_rounded,
+                  size: 14.0,
+                  color: isKorean ? AppTheme.googleGreen : AppTheme.googleBlue,
+                ),
+                const SizedBox(width: 4.0),
+                Text(
+                  isKorean ? 'EN' : 'KO',
+                  style: const TextStyle(
+                    fontFamily: 'Google Sans Flex',
+                    fontSize: 11.5,
+                    fontWeight: FontWeight.bold,
+                    color: AppTheme.textPrimary,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    });
   }
 }
 

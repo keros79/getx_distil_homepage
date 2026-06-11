@@ -24,724 +24,703 @@ class ComparisonController extends GetxController {
   List<dynamic> _row(List<dynamic> cells) => cells;
 
   // Metadata map as an instance variable
-  late final Map<String, Map<String, dynamic>> sectionMeta = {
+  Map<String, Map<String, dynamic>> get sectionMeta => {
     // ── Overview ──
     'overview': {
       'type': 'overview',
-      'title': 'Comprehensive Evaluation & Comparison',
+      'title': 'cmp.ov.title'.tr,
       'infoBadges': [
-        'Target version: getx_distil v1.1.3',
-        'Compared with: GetX (pub.dev/packages/get), Riverpod 3.0',
+        'cmp.ov.badge0'.tr,
+        'cmp.ov.badge1'.tr,
       ],
-      'sectionTitle': '1. getx_distil Project Overview',
-      'tableHeaders': ['Category', 'getx_distil', 'GetX'],
+      'sectionTitle': 'cmp.ov.section_title'.tr,
+      'tableHeaders': ['cmp.ov.h_category'.tr, 'cmp.ov.h_distil'.tr, 'cmp.ov.h_getx'.tr],
       'tableRows': [
-        _row(['Version', '1.1.3 (Stable)', '4.6.6']),
-        _row(['SDK', 'Dart ^3.12.0', 'Dart >=2.14.0']),
+        _row(['cmp.ov.r_version'.tr, '1.1.3 (Stable)', '4.6.6']),
+        _row(['cmp.ov.r_sdk'.tr, 'Dart ^3.12.0', 'Dart >=2.14.0']),
         _row([
-          'External Dependencies',
-          '0 (Flutter SDK only)',
-          'Dozens (collection, web, js, etc.)'
+          'cmp.ov.r_deps'.tr,
+          'cmp.ov.r_deps_distil'.tr,
+          'cmp.ov.r_deps_getx'.tr
         ]),
-        _row(['Source Files', '15', '100+']),
-        _row(['Core Logic', '~1,200 lines', '~15,000+ lines']),
+        _row(['cmp.ov.r_files'.tr, '15', '100+']),
+        _row(['cmp.ov.r_logic'.tr, '~1,200 lines', '~15,000+ lines']),
         _row([
-          'Routing',
-          _del('❌ Removed'),
-          _ok('✅ Built-in (GetPageRoute, etc.)')
+          'cmp.ov.r_routing'.tr,
+          _del('cmp.ov.r_removed'.tr),
+          _ok('cmp.ov.r_routing_getx'.tr)
         ]),
-        _row(['Internationalization', _ok('✅ Kept (simplified)'), _ok('✅ Kept')]),
-        _row(['State Management', _ok('✅ Core enhanced'), _ok('✅ Basic')]),
-        _row(['DI', _ok('✅ Hybrid (tree+global)'), _ok('✅ Global-centric')]),
+        _row(['cmp.ov.r_i18n'.tr, _ok('cmp.ov.r_i18n_distil'.tr), _ok('cmp.ov.r_i18n_getx'.tr)]),
+        _row(['cmp.ov.r_state'.tr, _ok('cmp.ov.r_state_distil'.tr), _ok('cmp.ov.r_state_getx'.tr)]),
+        _row(['cmp.ov.r_di'.tr, _ok('cmp.ov.r_di_distil'.tr), _ok('cmp.ov.r_di_getx'.tr)]),
       ],
       'nextSection': 'improvements',
-      'nextTitle': '2. Key Improvements over GetX',
+      'nextTitle': 'cmp.ov.next_title'.tr,
     },
 
     // ── Improvements ──
     'improvements': {
       'type': 'improvements',
-      'title': 'Key Improvements over GetX',
+      'title': 'cmp.imp.title'.tr,
       'items': [
         {
           'number': '2.1',
-          'title': 'Fast-Path Tracking (Notifier.isTracking)',
-          'subtitle': 'Most important performance improvement',
-          'tableHeaders': ['Category', 'GetX', 'getx_distil'],
+          'title': 'cmp.imp.i1.title'.tr,
+          'subtitle': 'cmp.imp.i1.subtitle'.tr,
+          'tableHeaders': ['cmp.imp.i1.h0'.tr, 'cmp.imp.i1.h1'.tr, 'cmp.imp.i1.h2'.tr],
           'tableRows': [
             _row([
-              'Approach',
-              'Zone-based global proxy (RxInterface.proxy)',
-              _ok('Static boolean flag (Notifier.isTracking)')
+              'cmp.imp.i1.r0c0'.tr,
+              'cmp.imp.i1.r0c1'.tr,
+              _ok('cmp.imp.i1.r0c2'.tr)
             ]),
             _row([
-              'Rx reads outside Obx',
-              'Proxy lookup + null check every time',
-              _ok('Bypassed entirely (O(1) bool check)')
+              'cmp.imp.i1.r1c0'.tr,
+              'cmp.imp.i1.r1c1'.tr,
+              _ok('cmp.imp.i1.r1c2'.tr)
             ]),
             _row([
-              'Large data iteration',
-              'CPU overhead accumulates',
-              _ok('Zero-cost')
+              'cmp.imp.i1.r2c0'.tr,
+              'cmp.imp.i1.r2c1'.tr,
+              _ok('cmp.imp.i1.r2c2'.tr)
             ]),
           ],
           'code':
               '// getx_distil - reportRead()\nvoid reportRead() {\n  if (Notifier.isTracking) {  // ← simple bool check\n    Notifier.instance.read(this);\n  }\n}',
-          'evaluation':
-              'Dramatically lighter than the Zone-based approach, with substantial CPU cycle savings during large data operations. Excellent design.',
+          'evaluation': 'cmp.imp.i1.eval'.tr,
         },
         {
           'number': '2.2',
-          'title': 'Self-Healing Build-Phase Updates',
-          'subtitle': 'Prevents crashes during build/layout phase',
-          'tableHeaders': ['Category', 'GetX', 'getx_distil'],
+          'title': 'cmp.imp.i2.title'.tr,
+          'subtitle': 'cmp.imp.i2.subtitle'.tr,
+          'tableHeaders': ['cmp.imp.i2.h0'.tr, 'cmp.imp.i2.h1'.tr, 'cmp.imp.i2.h2'.tr],
           'tableRows': [
             _row([
-              'State change during build',
-              _del('setState() during build crash'),
-              _ok('Safely deferred via PostFrameCallback')
+              'cmp.imp.i2.r0c0'.tr,
+              _del('cmp.imp.i2.r0c1'.tr),
+              _ok('cmp.imp.i2.r0c2'.tr)
             ]),
             _row([
-              'Detection method',
-              'None',
-              _ok('SchedulerBinding.instance.schedulerPhase check')
+              'cmp.imp.i2.r1c0'.tr,
+              'cmp.imp.i2.r1c1'.tr,
+              _ok('cmp.imp.i2.r1c2'.tr)
             ]),
           ],
           'code':
               'void refresh() {\n  final phase = SchedulerBinding.instance.schedulerPhase;\n  if (phase == SchedulerPhase.persistentCallbacks || \n      phase == SchedulerPhase.midFrameMicrotasks) {\n    scheduler.addPostFrameCallback((_) { /* safe update */ });\n  } else {\n    /* immediate update */\n  }\n}',
-          'evaluation':
-              'Prevents crashes that frequently occur in production. Very high practical value.',
+          'evaluation': 'cmp.imp.i2.eval'.tr,
         },
         {
           'number': '2.3',
-          'title': 'RxList Microtask Batching',
-          'subtitle': 'Key performance differentiator',
-          'tableHeaders': ['Category', 'GetX', 'getx_distil'],
+          'title': 'cmp.imp.i3.title'.tr,
+          'subtitle': 'cmp.imp.i3.subtitle'.tr,
+          'tableHeaders': ['cmp.imp.i3.h0'.tr, 'cmp.imp.i3.h1'.tr, 'cmp.imp.i3.h2'.tr],
           'tableRows': [
-            _row(['100 add() calls', '100 rebuilds', _ok('1 rebuild')]),
+            _row(['cmp.imp.i3.r0c0'.tr, 'cmp.imp.i3.r0c1'.tr, _ok('cmp.imp.i3.r0c2'.tr)]),
             _row([
-              'Approach',
-              'Immediate refresh() on each mutation',
-              _ok('Dirty-Flag + Microtask pipeline')
+              'cmp.imp.i3.r1c0'.tr,
+              'cmp.imp.i3.r1c1'.tr,
+              _ok('cmp.imp.i3.r1c2'.tr)
             ]),
             _row([
-              'sort() / shuffle()',
-              'N notifications (ListMixin default)',
-              _ok('1 notification (overridden)')
+              'cmp.imp.i3.r2c0'.tr,
+              'cmp.imp.i3.r2c1'.tr,
+              _ok('cmp.imp.i3.r2c2'.tr)
             ]),
           ],
           'code':
               'void _autoBatchRefresh() {\n  if (_isNotificationScheduled) return;  // ← drop-path\n  _isNotificationScheduled = true;\n  scheduleMicrotask(() {\n    refresh();\n    notifyStream();\n    _isNotificationScheduled = false;\n  });\n}',
-          'evaluation':
-              'When adding 10,000 items to a list, the original triggers 10,000 rebuilds → getx_distil triggers 1 rebuild. The most tangible performance difference.',
+          'evaluation': 'cmp.imp.i3.eval'.tr,
         },
         {
           'number': '2.4',
-          'title': '100% Tree-Scoped DI (BindingWidget)',
-          'subtitle': 'Architecture paradigm shift',
-          'tableHeaders': ['Category', 'GetX', 'getx_distil'],
+          'title': 'cmp.imp.i4.title'.tr,
+          'subtitle': 'cmp.imp.i4.subtitle'.tr,
+          'tableHeaders': ['cmp.imp.i4.h0'.tr, 'cmp.imp.i4.h1'.tr, 'cmp.imp.i4.h2'.tr],
           'tableRows': [
             _row([
-              'DI Scope',
-              'Global singleton-centric',
-              _ok('Widget tree scope + global hybrid')
+              'cmp.imp.i4.r0c0'.tr,
+              'cmp.imp.i4.r0c1'.tr,
+              _ok('cmp.imp.i4.r0c2'.tr)
             ]),
             _row([
-              'Same-type multi-instance',
-              'Collision',
-              _ok('Complete isolation')
+              'cmp.imp.i4.r1c0'.tr,
+              'cmp.imp.i4.r1c1'.tr,
+              _ok('cmp.imp.i4.r1c2'.tr)
             ]),
             _row([
-              'Lifecycle management',
-              'Manual Get.delete()',
-              _ok('Auto GC on widget dispose')
+              'cmp.imp.i4.r2c0'.tr,
+              'cmp.imp.i4.r2c1'.tr,
+              _ok('cmp.imp.i4.r2c2'.tr)
             ]),
-            _row(['GoRouter compatibility', 'Low', _ok('Fully compatible')]),
+            _row(['cmp.imp.i4.r3c0'.tr, 'cmp.imp.i4.r3c1'.tr, _ok('cmp.imp.i4.r3c2'.tr)]),
             _row([
-              'Context-free access',
-              'Get.find<T>()',
-              _ok('Get.find<T>() (WeakReference cache)')
+              'cmp.imp.i4.r4c0'.tr,
+              'cmp.imp.i4.r4c1'.tr,
+              _ok('cmp.imp.i4.r4c2'.tr)
             ]),
           ],
           'code':
               'GoRoute(\n  path: \'/settings\',\n  builder: (context, state) => BindingWidget(\n    bindings: [Bind<SettingsController>(() => SettingsController())],\n    child: const SettingsPage(),\n  ),\n)',
-          'evaluation':
-              'A design that perfectly aligns with the GoRouter era. Solves GetX\'s biggest architectural flaw — a key differentiator.',
+          'evaluation': 'cmp.imp.i4.eval'.tr,
         },
         {
           'number': '2.5',
-          'title': 'FIFO Sequential Pipeline (updateSequential)',
-          'subtitle': 'Prevents race conditions in high-frequency async',
-          'tableHeaders': ['Category', 'GetX', 'getx_distil'],
+          'title': 'cmp.imp.i5.title'.tr,
+          'subtitle': 'cmp.imp.i5.subtitle'.tr,
+          'tableHeaders': ['cmp.imp.i5.h0'.tr, 'cmp.imp.i5.h1'.tr, 'cmp.imp.i5.h2'.tr],
           'tableRows': [
             _row([
-              'Async update order',
-              'Not guaranteed (race conditions)',
-              _ok('Strict FIFO sequential execution')
+              'cmp.imp.i5.r0c0'.tr,
+              'cmp.imp.i5.r0c1'.tr,
+              _ok('cmp.imp.i5.r0c2'.tr)
             ]),
-            _row(['Approach', 'None', _ok('Completer chain')]),
+            _row(['cmp.imp.i5.r1c0'.tr, 'cmp.imp.i5.r1c1'.tr, _ok('cmp.imp.i5.r1c2'.tr)]),
           ],
           'code':
               'Future<void> updateSequential(Future<T> Function(T currentValue) action) {\n  final completer = Completer<void>();\n  _lastUpdateFuture = _lastUpdateFuture.then((_) async {\n    final newValue = await action(value);\n    value = newValue;\n    completer.complete();\n  });\n  return completer.future;\n}',
-          'evaluation':
-              'Essential for high-frequency scenarios like real-time quotes, chat, and sensor data. High practical value.',
+          'evaluation': 'cmp.imp.i5.eval'.tr,
         },
         {
           'number': '2.6',
-          'title': 'RxSList / RxS — Status-Aware Reactive Types',
-          'subtitle': 'Unique feature (not in original)',
-          'tableHeaders': ['Category', 'GetX', 'getx_distil'],
+          'title': 'cmp.imp.i6.title'.tr,
+          'subtitle': 'cmp.imp.i6.subtitle'.tr,
+          'tableHeaders': ['cmp.imp.i6.h0'.tr, 'cmp.imp.i6.h1'.tr, 'cmp.imp.i6.h2'.tr],
           'tableRows': [
             _row([
-              'List status management',
-              'Separate isLoading/errorMessage observables needed',
-              _ok('Built into the list itself')
+              'cmp.imp.i6.r0c0'.tr,
+              'cmp.imp.i6.r0c1'.tr,
+              _ok('cmp.imp.i6.r0c2'.tr)
             ]),
             _row([
-              'Single value status',
-              'StateMixin (controller level)',
-              _ok('Built into the value (RxS)')
+              'cmp.imp.i6.r1c0'.tr,
+              'cmp.imp.i6.r1c1'.tr,
+              _ok('cmp.imp.i6.r1c2'.tr)
             ]),
             _row([
-              'UI branching',
-              'Manual if-else',
-              _ok('Declarative via .on() builder')
+              'cmp.imp.i6.r2c0'.tr,
+              'cmp.imp.i6.r2c1'.tr,
+              _ok('cmp.imp.i6.r2c2'.tr)
             ]),
           ],
           'code':
               'Obx(() => items.on(\n  loading: () => const CircularProgressIndicator(),\n  loaded:  (data) => ListView.builder(...),\n  empty:   () => const Text(\'No items\'),\n  error:   (msg) => Text(\'Error: \$msg\'),\n));',
-          'evaluation':
-              'A DX innovation that eliminates the need for separate isLoading/errorMessage observables. An original contribution not found in the original.',
+          'evaluation': 'cmp.imp.i6.eval'.tr,
         },
         {
           'number': '2.7',
-          'title': 'Strict Async Obx Validation',
-          'subtitle': 'Blocks async Obx anti-patterns',
-          'tableHeaders': ['Category', 'GetX', 'getx_distil'],
+          'title': 'cmp.imp.i7.title'.tr,
+          'subtitle': 'cmp.imp.i7.subtitle'.tr,
+          'tableHeaders': ['cmp.imp.i7.h0'.tr, 'cmp.imp.i7.h1'.tr, 'cmp.imp.i7.h2'.tr],
           'tableRows': [
             _row([
-              'async/await inside Obx',
-              'Silent misbehavior',
-              _ok('Immediate FlutterError throw')
+              'cmp.imp.i7.r0c0'.tr,
+              'cmp.imp.i7.r0c1'.tr,
+              _ok('cmp.imp.i7.r0c2'.tr)
             ]),
             _row([
-              'Rx not detected',
-              'Exception thrown',
-              _ok('debugPrint warning (v1.0.3+)')
+              'cmp.imp.i7.r1c0'.tr,
+              'cmp.imp.i7.r1c1'.tr,
+              _ok('cmp.imp.i7.r1c2'.tr)
             ]),
           ],
-          'evaluation':
-              'A safety net that significantly reduces debugging time. Also ensures production stability.',
+          'evaluation': 'cmp.imp.i7.eval'.tr,
         },
         {
           'number': '2.8',
-          'title': 'High-Visibility DI Debugging',
-          'subtitle': 'Detailed debug info on DI lookup failure',
-          'tableHeaders': ['Category', 'GetX', 'getx_distil'],
+          'title': 'cmp.imp.i8.title'.tr,
+          'subtitle': 'cmp.imp.i8.subtitle'.tr,
+          'tableHeaders': ['cmp.imp.i8.h0'.tr, 'cmp.imp.i8.h1'.tr, 'cmp.imp.i8.h2'.tr],
           'tableRows': [
             _row([
-              'Error message',
-              '"Controller not found"',
-              _ok('Requested widget name + ancestor path + global/immortal service list')
+              'cmp.imp.i8.r0c0'.tr,
+              'cmp.imp.i8.r0c1'.tr,
+              _ok('cmp.imp.i8.r0c2'.tr)
             ]),
           ],
           'code':
               '📍 Requested Context Widget: Builder\n🌳 Search Path (Ancestor Widgets):\n   Builder -> Column -> Scaffold -> ...\n🌐 Registered Global Services:\n   CounterController, AuthService\n🌟 Registered Immortal Services:\n   DatabaseService',
-          'evaluation':
-              'Dramatically reduces time to diagnose DI issues. A decisive DX improvement.',
+          'evaluation': 'cmp.imp.i8.eval'.tr,
         },
       ],
       'nextSection': 'sacrificed',
-      'nextTitle': '3. Features Sacrificed vs GetX',
+      'nextTitle': 'cmp.imp.next_title'.tr,
     },
 
     // ── Sacrificed ──
     'sacrificed': {
       'type': 'sacrificed',
-      'title': 'Features Sacrificed vs GetX',
-      'tableHeaders': ['Feature', 'GetX', 'getx_distil', 'Impact'],
+      'title': 'cmp.sac.title'.tr,
+      'tableHeaders': ['cmp.sac.h_feature'.tr, 'cmp.sac.h_getx'.tr, 'cmp.sac.h_distil'.tr, 'cmp.sac.h_impact'.tr],
       'tableRows': [
         _row([
-          'Routing Engine',
-          'GetPageRoute, Get.to(), Get.off(), etc.',
-          _del('❌ Removed'),
-          'Use GoRouter/Navigator'
+          'cmp.sac.r0c0'.tr,
+          'cmp.sac.r0c1'.tr,
+          _del('cmp.sac.removed'.tr),
+          'cmp.sac.r0c3'.tr
         ]),
         _row([
-          'GetDialog/BottomSheet',
-          'Global overlay management',
-          _del('❌ Removed'),
-          'Use Flutter default APIs'
+          'cmp.sac.r1c0'.tr,
+          'cmp.sac.r1c1'.tr,
+          _del('cmp.sac.removed'.tr),
+          'cmp.sac.r1c3'.tr
         ]),
         _row([
-          'GetConnect',
-          'Built-in HTTP client',
-          _del('❌ Removed'),
-          'Use dio/http package'
+          'cmp.sac.r2c0'.tr,
+          'cmp.sac.r2c1'.tr,
+          _del('cmp.sac.removed'.tr),
+          'cmp.sac.r2c3'.tr
         ]),
         _row([
-          'GetStorage',
-          'Local storage',
-          _del('❌ Removed'),
-          'Use shared_preferences, etc.'
+          'cmp.sac.r3c0'.tr,
+          'cmp.sac.r3c1'.tr,
+          _del('cmp.sac.removed'.tr),
+          'cmp.sac.r3c3'.tr
         ]),
         _row([
-          'GetUtils',
-          'Utility functions',
-          _del('❌ Removed'),
-          'Use standard Dart/Flutter APIs'
+          'cmp.sac.r4c0'.tr,
+          'cmp.sac.r4c1'.tr,
+          _del('cmp.sac.removed'.tr),
+          'cmp.sac.r4c3'.tr
         ]),
         _row([
-          'GetX Binding (class)',
-          'GetPage + Binding pattern',
-          _del('❌ Removed'),
-          'Replaced by BindingWidget'
+          'cmp.sac.r5c0'.tr,
+          'cmp.sac.r5c1'.tr,
+          _del('cmp.sac.removed'.tr),
+          'cmp.sac.r5c3'.tr
         ]),
         _row([
-          'interval Worker',
-          'Periodic execution worker',
-          _del('❌ Removed'),
-          'Use Timer'
+          'cmp.sac.r6c0'.tr,
+          'cmp.sac.r6c1'.tr,
+          _del('cmp.sac.removed'.tr),
+          'cmp.sac.r6c3'.tr
         ]),
         _row([
-          'SmartManagement',
-          'Memory management policy',
-          _del('❌ Removed'),
-          'Replaced by BindingWidget Auto-GC'
+          'cmp.sac.r7c0'.tr,
+          'cmp.sac.r7c1'.tr,
+          _del('cmp.sac.removed'.tr),
+          'cmp.sac.r7c3'.tr
         ]),
       ],
-      'infoCard':
-          'Removing routing/dialogs/network/storage is an intentional design decision that aligns well with the modern Flutter ecosystem. Delegating each responsibility to specialized packages results in better architecture.',
+      'infoCard': 'cmp.sac.info_card'.tr,
       'nextSection': 'quality',
-      'nextTitle': '4. Code Quality Assessment',
+      'nextTitle': 'cmp.sac.next_title'.tr,
     },
 
     // ── Quality ──
     'quality': {
       'type': 'quality',
-      'title': 'Code Quality Assessment',
+      'title': 'cmp.qa.title'.tr,
       'goodPoints': [
-        'Extreme conciseness — core logic at ~1,200 lines, less than 10% of the original. Overwhelming maintainability.',
-        'Zero External Dependency — depends only on Flutter SDK. Zero supply chain risk.',
-        'Thorough testing — 1,594 lines of test code. Covers edge cases like RxList batching, WeakReference zombie prevention, sibling controller onClose cross-references.',
-        'Consistent architecture — all Rx types follow GetListenable → RxInterface hierarchy. Excellent extensibility.',
-        'Memory safety — WeakReference cache, guaranteed dispose order (onDelete first → weakRegistry removal), Expando-based GetView context management.',
-        'Documentation quality — English/Korean README perfectly synchronized. Example app covers all features.',
+        'cmp.qa.good0'.tr,
+        'cmp.qa.good1'.tr,
+        'cmp.qa.good2'.tr,
+        'cmp.qa.good3'.tr,
+        'cmp.qa.good4'.tr,
+        'cmp.qa.good5'.tr,
       ],
       'improvePoints': [
-        'GetxController.update() + ID-based rebuild not supported — ID-based partial rebuild used with GetBuilder in the original is weakened.',
-        'RxSList initial status ambiguity — even with data in the constructor, initial status is loading. An option to start as loaded would be nice.',
-        'interval Worker not supported — no periodic execution worker, must use Timer instead.',
-        'Get.find tag + context combination not possible — when context is provided, tag is ignored.',
-        'RxList operator []= override — custom list operations may trigger notifications without batching.',
+        'cmp.qa.bad0'.tr,
+        'cmp.qa.bad1'.tr,
+        'cmp.qa.bad2'.tr,
+        'cmp.qa.bad3'.tr,
+        'cmp.qa.bad4'.tr,
       ],
       'scores': [
         {
-          'item': 'Architecture Design',
+          'item': 'cmp.qa.s0_item'.tr,
           'score': '⭐⭐⭐⭐⭐',
-          'note': 'Tree-scoped DI + hybrid fallback is best practice'
+          'note': 'cmp.qa.s0_note'.tr
         },
         {
-          'item': 'Performance Optimization',
+          'item': 'cmp.qa.s1_item'.tr,
           'score': '⭐⭐⭐⭐⭐',
-          'note': 'Fast-Path + Batching + FIFO pipeline triple combo'
+          'note': 'cmp.qa.s1_note'.tr
         },
         {
-          'item': 'Memory Safety',
+          'item': 'cmp.qa.s2_item'.tr,
           'score': '⭐⭐⭐⭐⭐',
-          'note': 'WeakReference, guaranteed dispose order, Expando cleanup'
+          'note': 'cmp.qa.s2_note'.tr
         },
         {
-          'item': 'DX (Developer Experience)',
+          'item': 'cmp.qa.s3_item'.tr,
           'score': '⭐⭐⭐⭐½',
-          'note': 'RxSList/RxS .on() pattern is excellent. Great debug messages'
+          'note': 'cmp.qa.s3_note'.tr
         },
         {
-          'item': 'API Compatibility',
+          'item': 'cmp.qa.s4_item'.tr,
           'score': '⭐⭐⭐⭐',
-          'note': 'Core APIs like .obs, Obx, Get.find are identical'
+          'note': 'cmp.qa.s4_note'.tr
         },
         {
-          'item': 'Test Coverage',
+          'item': 'cmp.qa.s5_item'.tr,
           'score': '⭐⭐⭐⭐',
-          'note': 'Core features well covered. Some edge cases could be improved'
+          'note': 'cmp.qa.s5_note'.tr
         },
         {
-          'item': 'Documentation/Examples',
+          'item': 'cmp.qa.s6_item'.tr,
           'score': '⭐⭐⭐⭐⭐',
-          'note': 'English/Korean README + GoRouter-based example app is perfect'
+          'note': 'cmp.qa.s6_note'.tr
         },
         {
-          'item': 'Ecosystem Compatibility',
+          'item': 'cmp.qa.s7_item'.tr,
           'score': '⭐⭐⭐⭐',
-          'note':
-              'GoRouter-friendly. Existing GetX projects need routing migration'
+          'note': 'cmp.qa.s7_note'.tr
         },
       ],
       'nextSection': 'riverpod',
-      'nextTitle': '5. getx_distil vs Riverpod 3.0',
+      'nextTitle': 'cmp.qa.next_title'.tr,
     },
 
     // ── Riverpod ──
     'riverpod': {
       'type': 'riverpod',
-      'title': 'getx_distil vs Riverpod 3.0',
+      'title': 'cmp.rp.title'.tr,
       'subsections': [
         {
           'subtype': 'table',
           'number': '5.1',
-          'title': 'Philosophical Differences',
-          'tableHeaders': ['Dimension', 'getx_distil', 'Riverpod 3.0'],
+          'title': 'cmp.rp.s1.title'.tr,
+          'tableHeaders': ['cmp.rp.s1.h0'.tr, 'cmp.rp.s1.h1'.tr, 'cmp.rp.s1.h2'.tr],
           'tableRows': [
-            _row(['Paradigm', 'Imperative', 'Declarative']),
+            _row(['cmp.rp.s1.r0c0'.tr, 'cmp.rp.s1.r0c1'.tr, 'cmp.rp.s1.r0c2'.tr]),
             _row([
-              'State Creation',
-              'Runtime new + .obs',
-              'Compile-time code generation'
+              'cmp.rp.s1.r1c0'.tr,
+              'cmp.rp.s1.r1c1'.tr,
+              'cmp.rp.s1.r1c2'.tr
             ]),
             _row([
-              'DI Approach',
-              'Manual registration (Get.put, BindingWidget)',
-              'Auto registration (@riverpod annotation)'
+              'cmp.rp.s1.r2c0'.tr,
+              'cmp.rp.s1.r2c1'.tr,
+              'cmp.rp.s1.r2c2'.tr
             ]),
             _row([
-              'Learning Curve',
-              _ok('Low (same as GetX)'),
-              'High (Provider, Notifier, AsyncNotifier, etc.)'
+              'cmp.rp.s1.r3c0'.tr,
+              _ok('cmp.rp.s1.r3c1'.tr),
+              'cmp.rp.s1.r3c2'.tr
             ]),
             _row([
-              'Boilerplate',
-              _ok('Minimal (.obs one-liner)'),
-              'Medium~High (annotation + generated code)'
+              'cmp.rp.s1.r4c0'.tr,
+              _ok('cmp.rp.s1.r4c1'.tr),
+              'cmp.rp.s1.r4c2'.tr
             ]),
-            _row(['Build Dependency', _ok('None'), 'build_runner required']),
+            _row(['cmp.rp.s1.r5c0'.tr, _ok('cmp.rp.s1.r5c1'.tr), 'cmp.rp.s1.r5c2'.tr]),
           ],
-          'evaluation':
-              'getx_distil\'s imperative paradigm offers a low learning curve and minimal boilerplate for rapid development. Riverpod 3.0\'s declarative approach is systematic but requires more learning and setup.',
+          'evaluation': 'cmp.rp.s1.eval'.tr,
         },
         {
           'subtype': 'codeCompare',
           'number': '5.2',
-          'title': 'State Management Approach',
-          'description': 'getx_distil — Imperative Observable',
+          'title': 'cmp.rp.s2.title'.tr,
+          'description': 'cmp.rp.s2.desc1'.tr,
           'code1':
               '// Inside controller\nfinal count = 0.obs;           // RxInt\nfinal items = <String>[].ops;  // RxSList\n\n// Value change\ncount.value++;\nitems.add(\'new item\');\n\n// UI\nObx(() => Text(\'\${controller.count.value}\'))',
-          'description2': 'Riverpod 3.0 — Declarative Notifier',
+          'description2': 'cmp.rp.s2.desc2'.tr,
           'code2':
               '@riverpod\nclass Counter extends _\$Counter {\n  @override\n  int build() => 0;\n  void increment() => state++;\n}\n\n// UI\nConsumerWidget: ref.watch(counterProvider)',
-          'tableHeaders': ['Comparison', 'getx_distil', 'Riverpod 3.0'],
+          'tableHeaders': ['cmp.rp.s2.h0'.tr, 'cmp.rp.s2.h1'.tr, 'cmp.rp.s2.h2'.tr],
           'tableRows': [
             _row([
-              'State Declaration',
-              '.obs one-liner',
-              'Class + annotation + build()'
+              'cmp.rp.s2.r0c0'.tr,
+              'cmp.rp.s2.r0c1'.tr,
+              'cmp.rp.s2.r0c2'.tr
             ]),
             _row([
-              'State Mutation',
-              '.value = direct assignment',
-              'Method call to change state'
+              'cmp.rp.s2.r1c0'.tr,
+              'cmp.rp.s2.r1c1'.tr,
+              'cmp.rp.s2.r1c2'.tr
             ]),
             _row([
-              'Reactive Registration',
-              'Automatic (tracked on read)',
-              'Automatic (tracked via ref.watch)'
+              'cmp.rp.s2.r2c0'.tr,
+              'cmp.rp.s2.r2c1'.tr,
+              'cmp.rp.s2.r2c2'.tr
             ]),
-            _row(['Nullable State', 'Rxn<T>', 'AsyncValue<T>']),
-            _row(['Code Volume', _ok('~3 lines'), '~8 lines']),
+            _row(['cmp.rp.s2.r3c0'.tr, 'cmp.rp.s2.r3c1'.tr, 'cmp.rp.s2.r3c2'.tr]),
+            _row(['cmp.rp.s2.r4c0'.tr, _ok('cmp.rp.s2.r4c1'.tr), 'cmp.rp.s2.r4c2'.tr]),
           ],
-          'evaluation':
-              'For simple state management, getx_distil\'s DX is overwhelmingly concise. Riverpod requires explicit state mutation methods, which is an advantage for traceability of state change paths.',
+          'evaluation': 'cmp.rp.s2.eval'.tr,
         },
         {
           'subtype': 'codeCompare',
           'number': '5.3',
-          'title': 'Async State Management',
-          'description': 'getx_distil — RxSList / RxS',
+          'title': 'cmp.rp.s3.title'.tr,
+          'description': 'cmp.rp.s3.desc1'.tr,
           'code1':
               'final items = <User>[].ops; // RxSList<User>\n\n// Manual state transition\nitems.assignAll(fetchedUsers);     // status → loaded\nitems.error = \'Network failure\';\nitems.status = RxListStatus.error;\n\n// UI\nObx(() => items.on(\n  loading: () => CircularProgressIndicator(),\n  loaded:  (data) => ListView.builder(...),\n  error:   (msg) => Text(\'Error: \$msg\'),\n))',
-          'description2': 'Riverpod 3.0 — AsyncNotifier + AsyncValue',
+          'description2': 'cmp.rp.s3.desc2'.tr,
           'code2':
               '@riverpod\nclass Users extends _\$Users {\n  @override\n  FutureOr<List<User>> build() => _fetchUsers();\n\n  Future<void> refresh() async {\n    state = const AsyncLoading();\n    state = await AsyncValue.guard(() => _fetchUsers());\n  }\n}\n\n// UI\nref.watch(usersProvider).when(\n  loading: () => CircularProgressIndicator(),\n  data:    (users) => ListView.builder(...),\n  error:   (err, _) => Text(\'Error: \$err\'),\n)',
-          'tableHeaders': ['Comparison', 'getx_distil', 'Riverpod 3.0'],
+          'tableHeaders': ['cmp.rp.s3.h0'.tr, 'cmp.rp.s3.h1'.tr, 'cmp.rp.s3.h2'.tr],
           'tableRows': [
             _row([
-              'Async State Expression',
-              'RxSList / RxS (manual state transition)',
-              'AsyncValue<T> (automatic state management)'
+              'cmp.rp.s3.r0c0'.tr,
+              'cmp.rp.s3.r0c1'.tr,
+              'cmp.rp.s3.r0c2'.tr
             ]),
             _row([
-              'Loading→Data Transition',
-              'Manual assignAll()',
-              'Automatic (on Future completion)'
+              'cmp.rp.s3.r1c0'.tr,
+              'cmp.rp.s3.r1c1'.tr,
+              'cmp.rp.s3.r1c2'.tr
             ]),
             _row([
-              'Error Handling',
-              'Manual error + status',
-              'Automatic (AsyncValue.guard)'
+              'cmp.rp.s3.r2c0'.tr,
+              'cmp.rp.s3.r2c1'.tr,
+              'cmp.rp.s3.r2c2'.tr
             ]),
             _row([
-              'Caching/Retry',
-              'Manual implementation',
-              'Built-in (keepAlive, retry, invalidate)'
+              'cmp.rp.s3.r3c0'.tr,
+              'cmp.rp.s3.r3c1'.tr,
+              'cmp.rp.s3.r3c2'.tr
             ]),
             _row([
-              'DX',
-              'Intuitive but manual',
-              'Automated but requires learning'
+              'cmp.rp.s3.r4c0'.tr,
+              'cmp.rp.s3.r4c1'.tr,
+              'cmp.rp.s3.r4c2'.tr
             ]),
           ],
-          'evaluation':
-              'For pure async API call scenarios, Riverpod 3.0\'s AsyncNotifier is safer and more automated. getx_distil requires manual state transition control, but offers greater flexibility.',
+          'evaluation': 'cmp.rp.s3.eval'.tr,
         },
         {
           'subtype': 'codeCompare',
           'number': '5.4',
-          'title': 'DI (Dependency Injection)',
-          'description': 'getx_distil — Hybrid DI',
+          'title': 'cmp.rp.s4.title'.tr,
+          'description': 'cmp.rp.s4.desc1'.tr,
           'code1':
               '// Tree scope\nBindingWidget(\n  bindings: [Bind<Controller>(() => Controller())],\n  child: const MyPage(),\n)\n\n// Global\nGet.put<Controller>(Controller());\n\n// Lookup\nGet.find<Controller>(context);  // scope first → global fallback\nGet.find<Controller>();         // global + WeakReference fallback',
-          'description2': 'Riverpod 3.0 — Provider Scope',
+          'description2': 'cmp.rp.s4.desc2'.tr,
           'code2':
               '// Declarative registration (auto via @riverpod annotation)\n@riverpod\nclass Controller extends _\$Controller {\n  @override\n  void build() { ... }\n}\n\n// Lookup\nref.read(controllerProvider);                              // one-time read\nref.watch(controllerProvider);                             // reactive subscription\nref.watch(controllerProvider.select((s) => s.count));      // selective subscription',
-          'tableHeaders': ['Comparison', 'getx_distil', 'Riverpod 3.0'],
+          'tableHeaders': ['cmp.rp.s4.h0'.tr, 'cmp.rp.s4.h1'.tr, 'cmp.rp.s4.h2'.tr],
           'tableRows': [
             _row([
-              'Registration',
-              'Manual (Get.put, BindingWidget)',
-              'Automatic (annotation + code generation)'
+              'cmp.rp.s4.r0c0'.tr,
+              'cmp.rp.s4.r0c1'.tr,
+              'cmp.rp.s4.r0c2'.tr
             ]),
             _row([
-              'Scope',
-              'Widget tree scope + global',
-              'Provider scope (overridable)'
+              'cmp.rp.s4.r1c0'.tr,
+              'cmp.rp.s4.r1c1'.tr,
+              'cmp.rp.s4.r1c2'.tr
             ]),
             _row([
-              'Dynamic Multi-instance',
-              _ok('Natural via BindingWidget nesting'),
-              'family modifier (compile-time)'
+              'cmp.rp.s4.r2c0'.tr,
+              _ok('cmp.rp.s4.r2c1'.tr),
+              'cmp.rp.s4.r2c2'.tr
             ]),
             _row([
-              'Context-free Access',
-              _ok('✅ Get.find<T>()'),
-              '❌ ref required (only inside widgets/functions)'
+              'cmp.rp.s4.r3c0'.tr,
+              _ok('cmp.rp.s4.r3c1'.tr),
+              'cmp.rp.s4.r3c2'.tr
             ]),
             _row([
-              'Lifecycle Management',
-              'Auto GC on widget dispose',
-              'ref.onDispose() callback'
+              'cmp.rp.s4.r4c0'.tr,
+              'cmp.rp.s4.r4c1'.tr,
+              'cmp.rp.s4.r4c2'.tr
             ]),
             _row([
-              'Multi-instance Isolation',
-              _ok('Intuitive (BindingWidget nesting)'),
-              'Strict (family + override)'
+              'cmp.rp.s4.r5c0'.tr,
+              _ok('cmp.rp.s4.r5c1'.tr),
+              'cmp.rp.s4.r5c2'.tr
             ]),
           ],
-          'evaluation':
-              'Context-free access is a clear advantage of getx_distil. No ref needed when referencing other controllers inside a controller. Riverpod\'s family is type-safe at compile-time, but getx_distil\'s BindingWidget is more flexible for patterns that dynamically create N instances at runtime.',
+          'evaluation': 'cmp.rp.s4.eval'.tr,
         },
         {
           'subtype': 'table',
           'number': '5.5',
-          'title': 'Performance',
-          'subtitle': 'RxList bulk mutation',
-          'tableHeaders': ['Scenario', 'getx_distil', 'Riverpod 3.0'],
+          'title': 'cmp.rp.s5.title'.tr,
+          'tableHeaders': ['cmp.rp.s5.h0'.tr, 'cmp.rp.s5.h1'.tr, 'cmp.rp.s5.h2'.tr],
           'tableRows': [
             _row([
-              '10,000 add() calls',
-              _ok('1 rebuild (Microtask Batching)'),
-              'N rebuilds (per state change)'
+              'cmp.rp.s5.r0c0'.tr,
+              _ok('cmp.rp.s5.r0c1'.tr),
+              'cmp.rp.s5.r0c2'.tr
             ]),
             _row([
-              'for loop mutations',
-              _ok('Automatic batching'),
-              'Manual batching needed or single state = [...] assignment'
+              'cmp.rp.s5.r1c0'.tr,
+              _ok('cmp.rp.s5.r1c1'.tr),
+              'cmp.rp.s5.r1c2'.tr
             ]),
             _row([
-              'Rx reads outside Obx',
-              _ok('Zero-cost (isTracking flag)'),
-              'N/A (Provider reads always need ref)'
+              'cmp.rp.s5.r2c0'.tr,
+              _ok('cmp.rp.s5.r2c1'.tr),
+              'cmp.rp.s5.r2c2'.tr
             ]),
           ],
-          'evaluation':
-              'In high-frequency list mutation scenarios, getx_distil\'s Microtask Batching has a clear performance advantage over Riverpod. To achieve the same effect in Riverpod, developers must implement batching logic manually or use single state = newList assignment.',
+          'evaluation': 'cmp.rp.s5.eval'.tr,
         },
         {
           'subtype': 'table',
           'number': '5.6',
-          'title': 'Safety Features',
-          'tableHeaders': ['Safety Feature', 'getx_distil', 'Riverpod 3.0'],
+          'title': 'cmp.rp.s6.title'.tr,
+          'tableHeaders': ['cmp.rp.s6.h0'.tr, 'cmp.rp.s6.h1'.tr, 'cmp.rp.s6.h2'.tr],
           'tableRows': [
             _row([
-              'Build-phase state mutation',
-              _ok('Self-healing (PostFrameCallback deferral)'),
-              'N/A (only ref.watch allowed during build)'
+              'cmp.rp.s6.r0c0'.tr,
+              _ok('cmp.rp.s6.r0c1'.tr),
+              'cmp.rp.s6.r0c2'.tr
             ]),
             _row([
-              'Ref.watch during build',
-              'N/A',
-              _ok('Strict runtime check')
+              'cmp.rp.s6.r1c0'.tr,
+              'cmp.rp.s6.r1c1'.tr,
+              _ok('cmp.rp.s6.r1c2'.tr)
             ]),
             _row([
-              'Async Obx validation',
-              _ok('Strict blocking (FlutterError)'),
-              'N/A (AsyncNotifier is separate)'
+              'cmp.rp.s6.r2c0'.tr,
+              _ok('cmp.rp.s6.r2c1'.tr),
+              'cmp.rp.s6.r2c2'.tr
             ]),
             _row([
-              'DI lookup failure message',
-              _ok('Detailed debug report'),
-              'ProviderNotFoundException'
+              'cmp.rp.s6.r3c0'.tr,
+              _ok('cmp.rp.s6.r3c1'.tr),
+              'cmp.rp.s6.r3c2'.tr
             ]),
             _row([
-              'Race condition prevention',
-              _ok('FIFO pipeline (updateSequential)'),
-              'N/A (no sequential execution guarantee)'
+              'cmp.rp.s6.r4c0'.tr,
+              _ok('cmp.rp.s6.r4c1'.tr),
+              'cmp.rp.s6.r4c2'.tr
             ]),
             _row([
-              'Type Safety',
-              'Runtime (dynamic Get.find<T>())',
-              _ok('Compile-time (code generation)')
+              'cmp.rp.s6.r5c0'.tr,
+              'cmp.rp.s6.r5c1'.tr,
+              _ok('cmp.rp.s6.r5c2'.tr)
             ]),
           ],
-          'evaluation':
-              'getx_distil has richer runtime safety nets. Compile-time type safety is Riverpod 3.0\'s overwhelming advantage.',
+          'evaluation': 'cmp.rp.s6.eval'.tr,
         },
         {
           'subtype': 'table',
           'number': '5.7',
-          'title': 'Code Generation vs Zero Dependency',
-          'tableHeaders': ['Category', 'getx_distil', 'Riverpod 3.0'],
+          'title': 'cmp.rp.s7.title'.tr,
+          'tableHeaders': ['cmp.rp.s7.h0'.tr, 'cmp.rp.s7.h1'.tr, 'cmp.rp.s7.h2'.tr],
           'tableRows': [
-            _row(['build_runner needed', _ok('❌'), _ok('✅ (required)')]),
-            _row(['Generated code (.g.dart)', 'None', 'Yes']),
+            _row(['cmp.rp.s7.r0c0'.tr, _ok('cmp.rp.s7.r1c1'.tr), _ok('cmp.rp.s7.r1c2'.tr)]),
+            _row(['cmp.rp.s7.r1c0'.tr, 'cmp.rp.s7.r1c1'.tr, 'cmp.rp.s7.r1c2'.tr]),
             _row([
-              'Build time impact',
-              _ok('None'),
-              'Increases (code generation overhead)'
+              'cmp.rp.s7.r2c0'.tr,
+              _ok('cmp.rp.s7.r2c1'.tr),
+              'cmp.rp.s7.r2c2'.tr
             ]),
             _row([
-              'IDE Support',
-              'Standard Dart analysis',
-              'Generated code exploration needed'
+              'cmp.rp.s7.r3c0'.tr,
+              'cmp.rp.s7.r3c1'.tr,
+              'cmp.rp.s7.r3c2'.tr
             ]),
             _row([
-              'CI/CD Complexity',
-              _ok('Low'),
-              'High (build_runner step added)'
+              'cmp.rp.s7.r4c0'.tr,
+              _ok('cmp.rp.s7.r4c1'.tr),
+              'cmp.rp.s7.r4c2'.tr
             ]),
             _row([
-              'External Dependencies',
-              _ok('0'),
-              'Multiple (riverpod, riverpod_annotation, build_runner, etc.)'
+              'cmp.rp.s7.r5c0'.tr,
+              _ok('cmp.rp.s7.r5c1'.tr),
+              'cmp.rp.s7.r5c2'.tr
             ]),
           ],
-          'evaluation':
-              'For small/personal projects, getx_distil\'s zero dependency is a strong advantage. For large team projects, Riverpod\'s code generation provides refactoring safety.',
+          'evaluation': 'cmp.rp.s7.eval'.tr,
         },
         {
           'subtype': 'table',
           'number': '5.8',
-          'title': 'Testability',
-          'tableHeaders': ['Category', 'getx_distil', 'Riverpod 3.0'],
+          'title': 'cmp.rp.s8.title'.tr,
+          'tableHeaders': ['cmp.rp.s8.h0'.tr, 'cmp.rp.s8.h1'.tr, 'cmp.rp.s8.h2'.tr],
           'tableRows': [
             _row([
-              'Unit Testing',
-              'Get.put(mock) → Get.find()',
-              'ProviderContainer(overrides: [...])'
+              'cmp.rp.s8.r0c0'.tr,
+              'cmp.rp.s8.r0c1'.tr,
+              'cmp.rp.s8.r0c2'.tr
             ]),
             _row([
-              'Widget Testing',
-              'Scope control via BindingWidget',
-              'ProviderScope(overrides: [...])'
+              'cmp.rp.s8.r1c0'.tr,
+              'cmp.rp.s8.r1c1'.tr,
+              'cmp.rp.s8.r1c2'.tr
             ]),
             _row([
-              'Mocking Convenience',
-              'Moderate (manual registration/replacement)',
-              _ok('Excellent (systematic override system)')
+              'cmp.rp.s8.r2c0'.tr,
+              'cmp.rp.s8.r2c1'.tr,
+              _ok('cmp.rp.s8.r2c2'.tr)
             ]),
             _row([
-              'Test Isolation',
-              'Manual Get.reset() call',
-              _ok('Automatic ProviderContainer isolation')
+              'cmp.rp.s8.r3c0'.tr,
+              'cmp.rp.s8.r3c1'.tr,
+              _ok('cmp.rp.s8.r3c2'.tr)
             ]),
           ],
-          'evaluation':
-              'Riverpod 3.0\'s override system is more systematic for test mocking. getx_distil is intuitive but has potential for global state pollution.',
+          'evaluation': 'cmp.rp.s8.eval'.tr,
         },
       ],
       'matrix': [
-        {'item': 'Learning Curve', 'g': 5, 'r': 3},
-        {'item': 'Boilerplate', 'g': 5, 'r': 3},
-        {'item': 'Compile-time Safety', 'g': 3, 'r': 5},
-        {'item': 'Async State Automation', 'g': 4, 'r': 5},
-        {'item': 'List Bulk Mutation Performance', 'g': 5, 'r': 3},
-        {'item': 'DI Flexibility', 'g': 5, 'r': 4},
-        {'item': 'Context-free Access', 'g': 5, 'r': 2},
-        {'item': 'Test/Mocking System', 'g': 4, 'r': 5},
-        {'item': 'Build Complexity', 'g': 5, 'r': 3},
-        {'item': 'Refactoring Safety', 'g': 3, 'r': 5},
-        {'item': 'Memory Management Precision', 'g': 4, 'r': 5},
-        {'item': 'Runtime Safety Nets', 'g': 5, 'r': 3},
-        {'item': 'External Dependencies', 'g': 5, 'r': 3},
-        {'item': 'i18n/Theming', 'g': 4, 'r': 2},
+        {'item': 'cmp.rp.mx.learning_curve'.tr, 'g': 5, 'r': 3},
+        {'item': 'cmp.rp.mx.boilerplate'.tr, 'g': 5, 'r': 3},
+        {'item': 'cmp.rp.mx.compile_safety'.tr, 'g': 3, 'r': 5},
+        {'item': 'cmp.rp.mx.async_auto'.tr, 'g': 4, 'r': 5},
+        {'item': 'cmp.rp.mx.list_perf'.tr, 'g': 5, 'r': 3},
+        {'item': 'cmp.rp.mx.di_flex'.tr, 'g': 5, 'r': 4},
+        {'item': 'cmp.rp.mx.ctx_free'.tr, 'g': 5, 'r': 2},
+        {'item': 'cmp.rp.mx.test_mock'.tr, 'g': 4, 'r': 5},
+        {'item': 'cmp.rp.mx.build_complex'.tr, 'g': 5, 'r': 3},
+        {'item': 'cmp.rp.mx.refactor'.tr, 'g': 3, 'r': 5},
+        {'item': 'cmp.rp.mx.mem_mgmt'.tr, 'g': 4, 'r': 5},
+        {'item': 'cmp.rp.mx.runtime_safety'.tr, 'g': 5, 'r': 3},
+        {'item': 'cmp.rp.mx.ext_deps'.tr, 'g': 5, 'r': 3},
+        {'item': 'cmp.rp.mx.i18n'.tr, 'g': 4, 'r': 2},
       ],
       'guide': {
-        'winnerTitle': 'When to choose getx_distil',
+        'winnerTitle': 'cmp.rp.guide.winner_title'.tr,
         'winnerIcon': Icons.electric_bolt_rounded,
         'winnerColor': AppTheme.googleBlue,
         'winnerItems': [
-          '🚀 Rapid Prototyping / MVP — minimal boilerplate, start immediately',
-          '📱 Small~Medium Apps — no complex architecture overhead needed',
-          '🔄 GoRouter-based Routing — fully compatible with BindingWidget',
-          '📊 Heavy List Manipulation — RxList batching is essential for data-heavy apps',
-          '🧑‍💻 GetX Users — same DX, minimal migration cost',
-          '⚡ Build Time Sensitive — develop immediately without build_runner'
+          'cmp.rp.guide.winner0'.tr,
+          'cmp.rp.guide.winner1'.tr,
+          'cmp.rp.guide.winner2'.tr,
+          'cmp.rp.guide.winner3'.tr,
+          'cmp.rp.guide.winner4'.tr,
+          'cmp.rp.guide.winner5'.tr
         ],
-        'loserTitle': 'When to choose Riverpod 3.0',
+        'loserTitle': 'cmp.rp.guide.loser_title'.tr,
         'loserIcon': Icons.verified_rounded,
         'loserColor': AppTheme.googleGreen,
         'loserItems': [
-          '🏢 Large Team Projects — compile-time safety protects refactoring',
-          '🧪 Test-Driven Development (TDD) — override system is optimal for mocking',
-          '📡 Async-centric Apps — API calls/caching/retry are core features',
-          '🔒 Strict State Management — explicitly control state mutation paths',
-          '🏗️ Long-term Maintenance — code generation provides refactoring safety net'
+          'cmp.rp.guide.loser0'.tr,
+          'cmp.rp.guide.loser1'.tr,
+          'cmp.rp.guide.loser2'.tr,
+          'cmp.rp.guide.loser3'.tr,
+          'cmp.rp.guide.loser4'.tr
         ],
       },
       'nextSection': 'conclusion',
-      'nextTitle': '6. Conclusion',
+      'nextTitle': 'cmp.rp.next_title'.tr,
     },
 
     // ── Conclusion ──
     'conclusion': {
       'type': 'conclusion',
-      'title': 'Conclusion',
+      'title': 'cmp.con.title'.tr,
       'cards': [
         {
           'icon': Icons.compare_arrows_rounded,
           'color': AppTheme.googleBlue,
-          'cardTitle': 'getx_distil vs GetX',
-          'quote':
-              'getx_distil succeeds in precisely removing GetX\'s "excess" while refining its "core."',
+          'cardTitle': 'cmp.con.card0.title'.tr,
+          'quote': 'cmp.con.card0.quote'.tr,
           'paragraphs': [
-            'If GetX is a "framework," getx_distil is a "micro-engine." The design decision to boldly remove routing, dialogs, networking, and storage — focusing solely on state management and DI — perfectly aligns with the modern Flutter ecosystem (GoRouter, dio, shared_preferences, etc.).',
-            'In particular, Fast-Path Tracking, RxList Microtask Batching, and Tree-Scoped DI provide clear, measurable performance/stability advantages over the original, while RxSList/RxS are original contributions not found in the original.',
-            'For existing GetX users, it provides the same DX (.obs → Obx → Get.find) while fundamentally solving memory leak and scope collision issues in GoRouter environments. For new projects, it has a clear advantage over the original GetX.',
+            'cmp.con.card0.p0'.tr,
+            'cmp.con.card0.p1'.tr,
+            'cmp.con.card0.p2'.tr,
           ],
         },
         {
           'icon': Icons.swap_horiz_rounded,
           'color': AppTheme.googleGreen,
-          'cardTitle': 'getx_distil vs Riverpod 3.0',
-          'quote':
-              'getx_distil and Riverpod 3.0 are complementary rather than competitive.',
+          'cardTitle': 'cmp.con.card1.title'.tr,
+          'quote': 'cmp.con.card1.quote'.tr,
           'paragraphs': [
-            'getx_distil is a lightweight engine optimized for "fastest with least code." Riverpod 3.0 is a framework optimized for "safest, most systematic."',
-            'getx_distil\'s RxList batching, Fast-Path Tracking, and Self-Healing Build-Phase are unique optimizations not found in Riverpod, with a clear performance advantage especially in high-frequency data manipulation scenarios.',
-            'On the other hand, Riverpod 3.0\'s compile-time type safety and systematic async state management shine in large-scale projects. Choose based on project scale, team maturity, and data manipulation patterns.',
+            'cmp.con.card1.p0'.tr,
+            'cmp.con.card1.p1'.tr,
+            'cmp.con.card1.p2'.tr,
           ],
         },
       ],
-      'footerText': 'Written: 2026-06-10\nTarget version: getx_distil v1.1.3',
+      'footerText': 'cmp.con.footer'.tr,
     },
   };
 }
