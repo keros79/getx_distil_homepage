@@ -8,8 +8,6 @@ import 'core/app_translations.dart';
 void main() {
   usePathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
-  // Initialize default locale before running the app
-  Get.locale = const Locale('en', 'US');
   runApp(const MyApp());
 }
 
@@ -18,16 +16,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      final locale = Get.locale;
-      return GetMaterialApp(
-        key: ValueKey(locale),
-        routerConfig: router,
-        theme: AppTheme.lightTheme,
-        translations: AppTranslations(),
-        locale: locale,
-        fallbackLocale: const Locale('en', 'US'),
-      );
-    });
+    return GetMaterialApp(
+      routerConfig: router,
+      theme: AppTheme.lightTheme,
+      translations: AppTranslations(),
+      locale: Get.locale ?? const Locale('en', 'US'),
+      fallbackLocale: const Locale('en', 'US'),
+    );
   }
 }
