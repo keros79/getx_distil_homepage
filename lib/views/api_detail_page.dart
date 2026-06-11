@@ -157,8 +157,8 @@ class _ApiDetailPageState extends State<ApiDetailPage> {
         'tr and trParams extension support: Dynamic parameter string injection directly in translations.',
         'Clean dictionary mapping: Structure locale keys inside a simple Translations subclass.',
       ],
-      'next': 'guide',
-      'nextTitle': 'Back to Guide',
+      'next': 'comparison',
+      'nextTitle': 'Comparison Overview',
       'color': AppTheme.googleGreen,
     },
   };
@@ -329,8 +329,8 @@ class _ApiDetailPageState extends State<ApiDetailPage> {
           title: 'Explore $nextTitle',
           glowColor: color,
           onTap: () {
-            if (nextSection == 'guide') {
-              context.go('/guide');
+            if (nextSection == 'comparison') {
+              context.go('/comparison/overview');
             } else {
               context.go('/api/$nextSection');
             }
