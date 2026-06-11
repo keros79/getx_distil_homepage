@@ -2,14 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:getx_distil/get.dart';
 
 class HomeController extends GetxController {
-  // Reactive scroll offset for navbar styling
-  final scrollOffset = 0.0.obs;
-
   // Real-time mini playground states
   final counter = 0.obs;
   final clicks = 0.obs;
   final textInput = 'Type something...'.obs;
-  
+
   // Status-Aware states
   final demoItems = RxSList<String>();
   final rxUser = RxS<String?>(null);
@@ -23,11 +20,6 @@ class HomeController extends GetxController {
   void onInit() {
     super.onInit();
     scrollController = ScrollController();
-    scrollController.addListener(_scrollListener);
-  }
-
-  void _scrollListener() {
-    scrollOffset.value = scrollController.offset;
   }
 
   void increment() {
@@ -96,7 +88,6 @@ class HomeController extends GetxController {
 
   @override
   void onClose() {
-    scrollController.removeListener(_scrollListener);
     scrollController.dispose();
     super.onClose();
   }

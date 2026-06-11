@@ -4,9 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../app_theme.dart';
 
 class NavBar extends StatelessWidget implements PreferredSizeWidget {
-  final double scrollOffset;
-
-  const NavBar({super.key, required this.scrollOffset});
+  const NavBar({super.key});
 
   @override
   Size get preferredSize => const Size.fromHeight(70.0);
@@ -22,108 +20,88 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final bool isMobile = MediaQuery.of(context).size.width < 800;
 
-    return Container(
-      height: 70.0,
-      decoration: const BoxDecoration(
-        color: AppTheme.bg,
-        border: Border(
-          bottom: BorderSide(
-            color: AppTheme.border,
-            width: 1.0,
-          ),
+    return AppBar(
+      backgroundColor: AppTheme.bg,
+      surfaceTintColor: Colors.transparent,
+      elevation: 0,
+      scrolledUnderElevation: 0,
+      toolbarHeight: 70.0,
+      titleSpacing: 0,
+      automaticallyImplyLeading: false,
+      title: InkWell(
+        onTap: () => context.go('/'),
+        borderRadius: BorderRadius.circular(8.0),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ShaderMask(
+              shaderCallback: (bounds) =>
+                  AppTheme.primaryGradient.createShader(bounds),
+              child: const Icon(
+                Icons.bolt_rounded,
+                size: 30.0,
+                color: Colors.white,
+              ),
+            ),
+            const SizedBox(width: 8.0),
+            const Text(
+              'getx_distil',
+              style: TextStyle(
+                fontFamily: 'Google Sans Flex',
+                fontSize: 20.0,
+                fontWeight: FontWeight.w800,
+                letterSpacing: -0.5,
+                color: AppTheme.textPrimary,
+              ),
+            ),
+          ],
         ),
       ),
-          padding: const EdgeInsets.symmetric(horizontal: 24.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              // Logo
-              InkWell(
-                onTap: () => context.go('/'),
-                borderRadius: BorderRadius.circular(8.0),
-                child: Row(
-                  children: [
-                    // Spark/Shield logo design
-                    ShaderMask(
-                      shaderCallback: (bounds) =>
-                          AppTheme.primaryGradient.createShader(bounds),
-                      child: const Icon(
-                        Icons.bolt_rounded,
-                        size: 30.0,
-                        color: Colors.white,
-                      ),
-                    ),
-                    const SizedBox(width: 8.0),
-                    const Text(
-                      'getx_distil',
-                      style: TextStyle(
-                        fontFamily: 'Google Sans Flex',
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.w800,
-                        letterSpacing: -0.5,
-                        color: AppTheme.textPrimary,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              // Nav Links
-              if (!isMobile)
-                Row(
-                  children: [
-                    _NavLink(
-                      label: 'Home',
-                      onPressed: () => context.go('/'),
-                      isActive: GoRouterState.of(context).uri.path == '/',
-                    ),
-                    _NavLink(
-                      label: 'Guide',
-                      onPressed: () => context.go('/guide'),
-                      isActive: GoRouterState.of(context).uri.path == '/guide',
-                    ),
-                    _NavLink(
-                      label: 'API Reference',
-                      onPressed: () => context.go('/api/reactive-state'),
-                      isActive: GoRouterState.of(
-                        context,
-                      ).uri.path.startsWith('/api'),
-                    ),
-                    _NavLink(
-                      label: 'Comparison',
-                      onPressed: () => context.go('/comparison'),
-                      isActive:
-                          GoRouterState.of(context).uri.path == '/comparison' ||
-                              GoRouterState.of(context)
-                                  .uri
-                                  .path
-                                  .startsWith('/comparison/'),
-                    ),
-                    _NavLink(
-                      label: 'About',
-                      onPressed: () => context.go('/about'),
-                      isActive: GoRouterState.of(context).uri.path == '/about',
-                    ),
-                    _NavLink(
-                      label: 'pub.dev',
-                      onPressed: _launchPubDev,
-                      isActive: false,
-                    ),
-                  ],
-                )
-              else
-                // Mobile menu triggers drawer (handled in home_page/pages scaffolds)
-                IconButton(
-                  icon: const Icon(
-                    Icons.menu_rounded,
-                    color: AppTheme.textPrimary,
-                  ),
-                  onPressed: () {
-                    Scaffold.of(context).openEndDrawer();
-                  },
-                ),
-            ],
+      actions: [
+        if (!isMobile) ...[
+          _NavLink(
+            label: 'Home',
+            onPressed: () => context.go('/'),
+            isActive: GoRouterState.of(context).uri.path == '/',
           ),
+          _NavLink(
+            label: 'Guide',
+            onPressed: () => context.go('/guide'),
+            isActive: GoRouterState.of(context).uri.path == '/guide',
+          ),
+          _NavLink(
+            label: 'API Reference',
+            onPressed: () => context.go('/api/reactive-state'),
+            isActive: GoRouterState.of(context).uri.path.startsWith('/api'),
+          ),
+          _NavLink(
+            label: 'Comparison',
+            onPressed: () => context.go('/comparison'),
+            isActive: GoRouterState.of(context).uri.path == '/comparison' ||
+                GoRouterState.of(context).uri.path.startsWith('/comparison/'),
+          ),
+          _NavLink(
+            label: 'About',
+            onPressed: () => context.go('/about'),
+            isActive: GoRouterState.of(context).uri.path == '/about',
+          ),
+          _NavLink(
+            label: 'pub.dev',
+            onPressed: _launchPubDev,
+            isActive: false,
+          ),
+          const SizedBox(width: 8.0),
+        ] else
+          IconButton(
+            icon: const Icon(
+              Icons.menu_rounded,
+              color: AppTheme.textPrimary,
+            ),
+            onPressed: () {
+              Scaffold.of(context).openEndDrawer();
+            },
+          ),
+      ],
     );
   }
 }

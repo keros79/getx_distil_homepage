@@ -742,15 +742,11 @@ class ComparisonPage extends StatefulWidget {
 
 class _ComparisonPageState extends State<ComparisonPage> {
   late final ScrollController _scrollController;
-  double _scrollOffset = 0.0;
 
   @override
   void initState() {
     super.initState();
     _scrollController = ScrollController();
-    _scrollController.addListener(() {
-      if (mounted) setState(() => _scrollOffset = _scrollController.offset);
-    });
   }
 
   @override
@@ -758,7 +754,6 @@ class _ComparisonPageState extends State<ComparisonPage> {
     super.didUpdateWidget(oldWidget);
     if (widget.section != oldWidget.section) {
       _scrollController.jumpTo(0.0);
-      _scrollOffset = 0.0;
     }
   }
 
@@ -777,44 +772,25 @@ class _ComparisonPageState extends State<ComparisonPage> {
     return Scaffold(
       backgroundColor: AppTheme.bg,
       endDrawer: isMobile ? const AppDrawer() : null,
-      body: Stack(
+      appBar: const NavBar(),
+      body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Positioned.fill(
-            child: Column(
-              children: [
-                const SizedBox(height: 70.0),
-                Expanded(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      if (!isMobile)
-                        SidebarTocComparison(activePath: widget.section),
-                      Expanded(
-                        child: SingleChildScrollView(
-                          controller: _scrollController,
-                          padding: EdgeInsets.symmetric(
-                            horizontal: isMobile ? 24.0 : 48.0,
-                            vertical: 32.0,
-                          ),
-                          child: Center(
-                            child: Container(
-                              constraints: const BoxConstraints(maxWidth: 900),
-                              child: _buildContent(meta, isMobile),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+          if (!isMobile) SidebarTocComparison(activePath: widget.section),
+          Expanded(
+            child: SingleChildScrollView(
+              controller: _scrollController,
+              padding: EdgeInsets.symmetric(
+                horizontal: isMobile ? 24.0 : 48.0,
+                vertical: 32.0,
+              ),
+              child: Center(
+                child: Container(
+                  constraints: const BoxConstraints(maxWidth: 900),
+                  child: _buildContent(meta, isMobile),
                 ),
-              ],
+              ),
             ),
-          ),
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: NavBar(scrollOffset: _scrollOffset),
           ),
         ],
       ),

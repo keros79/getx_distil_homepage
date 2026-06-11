@@ -21,7 +21,6 @@ class ApiDetailPage extends StatefulWidget {
 
 class _ApiDetailPageState extends State<ApiDetailPage> {
   late final ScrollController _scrollController;
-  double _scrollOffset = 0.0;
   late final DocsController controller;
 
   @override
@@ -29,11 +28,6 @@ class _ApiDetailPageState extends State<ApiDetailPage> {
     super.initState();
     controller = Get.find<DocsController>();
     _scrollController = ScrollController();
-    _scrollController.addListener(() {
-      setState(() {
-        _scrollOffset = _scrollController.offset;
-      });
-    });
   }
 
   @override
@@ -41,7 +35,6 @@ class _ApiDetailPageState extends State<ApiDetailPage> {
     super.didUpdateWidget(oldWidget);
     if (widget.section != oldWidget.section) {
       _scrollController.jumpTo(0.0);
-      _scrollOffset = 0.0;
     }
   }
 
@@ -377,48 +370,28 @@ class _ApiDetailPageState extends State<ApiDetailPage> {
     return Scaffold(
       backgroundColor: AppTheme.bg,
       endDrawer: isMobile ? const AppDrawer() : null,
-      body: Stack(
+      appBar: const NavBar(),
+      body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Positioned.fill(
-            child: Column(
-              children: [
-                const SizedBox(height: 70.0), // Space for NavBar
-                Expanded(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Desktop Sidebar
-                      if (!isMobile) SidebarToc(activePath: section),
+          // Desktop Sidebar
+          if (!isMobile) SidebarToc(activePath: section),
 
-                      // Content Area
-                      Expanded(
-                        child: SingleChildScrollView(
-                          controller: _scrollController,
-                          padding: EdgeInsets.symmetric(
-                            horizontal: isMobile ? 24.0 : 48.0,
-                            vertical: 32.0,
-                          ),
-                          child: Center(
-                            child: Container(
-                              constraints: const BoxConstraints(maxWidth: 800),
-                              child: contentBody,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+          // Content Area
+          Expanded(
+            child: SingleChildScrollView(
+              controller: _scrollController,
+              padding: EdgeInsets.symmetric(
+                horizontal: isMobile ? 24.0 : 48.0,
+                vertical: 32.0,
+              ),
+              child: Center(
+                child: Container(
+                  constraints: const BoxConstraints(maxWidth: 800),
+                  child: contentBody,
                 ),
-              ],
+              ),
             ),
-          ),
-
-          // Fixed Glass Navbar
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: NavBar(scrollOffset: _scrollOffset),
           ),
         ],
       ),

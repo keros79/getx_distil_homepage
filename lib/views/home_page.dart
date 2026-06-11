@@ -29,52 +29,35 @@ class HomePage extends GetView<HomeController> {
     return Scaffold(
       backgroundColor: AppTheme.bg,
       endDrawer: isMobile ? const AppDrawer() : null,
-      body: Stack(
-        children: [
-          // 3. Scrollable Contents
-          Positioned.fill(
-            child: SingleChildScrollView(
-              controller: controller.scrollController,
-              child: Column(
-                children: [
-                  const SizedBox(height: 120.0), // Space for NavBar
-                  // --- HERO SECTION ---
-                  _buildHero(context, isMobile),
+      appBar: const NavBar(),
+      body: SingleChildScrollView(
+        controller: controller.scrollController,
+        child: Column(
+          children: [
+            // --- HERO SECTION ---
+            _buildHero(context, isMobile),
 
-                  const SizedBox(height: 100.0),
+            const SizedBox(height: 100.0),
 
-                  // --- INTERACTIVE PLAYGROUND ---
-                  _buildPlayground(context, isMobile),
+            // --- INTERACTIVE PLAYGROUND ---
+            _buildPlayground(context, isMobile),
 
-                  const SizedBox(height: 120.0),
+            const SizedBox(height: 120.0),
 
-                  // --- FEATURE HIGHLIGHTS ---
-                  _buildFeatures(context, isMobile),
+            // --- FEATURE HIGHLIGHTS ---
+            _buildFeatures(context, isMobile),
 
-                  const SizedBox(height: 120.0),
+            const SizedBox(height: 120.0),
 
-                  // --- ARCHITECTURE CALLOUT ---
-                  _buildArchitectureCallout(context, isMobile),
+            // --- ARCHITECTURE CALLOUT ---
+            _buildArchitectureCallout(context, isMobile),
 
-                  const SizedBox(height: 100.0),
+            const SizedBox(height: 100.0),
 
-                  // --- FOOTER ---
-                  _buildFooter(context, isMobile),
-                ],
-              ),
-            ),
-          ),
-
-          // 4. Fixed Glass Navbar (Reads scrollOffset reactively)
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: Obx(
-              () => NavBar(scrollOffset: controller.scrollOffset.value),
-            ),
-          ),
-        ],
+            // --- FOOTER ---
+            _buildFooter(context, isMobile),
+          ],
+        ),
       ),
     );
   }
