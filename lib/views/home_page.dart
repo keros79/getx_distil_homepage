@@ -1155,22 +1155,22 @@ Obx(() => rxUser.on(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           _ArchitectureBadge(
-                            text: 'home.badge_material_app'.tr,
+                            text: 'GetMaterialApp',
                             color: AppTheme.googleBlue,
                           ),
                           const SizedBox(height: 10),
                           _ArchitectureBadge(
-                            text: 'home.badge_go_router'.tr,
+                            text: 'GoRouter Config',
                             color: AppTheme.googleGreen,
                           ),
                           const SizedBox(height: 10),
                           _ArchitectureBadge(
-                            text: 'home.badge_binding_widget'.tr,
+                            text: 'BindingWidget Scopes',
                             color: AppTheme.googleRed,
                           ),
                           const SizedBox(height: 10),
                           _ArchitectureBadge(
-                            text: 'home.badge_get_view'.tr,
+                            text: 'GetView Page',
                             color: AppTheme.googleYellow,
                           ),
                         ],
@@ -1282,7 +1282,7 @@ Obx(() => rxUser.on(
                           size: 20,
                         ),
                         onPressed: _launchGitHub,
-                        tooltip: 'home.tooltip_github'.tr,
+                        tooltip: 'GitHub Repository',
                       ),
                       const SizedBox(width: 12.0),
                       IconButton(
@@ -1292,7 +1292,7 @@ Obx(() => rxUser.on(
                           size: 20,
                         ),
                         onPressed: () => context.go('/about'),
-                        tooltip: 'home.tooltip_about'.tr,
+                        tooltip: 'About Developer',
                       ),
                     ],
                   ),
@@ -1303,7 +1303,7 @@ Obx(() => rxUser.on(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'home.footer_copy'.tr,
+                    '© 2026 getx_distil. Open source under MIT License.',
                     style: const TextStyle(
                         color: AppTheme.textMuted, fontSize: 12.0),
                   ),

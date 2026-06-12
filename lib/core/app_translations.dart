@@ -119,17 +119,6 @@ class AppTranslations extends Translations {
           'home.arch_desc':
               'Incorporating GetX DX patterns into standard declarative routers (like GoRouter) is simplified with getx_distil. Bind controllers and views cleanly to widget tree life cycles without global route engine overheads.',
           'home.btn_arch_guide': 'Read Architecture Guide',
-          'home.badge_material_app': 'GetMaterialApp',
-          'home.badge_go_router': 'GoRouter Config',
-          'home.badge_binding_widget': 'BindingWidget Scopes',
-          'home.badge_get_view': 'GetView Page',
-
-          // ── Home — Footer ──
-          'home.footer_copy':
-              '© 2026 getx_distil. Open source under MIT License.',
-          'home.footer_version': 'v1.4.1+12',
-          'home.tooltip_github': 'GitHub Repository',
-          'home.tooltip_about': 'About Developer',
 
           // ── API Detail Page ──
           'api.breadcrumb': 'API REFERENCE',
@@ -304,8 +293,7 @@ class AppTranslations extends Translations {
           'cmp.imp.i2.r0c2': 'Safely deferred via PostFrameCallback',
           'cmp.imp.i2.r1c0': 'Detection method',
           'cmp.imp.i2.r1c1': 'None',
-          'cmp.imp.i2.r1c2':
-              'SchedulerBinding.instance.schedulerPhase check',
+          'cmp.imp.i2.r1c2': 'SchedulerBinding.instance.schedulerPhase check',
           'cmp.imp.i2.eval':
               'Prevents crashes that frequently occur in production. Very high practical value.',
           // Item 2.3
@@ -349,8 +337,7 @@ class AppTranslations extends Translations {
           'cmp.imp.i4.eval':
               "A design that perfectly aligns with the GoRouter era. Solves GetX's biggest architectural flaw — a key differentiator.",
           // Item 2.5
-          'cmp.imp.i5.title':
-              'FIFO Sequential Pipeline (updateSequential)',
+          'cmp.imp.i5.title': 'FIFO Sequential Pipeline (updateSequential)',
           'cmp.imp.i5.subtitle':
               'Prevents race conditions in high-frequency async',
           'cmp.imp.i5.h0': 'Category',
@@ -365,8 +352,7 @@ class AppTranslations extends Translations {
           'cmp.imp.i5.eval':
               'Essential for high-frequency scenarios like real-time quotes, chat, and sensor data. High practical value.',
           // Item 2.6
-          'cmp.imp.i6.title':
-              'RxSList / RxS — Status-Aware Reactive Types',
+          'cmp.imp.i6.title': 'RxSList / RxS — Status-Aware Reactive Types',
           'cmp.imp.i6.subtitle': 'Unique feature (not in original)',
           'cmp.imp.i6.h0': 'Category',
           'cmp.imp.i6.h1': 'GetX',
@@ -399,8 +385,7 @@ class AppTranslations extends Translations {
               'A safety net that significantly reduces debugging time. Also ensures production stability.',
           // Item 2.8
           'cmp.imp.i8.title': 'High-Visibility DI Debugging',
-          'cmp.imp.i8.subtitle':
-              'Detailed debug info on DI lookup failure',
+          'cmp.imp.i8.subtitle': 'Detailed debug info on DI lookup failure',
           'cmp.imp.i8.h0': 'Category',
           'cmp.imp.i8.h1': 'GetX',
           'cmp.imp.i8.h2': 'getx_distil',
@@ -513,8 +498,7 @@ class AppTranslations extends Translations {
           'cmp.rp.s1.r2c2': 'Auto registration (@riverpod annotation)',
           'cmp.rp.s1.r3c0': 'Learning Curve',
           'cmp.rp.s1.r3c1': 'Low (same as GetX)',
-          'cmp.rp.s1.r3c2':
-              'High (Provider, Notifier, AsyncNotifier, etc.)',
+          'cmp.rp.s1.r3c2': 'High (Provider, Notifier, AsyncNotifier, etc.)',
           'cmp.rp.s1.r4c0': 'Boilerplate',
           'cmp.rp.s1.r4c1': 'Minimal (.obs one-liner)',
           'cmp.rp.s1.r4c2': 'Medium~High (annotation + generated code)',
@@ -592,8 +576,7 @@ class AppTranslations extends Translations {
           'cmp.rp.s4.r2c2': 'family modifier (compile-time)',
           'cmp.rp.s4.r3c0': 'Context-free Access',
           'cmp.rp.s4.r3c1': '✅ Get.find<T>()',
-          'cmp.rp.s4.r3c2':
-              '❌ ref required (only inside widgets/functions)',
+          'cmp.rp.s4.r3c2': '❌ ref required (only inside widgets/functions)',
           'cmp.rp.s4.r4c0': 'Lifecycle Management',
           'cmp.rp.s4.r4c1': 'Auto GC on widget dispose',
           'cmp.rp.s4.r4c2': 'ref.onDispose() callback',
@@ -628,10 +611,8 @@ class AppTranslations extends Translations {
           'cmp.rp.s6.h1': 'getx_distil',
           'cmp.rp.s6.h2': 'Riverpod 3.0',
           'cmp.rp.s6.r0c0': 'Build-phase state mutation',
-          'cmp.rp.s6.r0c1':
-              'Self-healing (PostFrameCallback deferral)',
-          'cmp.rp.s6.r0c2':
-              'N/A (only ref.watch allowed during build)',
+          'cmp.rp.s6.r0c1': 'Self-healing (PostFrameCallback deferral)',
+          'cmp.rp.s6.r0c2': 'N/A (only ref.watch allowed during build)',
           'cmp.rp.s6.r1c0': 'Ref.watch during build',
           'cmp.rp.s6.r1c1': 'N/A',
           'cmp.rp.s6.r1c2': 'Strict runtime check',
@@ -687,8 +668,7 @@ class AppTranslations extends Translations {
           'cmp.rp.s8.r1c1': 'Scope control via BindingWidget',
           'cmp.rp.s8.r1c2': 'ProviderScope(overrides: [...])',
           'cmp.rp.s8.r2c0': 'Mocking Convenience',
-          'cmp.rp.s8.r2c1':
-              'Moderate (manual registration/replacement)',
+          'cmp.rp.s8.r2c1': 'Moderate (manual registration/replacement)',
           'cmp.rp.s8.r2c2': 'Excellent (systematic override system)',
           'cmp.rp.s8.r3c0': 'Test Isolation',
           'cmp.rp.s8.r3c1': 'Manual Get.reset() call',
@@ -777,8 +757,7 @@ class AppTranslations extends Translations {
               'GitHub 리포지토리와 오픈소스 유틸리티들을 확인하고 getx_distil 패키지에 기여해보세요.',
           'about.github_link': 'GitHub 방문하기 ->',
           'about.pub_title': 'pub.dev 패키지',
-          'about.pub_desc':
-              '배포된 패키지, 벤치마크, 문서화 점수 및 설치 방법을 확인해보세요.',
+          'about.pub_desc': '배포된 패키지, 벤치마크, 문서화 점수 및 설치 방법을 확인해보세요.',
           'about.pub_link': 'pub.dev 방문하기 ->',
 
           // ── Guide Page ──
@@ -801,8 +780,7 @@ class AppTranslations extends Translations {
 
           // ── Home — Hero ──
           'home.hero_title_mobile': 'Flutter 상태 관리',
-          'home.hero_title_desktop':
-              'Flutter 상태 관리\n더 가볍고 정교하게',
+          'home.hero_title_desktop': 'Flutter 상태 관리\n더 가볍고 정교하게',
           'home.slogan_1': '동일한 개발자 경험(DX). 제로 오버헤드.',
           'home.slogan_2': '위젯 트리 범위의 생명주기 및 가비지 컬렉션(GC).',
           'home.slogan_3': '렌더링 프레임 후 자동 복구되는 리빌드.',
@@ -870,17 +848,6 @@ class AppTranslations extends Translations {
           'home.arch_desc':
               'getx_distil을 활용하면 GetX의 우수한 DX를 GoRouter와 같은 표준 선언형 라우터에 쉽게 녹여낼 수 있습니다. 글로벌 라우팅 오버헤드 없이 위젯 트리 생명주기에 컨트롤러와 뷰를 깔끔하게 연동하세요.',
           'home.btn_arch_guide': '아키텍처 가이드 읽기',
-          'home.badge_material_app': 'GetMaterialApp',
-          'home.badge_go_router': 'GoRouter 설정',
-          'home.badge_binding_widget': 'BindingWidget 스코프',
-          'home.badge_get_view': 'GetView 페이지',
-
-          // ── Home — Footer ──
-          'home.footer_copy':
-              '© 2026 getx_distil. MIT 라이선스 하에 배포되는 오픈소스 프로젝트입니다.',
-          'home.footer_version': 'v1.4.1+12',
-          'home.tooltip_github': 'GitHub 리포지토리',
-          'home.tooltip_about': '개발자 정보',
 
           // ── API Detail Page ──
           'api.breadcrumb': 'API 레퍼런스',
@@ -997,8 +964,7 @@ class AppTranslations extends Translations {
           // ── Comparison — Overview ──
           'cmp.ov.title': '상세 비교 분석 및 평가',
           'cmp.ov.badge0': '대상 버전: getx_distil v1.1.3',
-          'cmp.ov.badge1':
-              '비교 대상: GetX (pub.dev/packages/get), Riverpod 3.0',
+          'cmp.ov.badge1': '비교 대상: GetX (pub.dev/packages/get), Riverpod 3.0',
           'cmp.ov.section_title': '1. getx_distil 프로젝트 개요',
           'cmp.ov.next_title': '2. 기존 GetX 대비 주요 개선점',
           'cmp.ov.h_category': '구분',
@@ -1196,8 +1162,7 @@ class AppTranslations extends Translations {
           'cmp.qa.next_title': '5. vs Riverpod 3.0 비교 분석',
           'cmp.qa.good0':
               '초정밀 경량화 — 핵심 코드가 약 1,200줄에 불과해 오리지널 대비 10% 이하입니다. 압도적인 관리 편의성을 자랑합니다.',
-          'cmp.qa.good1':
-              '제로 의존성 — Flutter SDK에만 의존하여 공급망 보안 위험이 완전히 제로입니다.',
+          'cmp.qa.good1': '제로 의존성 — Flutter SDK에만 의존하여 공급망 보안 위험이 완전히 제로입니다.',
           'cmp.qa.good2':
               '철저한 테스트 커버리지 — 핵심 기능 테스트 코드가 약 1,594줄에 달하며 좀비 메모리 감지, RxList 일괄 갱신 등 엣지 케이스까지 안전히 커버합니다.',
           'cmp.qa.good3':
@@ -1225,13 +1190,15 @@ class AppTranslations extends Translations {
           'cmp.qa.s3_item': 'DX (개발자 경험)',
           'cmp.qa.s3_note': '상태 인지형 RxSList와 .on() 분기 처리 가독성은 최고 수준',
           'cmp.qa.s4_item': '오리지널 호환성',
-          'cmp.qa.s4_note': '.obs, Obx, Get.find 등 핵심 패러다임이 100% 같아 손쉬운 마이그레이션 가능',
+          'cmp.qa.s4_note':
+              '.obs, Obx, Get.find 등 핵심 패러다임이 100% 같아 손쉬운 마이그레이션 가능',
           'cmp.qa.s5_item': '테스트 신뢰성',
           'cmp.qa.s5_note': '핵심 동작들이 잘 검증되어 있으나 일부 엣지 케이스는 확장 여지 있음',
           'cmp.qa.s6_item': '문서화 수준',
           'cmp.qa.s6_note': '한글/영문 가이드라인과 정교한 완성형 데모의 품질이 훌륭함',
           'cmp.qa.s7_item': '생태계 친화성',
-          'cmp.qa.s7_note': 'GoRouter 연동이 매끄러운 대신 기존 GetX 프로젝트 마이그레이션 시 수동 작업 요소 발생',
+          'cmp.qa.s7_note':
+              'GoRouter 연동이 매끄러운 대신 기존 GetX 프로젝트 마이그레이션 시 수동 작업 요소 발생',
 
           // ── Comparison — Riverpod ──
           'cmp.rp.title': 'getx_distil vs Riverpod 3.0',
@@ -1389,7 +1356,8 @@ class AppTranslations extends Translations {
           'cmp.rp.s7.r4c2': '빌드 단계 이전 코드 생성 단계 주입 필수',
           'cmp.rp.s7.r5c0': '패키지 총 의존성',
           'cmp.rp.s7.r5c1': '0 (Flutter SDK 내장)',
-          'cmp.rp.s7.r5c2': '다수 (riverpod, riverpod_annotation, build_runner 등 다량)',
+          'cmp.rp.s7.r5c2':
+              '다수 (riverpod, riverpod_annotation, build_runner 등 다량)',
           'cmp.rp.s7.eval':
               '소규모 1인 개발 또는 빠른 MVP 개발 단계에서는 코드 생성이 필요 없는 getx_distil이 속도전에서 월등히 강합니다. 반면 대규모 대기업 프로젝트에서는 컴파일 안전장치가 코드 유지보수에 기여합니다.',
 
@@ -1475,8 +1443,7 @@ class AppTranslations extends Translations {
               'getx_distil이 제공하는 RxList의 마이크로태스크 배치 최적화나 빌드 단계 자동 보정, Fast-Path 기술 등은 Riverpod에 존재하지 않는 성능 튜닝 장치로, 실시간 데이터 변동이 매우 심한 페이지일수록 getx_distil이 더 유리합니다.',
           'cmp.con.card1.p2':
               '반면 Riverpod 3.0은 코드 생성이 주는 컴파일 타임 검증성과 탄탄한 비동기 프로바이더가 거대한 엔터프라이즈 프로젝트에서 진가를 발휘하게 돕습니다. 프로젝트 예산 규모, 구성원의 기술적 성숙도, 처리해야 할 실시간 연산량 등에 맞춰 최적의 솔루션을 선택하는 것이 현명합니다.',
-          'cmp.con.footer':
-              '작성일자: 2026-06-10\n적용 엔진 버전: getx_distil v1.1.3',
+          'cmp.con.footer': '작성일자: 2026-06-10\n적용 엔진 버전: getx_distil v1.1.3',
         },
       };
 }
