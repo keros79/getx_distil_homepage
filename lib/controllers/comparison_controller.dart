@@ -29,19 +29,15 @@ class ComparisonController extends GetxController {
         'overview': {
           'type': 'overview',
           'title': 'cmp.ov.title'.tr,
-          'infoBadges': [
-            'cmp.ov.badge0'.tr,
-            'cmp.ov.badge1'.tr,
-          ],
           'sectionTitle': 'cmp.ov.section_title'.tr,
           'tableHeaders': [
             'cmp.ov.h_category'.tr,
-            'cmp.ov.h_distil'.tr,
-            'cmp.ov.h_getx'.tr
+            'getx_distil',
+            'GetX'
           ],
           'tableRows': [
             _row(['cmp.ov.r_version'.tr, '1.2.0 (Stable)', '4.6.6']),
-            _row(['cmp.ov.r_sdk'.tr, 'Dart ^3.12.0', 'Dart >=2.14.0']),
+            _row(['SDK', 'Dart ^3.12.0', 'Dart >=2.14.0']),
             _row([
               'cmp.ov.r_deps'.tr,
               'cmp.ov.r_deps_distil'.tr,
@@ -85,8 +81,8 @@ class ComparisonController extends GetxController {
               'subtitle': 'cmp.imp.i1.subtitle'.tr,
               'tableHeaders': [
                 'cmp.imp.i1.h0'.tr,
-                'cmp.imp.i1.h1'.tr,
-                'cmp.imp.i1.h2'.tr
+                'GetX',
+                'getx_distil'
               ],
               'tableRows': [
                 _row([
@@ -115,8 +111,8 @@ class ComparisonController extends GetxController {
               'subtitle': 'cmp.imp.i2.subtitle'.tr,
               'tableHeaders': [
                 'cmp.imp.i2.h0'.tr,
-                'cmp.imp.i2.h1'.tr,
-                'cmp.imp.i2.h2'.tr
+                'GetX',
+                'getx_distil'
               ],
               'tableRows': [
                 _row([
@@ -140,8 +136,8 @@ class ComparisonController extends GetxController {
               'subtitle': 'cmp.imp.i3.subtitle'.tr,
               'tableHeaders': [
                 'cmp.imp.i3.h0'.tr,
-                'cmp.imp.i3.h1'.tr,
-                'cmp.imp.i3.h2'.tr
+                'GetX',
+                'getx_distil'
               ],
               'tableRows': [
                 _row([
@@ -170,8 +166,8 @@ class ComparisonController extends GetxController {
               'subtitle': 'cmp.imp.i4.subtitle'.tr,
               'tableHeaders': [
                 'cmp.imp.i4.h0'.tr,
-                'cmp.imp.i4.h1'.tr,
-                'cmp.imp.i4.h2'.tr
+                'GetX',
+                'getx_distil'
               ],
               'tableRows': [
                 _row([
@@ -210,8 +206,8 @@ class ComparisonController extends GetxController {
               'subtitle': 'cmp.imp.i5.subtitle'.tr,
               'tableHeaders': [
                 'cmp.imp.i5.h0'.tr,
-                'cmp.imp.i5.h1'.tr,
-                'cmp.imp.i5.h2'.tr
+                'GetX',
+                'getx_distil'
               ],
               'tableRows': [
                 _row([
@@ -235,8 +231,8 @@ class ComparisonController extends GetxController {
               'subtitle': 'cmp.imp.i6.subtitle'.tr,
               'tableHeaders': [
                 'cmp.imp.i6.h0'.tr,
-                'cmp.imp.i6.h1'.tr,
-                'cmp.imp.i6.h2'.tr
+                'GetX',
+                'getx_distil'
               ],
               'tableRows': [
                 _row([
@@ -265,8 +261,8 @@ class ComparisonController extends GetxController {
               'subtitle': 'cmp.imp.i7.subtitle'.tr,
               'tableHeaders': [
                 'cmp.imp.i7.h0'.tr,
-                'cmp.imp.i7.h1'.tr,
-                'cmp.imp.i7.h2'.tr
+                'GetX',
+                'getx_distil'
               ],
               'tableRows': [
                 _row([
@@ -288,8 +284,8 @@ class ComparisonController extends GetxController {
               'subtitle': 'cmp.imp.i8.subtitle'.tr,
               'tableHeaders': [
                 'cmp.imp.i8.h0'.tr,
-                'cmp.imp.i8.h1'.tr,
-                'cmp.imp.i8.h2'.tr
+                'GetX',
+                'getx_distil'
               ],
               'tableRows': [
                 _row([
@@ -313,8 +309,8 @@ class ComparisonController extends GetxController {
           'title': 'cmp.sac.title'.tr,
           'tableHeaders': [
             'cmp.sac.h_feature'.tr,
-            'cmp.sac.h_getx'.tr,
-            'cmp.sac.h_distil'.tr,
+            'GetX',
+            'getx_distil',
             'cmp.sac.h_impact'.tr
           ],
           'tableRows': [
@@ -434,13 +430,13 @@ class ComparisonController extends GetxController {
             },
           ],
           'nextSection': 'riverpod',
-          'nextTitle': 'cmp.rp.title'.tr,
+          'nextTitle': 'getx_distil vs Riverpod 3.0',
         },
 
         // ── Riverpod ──
         'riverpod': {
           'type': 'riverpod',
-          'title': 'cmp.rp.title'.tr,
+          'title': 'getx_distil vs Riverpod 3.0',
           'subsections': [
             {
               'subtype': 'table',
@@ -448,8 +444,8 @@ class ComparisonController extends GetxController {
               'title': 'cmp.rp.s1.title'.tr,
               'tableHeaders': [
                 'cmp.rp.s1.h0'.tr,
-                'cmp.rp.s1.h1'.tr,
-                'cmp.rp.s1.h2'.tr
+                'getx_distil',
+                'Riverpod 3.0'
               ],
               'tableRows': [
                 _row([
@@ -497,8 +493,8 @@ class ComparisonController extends GetxController {
                   '@riverpod\nclass Counter extends _\$Counter {\n  @override\n  int build() => 0;\n  void increment() => state++;\n}\n\n// UI\nConsumerWidget: ref.watch(counterProvider)',
               'tableHeaders': [
                 'cmp.rp.s2.h0'.tr,
-                'cmp.rp.s2.h1'.tr,
-                'cmp.rp.s2.h2'.tr
+                'getx_distil',
+                'Riverpod 3.0'
               ],
               'tableRows': [
                 _row([
@@ -541,8 +537,8 @@ class ComparisonController extends GetxController {
                   '@riverpod\nclass Users extends _\$Users {\n  @override\n  FutureOr<List<User>> build() => _fetchUsers();\n\n  Future<void> refresh() async {\n    state = const AsyncLoading();\n    state = await AsyncValue.guard(() => _fetchUsers());\n  }\n}\n\n// UI\nref.watch(usersProvider).when(\n  loading: () => CircularProgressIndicator(),\n  data:    (users) => ListView.builder(...),\n  error:   (err, _) => Text(\'Error: \$err\'),\n)',
               'tableHeaders': [
                 'cmp.rp.s3.h0'.tr,
-                'cmp.rp.s3.h1'.tr,
-                'cmp.rp.s3.h2'.tr
+                'getx_distil',
+                'Riverpod 3.0'
               ],
               'tableRows': [
                 _row([
@@ -798,7 +794,6 @@ class ComparisonController extends GetxController {
               'cmp.rp.guide.winner5'.tr
             ],
             'loserTitle': 'cmp.rp.guide.loser_title'.tr,
-            'loserIcon': Icons.verified_rounded,
             'loserColor': AppTheme.googleGreen,
             'loserItems': [
               'cmp.rp.guide.loser0'.tr,

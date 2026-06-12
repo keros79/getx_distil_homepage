@@ -75,7 +75,7 @@ class AboutPage extends StatelessWidget {
 
                     // Name
                     Text(
-                      'about.name'.tr,
+                      'Danny Kang',
                       style: const TextStyle(
                         fontFamily: 'Google Sans Flex',
                         fontSize: 32.0,

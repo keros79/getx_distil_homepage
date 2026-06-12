@@ -79,23 +79,6 @@ class ComparisonPage extends GetView<ComparisonController> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _sectionHeader(meta['title']),
-        const SizedBox(height: 8.0),
-        for (final badge in (meta['infoBadges'] as List<String>))
-          Padding(
-            padding: const EdgeInsets.only(bottom: 4.0),
-            child: Row(
-              children: [
-                const Icon(Icons.info_outline_rounded,
-                    size: 14, color: AppTheme.textMuted),
-                const SizedBox(width: 6.0),
-                Text(badge,
-                    style: const TextStyle(
-                        color: AppTheme.textMuted,
-                        fontSize: 12.0,
-                        fontFamily: 'Google Sans Mono')),
-              ],
-            ),
-          ),
         const SizedBox(height: 32.0),
         _sectionTitle(meta['sectionTitle']),
         const SizedBox(height: 16.0),
@@ -822,29 +805,20 @@ class ComparisonPage extends GetView<ComparisonController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              const Icon(Icons.route_rounded,
-                  color: AppTheme.googleGreen, size: 24),
-              const SizedBox(width: 12.0),
-              Text('comparison.selection_guide'.tr,
-                  style: const TextStyle(
-                      fontFamily: 'Google Sans Flex',
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.w700,
-                      color: AppTheme.textPrimary)),
-            ],
-          ),
+          Text('comparison.selection_guide'.tr,
+              style: const TextStyle(
+                  fontFamily: 'Google Sans Flex',
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.w700,
+                  color: AppTheme.textPrimary)),
           const SizedBox(height: 24.0),
           _guideSection(
               guide['winnerTitle'],
-              guide['winnerIcon'] as IconData?,
               guide['winnerColor'] as Color,
               (guide['winnerItems'] as List<String>)),
           const SizedBox(height: 20.0),
           _guideSection(
               guide['loserTitle'],
-              guide['loserIcon'] as IconData?,
               guide['loserColor'] as Color,
               (guide['loserItems'] as List<String>)),
         ],
@@ -853,16 +827,12 @@ class ComparisonPage extends GetView<ComparisonController> {
   }
 
   Widget _guideSection(
-      String title, IconData? icon, Color color, List<String> items) {
+      String title, Color color, List<String> items) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
-            if (icon != null) ...[
-              Icon(icon, color: color, size: 20),
-              const SizedBox(width: 8.0),
-            ],
             Text(title,
                 style: TextStyle(
                     fontFamily: 'Google Sans Flex',

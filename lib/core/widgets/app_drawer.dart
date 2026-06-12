@@ -247,9 +247,9 @@ class _AppDrawerState extends State<AppDrawer> {
 
                     // pub.dev
                     ListTile(
-                      title: Text(
-                        'nav.pub_dev'.tr,
-                        style: const TextStyle(
+                      title: const Text(
+                        'pub.dev',
+                        style: TextStyle(
                           fontSize: 30,
                           fontWeight: FontWeight.w400,
                         ),

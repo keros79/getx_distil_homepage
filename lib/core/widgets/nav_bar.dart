@@ -87,7 +87,7 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
             isActive: GoRouterState.of(context).uri.path == '/about',
           ),
           _NavLink(
-            label: 'nav.pub_dev'.tr,
+            label: 'pub.dev',
             onPressed: _launchPubDev,
             isActive: false,
           ),
