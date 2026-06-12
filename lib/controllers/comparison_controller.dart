@@ -529,10 +529,10 @@ class ComparisonController extends GetxController {
               'subtype': 'codeCompare',
               'number': '5.3',
               'title': 'cmp.rp.s3.title'.tr,
-              'description': 'cmp.rp.s3.desc1'.tr,
+              'description': 'getx_distil — RxSList / RxS',
               'code1':
                   'final items = <User>[].ops; // RxSList<User>\n\n// Manual state transition\nitems.assignAll(fetchedUsers);     // status → loaded\nitems.error = \'Network failure\';\nitems.status = RxListStatus.error;\n\n// UI\nObx(() => items.on(\n  loading: () => CircularProgressIndicator(),\n  loaded:  (data) => ListView.builder(...),\n  error:   (msg) => Text(\'Error: \$msg\'),\n))',
-              'description2': 'cmp.rp.s3.desc2'.tr,
+              'description2': 'Riverpod 3.0 — AsyncNotifier + AsyncValue',
               'code2':
                   '@riverpod\nclass Users extends _\$Users {\n  @override\n  FutureOr<List<User>> build() => _fetchUsers();\n\n  Future<void> refresh() async {\n    state = const AsyncLoading();\n    state = await AsyncValue.guard(() => _fetchUsers());\n  }\n}\n\n// UI\nref.watch(usersProvider).when(\n  loading: () => CircularProgressIndicator(),\n  data:    (users) => ListView.builder(...),\n  error:   (err, _) => Text(\'Error: \$err\'),\n)',
               'tableHeaders': [
@@ -815,7 +815,7 @@ class ComparisonController extends GetxController {
             {
               'icon': Icons.compare_arrows_rounded,
               'color': AppTheme.googleBlue,
-              'cardTitle': 'cmp.con.card0.title'.tr,
+              'cardTitle': 'getx_distil vs GetX',
               'quote': 'cmp.con.card0.quote'.tr,
               'paragraphs': [
                 'cmp.con.card0.p0'.tr,

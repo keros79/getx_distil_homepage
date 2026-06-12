@@ -501,11 +501,7 @@ class AppTranslations extends Translations {
 
           // 5.3 Async State Management
           'cmp.rp.s3.title': 'Async State Management',
-          'cmp.rp.s3.desc1': 'getx_distil — RxSList / RxS',
-          'cmp.rp.s3.desc2': 'Riverpod 3.0 — AsyncNotifier + AsyncValue',
           'cmp.rp.s3.h0': 'Comparison',
-          'cmp.rp.s3.h1': 'getx_distil',
-          'cmp.rp.s3.h2': 'Riverpod 3.0',
           'cmp.rp.s3.r0c0': 'Async State Expression',
           'cmp.rp.s3.r0c1': 'RxSList / RxS (manual state transition)',
           'cmp.rp.s3.r0c2': 'AsyncValue<T> (automatic state management)',
@@ -676,7 +672,6 @@ class AppTranslations extends Translations {
 
           // ── Comparison — Conclusion ──
           'cmp.con.title': 'Conclusion',
-          'cmp.con.card0.title': 'getx_distil vs GetX',
           'cmp.con.card0.quote':
               'getx_distil succeeds in precisely removing GetX\'s "excess" while refining its "core."',
           'cmp.con.card0.p0':
@@ -1183,6 +1178,10 @@ class AppTranslations extends Translations {
           'cmp.rp.s2.r4c2': '~8줄',
           'cmp.rp.s2.eval':
               '단순 상태 관리 측면에서 getx_distil의 DX는 압도적으로 간결합니다. Riverpod은 명시적인 상태 변경 메서드를 정의해야 하므로 상태 변화 경로의 추적성 면에서 장점이 있습니다.',
+
+          // 5.3 Async State Management
+          'cmp.rp.s3.title': '비동기 상태 관리',
+          'cmp.rp.s3.h0': '비교 특징',
           'cmp.rp.s3.r0c0': '비동기 상태 제어',
           'cmp.rp.s3.r0c1': 'RxSList / RxS 타입 활용 (수동 상태 전환)',
           'cmp.rp.s3.r0c2': 'AsyncValue<T> 상태 타입 (스케줄러 자동 관리)',
@@ -1352,7 +1351,6 @@ class AppTranslations extends Translations {
 
           // ── Comparison — Conclusion ──
           'cmp.con.title': '비교 분석 종합 결론',
-          'cmp.con.card0.title': 'getx_distil vs GetX',
           'cmp.con.card0.quote':
               'getx_distil은 기존 GetX의 불필요한 "군더더기"를 정교하게 도려내고 핵심 "원석"만을 강화하는 데 완벽하게 성공했습니다.',
           'cmp.con.card0.p0':
