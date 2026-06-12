@@ -562,12 +562,21 @@ class ComparisonPage extends GetView<ComparisonController> {
                     return DataRow(
                       cells: row.asMap().entries.map((entry) {
                         final cell = entry.value;
-                        return DataCell(cell is Widget
-                            ? cell
-                            : Text('$cell',
-                                style: const TextStyle(
-                                    fontSize: 13.0,
-                                    color: AppTheme.textSecondary)));
+                        final isLastColumn = entry.key == row.length - 1;
+                        return DataCell(
+                          ConstrainedBox(
+                            constraints: BoxConstraints(
+                              maxWidth: isLastColumn ? 220 : double.infinity,
+                            ),
+                            child: cell is Widget
+                                ? cell
+                                : Text('$cell',
+                                    softWrap: true,
+                                    style: const TextStyle(
+                                        fontSize: 13.0,
+                                        color: AppTheme.textSecondary)),
+                          ),
+                        );
                       }).toList(),
                     );
                   }).toList(),
@@ -812,22 +821,17 @@ class ComparisonPage extends GetView<ComparisonController> {
                   fontWeight: FontWeight.w700,
                   color: AppTheme.textPrimary)),
           const SizedBox(height: 24.0),
-          _guideSection(
-              guide['winnerTitle'],
-              guide['winnerColor'] as Color,
+          _guideSection(guide['winnerTitle'], guide['winnerColor'] as Color,
               (guide['winnerItems'] as List<String>)),
           const SizedBox(height: 20.0),
-          _guideSection(
-              guide['loserTitle'],
-              guide['loserColor'] as Color,
+          _guideSection(guide['loserTitle'], guide['loserColor'] as Color,
               (guide['loserItems'] as List<String>)),
         ],
       ),
     );
   }
 
-  Widget _guideSection(
-      String title, Color color, List<String> items) {
+  Widget _guideSection(String title, Color color, List<String> items) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
