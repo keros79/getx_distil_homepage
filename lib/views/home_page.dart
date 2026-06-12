@@ -1304,11 +1304,13 @@ Obx(() => rxUser.on(
                 children: [
                   Text(
                     'home.footer_copy'.tr,
-                    style: const TextStyle(color: AppTheme.textMuted, fontSize: 12.0),
+                    style: const TextStyle(
+                        color: AppTheme.textMuted, fontSize: 12.0),
                   ),
                   Text(
-                    'home.footer_version'.tr,
-                    style: const TextStyle(color: AppTheme.textMuted, fontSize: 12.0),
+                    'v1.5.0+13',
+                    style: const TextStyle(
+                        color: AppTheme.textMuted, fontSize: 12.0),
                   ),
                 ],
               ),
