@@ -21,7 +21,7 @@ final GoRouter router = GoRouter(
           bindings: [
             Bind<HomeController>(() => HomeController()),
           ],
-          child: const HomePage(),
+          child: HomePage(),
         ),
       ),
     ),
@@ -32,7 +32,7 @@ final GoRouter router = GoRouter(
           bindings: [
             Bind<GuideController>(() => GuideController()),
           ],
-          child: const GuidePage(),
+          child: GuidePage(),
         ),
       ),
     ),

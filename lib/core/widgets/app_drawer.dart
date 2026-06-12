@@ -13,7 +13,8 @@ class AppDrawer extends StatefulWidget {
 
 class _AppDrawerState extends State<AppDrawer> {
   final ExpansionTileController _apiController = ExpansionTileController();
-  final ExpansionTileController _comparisonController = ExpansionTileController();
+  final ExpansionTileController _comparisonController =
+      ExpansionTileController();
 
   void _launchPubDev() async {
     final Uri url = Uri.parse('https://pub.dev/packages/getx_distil');
@@ -256,42 +257,6 @@ class _AppDrawerState extends State<AppDrawer> {
                       onTap: () {
                         Navigator.of(context).pop();
                         _launchPubDev();
-                      },
-                      contentPadding: EdgeInsets.zero,
-                    ),
-                    const Divider(height: 32, color: Color(0xFFDADCE0)),
-                    ListTile(
-                      title: Obx(() {
-                        final locale = Get.locale ?? const Locale('en', 'US');
-                        final isKorean = locale.languageCode == 'ko';
-                        return Row(
-                          children: [
-                            Icon(
-                              Icons.language_rounded,
-                              size: 24,
-                              color: isKorean ? AppTheme.googleGreen : AppTheme.googleBlue,
-                            ),
-                            const SizedBox(width: 12.0),
-                            Text(
-                              isKorean ? 'Switch to English (EN)' : '한국어로 변경 (KO)',
-                              style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w500,
-                                color: AppTheme.textPrimary,
-                              ),
-                            ),
-                          ],
-                        );
-                      }),
-                      onTap: () {
-                        final locale = Get.locale ?? const Locale('en', 'US');
-                        final isKorean = locale.languageCode == 'ko';
-                        if (isKorean) {
-                          Get.locale = const Locale('en', 'US');
-                        } else {
-                          Get.locale = const Locale('ko', 'KR');
-                        }
-                        Navigator.of(context).pop();
                       },
                       contentPadding: EdgeInsets.zero,
                     ),
