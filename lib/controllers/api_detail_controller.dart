@@ -9,113 +9,113 @@ class ApiDetailController extends GetxController
   final ScrollController scrollController = ScrollController();
 
   Map<String, Map<String, dynamic>> get sectionMeta => {
-    'reactive-state': {
-      'title': 'api.meta.reactive_state.title'.tr,
-      'codeKey': 'reactive_state',
-      'description': 'api.meta.reactive_state.desc'.tr,
-      'points': [
-        'api.meta.reactive_state.pt0'.tr,
-        'api.meta.reactive_state.pt1'.tr,
-        'api.meta.reactive_state.pt2'.tr,
-        'api.meta.reactive_state.pt3'.tr,
-      ],
-      'next': 'rxs',
-      'nextTitle': 'api.meta.reactive_state.next_title'.tr,
-      'color': AppTheme.googleBlue,
-    },
-    'rxs': {
-      'title': 'api.meta.rxs.title'.tr,
-      'codeKey': 'rxs',
-      'description': 'api.meta.rxs.desc'.tr,
-      'points': [
-        'api.meta.rxs.pt0'.tr,
-        'api.meta.rxs.pt1'.tr,
-        'api.meta.rxs.pt2'.tr,
-        'api.meta.rxs.pt3'.tr,
-      ],
-      'next': 'global-di',
-      'nextTitle': 'api.meta.rxs.next_title'.tr,
-      'color': AppTheme.googleBlue,
-    },
-    'global-di': {
-      'title': 'api.meta.global_di.title'.tr,
-      'codeKey': 'global_di',
-      'description': 'api.meta.global_di.desc'.tr,
-      'points': [
-        'api.meta.global_di.pt0'.tr,
-        'api.meta.global_di.pt1'.tr,
-        'api.meta.global_di.pt2'.tr,
-      ],
-      'next': 'binding-widget',
-      'nextTitle': 'api.meta.global_di.next_title'.tr,
-      'color': AppTheme.googleGreen,
-    },
-    'binding-widget': {
-      'title': 'api.meta.binding_widget.title'.tr,
-      'codeKey': 'binding_widget',
-      'description': 'api.meta.binding_widget.desc'.tr,
-      'points': [
-        'api.meta.binding_widget.pt0'.tr,
-        'api.meta.binding_widget.pt1'.tr,
-        'api.meta.binding_widget.pt2'.tr,
-      ],
-      'next': 'getx-service',
-      'nextTitle': 'api.meta.binding_widget.next_title'.tr,
-      'color': AppTheme.googleRed,
-    },
-    'getx-service': {
-      'title': 'api.meta.getx_service.title'.tr,
-      'codeKey': 'getx_service',
-      'description': 'api.meta.getx_service.desc'.tr,
-      'points': [
-        'api.meta.getx_service.pt0'.tr,
-        'api.meta.getx_service.pt1'.tr,
-        'api.meta.getx_service.pt2'.tr,
-      ],
-      'next': 'worker',
-      'nextTitle': 'api.meta.getx_service.next_title'.tr,
-      'color': AppTheme.googleYellow,
-    },
-    'worker': {
-      'title': 'api.meta.worker.title'.tr,
-      'codeKey': 'worker',
-      'description': 'api.meta.worker.desc'.tr,
-      'points': [
-        'api.meta.worker.pt0'.tr,
-        'api.meta.worker.pt1'.tr,
-        'api.meta.worker.pt2'.tr,
-      ],
-      'next': 'state-mixin',
-      'nextTitle': 'api.meta.worker.next_title'.tr,
-      'color': AppTheme.googleBlue,
-    },
-    'state-mixin': {
-      'title': 'api.meta.state_mixin.title'.tr,
-      'codeKey': 'state_mixin',
-      'description': 'api.meta.state_mixin.desc'.tr,
-      'points': [
-        'api.meta.state_mixin.pt0'.tr,
-        'api.meta.state_mixin.pt1'.tr,
-        'api.meta.state_mixin.pt2'.tr,
-      ],
-      'next': 'i18n',
-      'nextTitle': 'api.meta.state_mixin.next_title'.tr,
-      'color': AppTheme.googleGreen,
-    },
-    'i18n': {
-      'title': 'api.meta.i18n.title'.tr,
-      'codeKey': 'i18n',
-      'description': 'api.meta.i18n.desc'.tr,
-      'points': [
-        'api.meta.i18n.pt0'.tr,
-        'api.meta.i18n.pt1'.tr,
-        'api.meta.i18n.pt2'.tr,
-      ],
-      'next': 'comparison',
-      'nextTitle': 'api.meta.i18n.next_title'.tr,
-      'color': AppTheme.googleGreen,
-    },
-  };
+        'reactive-state': {
+          'title': 'api.meta.reactive_state.title'.tr,
+          'codeKey': 'reactive_state',
+          'description': 'api.meta.reactive_state.desc'.tr,
+          'points': [
+            'api.meta.reactive_state.pt0'.tr,
+            'api.meta.reactive_state.pt1'.tr,
+            'api.meta.reactive_state.pt2'.tr,
+            'api.meta.reactive_state.pt3'.tr,
+          ],
+          'next': 'rxs',
+          'nextTitle': 'api.meta.reactive_state.next_title'.tr,
+          'color': AppTheme.googleBlue,
+        },
+        'rxs': {
+          'title': 'api.meta.rxs.title'.tr,
+          'codeKey': 'rxs',
+          'description': 'api.meta.rxs.desc'.tr,
+          'points': [
+            'api.meta.rxs.pt0'.tr,
+            'api.meta.rxs.pt1'.tr,
+            'api.meta.rxs.pt2'.tr,
+            'api.meta.rxs.pt3'.tr,
+          ],
+          'next': 'global-di',
+          'nextTitle': 'api.meta.rxs.next_title'.tr,
+          'color': AppTheme.googleBlue,
+        },
+        'global-di': {
+          'title': 'api.meta.global_di.title'.tr,
+          'codeKey': 'global_di',
+          'description': 'api.meta.global_di.desc'.tr,
+          'points': [
+            'api.meta.global_di.pt0'.tr,
+            'api.meta.global_di.pt1'.tr,
+            'api.meta.global_di.pt2'.tr,
+          ],
+          'next': 'binding-widget',
+          'nextTitle': 'api.meta.global_di.next_title'.tr,
+          'color': AppTheme.googleGreen,
+        },
+        'binding-widget': {
+          'title': 'api.meta.binding_widget.title'.tr,
+          'codeKey': 'binding_widget',
+          'description': 'api.meta.binding_widget.desc'.tr,
+          'points': [
+            'api.meta.binding_widget.pt0'.tr,
+            'api.meta.binding_widget.pt1'.tr,
+            'api.meta.binding_widget.pt2'.tr,
+          ],
+          'next': 'getx-service',
+          'nextTitle': 'api.meta.binding_widget.next_title'.tr,
+          'color': AppTheme.googleRed,
+        },
+        'getx-service': {
+          'title': 'api.meta.getx_service.title'.tr,
+          'codeKey': 'getx_service',
+          'description': 'api.meta.getx_service.desc'.tr,
+          'points': [
+            'api.meta.getx_service.pt0'.tr,
+            'api.meta.getx_service.pt1'.tr,
+            'api.meta.getx_service.pt2'.tr,
+          ],
+          'next': 'worker',
+          'nextTitle': 'api.meta.getx_service.next_title'.tr,
+          'color': AppTheme.googleYellow,
+        },
+        'worker': {
+          'title': 'api.meta.worker.title'.tr,
+          'codeKey': 'worker',
+          'description': 'api.meta.worker.desc'.tr,
+          'points': [
+            'api.meta.worker.pt0'.tr,
+            'api.meta.worker.pt1'.tr,
+            'api.meta.worker.pt2'.tr,
+          ],
+          'next': 'state-mixin',
+          'nextTitle': 'api.meta.worker.next_title'.tr,
+          'color': AppTheme.googleBlue,
+        },
+        'state-mixin': {
+          'title': 'api.meta.state_mixin.title'.tr,
+          'codeKey': 'state_mixin',
+          'description': 'api.meta.state_mixin.desc'.tr,
+          'points': [
+            'api.meta.state_mixin.pt0'.tr,
+            'api.meta.state_mixin.pt1'.tr,
+            'api.meta.state_mixin.pt2'.tr,
+          ],
+          'next': 'i18n',
+          'nextTitle': 'api.meta.state_mixin.next_title'.tr,
+          'color': AppTheme.googleGreen,
+        },
+        'i18n': {
+          'title': 'api.meta.i18n.title'.tr,
+          'codeKey': 'i18n',
+          'description': 'api.meta.i18n.desc'.tr,
+          'points': [
+            'api.meta.i18n.pt0'.tr,
+            'api.meta.i18n.pt1'.tr,
+            'api.meta.i18n.pt2'.tr,
+          ],
+          'next': 'comparison',
+          'nextTitle': 'api.meta.i18n.next_title'.tr,
+          'color': AppTheme.googleGreen,
+        },
+      };
 
   // Keyed code samples
   final Map<String, String> _samples = {};
@@ -151,9 +151,8 @@ class ApiDetailController extends GetxController
           final content =
               await rootBundle.loadString('assets/code_samples/$key.txt');
           _samples[key] = content;
-        } catch (e) {
-          // Fallback static hardcoded code in case of bundle load delays
-          _samples[key] = _getFallbackCode(key);
+        } catch (_) {
+          // File not found — skip, sample will show a loading message
         }
       }
 
@@ -165,59 +164,5 @@ class ApiDetailController extends GetxController
 
   String getCode(String key) {
     return _samples[key] ?? 'Loading code snippet...';
-  }
-
-  String _getFallbackCode(String key) {
-    switch (key) {
-      case 'reactive_state':
-        return '''
-class CounterController extends GetxController {
-  final count = 0.obs;
-  void increment() => count.value++;
-}
-// View
-// Option 1: Obx widget
-Obx(() => Text('\${controller.count.value}'));
-
-// Option 2: GetView widget
-class CounterView extends GetView<CounterController> {
-  const CounterView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Obx(() => Text('\${controller.count.value}'));
-  }
-}''';
-      case 'global_di':
-        return '''
-final controller = Get.put(CounterController());
-final count = Get.find<CounterController>();''';
-      case 'binding_widget':
-        return '''
-BindingWidget(
-  bindings: [Bind<Controller>(() => Controller())],
-  child: MyPage(),
-);''';
-      case 'rxs':
-        return '''
-// 1. RxSList (Status-Aware List)
-final items = RxSList<String>();
-Obx(() => items.on(
-  loading: () => CircularProgressIndicator(),
-  loaded: (data) => ListView(children: data.map((e) => Text(e)).toList()),
-  empty: () => Text('Empty'),
-  error: (err) => Text('Error: \$err'),
-));
-
-// 2. RxS (Status-Aware Value)
-final user = RxS<String?>(null);
-Obx(() => user.on(
-  loading: () => CircularProgressIndicator(),
-  loaded: (data) => Text('User: \$data'),
-  error: (err) => Text('Error: \$err'),
-));''';
-      default:
-        return '// Fallback sample code';
-    }
   }
 }
