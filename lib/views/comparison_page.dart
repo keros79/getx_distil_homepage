@@ -20,7 +20,8 @@ class ComparisonPage extends GetView<ComparisonController> {
   Widget build(BuildContext context) {
     final double sw = MediaQuery.of(context).size.width;
     final bool isMobile = sw < 800;
-    final meta = controller.sectionMeta[section] ?? controller.sectionMeta['overview']!;
+    final meta =
+        controller.sectionMeta[section] ?? controller.sectionMeta['overview']!;
 
     return Scaffold(
       backgroundColor: AppTheme.bg,
@@ -51,7 +52,8 @@ class ComparisonPage extends GetView<ComparisonController> {
   }
 
   // ── Content Router ──
-  Widget _buildContent(Map<String, dynamic> meta, bool isMobile, BuildContext context) {
+  Widget _buildContent(
+      Map<String, dynamic> meta, bool isMobile, BuildContext context) {
     switch (meta['type'] as String) {
       case 'overview':
         return _buildOverview(meta, isMobile, context);
@@ -71,7 +73,8 @@ class ComparisonPage extends GetView<ComparisonController> {
   }
 
   // ── SECTION: Overview ──
-  Widget _buildOverview(Map<String, dynamic> meta, bool isMobile, BuildContext context) {
+  Widget _buildOverview(
+      Map<String, dynamic> meta, bool isMobile, BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -102,14 +105,16 @@ class ComparisonPage extends GetView<ComparisonController> {
           isMobile: isMobile,
         ),
         const SizedBox(height: 48.0),
-        _nextSectionHint(meta['nextTitle'], meta['nextSection'], isMobile, context),
+        _nextSectionHint(
+            meta['nextTitle'], meta['nextSection'], isMobile, context),
         const SizedBox(height: 80.0),
       ],
     );
   }
 
   // ── SECTION: Improvements ──
-  Widget _buildImprovements(Map<String, dynamic> meta, bool isMobile, BuildContext context) {
+  Widget _buildImprovements(
+      Map<String, dynamic> meta, bool isMobile, BuildContext context) {
     final items = meta['items'] as List;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -122,7 +127,8 @@ class ComparisonPage extends GetView<ComparisonController> {
             child: _buildImprovementCard(items[i], isMobile),
           ),
         const SizedBox(height: 48.0),
-        _nextSectionHint(meta['nextTitle'], meta['nextSection'], isMobile, context),
+        _nextSectionHint(
+            meta['nextTitle'], meta['nextSection'], isMobile, context),
         const SizedBox(height: 80.0),
       ],
     );
@@ -174,7 +180,8 @@ class ComparisonPage extends GetView<ComparisonController> {
   }
 
   // ── SECTION: Sacrificed ──
-  Widget _buildSacrificed(Map<String, dynamic> meta, bool isMobile, BuildContext context) {
+  Widget _buildSacrificed(
+      Map<String, dynamic> meta, bool isMobile, BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -206,39 +213,43 @@ class ComparisonPage extends GetView<ComparisonController> {
           ),
         ],
         const SizedBox(height: 48.0),
-        _nextSectionHint(meta['nextTitle'], meta['nextSection'], isMobile, context),
+        _nextSectionHint(
+            meta['nextTitle'], meta['nextSection'], isMobile, context),
         const SizedBox(height: 80.0),
       ],
     );
   }
 
   // ── SECTION: Quality ──
-  Widget _buildQuality(Map<String, dynamic> meta, bool isMobile, BuildContext context) {
+  Widget _buildQuality(
+      Map<String, dynamic> meta, bool isMobile, BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _sectionHeader(meta['title']),
         const SizedBox(height: 32.0),
-        _sectionTitle('✅ Strengths'),
+        _sectionTitle('Strengths'),
         const SizedBox(height: 16.0),
         _buildQualityList(meta['goodPoints'] as List<String>, warning: false),
         const SizedBox(height: 32.0),
-        _sectionTitle('⚠️ Areas for Improvement'),
+        _sectionTitle('Areas for Improvement'),
         const SizedBox(height: 16.0),
         _buildQualityList(meta['improvePoints'] as List<String>, warning: true),
         const SizedBox(height: 40.0),
-        _sectionTitle('📊 Overall Score'),
+        _sectionTitle('Overall Score'),
         const SizedBox(height: 16.0),
         _buildScoreTable(meta['scores'] as List, isMobile),
         const SizedBox(height: 48.0),
-        _nextSectionHint(meta['nextTitle'], meta['nextSection'], isMobile, context),
+        _nextSectionHint(
+            meta['nextTitle'], meta['nextSection'], isMobile, context),
         const SizedBox(height: 80.0),
       ],
     );
   }
 
   // ── SECTION: Riverpod ──
-  Widget _buildRiverpod(Map<String, dynamic> meta, bool isMobile, BuildContext context) {
+  Widget _buildRiverpod(
+      Map<String, dynamic> meta, bool isMobile, BuildContext context) {
     final subsections = meta['subsections'] as List;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -256,7 +267,8 @@ class ComparisonPage extends GetView<ComparisonController> {
         const SizedBox(height: 40.0),
         _buildSelectionGuide(meta['guide'] as Map<String, dynamic>, isMobile),
         const SizedBox(height: 48.0),
-        _nextSectionHint(meta['nextTitle'], meta['nextSection'], isMobile, context),
+        _nextSectionHint(
+            meta['nextTitle'], meta['nextSection'], isMobile, context),
         const SizedBox(height: 80.0),
       ],
     );
@@ -674,7 +686,7 @@ class ComparisonPage extends GetView<ComparisonController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('5.9 📊 Comprehensive Comparison Matrix',
+        const Text('5.9 Comprehensive Comparison Matrix',
             style: TextStyle(
                 fontFamily: 'Google Sans Flex',
                 fontSize: 18.0,
@@ -812,7 +824,8 @@ class ComparisonPage extends GetView<ComparisonController> {
         children: [
           Row(
             children: [
-              const Icon(Icons.route_rounded, color: AppTheme.googleGreen, size: 24),
+              const Icon(Icons.route_rounded,
+                  color: AppTheme.googleGreen, size: 24),
               const SizedBox(width: 12.0),
               Text('comparison.selection_guide'.tr,
                   style: const TextStyle(
@@ -825,13 +838,13 @@ class ComparisonPage extends GetView<ComparisonController> {
           const SizedBox(height: 24.0),
           _guideSection(
               guide['winnerTitle'],
-              guide['winnerIcon'] as IconData,
+              guide['winnerIcon'] as IconData?,
               guide['winnerColor'] as Color,
               (guide['winnerItems'] as List<String>)),
           const SizedBox(height: 20.0),
           _guideSection(
               guide['loserTitle'],
-              guide['loserIcon'] as IconData,
+              guide['loserIcon'] as IconData?,
               guide['loserColor'] as Color,
               (guide['loserItems'] as List<String>)),
         ],
@@ -840,14 +853,16 @@ class ComparisonPage extends GetView<ComparisonController> {
   }
 
   Widget _guideSection(
-      String title, IconData icon, Color color, List<String> items) {
+      String title, IconData? icon, Color color, List<String> items) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
-            Icon(icon, color: color, size: 20),
-            const SizedBox(width: 8.0),
+            if (icon != null) ...[
+              Icon(icon, color: color, size: 20),
+              const SizedBox(width: 8.0),
+            ],
             Text(title,
                 style: TextStyle(
                     fontFamily: 'Google Sans Flex',
@@ -879,7 +894,8 @@ class ComparisonPage extends GetView<ComparisonController> {
     );
   }
 
-  Widget _nextSectionHint(String label, String targetSection, bool isMobile, BuildContext context) {
+  Widget _nextSectionHint(
+      String label, String targetSection, bool isMobile, BuildContext context) {
     return NextNavCard(
       label: 'comparison.next_section'.tr,
       title: '${'comparison.explore'.tr} $label',
