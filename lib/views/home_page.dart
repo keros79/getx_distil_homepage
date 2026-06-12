@@ -217,16 +217,20 @@ class HomePage extends GetView<HomeController> {
   }
 
   Widget _buildPlayground(BuildContext context, bool isMobile) {
-    const String playgroundCode = '''
+    const String classicRxCode = '''
 // === 1. Classic Rx States & Obx ===
 final counter = 0.obs;
 final textInput = 'Hello'.obs;
 
 Obx(() => Text('Count: \${controller.counter.value}'));
-Obx(() => Text('Input: \${controller.textInput.value}'));
+Obx(() => Text('Input: \${controller.textInput.value}'));''';
 
+    const String rxsCode = '''
 // === 2. Status-Aware Rx States (RxSList, RxS) ===
+// You can declare via constructor or .ops extension on Lists
 final demoItems = RxSList<String>(); // Auto-syncs loading/loaded/empty/error
+// Or: final demoItems = <String>[].ops; // converts List to RxSList
+
 final rxUser = RxS<String?>(null);   // Auto-syncs loading/loaded/error
 
 // Mutating status-aware states automatically syncs status
@@ -283,69 +287,105 @@ Obx(() => rxUser.on(
               ),
             ),
           ),
-          const SizedBox(height: 24.0),
+          const SizedBox(height: 32.0),
+
+          // Main Header Info text moved above the Card
+          Text(
+            'home.demo_title'.tr,
+            style: const TextStyle(
+              fontFamily: 'Google Sans Flex',
+              fontSize: 20.0,
+              fontWeight: FontWeight.bold,
+              color: AppTheme.textPrimary,
+            ),
+          ),
+          const SizedBox(height: 8.0),
+          Text(
+            'home.demo_desc'.tr,
+            style: const TextStyle(
+              color: AppTheme.textSecondary,
+              fontSize: 14.5,
+              height: 1.5,
+            ),
+          ),
+          const SizedBox(height: 32.0),
+
+          // --- SECTION 1: Classic Rx State ---
           GlassCard(
             glowColor: AppTheme.googleBlue,
             child: isMobile
                 ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _buildPlaygroundLeft(context),
+                      _buildClassicRxLeft(context),
                       const SizedBox(height: 32.0),
-                      _buildPlaygroundRight(context),
+                      _buildClassicRxRight(context),
                     ],
                   )
                 : Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Expanded(child: _buildPlaygroundLeft(context)),
+                      Expanded(child: _buildClassicRxLeft(context)),
                       const SizedBox(width: 48.0),
-                      Expanded(child: _buildPlaygroundRight(context)),
+                      Expanded(child: _buildClassicRxRight(context)),
                     ],
                   ),
           ),
-          const SizedBox(height: 32.0),
+          const SizedBox(height: 16.0),
           const SizedBox(
             width: double.infinity,
-            child: CodeBlock(code: playgroundCode, language: 'dart'),
+            child: CodeBlock(code: classicRxCode, language: 'dart'),
+          ),
+
+          const SizedBox(height: 48.0),
+
+          // --- SECTION 2: Status-Aware Rx States (RxSList/RxS) ---
+          GlassCard(
+            glowColor: AppTheme.googleGreen,
+            child: isMobile
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildRxSLeft(context),
+                      const SizedBox(height: 32.0),
+                      _buildRxSRight(context),
+                    ],
+                  )
+                : Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(child: _buildRxSLeft(context)),
+                      const SizedBox(width: 48.0),
+                      Expanded(child: _buildRxSRight(context)),
+                    ],
+                  ),
+          ),
+          const SizedBox(height: 16.0),
+          const SizedBox(
+            width: double.infinity,
+            child: CodeBlock(code: rxsCode, language: 'dart'),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildPlaygroundLeft(BuildContext context) {
+  Widget _buildClassicRxLeft(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'home.demo_title'.tr,
-          style: const TextStyle(
-            fontFamily: 'Google Sans Flex',
-            fontSize: 18.0,
-            fontWeight: FontWeight.bold,
-            color: AppTheme.textPrimary,
-          ),
-        ),
-        const SizedBox(height: 8.0),
-        Text(
-          'home.demo_desc'.tr,
-          style: const TextStyle(
-              color: AppTheme.textSecondary, fontSize: 13.5, height: 1.4),
-        ),
-        const SizedBox(height: 24.0),
-
         // 1. Classic Rx Section
         Text(
           'home.demo_rx_label'.tr,
           style: const TextStyle(
             fontFamily: 'Google Sans Mono',
-            fontSize: 11.0,
+            fontSize: 12.0,
             fontWeight: FontWeight.bold,
             color: AppTheme.googleBlue,
             letterSpacing: 1.0,
           ),
         ),
-        const SizedBox(height: 8.0),
+        const SizedBox(height: 12.0),
         Row(
           children: [
             ElevatedButton(
@@ -388,7 +428,7 @@ Obx(() => rxUser.on(
             ),
           ],
         ),
-        const SizedBox(height: 12.0),
+        const SizedBox(height: 16.0),
         TextField(
           onChanged: (val) => controller.textInput.value = val,
           style: const TextStyle(color: AppTheme.textPrimary, fontSize: 14.0),
@@ -409,20 +449,123 @@ Obx(() => rxUser.on(
                 const EdgeInsets.symmetric(horizontal: 14.0, vertical: 12.0),
           ),
         ),
-        const SizedBox(height: 24.0),
+      ],
+    );
+  }
 
+  Widget _buildClassicRxRight(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(20.0),
+      decoration: BoxDecoration(
+        color: Colors.black.withOpacity(0.02),
+        borderRadius: BorderRadius.circular(12.0),
+        border: Border.all(color: Colors.black.withOpacity(0.04)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'home.live_state_label'.tr,
+                style: const TextStyle(
+                  fontFamily: 'Google Sans Mono',
+                  fontSize: 12.0,
+                  color: AppTheme.googleGreen,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Obx(
+                () => Text(
+                  'home.mutations_count'
+                      .trParams({'count': '${controller.clicks.value}'}),
+                  style: const TextStyle(
+                    fontFamily: 'Google Sans Mono',
+                    color: AppTheme.textMuted,
+                    fontSize: 12,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 20.0),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                'counter (RxInt):',
+                style: TextStyle(
+                  color: AppTheme.textSecondary,
+                  fontSize: 13.0,
+                  fontFamily: 'Google Sans Mono',
+                ),
+              ),
+              Obx(
+                () => AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 200),
+                  transitionBuilder: (child, animation) =>
+                      ScaleTransition(scale: animation, child: child),
+                  child: Text(
+                    '${controller.counter.value}',
+                    key: ValueKey(controller.counter.value),
+                    style: const TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                      color: AppTheme.textPrimary,
+                      fontFamily: 'Google Sans Mono',
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10.0),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'textInput (RxString):',
+                style: TextStyle(
+                  color: AppTheme.textSecondary,
+                  fontSize: 13.0,
+                  fontFamily: 'Google Sans Mono',
+                ),
+              ),
+              const SizedBox(height: 4.0),
+              Obx(
+                () => Text(
+                  '"${controller.textInput.value}"',
+                  style: const TextStyle(
+                    fontSize: 14.5,
+                    fontWeight: FontWeight.w500,
+                    color: AppTheme.googleBlue,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildRxSLeft(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
         // 2. RxSList Section
         Text(
           'home.demo_rxslist_label'.tr,
           style: const TextStyle(
             fontFamily: 'Google Sans Mono',
-            fontSize: 11.0,
+            fontSize: 12.0,
             fontWeight: FontWeight.bold,
             color: AppTheme.googleGreen,
             letterSpacing: 1.0,
           ),
         ),
-        const SizedBox(height: 8.0),
+        const SizedBox(height: 12.0),
         Wrap(
           spacing: 8.0,
           runSpacing: 8.0,
@@ -486,13 +629,13 @@ Obx(() => rxUser.on(
           'home.demo_rxs_label'.tr,
           style: const TextStyle(
             fontFamily: 'Google Sans Mono',
-            fontSize: 11.0,
+            fontSize: 12.0,
             fontWeight: FontWeight.bold,
             color: AppTheme.googleYellow,
             letterSpacing: 1.0,
           ),
         ),
-        const SizedBox(height: 8.0),
+        const SizedBox(height: 12.0),
         Wrap(
           spacing: 8.0,
           runSpacing: 8.0,
@@ -553,7 +696,7 @@ Obx(() => rxUser.on(
     );
   }
 
-  Widget _buildPlaygroundRight(BuildContext context) {
+  Widget _buildRxSRight(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(20.0),
       decoration: BoxDecoration(
@@ -590,64 +733,6 @@ Obx(() => rxUser.on(
             ],
           ),
           const SizedBox(height: 20.0),
-
-          // 1. Classic Rx Displays
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                'counter (RxInt):',
-                style: TextStyle(
-                  color: AppTheme.textSecondary,
-                  fontSize: 13.0,
-                  fontFamily: 'Google Sans Mono',
-                ),
-              ),
-              Obx(
-                () => AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 200),
-                  transitionBuilder: (child, animation) =>
-                      ScaleTransition(scale: animation, child: child),
-                  child: Text(
-                    '${controller.counter.value}',
-                    key: ValueKey(controller.counter.value),
-                    style: const TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
-                      color: AppTheme.textPrimary,
-                      fontFamily: 'Google Sans Mono',
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10.0),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'textInput (RxString):',
-                style: TextStyle(
-                  color: AppTheme.textSecondary,
-                  fontSize: 13.0,
-                  fontFamily: 'Google Sans Mono',
-                ),
-              ),
-              const SizedBox(height: 4.0),
-              Obx(
-                () => Text(
-                  '"${controller.textInput.value}"',
-                  style: const TextStyle(
-                    fontSize: 14.5,
-                    fontWeight: FontWeight.w500,
-                    color: AppTheme.googleBlue,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const Divider(height: 24.0, color: Color(0xFFDADCE0)),
 
           // 2. RxSList (demoItems) Display
           Column(
