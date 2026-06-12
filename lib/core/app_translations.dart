@@ -685,6 +685,12 @@ class AppTranslations extends Translations {
               'In particular, Fast-Path Tracking, RxList Microtask Batching, and Tree-Scoped DI provide clear, measurable performance/stability advantages over the original, while RxSList/RxS are original contributions not found in the original.',
           'cmp.con.card0.p2':
               'For existing GetX users, it provides the same DX (.obs → Obx → Get.find) while fundamentally solving memory leak and scope collision issues in GoRouter environments. For new projects, it has a clear advantage over the original GetX.',
+          'cmp.con.card1.quote':
+              'getx_distil and Riverpod 3.0 are closer to a complementary relationship rather than a competitive one.',
+          'cmp.con.card1.p0':
+              'getx_distil is a lightweight engine pursuing "fastest and freest with minimum code," while Riverpod 3.0 is a structure-oriented framework that "strictly prevents mistakes through static types."',
+          'cmp.con.card1.p1':
+              'Performance tuning features provided by getx_distil—such as RxList microtask batching optimization, build-phase auto-healing, and Fast-Path technology—do not exist in Riverpod. Thus, getx_distil has a clear advantage for pages with extremely high-frequency real-time data mutations.',
           'cmp.con.card1.p2':
               "On the other hand, Riverpod 3.0's compile-time type safety and systematic async state management shine in large-scale projects. Choose based on project scale, team maturity, and data manipulation patterns.",
           'cmp.con.footer':
