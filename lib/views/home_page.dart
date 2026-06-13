@@ -228,10 +228,10 @@ Obx(() => Text('Input: \${controller.textInput.value}'));''';
     const String rxsCode = '''
 // === 2. Status-Aware Rx States (RxSList, RxS) ===
 // You can declare via constructor or .ops extension on Lists
-final demoItems = RxSList<String>(); // Auto-syncs loading/loaded/empty/error
+final demoItems = RxSList<String>(); // Auto-syncs idle/loading/loaded/empty/error
 // Or: final demoItems = <String>[].ops; // converts List to RxSList
 
-final rxUser = RxS<String?>(null);   // Auto-syncs loading/loaded/error
+final rxUser = RxS<String?>(null);   // Auto-syncs idle/loading/loaded/error
 
 // Mutating status-aware states automatically syncs status
 void loadDemoList() {
@@ -240,16 +240,18 @@ void loadDemoList() {
 
 // Bind UI with .on() inside Obx
 Obx(() => demoItems.on(
+  idle: () => const Text('Idle'),
   loading: () => const CircularProgressIndicator(),
   loaded: (data) => Wrap(children: data.map((item) => Text(item)).toList()),
   empty: () => const Text('Empty'),
-  error: (err) => Text('Error: \$err'),
+  error: (err) => Text('Error: \${err ?? "Unknown"}'),
 ));
 
 Obx(() => rxUser.on(
+  idle: () => const Text('Idle'),
   loading: () => const CircularProgressIndicator(),
   loaded: (name) => Text('User: \$name'),
-  error: (err) => Text('Error: \$err'),
+  error: (err) => Text('Error: \${err ?? "Unknown"}'),
 ));''';
 
     return Container(
@@ -675,7 +677,7 @@ Obx(() => rxUser.on(
                 padding: const EdgeInsets.symmetric(
                     horizontal: 14.0, vertical: 12.0),
               ),
-              child: Text('home.btn_reset_loading'.tr),
+              child: Text('home.btn_reset_idle'.tr),
             ),
           ],
         ),
@@ -780,6 +782,23 @@ Obx(() => rxUser.on(
               const SizedBox(height: 8.0),
               Obx(
                 () => controller.demoItems.on(
+                  idle: () => Container(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.info_outline_rounded,
+                            color: AppTheme.textMuted, size: 16),
+                        const SizedBox(width: 8.0),
+                        Text(
+                          'home.list_idle'.tr,
+                          style: const TextStyle(
+                              color: AppTheme.textMuted,
+                              fontSize: 13.0,
+                              fontStyle: FontStyle.italic),
+                        ),
+                      ],
+                    ),
+                  ),
                   loading: () => Container(
                     height: 48,
                     alignment: Alignment.center,
@@ -829,7 +848,7 @@ Obx(() => rxUser.on(
                         const SizedBox(width: 8.0),
                         Expanded(
                           child: Text(
-                            '$error',
+                            error ?? 'Unknown Error',
                             style: const TextStyle(
                                 color: AppTheme.googleRed, fontSize: 12.0),
                           ),
@@ -888,6 +907,31 @@ Obx(() => rxUser.on(
               const SizedBox(height: 8.0),
               Obx(
                 () => controller.rxUser.on(
+                  idle: () => Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 12.0, vertical: 10.0),
+                    decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.02),
+                      borderRadius: BorderRadius.circular(8.0),
+                      border: Border.all(
+                          color: Colors.black.withOpacity(0.05)),
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.info_outline_rounded,
+                            color: AppTheme.textMuted, size: 20),
+                        const SizedBox(width: 8.0),
+                        Text(
+                          'home.user_idle'.tr,
+                          style: const TextStyle(
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.bold,
+                            color: AppTheme.textMuted,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                   loading: () => Container(
                     height: 48,
                     alignment: Alignment.center,
@@ -936,7 +980,7 @@ Obx(() => rxUser.on(
                         const SizedBox(width: 8.0),
                         Expanded(
                           child: Text(
-                            '$error',
+                            error ?? 'Unknown Error',
                             style: const TextStyle(
                                 color: AppTheme.googleRed, fontSize: 12.0),
                           ),
@@ -955,6 +999,8 @@ Obx(() => rxUser.on(
 
   Color _getRxListStatusColor(RxListStatus status) {
     switch (status) {
+      case RxListStatus.idle:
+        return AppTheme.textMuted;
       case RxListStatus.loading:
         return AppTheme.googleBlue;
       case RxListStatus.loaded:
@@ -968,6 +1014,8 @@ Obx(() => rxUser.on(
 
   Color _getRxDataStatusColor(RxDataStatus status) {
     switch (status) {
+      case RxDataStatus.idle:
+        return AppTheme.textMuted;
       case RxDataStatus.loading:
         return AppTheme.googleYellow;
       case RxDataStatus.loaded:

@@ -39,19 +39,21 @@ class HomeController extends GetxController {
     clicks.value = 0;
     textInput.value = 'Type something...';
     demoItems.clear();
-    demoItems.status = RxListStatus.loading;
+    demoItems.setIdle();
     rxUser.value = null;
-    rxUser.status = RxDataStatus.loading;
+    rxUser.setIdle();
   }
 
-  void loadDemoList() {
-    demoItems.assignAll(['Apple 🍎', 'Banana 🍌', 'Orange 🍊']);
+  Future<void> loadDemoList() async {
+    if (demoItems.status == RxListStatus.loading) return;
+    demoItems.setLoading();
     clicks.value++;
+    await Future.delayed(const Duration(seconds: 2));
+    demoItems.assignAll(['Apple 🍎', 'Banana 🍌', 'Orange 🍊']);
   }
 
   void triggerDemoListError() {
-    demoItems.error = 'Failed to fetch items';
-    demoItems.status = RxListStatus.error;
+    demoItems.setError('Failed to fetch items');
     clicks.value++;
   }
 
@@ -69,20 +71,22 @@ class HomeController extends GetxController {
     clicks.value++;
   }
 
-  void loadUser() {
-    rxUser.value = 'Alice 🦄';
+  Future<void> loadUser() async {
+    if (rxUser.status == RxDataStatus.loading) return;
+    rxUser.setLoading();
     clicks.value++;
+    await Future.delayed(const Duration(seconds: 2));
+    rxUser.value = 'Alice 🦄';
   }
 
   void triggerUserError() {
-    rxUser.error = 'Database timeout error';
-    rxUser.status = RxDataStatus.error;
+    rxUser.setError('Database timeout error');
     clicks.value++;
   }
 
   void resetUser() {
     rxUser.value = null;
-    rxUser.status = RxDataStatus.loading;
+    rxUser.setIdle();
     clicks.value++;
   }
 

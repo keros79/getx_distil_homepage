@@ -75,11 +75,13 @@ class AppTranslations extends Translations {
           'home.btn_clear_list': 'Clear List',
           'home.demo_rxs_label': '3. STATUS-AWARE VALUE (RxS)',
           'home.btn_load_user': 'Load User',
-          'home.btn_reset_loading': 'Reset Loading',
+          'home.btn_reset_idle': 'Reset to Idle',
           'home.btn_reset_all': 'Reset All Controls',
           'home.live_state_label': '🟢 LIVE STATE VIEWS',
           'home.mutations_count': 'Mutations: @count',
           'home.list_empty': 'List status is Empty.',
+          'home.list_idle': 'List status is Idle.',
+          'home.user_idle': 'User status is Idle.',
 
           // ── Home — Features ──
           'home.features_label': 'DESIGN SYSTEM FEATURES',
@@ -91,7 +93,7 @@ class AppTranslations extends Translations {
               'Declare states with simple .obs and build lightweight reactive widgets that listen only to target properties.',
           'home.feat.rxs.title': 'Status-Aware (RxSList & RxS)',
           'home.feat.rxs.desc':
-              'Simplify async state lifecycle handling. Carry loading, loaded, empty, and error status directly inside your reactive observables.',
+              'Simplify async state lifecycle handling. Carry idle, loading, loaded, empty, and error status directly inside your reactive observables.',
           'home.feat.global_di.title': 'Global & Scoped DI',
           'home.feat.global_di.desc':
               'Access components anywhere without contexts. Fallback pipelines search for scoped instances before searching global registries.',
@@ -144,9 +146,9 @@ class AppTranslations extends Translations {
           'api.meta.rxs.desc':
               'Simplify async state lifecycle handling. RxSList and RxS bundle loading, loaded, empty, and error states directly with state mutations, eliminating extra boilerplate flags.',
           'api.meta.rxs.pt0':
-              '1. RxSList (Reactive List): Extends RxList to auto-sync status (loading, loaded, empty) with mutations like add, assignAll, and clear.',
+              '1. RxSList (Reactive List): Extends RxList to auto-sync status (idle, loading, loaded, empty, error) with mutations like add, assignAll, and clear.',
           'api.meta.rxs.pt1':
-              '2. RxS (Reactive Value): Extends Rxn to carry async status (loading, loaded, error) for single-object models like user profiles.',
+              '2. RxS (Reactive Value): Extends Rxn to carry async status (idle, loading, loaded, error) for single-object models like user profiles.',
           'api.meta.rxs.pt2':
               'Declarative UI Binding: Use the on() builder inside Obx to write clean layout branches for different async states.',
           'api.meta.rxs.pt3':
@@ -761,11 +763,13 @@ class AppTranslations extends Translations {
           'home.btn_clear_list': '리스트 비우기',
           'home.demo_rxs_label': '3. 상태 인지형 단일 값 (RxS)',
           'home.btn_load_user': '유저 로드',
-          'home.btn_reset_loading': '로딩 리셋',
+          'home.btn_reset_idle': '대기 상태 리셋',
           'home.btn_reset_all': '모든 컨트롤 초기화',
           'home.live_state_label': '🟢 실시간 상태 뷰',
           'home.mutations_count': '변경 횟수: @count',
           'home.list_empty': '리스트가 비어 있습니다.',
+          'home.list_idle': '리스트가 대기(Idle) 상태입니다.',
+          'home.user_idle': '유저가 대기(Idle) 상태입니다.',
 
           // ── Home — Features ──
           'home.features_label': '디자인 시스템 특징',
@@ -777,7 +781,7 @@ class AppTranslations extends Translations {
               '단순히 .obs를 추가하여 상태를 선언하고, 타겟 속성만을 구독하는 경량 반응형 위젯을 구축하세요.',
           'home.feat.rxs.title': '상태 인지형 (RxSList 및 RxS)',
           'home.feat.rxs.desc':
-              '비동기 상태의 생명주기 처리를 단순화합니다. 반응형 옵저버블 내부에서 로딩, 완료, 빈 상태, 에러 상태를 직접 관리할 수 있습니다.',
+              '비동기 상태의 생명주기 처리를 단순화합니다. 반응형 옵저버블 내부에서 대기, 로딩, 완료, 빈 상태, 에러 상태를 직접 관리할 수 있습니다.',
           'home.feat.global_di.title': '글로벌 및 스코프 DI',
           'home.feat.global_di.desc':
               '컨텍스트 없이 어디서나 컴포넌트에 접근하세요. 로컬 위젯 트리 스코프를 먼저 탐색한 후 글로벌 등록 정보를 조회하는 하이브리드 탐색 체인을 갖추고 있습니다.',
@@ -830,9 +834,9 @@ class AppTranslations extends Translations {
           'api.meta.rxs.desc':
               '비동기 상태 생명주기 관리를 극적으로 단순화합니다. RxSList 및 RxS는 상태 변경 작업과 로딩, 완료, 빈 상태, 에러 상태를 결합하여 불필요한 플래그 선언을 없애줍니다.',
           'api.meta.rxs.pt0':
-              '1. RxSList (반응형 리스트): RxList를 확장하여 add, assignAll, clear 등 리스트 조작 시 상태(로딩, 완료, 비어있음)를 자동으로 연동합니다.',
+              '1. RxSList (반응형 리스트): RxList를 확장하여 리스트 조작 시 비동기 상태(대기, 로딩, 완료, 비어있음, 에러)를 자동으로 연동합니다.',
           'api.meta.rxs.pt1':
-              '2. RxS (반응형 단일값): Rxn을 확장하여 유저 프로필과 같은 단일 객체 모델의 비동기 상태(로딩, 완료, 에러)를 제공합니다.',
+              '2. RxS (반응형 단일값): Rxn을 확장하여 유저 프로필과 같은 단일 객체 모델의 비동기 상태(대기, 로딩, 완료, 에러)를 제공합니다.',
           'api.meta.rxs.pt2':
               '선언형 UI 바인딩: Obx 내부에서 .on() 빌더를 사용하여 비동기 상태 변화에 따른 깔끔한 레이아웃 분기를 작성할 수 있습니다.',
           'api.meta.rxs.pt3':

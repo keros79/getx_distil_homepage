@@ -1,44 +1,46 @@
 // ==========================================
 // 1. RxSList (Status-Aware List)
 // ==========================================
-final items = RxSList<String>(); // Starts as loading status
+final items = RxSList<String>(); // Starts as idle status
 
 // UI Binding using items.on(...) inside Obx
 Obx(() => items.on(
+  idle: () => const Text('Idle...'),
   loading: () => const CircularProgressIndicator(),
   loaded: (data) => ListView(children: data.map((e) => Text(e)).toList()),
   empty: () => const Text('No items found.'),
-  error: (err) => Text('Error: $err'),
+  error: (err) => Text('Error: ${err ?? "Unknown"}'),
 ));
 
 void fetchItems() async {
   try {
+    items.setLoading();
     final res = await api.getItems();
     items.assignAll(res); // Automatically transitions to loaded (or empty if empty list)
   } catch (e) {
-    items.error = e.toString();
-    items.status = RxListStatus.error; // Preserves items, transitions status to error
+    items.setError(e.toString()); // Preserves items, transitions status to error
   }
 }
 
 // ==========================================
 // 2. RxS (Status-Aware Nullable Value)
 // ==========================================
-final user = RxS<User?>(null); // Starts as loading status
+final user = RxS<User?>(null); // Starts as idle status
 
 // UI Binding using user.on(...) inside Obx
 Obx(() => user.on(
+  idle: () => const Text('Idle...'),
   loading: () => const CircularProgressIndicator(),
   loaded: (data) => Text('Hello, ${data?.name ?? "Guest"}'),
-  error: (err) => Text('Error: $err'),
+  error: (err) => Text('Error: ${err ?? "Unknown"}'),
 ));
 
 void fetchUser() async {
   try {
+    user.setLoading();
     final res = await api.getUser();
     user.value = res; // Automatically transitions to loaded
   } catch (e) {
-    user.error = e.toString();
-    user.status = RxDataStatus.error; // Preserves data, transitions status to error
+    user.setError(e.toString()); // Preserves data, transitions status to error
   }
 }

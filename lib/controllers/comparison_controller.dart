@@ -531,7 +531,7 @@ class ComparisonController extends GetxController {
               'title': 'cmp.rp.s3.title'.tr,
               'description': 'getx_distil — RxSList / RxS',
               'code1':
-                  'final items = <User>[].ops; // RxSList<User>\n\n// Manual state transition\nitems.assignAll(fetchedUsers);     // status → loaded\nitems.error = \'Network failure\';\nitems.status = RxListStatus.error;\n\n// UI\nObx(() => items.on(\n  loading: () => CircularProgressIndicator(),\n  loaded:  (data) => ListView.builder(...),\n  error:   (msg) => Text(\'Error: \$msg\'),\n))',
+                  'final items = <User>[].ops; // RxSList<User>\n\n// Manual state transition\nitems.assignAll(fetchedUsers);     // status → loaded\nitems.setError(\'Network failure\'); // Preserves items, transitions status to error\n\n// UI\nObx(() => items.on(\n  idle:    () => const Text(\'Idle\'),\n  loading: () => CircularProgressIndicator(),\n  loaded:  (data) => ListView.builder(...),\n  error:   (msg) => Text(\'Error: \${msg ?? "Unknown"}\'),\n))',
               'description2': 'Riverpod 3.0 — AsyncNotifier + AsyncValue',
               'code2':
                   '@riverpod\nclass Users extends _\$Users {\n  @override\n  FutureOr<List<User>> build() => _fetchUsers();\n\n  Future<void> refresh() async {\n    state = const AsyncLoading();\n    state = await AsyncValue.guard(() => _fetchUsers());\n  }\n}\n\n// UI\nref.watch(usersProvider).when(\n  loading: () => CircularProgressIndicator(),\n  data:    (users) => ListView.builder(...),\n  error:   (err, _) => Text(\'Error: \$err\'),\n)',
