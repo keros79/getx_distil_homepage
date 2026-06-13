@@ -1,0 +1,9 @@
+@riverpod
+class Counter extends _$Counter {
+  @override
+  int build() => 0;
+  void increment() => state++;
+}
+
+// UI
+ConsumerWidget: ref.watch(counterProvider)

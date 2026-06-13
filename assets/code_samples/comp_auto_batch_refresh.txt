@@ -1,0 +1,9 @@
+void _autoBatchRefresh() {
+  if (_isNotificationScheduled) return;  // ← drop-path
+  _isNotificationScheduled = true;
+  scheduleMicrotask(() {
+    refresh();
+    notifyStream();
+    _isNotificationScheduled = false;
+  });
+}

@@ -1,0 +1,7 @@
+📍 Requested Context Widget: Builder
+🌳 Search Path (Ancestor Widgets):
+   Builder -> Column -> Scaffold -> ...
+🌐 Registered Global Services:
+   CounterController, AuthService
+🌟 Registered Immortal Services:
+   DatabaseService

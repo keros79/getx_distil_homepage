@@ -1,0 +1,13 @@
+final items = <User>[].ops; // RxSList<User>
+
+// Manual state transition
+items.assignAll(fetchedUsers);     // status → loaded
+items.setError('Network failure'); // Preserves items, transitions status to error
+
+// UI
+Obx(() => items.on(
+  idle:    () => const Text('Idle'),
+  loading: () => CircularProgressIndicator(),
+  loaded:  (data) => ListView.builder(...),
+  error:   (msg) => Text('Error: ${msg ?? "Unknown"}'),
+))

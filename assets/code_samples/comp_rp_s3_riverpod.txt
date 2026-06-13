@@ -1,0 +1,17 @@
+@riverpod
+class Users extends _$Users {
+  @override
+  FutureOr<List<User>> build() => _fetchUsers();
+
+  Future<void> refresh() async {
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(() => _fetchUsers());
+  }
+}
+
+// UI
+ref.watch(usersProvider).when(
+  loading: () => CircularProgressIndicator(),
+  data:    (users) => ListView.builder(...),
+  error:   (err, _) => Text('Error: $err'),
+)

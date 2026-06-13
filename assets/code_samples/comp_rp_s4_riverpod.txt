@@ -1,0 +1,11 @@
+// Declarative registration (auto via @riverpod annotation)
+@riverpod
+class Controller extends _$Controller {
+  @override
+  void build() { ... }
+}
+
+// Lookup
+ref.read(controllerProvider);                              // one-time read
+ref.watch(controllerProvider);                             // reactive subscription
+ref.watch(controllerProvider.select((s) => s.count));      // selective subscription

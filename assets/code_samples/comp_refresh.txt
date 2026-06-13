@@ -1,0 +1,9 @@
+void refresh() {
+  final phase = SchedulerBinding.instance.schedulerPhase;
+  if (phase == SchedulerPhase.persistentCallbacks || 
+      phase == SchedulerPhase.midFrameMicrotasks) {
+    scheduler.addPostFrameCallback((_) { /* safe update */ });
+  } else {
+    /* immediate update */
+  }
+}

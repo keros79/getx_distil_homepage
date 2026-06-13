@@ -1,15 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:getx_distil/get.dart';
 
 import '../core/app_theme.dart';
 
-class ComparisonController extends GetxController {
+class ComparisonController extends GetxController with StateMixin<Map<String, String>> {
   late final ScrollController scrollController;
+
+  final Map<String, String> _samples = {};
+
+  String getCode(String key) => _samples[key] ?? '';
 
   @override
   void onInit() {
     super.onInit();
     scrollController = ScrollController();
+    loadSamples();
+  }
+
+  Future<void> loadSamples() async {
+    change(null, status: RxStatus.loading());
+    try {
+      final keys = [
+        'comp_report_read',
+        'comp_refresh',
+        'comp_auto_batch_refresh',
+        'comp_binding_widget_route',
+        'comp_update_sequential',
+        'comp_items_on',
+        'comp_di_debug',
+        'comp_rp_s2_distil',
+        'comp_rp_s2_riverpod',
+        'comp_rp_s3_distil',
+        'comp_rp_s3_riverpod',
+        'comp_rp_s4_distil',
+        'comp_rp_s4_riverpod',
+      ];
+
+      for (final key in keys) {
+        _samples[key] = await rootBundle.loadString('assets/code_samples/$key.txt');
+      }
+
+      change(_samples, status: RxStatus.success());
+    } catch (e) {
+      change(null, status: RxStatus.error(e.toString()));
+    }
   }
 
   @override
@@ -101,8 +136,7 @@ class ComparisonController extends GetxController {
                   _ok('cmp.imp.i1.r2c2'.tr)
                 ]),
               ],
-              'code':
-                  '// getx_distil - reportRead()\nvoid reportRead() {\n  if (Notifier.isTracking) {  // ← simple bool check\n    Notifier.instance.read(this);\n  }\n}',
+              'code': getCode('comp_report_read'),
               'evaluation': 'cmp.imp.i1.eval'.tr,
             },
             {
@@ -126,8 +160,7 @@ class ComparisonController extends GetxController {
                   _ok('cmp.imp.i2.r1c2'.tr)
                 ]),
               ],
-              'code':
-                  'void refresh() {\n  final phase = SchedulerBinding.instance.schedulerPhase;\n  if (phase == SchedulerPhase.persistentCallbacks || \n      phase == SchedulerPhase.midFrameMicrotasks) {\n    scheduler.addPostFrameCallback((_) { /* safe update */ });\n  } else {\n    /* immediate update */\n  }\n}',
+              'code': getCode('comp_refresh'),
               'evaluation': 'cmp.imp.i2.eval'.tr,
             },
             {
@@ -156,8 +189,7 @@ class ComparisonController extends GetxController {
                   _ok('cmp.imp.i3.r2c2'.tr)
                 ]),
               ],
-              'code':
-                  'void _autoBatchRefresh() {\n  if (_isNotificationScheduled) return;  // ← drop-path\n  _isNotificationScheduled = true;\n  scheduleMicrotask(() {\n    refresh();\n    notifyStream();\n    _isNotificationScheduled = false;\n  });\n}',
+              'code': getCode('comp_auto_batch_refresh'),
               'evaluation': 'cmp.imp.i3.eval'.tr,
             },
             {
@@ -196,8 +228,7 @@ class ComparisonController extends GetxController {
                   _ok('cmp.imp.i4.r4c2'.tr)
                 ]),
               ],
-              'code':
-                  'GoRoute(\n  path: \'/settings\',\n  builder: (context, state) => BindingWidget(\n    bindings: [Bind<SettingsController>(() => SettingsController())],\n    child: const SettingsPage(),\n  ),\n)',
+              'code': getCode('comp_binding_widget_route'),
               'evaluation': 'cmp.imp.i4.eval'.tr,
             },
             {
@@ -221,8 +252,7 @@ class ComparisonController extends GetxController {
                   _ok('cmp.imp.i5.r1c2'.tr)
                 ]),
               ],
-              'code':
-                  'Future<void> updateSequential(Future<T> Function(T currentValue) action) {\n  final completer = Completer<void>();\n  _lastUpdateFuture = _lastUpdateFuture.then((_) async {\n    final newValue = await action(value);\n    value = newValue;\n    completer.complete();\n  });\n  return completer.future;\n}',
+              'code': getCode('comp_update_sequential'),
               'evaluation': 'cmp.imp.i5.eval'.tr,
             },
             {
@@ -251,8 +281,7 @@ class ComparisonController extends GetxController {
                   _ok('cmp.imp.i6.r2c2'.tr)
                 ]),
               ],
-              'code':
-                  'Obx(() => items.on(\n  loading: () => const CircularProgressIndicator(),\n  loaded:  (data) => ListView.builder(...),\n  empty:   () => const Text(\'No items\'),\n  error:   (msg) => Text(\'Error: \$msg\'),\n));',
+              'code': getCode('comp_items_on'),
               'evaluation': 'cmp.imp.i6.eval'.tr,
             },
             {
@@ -294,8 +323,7 @@ class ComparisonController extends GetxController {
                   _ok('cmp.imp.i8.r0c2'.tr)
                 ]),
               ],
-              'code':
-                  '📍 Requested Context Widget: Builder\n🌳 Search Path (Ancestor Widgets):\n   Builder -> Column -> Scaffold -> ...\n🌐 Registered Global Services:\n   CounterController, AuthService\n🌟 Registered Immortal Services:\n   DatabaseService',
+              'code': getCode('comp_di_debug'),
               'evaluation': 'cmp.imp.i8.eval'.tr,
             },
           ],
@@ -486,11 +514,9 @@ class ComparisonController extends GetxController {
               'number': '5.2',
               'title': 'cmp.rp.s2.title'.tr,
               'description': 'cmp.rp.s2.desc1'.tr,
-              'code1':
-                  '// Inside controller\nfinal count = 0.obs;           // RxInt\nfinal items = <String>[].ops;  // RxSList\n\n// Value change\ncount.value++;\nitems.add(\'new item\');\n\n// UI\nObx(() => Text(\'\${controller.count.value}\'))',
+              'code1': getCode('comp_rp_s2_distil'),
               'description2': 'cmp.rp.s2.desc2'.tr,
-              'code2':
-                  '@riverpod\nclass Counter extends _\$Counter {\n  @override\n  int build() => 0;\n  void increment() => state++;\n}\n\n// UI\nConsumerWidget: ref.watch(counterProvider)',
+              'code2': getCode('comp_rp_s2_riverpod'),
               'tableHeaders': [
                 'cmp.rp.s2.h0'.tr,
                 'getx_distil',
@@ -530,11 +556,9 @@ class ComparisonController extends GetxController {
               'number': '5.3',
               'title': 'cmp.rp.s3.title'.tr,
               'description': 'getx_distil — RxSList / RxS',
-              'code1':
-                  'final items = <User>[].ops; // RxSList<User>\n\n// Manual state transition\nitems.assignAll(fetchedUsers);     // status → loaded\nitems.setError(\'Network failure\'); // Preserves items, transitions status to error\n\n// UI\nObx(() => items.on(\n  idle:    () => const Text(\'Idle\'),\n  loading: () => CircularProgressIndicator(),\n  loaded:  (data) => ListView.builder(...),\n  error:   (msg) => Text(\'Error: \${msg ?? "Unknown"}\'),\n))',
+              'code1': getCode('comp_rp_s3_distil'),
               'description2': 'Riverpod 3.0 — AsyncNotifier + AsyncValue',
-              'code2':
-                  '@riverpod\nclass Users extends _\$Users {\n  @override\n  FutureOr<List<User>> build() => _fetchUsers();\n\n  Future<void> refresh() async {\n    state = const AsyncLoading();\n    state = await AsyncValue.guard(() => _fetchUsers());\n  }\n}\n\n// UI\nref.watch(usersProvider).when(\n  loading: () => CircularProgressIndicator(),\n  data:    (users) => ListView.builder(...),\n  error:   (err, _) => Text(\'Error: \$err\'),\n)',
+              'code2': getCode('comp_rp_s3_riverpod'),
               'tableHeaders': [
                 'cmp.rp.s3.h0'.tr,
                 'getx_distil',
@@ -574,11 +598,9 @@ class ComparisonController extends GetxController {
               'number': '5.4',
               'title': 'cmp.rp.s4.title'.tr,
               'description': 'cmp.rp.s4.desc1'.tr,
-              'code1':
-                  '// Tree scope\nBindingWidget(\n  bindings: [Bind<Controller>(() => Controller())],\n  child: const MyPage(),\n)\n\n// Global\nGet.put<Controller>(Controller());\n\n// Lookup\nGet.find<Controller>(context);  // scope first → global fallback\nGet.find<Controller>();         // global + WeakReference fallback',
+              'code1': getCode('comp_rp_s4_distil'),
               'description2': 'cmp.rp.s4.desc2'.tr,
-              'code2':
-                  '// Declarative registration (auto via @riverpod annotation)\n@riverpod\nclass Controller extends _\$Controller {\n  @override\n  void build() { ... }\n}\n\n// Lookup\nref.read(controllerProvider);                              // one-time read\nref.watch(controllerProvider);                             // reactive subscription\nref.watch(controllerProvider.select((s) => s.count));      // selective subscription',
+              'code2': getCode('comp_rp_s4_riverpod'),
               'tableHeaders': [
                 'cmp.rp.s4.h0'.tr,
                 'getx_distil',

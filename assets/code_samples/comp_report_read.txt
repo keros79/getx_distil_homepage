@@ -1,0 +1,6 @@
+// getx_distil - reportRead()
+void reportRead() {
+  if (Notifier.isTracking) {  // ← simple bool check
+    Notifier.instance.read(this);
+  }
+}

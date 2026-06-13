@@ -1,0 +1,12 @@
+// Tree scope
+BindingWidget(
+  bindings: [Bind<Controller>(() => Controller())],
+  child: const MyPage(),
+)
+
+// Global
+Get.put<Controller>(Controller());
+
+// Lookup
+Get.find<Controller>(context);  // scope first → global fallback
+Get.find<Controller>();         // global + WeakReference fallback

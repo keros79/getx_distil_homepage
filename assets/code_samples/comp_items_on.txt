@@ -1,0 +1,6 @@
+Obx(() => items.on(
+  loading: () => const CircularProgressIndicator(),
+  loaded:  (data) => ListView.builder(...),
+  empty:   () => const Text('No items'),
+  error:   (msg) => Text('Error: $msg'),
+));

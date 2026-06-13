@@ -1,0 +1,7 @@
+GoRoute(
+  path: '/settings',
+  builder: (context, state) => BindingWidget(
+    bindings: [Bind<SettingsController>(() => SettingsController())],
+    child: const SettingsPage(),
+  ),
+)

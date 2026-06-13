@@ -20,33 +20,46 @@ class ComparisonPage extends GetView<ComparisonController> {
   Widget build(BuildContext context) {
     final double sw = MediaQuery.of(context).size.width;
     final bool isMobile = sw < 800;
-    final meta =
-        controller.sectionMeta[section] ?? controller.sectionMeta['overview']!;
 
     return Scaffold(
       backgroundColor: AppTheme.bg,
       endDrawer: isMobile ? const AppDrawer() : null,
       appBar: const NavBar(),
-      body: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (!isMobile) SidebarTocComparison(activePath: section),
-          Expanded(
-            child: SingleChildScrollView(
-              controller: controller.scrollController,
-              padding: EdgeInsets.symmetric(
-                horizontal: isMobile ? 24.0 : 48.0,
-                vertical: 32.0,
-              ),
-              child: Center(
-                child: Container(
-                  constraints: const BoxConstraints(maxWidth: 900),
-                  child: _buildContent(meta, isMobile, context),
+      body: controller.obx(
+        (state) {
+          final meta = controller.sectionMeta[section] ??
+              controller.sectionMeta['overview']!;
+          return Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (!isMobile) SidebarTocComparison(activePath: section),
+              Expanded(
+                child: SingleChildScrollView(
+                  controller: controller.scrollController,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: isMobile ? 24.0 : 48.0,
+                    vertical: 32.0,
+                  ),
+                  child: Center(
+                    child: Container(
+                      constraints: const BoxConstraints(maxWidth: 900),
+                      child: _buildContent(meta, isMobile, context),
+                    ),
+                  ),
                 ),
               ),
-            ),
+            ],
+          );
+        },
+        onLoading: const Center(
+          child: CircularProgressIndicator(color: AppTheme.googleBlue),
+        ),
+        onError: (error) => Center(
+          child: Text(
+            'Error loading comparison code samples: $error',
+            style: const TextStyle(color: AppTheme.googleRed),
           ),
-        ],
+        ),
       ),
     );
   }

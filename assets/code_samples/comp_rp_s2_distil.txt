@@ -1,0 +1,10 @@
+// Inside controller
+final count = 0.obs;           // RxInt
+final items = <String>[].ops;  // RxSList
+
+// Value change
+count.value++;
+items.add('new item');
+
+// UI
+Obx(() => Text('${controller.count.value}'))

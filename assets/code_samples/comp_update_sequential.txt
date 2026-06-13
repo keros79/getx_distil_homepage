@@ -1,0 +1,9 @@
+Future<void> updateSequential(Future<T> Function(T currentValue) action) {
+  final completer = Completer<void>();
+  _lastUpdateFuture = _lastUpdateFuture.then((_) async {
+    final newValue = await action(value);
+    value = newValue;
+    completer.complete();
+  });
+  return completer.future;
+}
