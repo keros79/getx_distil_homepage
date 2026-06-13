@@ -1,5 +1,6 @@
 import 'package:getx_distil/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 import '../controllers/home_controller.dart';
 import '../controllers/api_detail_controller.dart';
@@ -13,6 +14,9 @@ import '../views/comparison_page.dart';
 
 final GoRouter router = GoRouter(
   initialLocation: '/',
+  observers: [
+    FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
+  ],
   routes: [
     GoRoute(
       path: '/',
