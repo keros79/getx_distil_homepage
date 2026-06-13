@@ -18,6 +18,7 @@ class ComparisonPage extends GetView<ComparisonController> {
 
   @override
   Widget build(BuildContext context) {
+    controller.loadSamplesForSection(section);
     final double sw = MediaQuery.of(context).size.width;
     final bool isMobile = sw < 800;
 
@@ -25,41 +26,32 @@ class ComparisonPage extends GetView<ComparisonController> {
       backgroundColor: AppTheme.bg,
       endDrawer: isMobile ? const AppDrawer() : null,
       appBar: const NavBar(),
-      body: controller.obx(
-        (state) {
-          final meta = controller.sectionMeta[section] ??
-              controller.sectionMeta['overview']!;
-          return Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (!isMobile) SidebarTocComparison(activePath: section),
-              Expanded(
-                child: SingleChildScrollView(
-                  controller: controller.scrollController,
-                  padding: EdgeInsets.symmetric(
-                    horizontal: isMobile ? 24.0 : 48.0,
-                    vertical: 32.0,
-                  ),
-                  child: Center(
-                    child: Container(
-                      constraints: const BoxConstraints(maxWidth: 900),
-                      child: _buildContent(meta, isMobile, context),
-                    ),
+      body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (!isMobile) SidebarTocComparison(activePath: section),
+          Expanded(
+            child: SingleChildScrollView(
+              controller: controller.scrollController,
+              padding: EdgeInsets.symmetric(
+                horizontal: isMobile ? 24.0 : 48.0,
+                vertical: 32.0,
+              ),
+              child: Center(
+                child: Container(
+                  constraints: const BoxConstraints(maxWidth: 900),
+                  child: Builder(
+                    builder: (context) {
+                      final meta = controller.sectionMeta[section] ??
+                          controller.sectionMeta['overview']!;
+                      return _buildContent(meta, isMobile, context);
+                    },
                   ),
                 ),
               ),
-            ],
-          );
-        },
-        onLoading: const Center(
-          child: CircularProgressIndicator(color: AppTheme.googleBlue),
-        ),
-        onError: (error) => Center(
-          child: Text(
-            'Error loading comparison code samples: $error',
-            style: const TextStyle(color: AppTheme.googleRed),
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
@@ -157,7 +149,7 @@ class ComparisonPage extends GetView<ComparisonController> {
           rows: _resolveRows(item['tableRows']),
           isMobile: isMobile,
         ),
-        if (item['code'] != null) ...[
+        if (item['codeKey'] != null) ...[
           const SizedBox(height: 20.0),
           const Text('CODE',
               style: TextStyle(
@@ -167,7 +159,7 @@ class ComparisonPage extends GetView<ComparisonController> {
                   color: AppTheme.textMuted,
                   letterSpacing: 1.5)),
           const SizedBox(height: 8.0),
-          CodeBlock(code: item['code'] as String, language: 'dart'),
+          _buildRxCodeBlock(item['codeKey'] as String),
         ],
         const SizedBox(height: 20.0),
         _evaluationBadge(item['evaluation'] as String),
@@ -323,7 +315,7 @@ class ComparisonPage extends GetView<ComparisonController> {
                 fontWeight: FontWeight.bold,
                 color: AppTheme.googleBlue)),
         const SizedBox(height: 8.0),
-        CodeBlock(code: item['code1'] as String, language: 'dart'),
+        _buildRxCodeBlock(item['codeKey1'] as String),
         const SizedBox(height: 20.0),
         Text(item['description2'] as String,
             style: const TextStyle(
@@ -332,7 +324,7 @@ class ComparisonPage extends GetView<ComparisonController> {
                 fontWeight: FontWeight.bold,
                 color: AppTheme.textSecondary)),
         const SizedBox(height: 8.0),
-        CodeBlock(code: item['code2'] as String, language: 'dart'),
+        _buildRxCodeBlock(item['codeKey2'] as String),
         const SizedBox(height: 20.0),
         _buildComparisonTable(
             headers: item['tableHeaders'].cast<String>(),
@@ -888,6 +880,50 @@ class ComparisonPage extends GetView<ComparisonController> {
       title: '${'comparison.explore'.tr} $label',
       glowColor: AppTheme.googleBlue,
       onTap: () => context.go('/comparison/$targetSection'),
+    );
+  }
+
+  Widget _buildRxCodeBlock(String codeKey) {
+    final rxCode = controller.getRxCode(codeKey);
+    if (rxCode == null) {
+      return const SizedBox.shrink();
+    }
+    return Obx(
+      () => rxCode.on(
+        idle: () => const SizedBox(
+          height: 100,
+          child: Center(
+            child: Text(
+              'Idle...',
+              style: TextStyle(color: AppTheme.textMuted),
+            ),
+          ),
+        ),
+        loading: () => Container(
+          height: 150,
+          decoration: BoxDecoration(
+            color: Colors.black.withOpacity(0.02),
+            borderRadius: BorderRadius.circular(12.0),
+            border: Border.all(color: Colors.black.withOpacity(0.04)),
+          ),
+          child: const Center(
+            child: CircularProgressIndicator(color: AppTheme.googleBlue),
+          ),
+        ),
+        loaded: (code) => CodeBlock(code: code ?? '', language: 'dart'),
+        error: (error) => Container(
+          padding: const EdgeInsets.all(16.0),
+          decoration: BoxDecoration(
+            color: AppTheme.googleRed.withOpacity(0.05),
+            borderRadius: BorderRadius.circular(8.0),
+            border: Border.all(color: AppTheme.googleRed.withOpacity(0.12)),
+          ),
+          child: Text(
+            'Error loading code sample: $error',
+            style: const TextStyle(color: AppTheme.googleRed),
+          ),
+        ),
+      ),
     );
   }
 }

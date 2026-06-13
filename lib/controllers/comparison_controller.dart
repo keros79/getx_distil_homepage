@@ -4,47 +4,101 @@ import 'package:getx_distil/get.dart';
 
 import '../core/app_theme.dart';
 
-class ComparisonController extends GetxController with StateMixin<Map<String, String>> {
+class ComparisonController extends GetxController {
   late final ScrollController scrollController;
 
-  final Map<String, String> _samples = {};
+  final Map<String, RxS<String>> _samples = {
+    'comp_report_read': RxS<String>(''),
+    'comp_refresh': RxS<String>(''),
+    'comp_auto_batch_refresh': RxS<String>(''),
+    'comp_binding_widget_route': RxS<String>(''),
+    'comp_update_sequential': RxS<String>(''),
+    'comp_items_on': RxS<String>(''),
+    'comp_di_debug': RxS<String>(''),
+    'comp_rp_s2_distil': RxS<String>(''),
+    'comp_rp_s2_riverpod': RxS<String>(''),
+    'comp_rp_s3_distil': RxS<String>(''),
+    'comp_rp_s3_riverpod': RxS<String>(''),
+    'comp_rp_s4_distil': RxS<String>(''),
+    'comp_rp_s4_riverpod': RxS<String>(''),
+  };
 
-  String getCode(String key) => _samples[key] ?? '';
+  String getCode(String key) => _samples[key]?.value ?? '';
+  RxS<String>? getRxCode(String key) => _samples[key];
+
+  int _activeLoadId = 0;
 
   @override
   void onInit() {
     super.onInit();
     scrollController = ScrollController();
-    loadSamples();
   }
 
-  Future<void> loadSamples() async {
-    change(null, status: RxStatus.loading());
-    try {
-      final keys = [
-        'comp_report_read',
-        'comp_refresh',
-        'comp_auto_batch_refresh',
-        'comp_binding_widget_route',
-        'comp_update_sequential',
-        'comp_items_on',
-        'comp_di_debug',
-        'comp_rp_s2_distil',
-        'comp_rp_s2_riverpod',
-        'comp_rp_s3_distil',
-        'comp_rp_s3_riverpod',
-        'comp_rp_s4_distil',
-        'comp_rp_s4_riverpod',
-      ];
+  List<String> _getKeysForSection(String section) {
+    switch (section) {
+      case 'improvements':
+        return [
+          'comp_report_read',
+          'comp_refresh',
+          'comp_auto_batch_refresh',
+          'comp_binding_widget_route',
+          'comp_update_sequential',
+          'comp_items_on',
+          'comp_di_debug',
+        ];
+      case 'riverpod':
+        return [
+          'comp_rp_s2_distil',
+          'comp_rp_s2_riverpod',
+          'comp_rp_s3_distil',
+          'comp_rp_s3_riverpod',
+          'comp_rp_s4_distil',
+          'comp_rp_s4_riverpod',
+        ];
+      default:
+        return [];
+    }
+  }
 
-      for (final key in keys) {
-        _samples[key] = await rootBundle.loadString('assets/code_samples/$key.txt');
+  void loadSamplesForSection(String section) {
+    final neededKeys = _getKeysForSection(section);
+    final missingKeys = neededKeys.where((k) {
+      final sample = _samples[k];
+      return sample == null || sample.status != RxDataStatus.loaded;
+    }).toList();
+
+    if (missingKeys.isEmpty) {
+      return;
+    }
+
+    _activeLoadId++;
+    final loadId = _activeLoadId;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (loadId != _activeLoadId) return;
+
+      for (final key in missingKeys) {
+        _samples[key]?.setLoading();
       }
 
-      change(_samples, status: RxStatus.success());
-    } catch (e) {
-      change(null, status: RxStatus.error(e.toString()));
-    }
+      try {
+        for (final key in missingKeys) {
+          final content = await rootBundle.loadString('assets/code_samples/$key.txt');
+          if (loadId == _activeLoadId) {
+            final sample = _samples[key];
+            if (sample != null) {
+              sample.value = content;
+            }
+          }
+        }
+      } catch (e) {
+        if (loadId == _activeLoadId) {
+          for (final key in missingKeys) {
+            _samples[key]?.setError(e.toString());
+          }
+        }
+      }
+    });
   }
 
   @override
@@ -136,7 +190,7 @@ class ComparisonController extends GetxController with StateMixin<Map<String, St
                   _ok('cmp.imp.i1.r2c2'.tr)
                 ]),
               ],
-              'code': getCode('comp_report_read'),
+              'codeKey': 'comp_report_read',
               'evaluation': 'cmp.imp.i1.eval'.tr,
             },
             {
@@ -160,7 +214,7 @@ class ComparisonController extends GetxController with StateMixin<Map<String, St
                   _ok('cmp.imp.i2.r1c2'.tr)
                 ]),
               ],
-              'code': getCode('comp_refresh'),
+              'codeKey': 'comp_refresh',
               'evaluation': 'cmp.imp.i2.eval'.tr,
             },
             {
@@ -189,7 +243,7 @@ class ComparisonController extends GetxController with StateMixin<Map<String, St
                   _ok('cmp.imp.i3.r2c2'.tr)
                 ]),
               ],
-              'code': getCode('comp_auto_batch_refresh'),
+              'codeKey': 'comp_auto_batch_refresh',
               'evaluation': 'cmp.imp.i3.eval'.tr,
             },
             {
@@ -228,7 +282,7 @@ class ComparisonController extends GetxController with StateMixin<Map<String, St
                   _ok('cmp.imp.i4.r4c2'.tr)
                 ]),
               ],
-              'code': getCode('comp_binding_widget_route'),
+              'codeKey': 'comp_binding_widget_route',
               'evaluation': 'cmp.imp.i4.eval'.tr,
             },
             {
@@ -252,7 +306,7 @@ class ComparisonController extends GetxController with StateMixin<Map<String, St
                   _ok('cmp.imp.i5.r1c2'.tr)
                 ]),
               ],
-              'code': getCode('comp_update_sequential'),
+              'codeKey': 'comp_update_sequential',
               'evaluation': 'cmp.imp.i5.eval'.tr,
             },
             {
@@ -281,7 +335,7 @@ class ComparisonController extends GetxController with StateMixin<Map<String, St
                   _ok('cmp.imp.i6.r2c2'.tr)
                 ]),
               ],
-              'code': getCode('comp_items_on'),
+              'codeKey': 'comp_items_on',
               'evaluation': 'cmp.imp.i6.eval'.tr,
             },
             {
@@ -323,7 +377,7 @@ class ComparisonController extends GetxController with StateMixin<Map<String, St
                   _ok('cmp.imp.i8.r0c2'.tr)
                 ]),
               ],
-              'code': getCode('comp_di_debug'),
+              'codeKey': 'comp_di_debug',
               'evaluation': 'cmp.imp.i8.eval'.tr,
             },
           ],
@@ -514,9 +568,9 @@ class ComparisonController extends GetxController with StateMixin<Map<String, St
               'number': '5.2',
               'title': 'cmp.rp.s2.title'.tr,
               'description': 'cmp.rp.s2.desc1'.tr,
-              'code1': getCode('comp_rp_s2_distil'),
+              'codeKey1': 'comp_rp_s2_distil',
               'description2': 'cmp.rp.s2.desc2'.tr,
-              'code2': getCode('comp_rp_s2_riverpod'),
+              'codeKey2': 'comp_rp_s2_riverpod',
               'tableHeaders': [
                 'cmp.rp.s2.h0'.tr,
                 'getx_distil',
@@ -556,9 +610,9 @@ class ComparisonController extends GetxController with StateMixin<Map<String, St
               'number': '5.3',
               'title': 'cmp.rp.s3.title'.tr,
               'description': 'getx_distil — RxSList / RxS',
-              'code1': getCode('comp_rp_s3_distil'),
+              'codeKey1': 'comp_rp_s3_distil',
               'description2': 'Riverpod 3.0 — AsyncNotifier + AsyncValue',
-              'code2': getCode('comp_rp_s3_riverpod'),
+              'codeKey2': 'comp_rp_s3_riverpod',
               'tableHeaders': [
                 'cmp.rp.s3.h0'.tr,
                 'getx_distil',
@@ -598,9 +652,9 @@ class ComparisonController extends GetxController with StateMixin<Map<String, St
               'number': '5.4',
               'title': 'cmp.rp.s4.title'.tr,
               'description': 'cmp.rp.s4.desc1'.tr,
-              'code1': getCode('comp_rp_s4_distil'),
+              'codeKey1': 'comp_rp_s4_distil',
               'description2': 'cmp.rp.s4.desc2'.tr,
-              'code2': getCode('comp_rp_s4_riverpod'),
+              'codeKey2': 'comp_rp_s4_riverpod',
               'tableHeaders': [
                 'cmp.rp.s4.h0'.tr,
                 'getx_distil',
