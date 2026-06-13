@@ -913,8 +913,7 @@ Obx(() => rxUser.on(
                     decoration: BoxDecoration(
                       color: Colors.black.withOpacity(0.02),
                       borderRadius: BorderRadius.circular(8.0),
-                      border: Border.all(
-                          color: Colors.black.withOpacity(0.05)),
+                      border: Border.all(color: Colors.black.withOpacity(0.05)),
                     ),
                     child: Row(
                       children: [
@@ -1441,7 +1440,7 @@ Obx(() => rxUser.on(
                         color: AppTheme.textMuted, fontSize: 12.0),
                   ),
                   Text(
-                    'v1.5.1+14',
+                    'v1.5.2+15',
                     style: const TextStyle(
                         color: AppTheme.textMuted, fontSize: 12.0),
                   ),
