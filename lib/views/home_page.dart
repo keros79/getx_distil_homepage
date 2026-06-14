@@ -401,13 +401,7 @@ Obx(() => rxUser.on(
                 padding: const EdgeInsets.symmetric(
                     horizontal: 14.0, vertical: 12.0),
               ),
-              child: Row(
-                children: [
-                  const Icon(Icons.add_rounded, size: 16),
-                  const SizedBox(width: 4.0),
-                  Text('home.btn_count_up'.tr),
-                ],
-              ),
+              child: Text('home.btn_count_up'.tr),
             ),
             const SizedBox(width: 8.0),
             OutlinedButton(
@@ -420,13 +414,7 @@ Obx(() => rxUser.on(
                 padding: const EdgeInsets.symmetric(
                     horizontal: 14.0, vertical: 12.0),
               ),
-              child: Row(
-                children: [
-                  const Icon(Icons.remove_rounded, size: 16),
-                  const SizedBox(width: 4.0),
-                  Text('home.btn_count_down'.tr),
-                ],
-              ),
+              child: Text('home.btn_count_down'.tr),
             ),
           ],
         ),

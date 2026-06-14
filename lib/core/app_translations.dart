@@ -753,8 +753,8 @@ class AppTranslations extends Translations {
           'home.demo_desc':
               '아래에서 상태를 변경해보세요. 상태 인지형(Status-Aware) 옵저버블이 자동으로 상태를 전환하고 연결된 Obx 위젯을 새로고침합니다.',
           'home.demo_rx_label': '1. 기본 RX 상태',
-          'home.btn_count_up': '증가++',
-          'home.btn_count_down': '감소--',
+          'home.btn_count_up': '카운트++',
+          'home.btn_count_down': '카운트--',
           'home.demo_hint': '반응형 텍스트 입력...',
           'home.demo_rxslist_label': '2. 상태 인지형 리스트 (RxSList)',
           'home.btn_load_items': '아이템 로드',
