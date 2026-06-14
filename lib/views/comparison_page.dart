@@ -7,7 +7,6 @@ import '../core/app_theme.dart';
 import '../core/widgets/nav_bar.dart';
 import '../core/widgets/sidebar_toc_comparison.dart';
 import '../core/widgets/code_block.dart';
-import '../core/widgets/glass_card.dart';
 import '../core/widgets/next_nav_card.dart';
 import '../core/widgets/app_drawer.dart';
 
@@ -89,7 +88,7 @@ class ComparisonPage extends GetView<ComparisonController> {
         const SizedBox(height: 16.0),
         _buildComparisonTable(
           headers: meta['tableHeaders'].cast<String>(),
-          rows: _resolveRows(meta['tableRows']),
+          rows: _resolveRows(meta['tableRows'], isMobile: isMobile),
           isMobile: isMobile,
         ),
         const SizedBox(height: 48.0),
@@ -146,7 +145,7 @@ class ComparisonPage extends GetView<ComparisonController> {
         const SizedBox(height: 20.0),
         _buildComparisonTable(
           headers: (item['tableHeaders'] as List<String>),
-          rows: _resolveRows(item['tableRows']),
+          rows: _resolveRows(item['tableRows'], isMobile: isMobile),
           isMobile: isMobile,
         ),
         if (item['codeKey'] != null) ...[
@@ -177,14 +176,28 @@ class ComparisonPage extends GetView<ComparisonController> {
         const SizedBox(height: 32.0),
         _buildComparisonTable(
           headers: meta['tableHeaders'].cast<String>(),
-          rows: _resolveRows(meta['tableRows']),
+          rows: _resolveRows(meta['tableRows'], isMobile: isMobile),
           isMobile: isMobile,
         ),
         if (meta['infoCard'] != null) ...[
           const SizedBox(height: 24.0),
-          GlassCard(
-            glowColor: AppTheme.googleBlue,
+          Container(
             padding: const EdgeInsets.all(20.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16.0),
+              border: Border.all(
+                color: Colors.black.withOpacity(0.06),
+                width: 1.0,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.02),
+                  blurRadius: 12.0,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
             child: Row(
               children: [
                 const Icon(Icons.info_outline_rounded,
@@ -290,7 +303,7 @@ class ComparisonPage extends GetView<ComparisonController> {
           const SizedBox(height: 20.0),
           _buildComparisonTable(
               headers: item['tableHeaders'].cast<String>(),
-              rows: _resolveRows(item['tableRows']),
+              rows: _resolveRows(item['tableRows'], isMobile: isMobile),
               isMobile: isMobile),
           const SizedBox(height: 20.0),
           _evaluationBadge(item['evaluation'] as String),
@@ -328,7 +341,7 @@ class ComparisonPage extends GetView<ComparisonController> {
         const SizedBox(height: 20.0),
         _buildComparisonTable(
             headers: item['tableHeaders'].cast<String>(),
-            rows: _resolveRows(item['tableRows']),
+            rows: _resolveRows(item['tableRows'], isMobile: isMobile),
             isMobile: isMobile),
         const SizedBox(height: 20.0),
         _evaluationBadge(item['evaluation'] as String),
@@ -354,67 +367,97 @@ class ComparisonPage extends GetView<ComparisonController> {
   }
 
   Widget _buildConclusionCard(Map<String, dynamic> card) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(card['cardTitle'] as String,
-            style: const TextStyle(
-                fontFamily: 'Google Sans Flex',
-                fontSize: 20.0,
-                fontWeight: FontWeight.w700,
-                color: AppTheme.textPrimary)),
-        const SizedBox(height: 16.0),
-        const Divider(height: 1, color: Color(0xFFDADCE0)),
-        const SizedBox(height: 16.0),
-        Text(card['quote'] as String,
-            style: const TextStyle(
-                fontFamily: 'Google Sans Flex',
-                fontSize: 16.0,
-                fontWeight: FontWeight.w600,
-                color: AppTheme.textPrimary,
-                height: 1.5)),
-        const SizedBox(height: 16.0),
-        for (final p in (card['paragraphs'] as List<String>)) ...[
-          Text(p,
-              style: const TextStyle(
-                  color: AppTheme.textSecondary, fontSize: 14.0, height: 1.6)),
-          const SizedBox(height: 12.0),
+    return Container(
+      padding: const EdgeInsets.all(24.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16.0),
+        border: Border.all(
+          color: Colors.black.withOpacity(0.06),
+          width: 1.0,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.02),
+            blurRadius: 12.0,
+            offset: const Offset(0, 4),
+          ),
         ],
-      ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(card['cardTitle'] as String,
+              style: const TextStyle(
+                  fontFamily: 'Google Sans Flex',
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.w700,
+                  color: AppTheme.textPrimary)),
+          const SizedBox(height: 12.0),
+          Container(
+            height: 2,
+            width: 40,
+            decoration: BoxDecoration(
+              gradient: AppTheme.primaryGradient,
+              borderRadius: BorderRadius.circular(1.0),
+            ),
+          ),
+          const SizedBox(height: 20.0),
+          Text(card['quote'] as String,
+              style: const TextStyle(
+                  fontFamily: 'Google Sans Flex',
+                  fontSize: 15.5,
+                  fontWeight: FontWeight.w600,
+                  color: AppTheme.textPrimary,
+                  height: 1.5)),
+          const SizedBox(height: 16.0),
+          for (final p in (card['paragraphs'] as List<String>)) ...[
+            Text(p,
+                style: const TextStyle(
+                    color: AppTheme.textSecondary,
+                    fontSize: 13.5,
+                    height: 1.6)),
+            const SizedBox(height: 12.0),
+          ],
+        ],
+      ),
     );
   }
 
   // ── Helper: Row Resolver ──
-  List<List<dynamic>> _resolveRows(List<dynamic> rawRows) {
+  List<List<dynamic>> _resolveRows(List<dynamic> rawRows,
+      {bool isMobile = false}) {
     return rawRows.map((row) {
       final cells = row as List<dynamic>;
       return cells.map((cell) {
         if (cell is Map<String, dynamic>) {
-          return _renderCell(cell);
+          return _renderCell(cell, isMobile: isMobile);
         }
         return cell as String;
       }).toList();
     }).toList();
   }
 
-  Widget _renderCell(Map<String, dynamic> cell) {
+  Widget _renderCell(Map<String, dynamic> cell, {bool isMobile = false}) {
+    final double offset = isMobile ? 2.0 : 0.0;
     switch (cell['type'] as String) {
       case 'success':
         return Text(cell['text'] as String,
-            style: const TextStyle(
+            style: TextStyle(
                 fontWeight: FontWeight.w600,
                 color: AppTheme.googleGreen,
-                fontSize: 12.5));
+                fontSize: 12.5 + offset));
       case 'delete':
         return Text(cell['text'] as String,
-            style: const TextStyle(color: AppTheme.googleRed, fontSize: 12.5));
+            style:
+                TextStyle(color: AppTheme.googleRed, fontSize: 12.5 + offset));
       case 'star':
         return Text('⭐' * (cell['count'] as int),
-            style: const TextStyle(fontSize: 13.0));
+            style: TextStyle(fontSize: 13.0 + offset));
       default:
         return Text('${cell['text']}',
-            style:
-                const TextStyle(fontSize: 13.0, color: AppTheme.textSecondary));
+            style: TextStyle(
+                fontSize: 13.0 + offset, color: AppTheme.textSecondary));
     }
   }
 
@@ -443,13 +486,43 @@ class ComparisonPage extends GetView<ComparisonController> {
       width: double.infinity,
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-        color: AppTheme.googleBlue.withOpacity(0.04),
-        borderRadius: BorderRadius.circular(10.0),
-        border: Border.all(color: AppTheme.googleBlue.withOpacity(0.12)),
+        color: AppTheme.googleBlue.withOpacity(0.03),
+        borderRadius: BorderRadius.circular(12.0),
+        border: Border.all(color: AppTheme.googleBlue.withOpacity(0.1)),
       ),
-      child: Text('Evaluation: $text',
-          style: const TextStyle(
-              color: AppTheme.textSecondary, fontSize: 13.5, height: 1.5)),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Icon(
+            Icons.analytics_outlined,
+            color: AppTheme.googleBlue,
+            size: 20.0,
+          ),
+          const SizedBox(width: 12.0),
+          Expanded(
+            child: RichText(
+              text: TextSpan(
+                style: const TextStyle(
+                  fontFamily: 'Google Sans Flex',
+                  fontSize: 13.5,
+                  height: 1.5,
+                  color: AppTheme.textSecondary,
+                ),
+                children: [
+                  const TextSpan(
+                    text: 'Evaluation: ',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      color: AppTheme.googleBlue,
+                    ),
+                  ),
+                  TextSpan(text: text),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -490,40 +563,124 @@ class ComparisonPage extends GetView<ComparisonController> {
       return Column(
         children: rows.map((row) {
           return Padding(
-            padding: const EdgeInsets.only(bottom: 12.0),
-            child: GlassCard(
-              padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.only(bottom: 16.0),
+            child: Container(
+              padding: const EdgeInsets.all(0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(
+                  color: Colors.black.withOpacity(0.06),
+                  width: 1.0,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.02),
+                    blurRadius: 12.0,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('${row[0]}',
-                      style: const TextStyle(
-                          fontFamily: 'Google Sans Flex',
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.bold,
-                          color: AppTheme.textPrimary)),
-                  const SizedBox(height: 8.0),
-                  for (int i = 1; i < headers.length && i < row.length; i++)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 6.0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('${headers[i]}: ',
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  color: AppTheme.textMuted,
-                                  fontSize: 12.0)),
-                          Expanded(
-                              child: row[i] is Widget
-                                  ? row[i] as Widget
-                                  : Text('${row[i]}',
-                                      style: const TextStyle(
-                                          color: AppTheme.textSecondary,
-                                          fontSize: 13.0))),
-                        ],
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0, vertical: 12.0),
+                    decoration: BoxDecoration(
+                      color: AppTheme.bg,
+                      border: Border(
+                        bottom: BorderSide(
+                          color: Colors.black.withOpacity(0.04),
+                          width: 1.0,
+                        ),
                       ),
                     ),
+                    child: Text(
+                      '${row[0]}',
+                      style: const TextStyle(
+                        fontFamily: 'Google Sans Flex',
+                        fontSize: 16.5,
+                        fontWeight: FontWeight.w700,
+                        color: AppTheme.textPrimary,
+                        letterSpacing: -0.2,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        for (int i = 1;
+                            i < headers.length && i < row.length;
+                            i++) ...[
+                          Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: headers[i].toLowerCase().contains('distil')
+                                  ? AppTheme.googleBlue.withOpacity(0.03)
+                                  : Colors.black.withOpacity(0.015),
+                            ),
+                            child: IntrinsicHeight(
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  Container(
+                                    width: 5,
+                                    color: _getLibraryColor(headers[i]),
+                                  ),
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            headers[i],
+                                            style: TextStyle(
+                                              fontFamily: 'Google Sans Flex',
+                                              fontSize: 13.5,
+                                              fontWeight: FontWeight.bold,
+                                              color:
+                                                  _getLibraryColor(headers[i]),
+                                              letterSpacing: 0.5,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 6.0),
+                                          row[i] is Widget
+                                              ? row[i] as Widget
+                                              : Text(
+                                                  '${row[i]}',
+                                                  style: TextStyle(
+                                                    color: headers[i]
+                                                            .toLowerCase()
+                                                            .contains('distil')
+                                                        ? AppTheme.textPrimary
+                                                        : AppTheme
+                                                            .textSecondary,
+                                                    fontSize: 15.0,
+                                                    height: 1.4,
+                                                    fontWeight: headers[i]
+                                                            .toLowerCase()
+                                                            .contains('distil')
+                                                        ? FontWeight.w500
+                                                        : FontWeight.normal,
+                                                  ),
+                                                ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -599,28 +756,92 @@ class ComparisonPage extends GetView<ComparisonController> {
       return Column(
         children: scores.map((s) {
           return Padding(
-            padding: const EdgeInsets.only(bottom: 12.0),
-            child: GlassCard(
-              padding: const EdgeInsets.all(14.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(s['item'],
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15.0,
-                              color: AppTheme.textPrimary)),
-                      Text(s['score'], style: const TextStyle(fontSize: 14.0)),
-                    ],
+            padding: const EdgeInsets.only(bottom: 16.0),
+            child: Container(
+              padding: const EdgeInsets.all(0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16.0),
+                border: Border.all(
+                  color: Colors.black.withOpacity(0.06),
+                  width: 1.0,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.02),
+                    blurRadius: 12.0,
+                    offset: const Offset(0, 4),
                   ),
-                  const SizedBox(height: 6.0),
-                  Text(s['note'],
-                      style: const TextStyle(
-                          color: AppTheme.textSecondary, fontSize: 12.5)),
                 ],
+              ),
+              child: IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Container(
+                      width: 5,
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [AppTheme.googleBlue, AppTheme.googleGreen],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    s['item'],
+                                    style: const TextStyle(
+                                      fontFamily: 'Google Sans Flex',
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 14.5,
+                                      color: AppTheme.textPrimary,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8.0, vertical: 4.0),
+                                  decoration: BoxDecoration(
+                                    color:
+                                        AppTheme.googleYellow.withOpacity(0.1),
+                                    borderRadius: BorderRadius.circular(6.0),
+                                  ),
+                                  child: Text(
+                                    s['score'],
+                                    style: const TextStyle(
+                                      fontSize: 12.0,
+                                      letterSpacing: 0.5,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 8.0),
+                            Text(
+                              s['note'],
+                              style: const TextStyle(
+                                color: AppTheme.textSecondary,
+                                fontSize: 12.5,
+                                height: 1.4,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           );
@@ -695,27 +916,75 @@ class ComparisonPage extends GetView<ComparisonController> {
             children: matrix.map((m) {
               final g = m['g'] as int;
               final r = m['r'] as int;
+              final winner =
+                  g > r ? 'getx_distil' : (r > g ? 'Riverpod' : 'Tie');
               return Padding(
-                padding: const EdgeInsets.only(bottom: 10.0),
-                child: GlassCard(
-                  padding: const EdgeInsets.all(14.0),
+                padding: const EdgeInsets.only(bottom: 14.0),
+                child: Container(
+                  padding: const EdgeInsets.all(0),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(16.0),
+                    border: Border.all(
+                      color: Colors.black.withOpacity(0.06),
+                      width: 1.0,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.02),
+                        blurRadius: 12.0,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(m['item'],
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15.0,
-                              color: AppTheme.textPrimary)),
-                      const SizedBox(height: 8.0),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          _matrixCell('getx_distil', g),
-                          const Text('vs',
-                              style: TextStyle(
-                                  color: AppTheme.textMuted, fontSize: 12)),
-                          _matrixCell('Riverpod', r),
-                        ],
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16.0, vertical: 12.0),
+                        decoration: BoxDecoration(
+                          color: AppTheme.bg,
+                          border: Border(
+                            bottom: BorderSide(
+                              color: Colors.black.withOpacity(0.04),
+                              width: 1.0,
+                            ),
+                          ),
+                        ),
+                        child: Center(
+                          child: Text(
+                            m['item'],
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              fontFamily: 'Google Sans Flex',
+                              fontWeight: FontWeight.w700,
+                              fontSize: 14.0,
+                              color: AppTheme.textPrimary,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: _matrixCellWidget(
+                                  'getx_distil', g, winner == 'getx_distil'),
+                            ),
+                            Container(
+                              height: 32,
+                              width: 1,
+                              color: Colors.black.withOpacity(0.06),
+                            ),
+                            Expanded(
+                              child: _matrixCellWidget(
+                                  'Riverpod 3.0', r, winner == 'Riverpod'),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -799,23 +1068,50 @@ class ComparisonPage extends GetView<ComparisonController> {
     );
   }
 
-  Widget _matrixCell(String label, int score) {
+  Widget _matrixCellWidget(String label, int score, bool isWinner) {
     return Column(
       children: [
-        Text(label,
-            style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 11.0,
-                color: AppTheme.textMuted)),
-        const SizedBox(height: 4.0),
-        Text('⭐' * score, style: const TextStyle(fontSize: 12.0)),
+        Text(
+          label,
+          style: TextStyle(
+            fontFamily: 'Google Sans Flex',
+            fontWeight: isWinner ? FontWeight.bold : FontWeight.w500,
+            fontSize: isWinner ? 13.5 : 11.5,
+            color: isWinner ? _getLibraryColor(label) : AppTheme.textMuted,
+          ),
+        ),
+        const SizedBox(height: 6.0),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              '⭐' * score,
+              style: const TextStyle(fontSize: 12.0),
+            ),
+          ],
+        ),
       ],
     );
   }
 
   Widget _buildSelectionGuide(Map<String, dynamic> guide, bool isMobile) {
-    return GlassCard(
-      glowColor: AppTheme.googleGreen,
+    return Container(
+      padding: const EdgeInsets.all(24.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16.0),
+        border: Border.all(
+          color: Colors.black.withOpacity(0.06),
+          width: 1.0,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.02),
+            blurRadius: 12.0,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -827,45 +1123,61 @@ class ComparisonPage extends GetView<ComparisonController> {
                   color: AppTheme.textPrimary)),
           const SizedBox(height: 24.0),
           _guideSection(guide['winnerTitle'], guide['winnerColor'] as Color,
-              (guide['winnerItems'] as List<String>)),
-          const SizedBox(height: 20.0),
+              (guide['winnerItems'] as List<String>), true),
+          const SizedBox(height: 24.0),
           _guideSection(guide['loserTitle'], guide['loserColor'] as Color,
-              (guide['loserItems'] as List<String>)),
+              (guide['loserItems'] as List<String>), false),
         ],
       ),
     );
   }
 
-  Widget _guideSection(String title, Color color, List<String> items) {
+  Widget _guideSection(
+      String title, Color color, List<String> items, bool isWinner) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            Text(title,
-                style: TextStyle(
-                    fontFamily: 'Google Sans Flex',
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w700,
-                    color: color)),
-          ],
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+          decoration: BoxDecoration(
+            color: color.withOpacity(0.08),
+            borderRadius: BorderRadius.circular(6.0),
+          ),
+          child: Text(
+            title,
+            style: TextStyle(
+              fontFamily: 'Google Sans Flex',
+              fontSize: 14.5,
+              fontWeight: FontWeight.w700,
+              color: color,
+            ),
+          ),
         ),
-        const SizedBox(height: 12.0),
+        const SizedBox(height: 14.0),
         for (final item in items)
           Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
+            padding: const EdgeInsets.only(bottom: 12.0),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Icon(Icons.circle_rounded,
-                    size: 6, color: AppTheme.textMuted),
-                const SizedBox(width: 12.0),
+                Icon(
+                  isWinner
+                      ? Icons.check_circle_outline_rounded
+                      : Icons.arrow_outward_rounded,
+                  size: 16.0,
+                  color: isWinner ? AppTheme.googleBlue : AppTheme.textMuted,
+                ),
+                const SizedBox(width: 10.0),
                 Expanded(
-                    child: Text(item,
-                        style: const TextStyle(
-                            color: AppTheme.textSecondary,
-                            fontSize: 14.0,
-                            height: 1.4))),
+                  child: Text(
+                    item,
+                    style: const TextStyle(
+                      color: AppTheme.textSecondary,
+                      fontSize: 13.5,
+                      height: 1.45,
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -925,5 +1237,17 @@ class ComparisonPage extends GetView<ComparisonController> {
         ),
       ),
     );
+  }
+
+  Color _getLibraryColor(String header) {
+    final lower = header.toLowerCase();
+    if (lower.contains('distil')) {
+      return AppTheme.googleBlue;
+    } else if (lower.contains('getx') || lower.contains('classic')) {
+      return Colors.purple;
+    } else if (lower.contains('riverpod')) {
+      return AppTheme.googleGreen;
+    }
+    return AppTheme.textMuted;
   }
 }
