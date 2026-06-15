@@ -32,6 +32,7 @@ class _AppDrawerState extends State<AppDrawer> {
     {'title': 'Background Side-Effects', 'path': 'worker'},
     {'title': 'Declarative Async Branching', 'path': 'state-mixin'},
     {'title': 'Reactive Localization', 'path': 'i18n'},
+    {'title': 'TDD & Testability', 'path': 'tdd'},
   ];
 
   static const List<Map<String, String>> _comparisonSections = [

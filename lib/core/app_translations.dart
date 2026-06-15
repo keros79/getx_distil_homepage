@@ -225,7 +225,19 @@ class AppTranslations extends Translations {
               'tr and trParams extension support: Dynamic parameter string injection directly in translations.',
           'api.meta.i18n.pt2':
               'Clean dictionary mapping: Structure locale keys inside a simple Translations subclass.',
-          'api.meta.i18n.next_title': 'Comparison Overview',
+          'api.meta.i18n.next_title': 'TDD & Testability',
+
+          // ── API Section Meta — TDD & Testability ──
+          'api.meta.tdd.title': 'TDD & Testability',
+          'api.meta.tdd.desc':
+              'getx_distil\'s BindingWidget shines when it comes to TDD (Test-Driven Development) and unit/widget testing. Since BindingWidget provides a strictly tree-scoped, isolated DI lifecycle, you can write mock-driven widget and logic tests without polluting global namespaces or worrying about test order execution.',
+          'api.meta.tdd.pt0':
+              'Zero State Pollution: Each test instantiates and disposes its own BindingWidget, ensuring no residues leak into other tests.',
+          'api.meta.tdd.pt1':
+              'No Production Code Modifications: You don\'t need to put isTesting flags or custom conditional injection logic inside your Controllers or Views. Just declare your mock bindings inside the test\'s BindingWidget.',
+          'api.meta.tdd.pt2':
+              'Declarative Overrides: Overriding real services with mock implementations is done in a clear, declarative list of bindings.',
+          'api.meta.tdd.next_title': 'Comparison Overview',
 
           // ── Comparison Page ──
           'comparison.next_section': 'Next section',
@@ -913,7 +925,19 @@ class AppTranslations extends Translations {
               'tr 및 trParams 지원: 번역 템플릿 문자열에 유동 인자를 바로 주입할 수 있어 유연합니다.',
           'api.meta.i18n.pt2':
               '깔끔한 사전식 매핑: Translations 서브클래스를 사용하여 단 하나의 파일에서 직관적으로 번역 사전을 정의합니다.',
-          'api.meta.i18n.next_title': '비교 분석 시작하기',
+          'api.meta.i18n.next_title': 'TDD & 테스트 용이성',
+
+          // ── API Section Meta — TDD & Testability ──
+          'api.meta.tdd.title': 'TDD & 테스트 용이성',
+          'api.meta.tdd.desc':
+              'getx_distil의 BindingWidget은 TDD (테스트 주도 개발) 및 단위/위젯 테스트 시 그 가치가 더욱 빛납니다. 기존의 글로벌 싱글톤 DI 시스템은 다수의 테스트 케이스를 동시에 실행할 때 상태 오염 및 테스트 간 간섭 문제를 유발하곤 했습니다. BindingWidget은 엄격하게 트리 스코프를 따르는 격리된 DI 라이프사이클을 제공하므로, 전역 네임스페이스를 더럽히거나 테스트 순서 얽힘 걱정 없이 모의 객체(Mock) 중심의 독립된 위젯 및 로직 테스트를 유연하게 작성할 수 있습니다.',
+          'api.meta.tdd.pt0':
+              '상태 오염 제로: 각 테스트가 고유의 BindingWidget을 생성하고 해제하므로 다른 테스트에 어떠한 부작용도 유출되지 않습니다.',
+          'api.meta.tdd.pt1':
+              '프로덕션 코드 수정 불필요: 컨트롤러나 뷰에 isTesting 플래그나 조건부 주입 분기문이 필요 없습니다. 테스트용 BindingWidget 내부의 bindings 목록에 모의 객체만 선언하면 됩니다.',
+          'api.meta.tdd.pt2':
+              '선언형 오버라이드: 실제 서비스를 Mock 구현체로 대체하는 작업이 선언적인 bindings 목록 정의만으로 깔끔하게 완료됩니다.',
+          'api.meta.tdd.next_title': '비교 분석 시작하기',
 
           // ── Comparison Page ──
           'comparison.next_section': '다음 섹션',

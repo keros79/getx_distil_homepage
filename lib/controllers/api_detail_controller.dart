@@ -111,9 +111,22 @@ class ApiDetailController extends GetxController
             'api.meta.i18n.pt1'.tr,
             'api.meta.i18n.pt2'.tr,
           ],
-          'next': 'comparison',
+          'next': 'tdd',
           'nextTitle': 'api.meta.i18n.next_title'.tr,
           'color': AppTheme.googleGreen,
+        },
+        'tdd': {
+          'title': 'api.meta.tdd.title'.tr,
+          'codeKey': 'tdd',
+          'description': 'api.meta.tdd.desc'.tr,
+          'points': [
+            'api.meta.tdd.pt0'.tr,
+            'api.meta.tdd.pt1'.tr,
+            'api.meta.tdd.pt2'.tr,
+          ],
+          'next': 'comparison',
+          'nextTitle': 'api.meta.tdd.next_title'.tr,
+          'color': AppTheme.googleBlue,
         },
       };
 
@@ -144,6 +157,7 @@ class ApiDetailController extends GetxController
         'state_mixin',
         'i18n',
         'rxs',
+        'tdd',
       ];
 
       for (var key in keys) {

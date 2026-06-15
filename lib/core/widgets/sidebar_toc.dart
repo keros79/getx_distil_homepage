@@ -43,6 +43,10 @@ class SidebarToc extends StatelessWidget {
       'title': '8. Reactive Localization',
       'path': 'i18n',
     },
+    {
+      'title': '9. TDD & Testability',
+      'path': 'tdd',
+    },
   ];
 
   @override
