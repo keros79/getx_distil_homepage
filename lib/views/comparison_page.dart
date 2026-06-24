@@ -9,6 +9,7 @@ import '../core/widgets/sidebar_toc_comparison.dart';
 import '../core/widgets/code_block.dart';
 import '../core/widgets/next_nav_card.dart';
 import '../core/widgets/app_drawer.dart';
+import '../core/widgets/scroll_resetter.dart';
 
 // ── Widget Class ──
 class ComparisonPage extends GetView<ComparisonController> {
@@ -30,21 +31,25 @@ class ComparisonPage extends GetView<ComparisonController> {
         children: [
           if (!isMobile) SidebarTocComparison(activePath: section),
           Expanded(
-            child: SingleChildScrollView(
-              controller: controller.scrollController,
-              padding: EdgeInsets.symmetric(
-                horizontal: isMobile ? 24.0 : 48.0,
-                vertical: 32.0,
-              ),
-              child: Center(
-                child: Container(
-                  constraints: const BoxConstraints(maxWidth: 900),
-                  child: Builder(
-                    builder: (context) {
-                      final meta = controller.sectionMeta[section] ??
-                          controller.sectionMeta['overview']!;
-                      return _buildContent(meta, isMobile, context);
-                    },
+            child: ScrollResetter(
+              param: section,
+              scrollController: controller.scrollController,
+              child: SingleChildScrollView(
+                controller: controller.scrollController,
+                padding: EdgeInsets.symmetric(
+                  horizontal: isMobile ? 24.0 : 48.0,
+                  vertical: 32.0,
+                ),
+                child: Center(
+                  child: Container(
+                    constraints: const BoxConstraints(maxWidth: 900),
+                    child: Builder(
+                      builder: (context) {
+                        final meta = controller.sectionMeta[section] ??
+                            controller.sectionMeta['overview']!;
+                        return _buildContent(meta, isMobile, context);
+                      },
+                    ),
                   ),
                 ),
               ),

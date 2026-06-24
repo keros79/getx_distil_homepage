@@ -10,6 +10,7 @@ import '../core/widgets/code_block.dart';
 import '../core/widgets/glass_card.dart';
 import '../core/widgets/next_nav_card.dart';
 import '../core/widgets/app_drawer.dart';
+import '../core/widgets/scroll_resetter.dart';
 
 class ApiDetailPage extends GetView<ApiDetailController> {
   final String section;
@@ -204,16 +205,20 @@ class ApiDetailPage extends GetView<ApiDetailController> {
 
           // Content Area
           Expanded(
-            child: SingleChildScrollView(
-              controller: controller.scrollController,
-              padding: EdgeInsets.symmetric(
-                horizontal: isMobile ? 24.0 : 48.0,
-                vertical: 32.0,
-              ),
-              child: Center(
-                child: Container(
-                  constraints: const BoxConstraints(maxWidth: 800),
-                  child: contentBody,
+            child: ScrollResetter(
+              param: section,
+              scrollController: controller.scrollController,
+              child: SingleChildScrollView(
+                controller: controller.scrollController,
+                padding: EdgeInsets.symmetric(
+                  horizontal: isMobile ? 24.0 : 48.0,
+                  vertical: 32.0,
+                ),
+                child: Center(
+                  child: Container(
+                    constraints: const BoxConstraints(maxWidth: 800),
+                    child: contentBody,
+                  ),
                 ),
               ),
             ),
