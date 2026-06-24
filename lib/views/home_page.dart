@@ -1440,7 +1440,7 @@ Obx(() => rxUser.on(
                         color: AppTheme.textMuted, fontSize: 12.0),
                   ),
                   Text(
-                    'v1.6.5+21',
+                    'v1.6.6+22',
                     style: const TextStyle(
                         color: AppTheme.textMuted, fontSize: 12.0),
                   ),
