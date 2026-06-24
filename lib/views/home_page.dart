@@ -96,8 +96,10 @@ class HomePage extends GetView<HomeController> {
 
           // Animated typing slogan
           SizedBox(
-            height: 40.0,
+            height: isMobile ? 54.0 : 64.0,
+            width: double.infinity,
             child: DefaultTextStyle(
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: 'Google Sans Flex',
                 fontSize: isMobile ? 18.0 : 22.0,
@@ -109,10 +111,20 @@ class HomePage extends GetView<HomeController> {
                 animatedTexts: [
                   TypewriterAnimatedText(
                     'home.slogan_1'.tr,
+                    textAlign: TextAlign.center,
                   ),
-                  TypewriterAnimatedText('home.slogan_2'.tr),
-                  TypewriterAnimatedText('home.slogan_3'.tr),
-                  TypewriterAnimatedText('home.slogan_4'.tr),
+                  TypewriterAnimatedText(
+                    'home.slogan_2'.tr,
+                    textAlign: TextAlign.center,
+                  ),
+                  TypewriterAnimatedText(
+                    'home.slogan_3'.tr,
+                    textAlign: TextAlign.center,
+                  ),
+                  TypewriterAnimatedText(
+                    'home.slogan_4'.tr,
+                    textAlign: TextAlign.center,
+                  ),
                 ],
               ),
             ),

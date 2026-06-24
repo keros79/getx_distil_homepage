@@ -51,7 +51,7 @@ class AppTranslations extends Translations {
           'home.hero_title_desktop':
               'Flutter State Management\nDistilled & Refined',
           'home.slogan_1': 'Same Developer Experience. Zero Overhead.',
-          'home.slogan_2': 'Tree-Scoped Lifecycle & GC.',
+          'home.slogan_2': 'Tree-Scoped Lifecycle.',
           'home.slogan_3': 'Self-Healing Post-Frame Rebuilds.',
           'home.slogan_4': 'Fast-Path Reactive Engine.',
           'home.hero_desc':
@@ -751,7 +751,7 @@ class AppTranslations extends Translations {
           'home.hero_title_mobile': 'Flutter 상태 관리',
           'home.hero_title_desktop': 'Flutter 상태 관리\n더 가볍고 정교하게',
           'home.slogan_1': '동일한 개발자 경험(DX). 제로 오버헤드.',
-          'home.slogan_2': '위젯 트리 범위의 생명주기 및 가비지 컬렉션(GC).',
+          'home.slogan_2': '위젯 트리 범위의 생명주기 및 가비지 컬렉션.',
           'home.slogan_3': '렌더링 프레임 후 자동 복구되는 리빌드.',
           'home.slogan_4': '빠른 경로(Fast-Path) 반응형 엔진.',
           'home.hero_desc':
