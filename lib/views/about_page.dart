@@ -1,21 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:getx_distil/get.dart';
-import 'package:url_launcher/url_launcher.dart';
+import '../controllers/about_controller.dart';
 
 import '../core/app_theme.dart';
 import '../core/widgets/nav_bar.dart';
 import '../core/widgets/glass_card.dart';
 import '../core/widgets/app_drawer.dart';
 
-class AboutPage extends StatelessWidget {
+class AboutPage extends GetView<AboutController> {
   const AboutPage({super.key});
-
-  static void _launchUrl(String urlString) async {
-    final Uri url = Uri.parse(urlString);
-    if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
-      throw Exception('Could not launch $url');
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -195,7 +188,7 @@ class AboutPage extends StatelessWidget {
           ),
           const SizedBox(height: 16.0),
           TextButton(
-            onPressed: () => _launchUrl('https://github.com/keros79'),
+            onPressed: () => controller.launchUrlString('https://github.com/keros79'),
             child: Text(
               'about.github_link'.tr,
               style: const TextStyle(
@@ -241,7 +234,7 @@ class AboutPage extends StatelessWidget {
           ),
           const SizedBox(height: 16.0),
           TextButton(
-            onPressed: () => _launchUrl('https://pub.dev/packages/getx_distil'),
+            onPressed: () => controller.launchUrlString('https://pub.dev/packages/getx_distil'),
             child: Text(
               'about.pub_link'.tr,
               style: const TextStyle(
