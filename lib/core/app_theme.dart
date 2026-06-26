@@ -29,7 +29,7 @@ class AppTheme {
         onSurface: textPrimary,
       ),
       fontFamily: 'Google Sans Flex',
-      fontFamilyFallback: const ['sans-serif'],
+      fontFamilyFallback: const ['NanumGothic', 'sans-serif'],
       textTheme: const TextTheme(
         displayLarge: TextStyle(color: textPrimary, fontWeight: FontWeight.w700, letterSpacing: -1.0),
         displayMedium: TextStyle(color: textPrimary, fontWeight: FontWeight.w600, letterSpacing: -0.5),
