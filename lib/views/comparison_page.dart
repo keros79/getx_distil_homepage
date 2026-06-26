@@ -505,8 +505,8 @@ class ComparisonPage extends GetView<ComparisonController> {
           ),
           const SizedBox(width: 12.0),
           Expanded(
-            child: RichText(
-              text: TextSpan(
+            child: Text.rich(
+              TextSpan(
                 style: const TextStyle(
                   fontFamily: 'Google Sans Flex',
                   fontSize: 13.5,

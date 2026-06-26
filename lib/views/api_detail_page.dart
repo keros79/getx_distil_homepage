@@ -116,8 +116,8 @@ class ApiDetailPage extends GetView<ApiDetailController> {
                   Icon(Icons.bolt_rounded, color: color, size: 20.0),
                   const SizedBox(width: 12.0),
                   Expanded(
-                    child: RichText(
-                      text: TextSpan(
+                    child: Text.rich(
+                      TextSpan(
                         style: const TextStyle(
                           color: AppTheme.textSecondary,
                           fontSize: 14.5,
