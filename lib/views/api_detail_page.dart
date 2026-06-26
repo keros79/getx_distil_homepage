@@ -195,8 +195,8 @@ class ApiDetailPage extends GetView<ApiDetailController> {
 
     return Scaffold(
       backgroundColor: AppTheme.bg,
-      endDrawer: isMobile ? const AppDrawer() : null,
-      appBar: const NavBar(),
+      endDrawer: isMobile ? AppDrawer() : null,
+      appBar: NavBar(),
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

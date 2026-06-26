@@ -17,8 +17,8 @@ class AboutPage extends GetView<AboutController> {
 
     return Scaffold(
       backgroundColor: AppTheme.bg,
-      endDrawer: isMobile ? const AppDrawer() : null,
-      appBar: const NavBar(),
+      endDrawer: isMobile ? AppDrawer() : null,
+      appBar: NavBar(),
       body: SingleChildScrollView(
         child: Column(
           children: [

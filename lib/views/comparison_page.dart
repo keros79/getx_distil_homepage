@@ -24,8 +24,8 @@ class ComparisonPage extends GetView<ComparisonController> {
 
     return Scaffold(
       backgroundColor: AppTheme.bg,
-      endDrawer: isMobile ? const AppDrawer() : null,
-      appBar: const NavBar(),
+      endDrawer: isMobile ? AppDrawer() : null,
+      appBar: NavBar(),
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

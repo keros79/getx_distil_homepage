@@ -28,8 +28,8 @@ class HomePage extends GetView<HomeController> {
 
     return Scaffold(
       backgroundColor: AppTheme.bg,
-      endDrawer: isMobile ? const AppDrawer() : null,
-      appBar: const NavBar(),
+      endDrawer: isMobile ? AppDrawer() : null,
+      appBar: NavBar(),
       body: SingleChildScrollView(
         controller: controller.scrollController,
         child: Column(
