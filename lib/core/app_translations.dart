@@ -237,7 +237,31 @@ class AppTranslations extends Translations {
               'No Production Code Modifications: You don\'t need to put isTesting flags or custom conditional injection logic inside your Controllers or Views. Just declare your mock bindings inside the test\'s BindingWidget.',
           'api.meta.tdd.pt2':
               'Declarative Overrides: Overriding real services with mock implementations is done in a clear, declarative list of bindings.',
-          'api.meta.tdd.next_title': 'Comparison Overview',
+          'api.meta.tdd.next_title': 'GoRouter & Route Guard',
+          
+          // ── API Section Meta — GoRouter & Route Guard ──
+          'api.meta.route_guard.title': 'GoRouter & Reactive Route Guard',
+          'api.meta.route_guard.desc':
+              'getx_distil is designed to work seamlessly with GoRouter, Flutter\'s standard routing package, rather than using its own routing system. Since all Rx observables in getx_distil (e.g., RxBool, Rxn, etc.) implement Flutter\'s standard ValueListenable, you can directly bind them to GoRouter\'s refreshListenable to implement reactive route guards (auth/permission middleware) declaratively.',
+          'api.meta.route_guard.pt0':
+              'Declarative Route Guard: Bind Rx variables directly to GoRouter\'s refreshListenable for automatic redirect evaluations.',
+          'api.meta.route_guard.pt1':
+              'Standard Interface Compatibility: Every Rx variable implements ValueListenable natively, reducing boilerplate.',
+          'api.meta.route_guard.pt2':
+              'Precise Lifecycle Alignment: Works perfectly with BindingWidget to clean up scoped dependencies upon unmounting.',
+          'api.meta.route_guard.next_title': 'Comparison Overview',
+
+          'api.route_guard.sub1_title': '1. Define a Global Auth Controller',
+          'api.route_guard.sub1_desc':
+              'A global controller that tracks the authentication session initialization (isInitialized) and login status (isLoggedIn).',
+          'api.route_guard.sub2_title': '2. Configure main() and GoRouter (Proper Initialization Timing)',
+          'api.route_guard.sub2_desc':
+              'If GoRouter is declared as a global or static variable, calling Get.find<AuthController>() directly inside refreshListenable may cause timing issues before the dependency is registered. To avoid this, you must call Get.put(AuthController(), permanent: true) inside main() at startup to inject the global controller, and then link it with GoRouter.',
+          'api.route_guard.sub3_title': '⚠️ Warning: Initialization Timing (Crash Example)',
+          'api.route_guard.sub3_desc':
+              'The bindings property of GetMaterialApp injects dependencies during the widget build phase. Declaring GoRouter as a global variable and calling Get.find in refreshListenable, while defining dependencies in GetMaterialApp(bindings: [...]), triggers a crash because GoRouter is evaluated before registration.',
+          'api.route_guard.warn_desc':
+              'Therefore, global core services needed by route guards at startup should be manually registered first using Get.put(..., permanent: true) inside the main() function.',
 
           // ── Comparison Page ──
           'comparison.next_section': 'Next section',
@@ -937,7 +961,31 @@ class AppTranslations extends Translations {
               '프로덕션 코드 수정 불필요: 컨트롤러나 뷰에 isTesting 플래그나 조건부 주입 분기문이 필요 없습니다. 테스트용 BindingWidget 내부의 bindings 목록에 모의 객체만 선언하면 됩니다.',
           'api.meta.tdd.pt2':
               '선언형 오버라이드: 실제 서비스를 Mock 구현체로 대체하는 작업이 선언적인 bindings 목록 정의만으로 깔끔하게 완료됩니다.',
-          'api.meta.tdd.next_title': '비교 분석 시작하기',
+          'api.meta.tdd.next_title': 'GoRouter와 반응형 라우트 가드',
+
+          // ── API Section Meta — GoRouter & Route Guard ──
+          'api.meta.route_guard.title': 'GoRouter와 반응형 라우트 가드',
+          'api.meta.route_guard.desc':
+              'getx_distil은 자체적인 라우팅 시스템 대신 Flutter 표준 라우터 패키지인 GoRouter와의 완벽한 연동을 지향합니다. getx_distil의 모든 Rx 변수(예: RxBool, Rxn 등)는 Flutter의 표준 ValueListenable을 구현하고 있으므로, GoRouter의 refreshListenable에 직접 바인딩하여 반응형 라우트 가드(인증 및 권한 미들웨어)를 매우 선언적으로 구현할 수 있습니다.',
+          'api.meta.route_guard.pt0':
+              '선언형 라우트 가드: Rx 변수들을 GoRouter의 refreshListenable에 바인딩하여 데이터가 바뀔 때 자동으로 리다이렉션을 실행합니다.',
+          'api.meta.route_guard.pt1':
+              '표준 인터페이스 호환: 모든 Rx 변수가 ValueListenable을 직접 구현하므로, 추가적인 보일러플레이트 코드 없이 직접 연동이 가능합니다.',
+          'api.meta.route_guard.pt2':
+              '정밀한 생명주기 조화: BindingWidget과 완벽하게 조화되어 화면 이탈 시 해당 스코프의 리소스를 깨끗이 가비지 컬렉션합니다.',
+          'api.meta.route_guard.next_title': '비교 분석 시작하기',
+
+          'api.route_guard.sub1_title': '1. 전역 인증 컨트롤러 정의',
+          'api.route_guard.sub1_desc':
+              '인증 세션 체크 여부(isInitialized)와 로그인 여부(isLoggedIn)를 추적하는 전역 컨트롤러입니다.',
+          'api.route_guard.sub2_title': '2. main() 및 GoRouter 설정 (올바른 초기화 타이밍)',
+          'api.route_guard.sub2_desc':
+              'GoRouter를 파일 최상단 전역 변수나 클래스 static 변수로 선언하고 refreshListenable에서 Get.find<AuthController>()를 바로 호출하는 경우, 의존성 등록 시점과의 타이밍 이슈가 생길 수 있습니다. 이를 방지하기 위해 앱 구동 시작점인 main()에서 Get.put(AuthController(), permanent: true)을 호출하여 최우선적으로 전역 주입한 뒤, GoRouter를 연동해야 합니다.',
+          'api.route_guard.sub3_title': '⚠️ 초기화 타이밍 주의 (크래시가 발생하는 예시)',
+          'api.route_guard.sub3_desc':
+              'GetMaterialApp의 bindings 프로퍼티는 위젯이 빌드되는 단계에서 의존성을 주입합니다. 전역 변수로 GoRouter를 선언하고 refreshListenable에서 Get.find...을 수행하면서, GetMaterialApp(bindings: [...])에 의존성을 정의하면 의존성 등록 전에 GoRouter가 평가(Evaluation)되면서 탐색 실패 크래시가 발생합니다.',
+          'api.route_guard.warn_desc':
+              '따라서 인증 컨트롤러처럼 라우트 가드에 연동되어 앱 최극초기 구동 시점에 조회되어야 하는 글로벌 핵심 서비스는 main() 함수 내에서 Get.put(..., permanent: true)을 호출해 가장 먼저 수동 등록하는 것이 좋습니다.',
 
           // ── Comparison Page ──
           'comparison.next_section': '다음 섹션',

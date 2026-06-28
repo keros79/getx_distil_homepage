@@ -1,0 +1,16 @@
+class AuthController extends GetxController {
+  final isLoggedIn = false.obs;
+  final isInitialized = false.obs; // Whether the authentication check is completed
+
+  @override
+  void onInit() {
+    super.onInit();
+    checkAuthSession(); // Start asynchronous session check in background (does not block app initialization)
+  }
+
+  Future<void> checkAuthSession() async {
+    await Future.delayed(const Duration(seconds: 1)); // Simulate local storage token check
+    isLoggedIn.value = true; // Set value based on session existence
+    isInitialized.value = true; // Enable the check completed flag
+  }
+}

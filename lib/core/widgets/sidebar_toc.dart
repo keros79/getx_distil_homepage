@@ -47,6 +47,10 @@ class SidebarToc extends StatelessWidget {
       'title': '9. TDD & Testability',
       'path': 'tdd',
     },
+    {
+      'title': '10. GoRouter & Route Guard',
+      'path': 'route-guard',
+    },
   ];
 
   @override

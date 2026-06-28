@@ -144,36 +144,103 @@ class ApiDetailPage extends GetView<ApiDetailController> {
         ),
         const SizedBox(height: 32.0),
 
-        // Live Demo Code
-        Text(
-          'api.impl_example'.tr,
-          style: TextStyle(
-            fontFamily: 'Google Sans Flex',
-            fontSize: 12.0,
-            color: AppTheme.textMuted,
-            fontWeight: FontWeight.bold,
-            letterSpacing: 1.5,
-          ),
-        ),
-        const SizedBox(height: 16.0),
-        controller.obx(
-          (state) => CodeBlock(
-            code: state?[codeKey] ?? '// Failed loading code sample.',
-            language: 'dart',
-          ),
-          onLoading: const GlassCard(
-            child: Center(
-              child: Padding(
-                padding: EdgeInsets.all(24.0),
-                child: CircularProgressIndicator(color: AppTheme.googleBlue),
-              ),
+        if (section == 'route-guard') ...[
+          // Subsection 1: AuthController
+          _buildSubsectionTitle('api.route_guard.sub1_title'.tr),
+          Text(
+            'api.route_guard.sub1_desc'.tr,
+            style: const TextStyle(
+              color: AppTheme.textSecondary,
+              fontSize: 14.5,
+              height: 1.5,
             ),
           ),
-          onError: (error) => Text(
-            'Error loading code sample: $error',
-            style: const TextStyle(color: AppTheme.googleRed),
+          const SizedBox(height: 12.0),
+          controller.obx(
+            (state) => CodeBlock(
+              code: state?['route_guard_auth_controller'] ?? '// Failed loading code sample.',
+              language: 'dart',
+            ),
           ),
-        ),
+          const SizedBox(height: 32.0),
+
+          // Subsection 2: Setup
+          _buildSubsectionTitle('api.route_guard.sub2_title'.tr),
+          Text(
+            'api.route_guard.sub2_desc'.tr,
+            style: const TextStyle(
+              color: AppTheme.textSecondary,
+              fontSize: 14.5,
+              height: 1.5,
+            ),
+          ),
+          const SizedBox(height: 12.0),
+          controller.obx(
+            (state) => CodeBlock(
+              code: state?['route_guard_setup'] ?? '// Failed loading code sample.',
+              language: 'dart',
+            ),
+          ),
+          const SizedBox(height: 32.0),
+
+          // Subsection 3: Warning (Bad Example)
+          _buildSubsectionTitle('api.route_guard.sub3_title'.tr),
+          Text(
+            'api.route_guard.sub3_desc'.tr,
+            style: const TextStyle(
+              color: AppTheme.textSecondary,
+              fontSize: 14.5,
+              height: 1.5,
+            ),
+          ),
+          const SizedBox(height: 12.0),
+          controller.obx(
+            (state) => CodeBlock(
+              code: state?['route_guard_bad_example'] ?? '// Failed loading code sample.',
+              language: 'dart',
+            ),
+          ),
+          const SizedBox(height: 12.0),
+          Text(
+            'api.route_guard.warn_desc'.tr,
+            style: const TextStyle(
+              color: AppTheme.textSecondary,
+              fontSize: 14.5,
+              height: 1.5,
+            ),
+          ),
+        ] else ...[
+          // Live Demo Code
+          Text(
+            'api.impl_example'.tr,
+            style: TextStyle(
+              fontFamily: 'Google Sans Flex',
+              fontSize: 12.0,
+              color: AppTheme.textMuted,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 1.5,
+            ),
+          ),
+          const SizedBox(height: 16.0),
+          controller.obx(
+            (state) => CodeBlock(
+              code: state?[codeKey] ?? '// Failed loading code sample.',
+              language: 'dart',
+            ),
+            onLoading: const GlassCard(
+              child: Center(
+                child: Padding(
+                  padding: EdgeInsets.all(24.0),
+                  child: CircularProgressIndicator(color: AppTheme.googleBlue),
+                ),
+              ),
+            ),
+            onError: (error) => Text(
+              'Error loading code sample: $error',
+              style: const TextStyle(color: AppTheme.googleRed),
+            ),
+          ),
+        ],
         const SizedBox(height: 48.0),
 
         // Next Card
@@ -225,6 +292,24 @@ class ApiDetailPage extends GetView<ApiDetailController> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildSubsectionTitle(String title) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: const TextStyle(
+            fontFamily: 'Google Sans Flex',
+            fontSize: 16.0,
+            fontWeight: FontWeight.bold,
+            color: AppTheme.textPrimary,
+          ),
+        ),
+        const SizedBox(height: 8.0),
+      ],
     );
   }
 }

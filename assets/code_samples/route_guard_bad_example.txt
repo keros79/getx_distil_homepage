@@ -1,0 +1,22 @@
+// ❌ Bad example: GoRouter attempts to Get.find before dependency is injected, triggering a crash
+final GoRouter router = GoRouter(
+  initialLocation: '/',
+  refreshListenable: Listenable.merge([
+    Get.find<AuthController>().isLoggedIn, // 🚨 Error occurs here (Not registered yet!)
+  ]),
+  routes: [...],
+);
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GetMaterialApp(
+      routerConfig: router, // Refers to the global router variable when building GetMaterialApp
+      bindings: [
+        Bind<AuthController>(() => AuthController()), // ◀ Not registered yet because it hasn't built!
+      ],
+    );
+  }
+}

@@ -1,0 +1,59 @@
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  // Register AuthController immediately at app startup (onInit asynchronous check starts in background)
+  Get.put(AuthController(), permanent: true);
+  
+  runApp(const MyApp());
+}
+
+// GoRouter definition
+final auth = Get.find<AuthController>();
+
+final goRouter = GoRouter(
+  initialLocation: '/splash',
+  // Reactive binding: GoRouter automatically re-invokes redirect() whenever the Rx values below change.
+  refreshListenable: Listenable.merge([
+    auth.isLoggedIn,
+    auth.isInitialized,
+  ]),
+  redirect: (context, state) {
+    // 1. If authentication data loading is not yet completed, maintain the splash screen
+    if (!auth.isInitialized.value) {
+      return '/splash';
+    }
+
+    final loggedIn = auth.isLoggedIn.value;
+    final isGoingToLogin = state.matchedLocation == '/login';
+    final isGoingToSplash = state.matchedLocation == '/splash';
+
+    // Not logged in -> Force navigation to the login page
+    if (!loggedIn) {
+      return '/login';
+    }
+
+    // Logged in but staying on splash or login page -> Navigate to home
+    if (loggedIn && (isGoingToLogin || isGoingToSplash)) {
+      return '/';
+    }
+
+    return null; // Do not redirect (navigate to destination)
+  },
+  routes: [
+    GoRoute(
+      path: '/splash',
+      builder: (context, state) => const SplashScreen(), // Splash widget displaying a loading spinner etc.
+    ),
+    GoRoute(
+      path: '/login',
+      builder: (context, state) => const LoginPage(),
+    ),
+    GoRoute(
+      path: '/',
+      builder: (context, state) => const BindingWidget(
+        bindings: [Bind(HomeController.new)],
+        child: HomePage(),
+      ),
+    ),
+  ],
+);

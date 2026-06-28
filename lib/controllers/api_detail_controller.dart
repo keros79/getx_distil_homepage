@@ -124,9 +124,22 @@ class ApiDetailController extends GetxController
             'api.meta.tdd.pt1'.tr,
             'api.meta.tdd.pt2'.tr,
           ],
-          'next': 'comparison',
-          'nextTitle': 'api.meta.tdd.next_title'.tr,
+          'next': 'route-guard',
+          'nextTitle': 'api.meta.route_guard.title'.tr,
           'color': AppTheme.googleBlue,
+        },
+        'route-guard': {
+          'title': 'api.meta.route_guard.title'.tr,
+          'codeKey': 'route_guard',
+          'description': 'api.meta.route_guard.desc'.tr,
+          'points': [
+            'api.meta.route_guard.pt0'.tr,
+            'api.meta.route_guard.pt1'.tr,
+            'api.meta.route_guard.pt2'.tr,
+          ],
+          'next': 'comparison',
+          'nextTitle': 'api.meta.route_guard.next_title'.tr,
+          'color': AppTheme.googleGreen,
         },
       };
 
@@ -158,6 +171,9 @@ class ApiDetailController extends GetxController
         'i18n',
         'rxs',
         'tdd',
+        'route_guard_auth_controller',
+        'route_guard_setup',
+        'route_guard_bad_example',
       ];
 
       for (var key in keys) {
