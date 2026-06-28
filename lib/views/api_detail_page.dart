@@ -22,7 +22,8 @@ class ApiDetailPage extends GetView<ApiDetailController> {
     final double screenWidth = MediaQuery.of(context).size.width;
     final bool isMobile = screenWidth < 800;
 
-    final meta = controller.sectionMeta[section] ?? controller.sectionMeta['reactive-state']!;
+    final meta = controller.sectionMeta[section] ??
+        controller.sectionMeta['reactive-state']!;
     final String title = meta['title'] as String;
     final String codeKey = meta['codeKey'] as String;
     final String description = meta['description'] as String;
@@ -158,7 +159,8 @@ class ApiDetailPage extends GetView<ApiDetailController> {
           const SizedBox(height: 12.0),
           controller.obx(
             (state) => CodeBlock(
-              code: state?['route_guard_auth_controller'] ?? '// Failed loading code sample.',
+              code: state?['route_guard_auth_controller'] ??
+                  '// Failed loading code sample.',
               language: 'dart',
             ),
           ),
@@ -177,7 +179,8 @@ class ApiDetailPage extends GetView<ApiDetailController> {
           const SizedBox(height: 12.0),
           controller.obx(
             (state) => CodeBlock(
-              code: state?['route_guard_setup'] ?? '// Failed loading code sample.',
+              code: state?['route_guard_setup'] ??
+                  '// Failed loading code sample.',
               language: 'dart',
             ),
           ),
@@ -196,7 +199,8 @@ class ApiDetailPage extends GetView<ApiDetailController> {
           const SizedBox(height: 12.0),
           controller.obx(
             (state) => CodeBlock(
-              code: state?['route_guard_bad_example'] ?? '// Failed loading code sample.',
+              code: state?['route_guard_bad_example'] ??
+                  '// Failed loading code sample.',
               language: 'dart',
             ),
           ),
@@ -246,7 +250,7 @@ class ApiDetailPage extends GetView<ApiDetailController> {
         // Next Card
         NextNavCard(
           label: 'api.next_up'.tr,
-          title: '${'api.next_explore'.tr} $nextTitle',
+          title: nextTitle,
           glowColor: color,
           onTap: () {
             if (nextSection == 'comparison') {

@@ -1194,7 +1194,7 @@ class ComparisonPage extends GetView<ComparisonController> {
       String label, String targetSection, bool isMobile, BuildContext context) {
     return NextNavCard(
       label: 'comparison.next_section'.tr,
-      title: '${'comparison.explore'.tr} $label',
+      title: label,
       glowColor: AppTheme.googleBlue,
       onTap: () => context.go('/comparison/$targetSection'),
     );

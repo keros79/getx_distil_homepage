@@ -125,7 +125,6 @@ class AppTranslations extends Translations {
           'api.key_enhancements': 'KEY ENHANCEMENTS',
           'api.impl_example': 'IMPLEMENTATION EXAMPLE',
           'api.next_up': 'Next up',
-          'api.next_explore': 'Explore',
 
           // ── API Section Meta — Reactive State ──
           'api.meta.reactive_state.title': 'Reactive State (Rx & Obx)',
@@ -238,7 +237,7 @@ class AppTranslations extends Translations {
           'api.meta.tdd.pt2':
               'Declarative Overrides: Overriding real services with mock implementations is done in a clear, declarative list of bindings.',
           'api.meta.tdd.next_title': 'GoRouter & Route Guard',
-          
+
           // ── API Section Meta — GoRouter & Route Guard ──
           'api.meta.route_guard.title': 'GoRouter & Reactive Route Guard',
           'api.meta.route_guard.desc':
@@ -254,10 +253,12 @@ class AppTranslations extends Translations {
           'api.route_guard.sub1_title': '1. Define a Global Auth Controller',
           'api.route_guard.sub1_desc':
               'A global controller that tracks the authentication session initialization (isInitialized) and login status (isLoggedIn).',
-          'api.route_guard.sub2_title': '2. Configure main() and GoRouter (Proper Initialization Timing)',
+          'api.route_guard.sub2_title':
+              '2. Configure main() and GoRouter (Proper Initialization Timing)',
           'api.route_guard.sub2_desc':
               'If GoRouter is declared as a global or static variable, calling Get.find<AuthController>() directly inside refreshListenable may cause timing issues before the dependency is registered. To avoid this, you must call Get.put(AuthController(), permanent: true) inside main() at startup to inject the global controller, and then link it with GoRouter.',
-          'api.route_guard.sub3_title': '⚠️ Warning: Initialization Timing (Crash Example)',
+          'api.route_guard.sub3_title':
+              '⚠️ Warning: Initialization Timing (Crash Example)',
           'api.route_guard.sub3_desc':
               'The bindings property of GetMaterialApp injects dependencies during the widget build phase. Declaring GoRouter as a global variable and calling Get.find in refreshListenable, while defining dependencies in GetMaterialApp(bindings: [...]), triggers a crash because GoRouter is evaluated before registration.',
           'api.route_guard.warn_desc':
@@ -265,7 +266,6 @@ class AppTranslations extends Translations {
 
           // ── Comparison Page ──
           'comparison.next_section': 'Next section',
-          'comparison.explore': 'Explore',
           'comparison.selection_guide': '5.10 Selection Guide',
 
           // ── Comparison — Overview ──
@@ -849,7 +849,6 @@ class AppTranslations extends Translations {
           'api.key_enhancements': '주요 개선 사항',
           'api.impl_example': '구현 예시',
           'api.next_up': '다음 주제',
-          'api.next_explore': '자세히 보기:',
 
           // ── API Section Meta — Reactive State ──
           'api.meta.reactive_state.title': '반응형 상태 (Rx 및 Obx)',
@@ -989,7 +988,6 @@ class AppTranslations extends Translations {
 
           // ── Comparison Page ──
           'comparison.next_section': '다음 섹션',
-          'comparison.explore': '자세히 보기:',
           'comparison.selection_guide': '5.10 프레임워크 선택 가이드',
 
           // ── Comparison — Overview ──
