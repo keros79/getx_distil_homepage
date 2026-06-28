@@ -65,7 +65,7 @@ class HomePage extends GetView<HomeController> {
   // Hero Section
   Widget _buildHero(BuildContext context, bool isMobile) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+      padding: const EdgeInsets.fromLTRB(24.0, 100.0, 24.0, 40.0),
       width: 1100,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
