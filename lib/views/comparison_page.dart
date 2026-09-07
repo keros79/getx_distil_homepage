@@ -42,7 +42,7 @@ class ComparisonPage extends GetView<ComparisonController> {
                 ),
                 child: Center(
                   child: Container(
-                    constraints: const BoxConstraints(maxWidth: 900),
+                    constraints: const BoxConstraints(maxWidth: 1100),
                     child: Builder(
                       builder: (context) {
                         final meta = controller.sectionMeta[section] ??
@@ -694,65 +694,75 @@ class ComparisonPage extends GetView<ComparisonController> {
       );
     }
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: ConstrainedBox(
-            constraints: BoxConstraints(minWidth: constraints.maxWidth),
-            child: Container(
-              decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.5),
-                  borderRadius: BorderRadius.circular(12.0),
-                  border: Border.all(color: Colors.black.withOpacity(0.06))),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(12.0),
-                child: DataTable(
-                  headingRowColor: WidgetStateProperty.all(
-                      AppTheme.googleBlue.withOpacity(0.04)),
-                  border: TableBorder(
-                    horizontalInside: BorderSide(
-                        color: Colors.black.withOpacity(0.03), width: 0.3),
-                    verticalInside: BorderSide(
-                        color: Colors.black.withOpacity(0.03), width: 0.3),
-                  ),
-                  columnSpacing: 24.0,
-                  columns: headers
-                      .map((h) => DataColumn(
-                          label: Text(h,
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 13.0,
-                                  color: AppTheme.textPrimary))))
-                      .toList(),
-                  rows: rows.map((row) {
-                    return DataRow(
-                      cells: row.asMap().entries.map((entry) {
-                        final cell = entry.value;
-                        final isLastColumn = entry.key == row.length - 1;
-                        return DataCell(
-                          ConstrainedBox(
-                            constraints: BoxConstraints(
-                              maxWidth: isLastColumn ? 220 : double.infinity,
-                            ),
-                            child: cell is Widget
-                                ? cell
-                                : Text('$cell',
-                                    softWrap: true,
-                                    style: const TextStyle(
-                                        fontSize: 13.0,
-                                        color: AppTheme.textSecondary)),
-                          ),
-                        );
-                      }).toList(),
-                    );
-                  }).toList(),
-                ),
-              ),
-            ),
-          ),
+    return _buildEqualTable(
+      headerCells: headers.map(_tableHeaderText).toList(),
+      rows: rows.map((row) {
+        return row.map<Widget>((cell) {
+          return cell is Widget
+              ? cell
+              : Text('$cell',
+                  softWrap: true,
+                  style: const TextStyle(
+                      fontSize: 13.0,
+                      height: 1.45,
+                      color: AppTheme.textSecondary));
+        }).toList();
+      }).toList(),
+    );
+  }
+
+  // ── Shared desktop table: every column gets the same width (1:1:…) and the
+  // table always fills the available width, so text wraps instead of clipping.
+  Widget _tableHeaderText(String text) => Text(text,
+      style: const TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 13.0,
+          color: AppTheme.textPrimary));
+
+  Widget _buildEqualTable({
+    required List<Widget> headerCells,
+    required List<List<Widget>> rows,
+  }) {
+    final int columnCount = headerCells.length;
+    Widget pad(Widget child) => Padding(
+          padding:
+              const EdgeInsets.symmetric(horizontal: 16.0, vertical: 14.0),
+          child: child,
         );
-      },
+    List<Widget> normalize(List<Widget> cells) => [
+          for (int i = 0; i < columnCount; i++)
+            pad(i < cells.length ? cells[i] : const SizedBox.shrink()),
+        ];
+
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.5),
+          borderRadius: BorderRadius.circular(12.0),
+          border: Border.all(color: Colors.black.withOpacity(0.06))),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(12.0),
+        child: Table(
+          columnWidths: {
+            for (int i = 0; i < columnCount; i++) i: const FlexColumnWidth(1),
+          },
+          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+          border: TableBorder(
+            horizontalInside:
+                BorderSide(color: Colors.black.withOpacity(0.05), width: 0.5),
+            verticalInside:
+                BorderSide(color: Colors.black.withOpacity(0.04), width: 0.5),
+          ),
+          children: [
+            TableRow(
+              decoration:
+                  BoxDecoration(color: AppTheme.googleBlue.withOpacity(0.04)),
+              children: normalize(headerCells),
+            ),
+            for (final row in rows) TableRow(children: normalize(row)),
+          ],
+        ),
+      ),
     );
   }
 
@@ -854,54 +864,17 @@ class ComparisonPage extends GetView<ComparisonController> {
       );
     }
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: ConstrainedBox(
-            constraints: BoxConstraints(minWidth: constraints.maxWidth),
-            child: Container(
-              decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.5),
-                  borderRadius: BorderRadius.circular(12.0),
-                  border: Border.all(color: Colors.black.withOpacity(0.06))),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(12.0),
-                child: DataTable(
-                  headingRowColor: WidgetStateProperty.all(
-                      AppTheme.googleBlue.withOpacity(0.04)),
-                  border: TableBorder(
-                      horizontalInside: BorderSide(
-                          color: Colors.black.withOpacity(0.03), width: 0.3)),
-                  columnSpacing: 32.0,
-                  columns: const [
-                    DataColumn(
-                        label: Text('Category',
-                            style: TextStyle(fontWeight: FontWeight.bold))),
-                    DataColumn(
-                        label: Text('Score',
-                            style: TextStyle(fontWeight: FontWeight.bold))),
-                    DataColumn(
-                        label: Text('Note',
-                            style: TextStyle(fontWeight: FontWeight.bold))),
-                  ],
-                  rows: scores.map((s) {
-                    return DataRow(cells: [
-                      DataCell(Text(s['item'],
-                          style: const TextStyle(fontSize: 13.0))),
-                      DataCell(Text(s['score'],
-                          style: const TextStyle(fontSize: 13.0))),
-                      DataCell(Text(s['note'],
-                          style: const TextStyle(
-                              fontSize: 13.0, color: AppTheme.textMuted))),
-                    ]);
-                  }).toList(),
-                ),
-              ),
-            ),
-          ),
-        );
-      },
+    return _buildEqualTable(
+      headerCells: ['Category', 'Score', 'Note'].map(_tableHeaderText).toList(),
+      rows: scores.map<List<Widget>>((s) {
+        return [
+          Text(s['item'], style: const TextStyle(fontSize: 13.0, height: 1.45)),
+          Text(s['score'], style: const TextStyle(fontSize: 13.0)),
+          Text(s['note'],
+              style: const TextStyle(
+                  fontSize: 13.0, height: 1.45, color: AppTheme.textMuted)),
+        ];
+      }).toList(),
     );
   }
 
@@ -998,76 +971,31 @@ class ComparisonPage extends GetView<ComparisonController> {
             }).toList(),
           )
         else
-          LayoutBuilder(
-            builder: (context, constraints) {
-              return SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(minWidth: constraints.maxWidth),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.5),
-                        borderRadius: BorderRadius.circular(12.0),
-                        border:
-                            Border.all(color: Colors.black.withOpacity(0.06))),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(12.0),
-                      child: DataTable(
-                        headingRowColor: WidgetStateProperty.all(
-                            AppTheme.googleBlue.withOpacity(0.04)),
-                        border: TableBorder(
-                            horizontalInside: BorderSide(
-                                color: Colors.black.withOpacity(0.03),
-                                width: 0.3)),
-                        columnSpacing: 32.0,
-                        columns: const [
-                          DataColumn(
-                              label: Text('Category',
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.bold))),
-                          DataColumn(
-                              label: Text('getx_distil',
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.bold))),
-                          DataColumn(
-                              label: Text('Riverpod 3.x',
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.bold))),
-                          DataColumn(
-                              label: Text('Winner',
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.bold))),
-                        ],
-                        rows: matrix.map((m) {
-                          final g = m['g'] as int;
-                          final r = m['r'] as int;
-                          final winner = g > r
-                              ? 'getx_distil'
-                              : (r > g ? 'Riverpod' : 'Tie');
-                          return DataRow(cells: [
-                            DataCell(Text(m['item'],
-                                style: const TextStyle(fontSize: 13.0))),
-                            DataCell(Text('⭐' * g,
-                                style: const TextStyle(fontSize: 13.0))),
-                            DataCell(Text('⭐' * r,
-                                style: const TextStyle(fontSize: 13.0))),
-                            DataCell(Text(winner,
-                                style: TextStyle(
-                                    fontSize: 12.0,
-                                    fontWeight: FontWeight.bold,
-                                    color: winner == 'getx_distil'
-                                        ? AppTheme.googleBlue
-                                        : (winner == 'Riverpod'
-                                            ? AppTheme.googleGreen
-                                            : AppTheme.textMuted)))),
-                          ]);
-                        }).toList(),
-                      ),
-                    ),
-                  ),
-                ),
-              );
-            },
+          _buildEqualTable(
+            headerCells: ['Category', 'getx_distil', 'Riverpod 3.x', 'Winner']
+                .map(_tableHeaderText)
+                .toList(),
+            rows: matrix.map<List<Widget>>((m) {
+              final g = m['g'] as int;
+              final r = m['r'] as int;
+              final winner =
+                  g > r ? 'getx_distil' : (r > g ? 'Riverpod' : 'Tie');
+              return [
+                Text(m['item'],
+                    style: const TextStyle(fontSize: 13.0, height: 1.45)),
+                Text('⭐' * g, style: const TextStyle(fontSize: 13.0)),
+                Text('⭐' * r, style: const TextStyle(fontSize: 13.0)),
+                Text(winner,
+                    style: TextStyle(
+                        fontSize: 12.0,
+                        fontWeight: FontWeight.bold,
+                        color: winner == 'getx_distil'
+                            ? AppTheme.googleBlue
+                            : (winner == 'Riverpod'
+                                ? AppTheme.googleGreen
+                                : AppTheme.textMuted))),
+              ];
+            }).toList(),
           ),
       ],
     );
