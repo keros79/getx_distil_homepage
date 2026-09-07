@@ -40,7 +40,7 @@ class _AppDrawerState extends State<AppDrawer> {
     {'title': '2. Key Improvements', 'path': 'improvements'},
     {'title': '3. Features Sacrificed', 'path': 'sacrificed'},
     {'title': '4. Code Quality Assessment', 'path': 'quality'},
-    {'title': '5. vs Riverpod 3.0', 'path': 'riverpod'},
+    {'title': '5. vs Riverpod 3.x', 'path': 'riverpod'},
     {'title': '6. Conclusion', 'path': 'conclusion'},
   ];
 

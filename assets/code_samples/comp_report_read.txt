@@ -1,6 +1,15 @@
-// getx_distil - reportRead()
+// GetX 4.7.3 — static nullable proxy (NOT Zone-based)
+T get value {
+  RxInterface.proxy?.addListener(subject);  // one static null-check
+  return _value;
+}
+
+// getx_distil 1.3.2 — static bool gate
 void reportRead() {
-  if (Notifier.isTracking) {  // ← simple bool check
+  if (Notifier.isTracking) {                // one static bool-check
     Notifier.instance.read(this);
   }
 }
+// Outside Obx both cost ~the same. The real saving: getx_distil
+// keeps a plain callback list and creates its StreamController
+// lazily; GetX allocates a GetStream for every Rx up front.

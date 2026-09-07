@@ -276,16 +276,21 @@ class AppTranslations extends Translations {
           'cmp.ov.r_version': 'Version',
           'cmp.ov.r_deps': 'External Dependencies',
           'cmp.ov.r_deps_distil': '0 (Flutter SDK only)',
-          'cmp.ov.r_deps_getx': 'Dozens (collection, web, js, etc.)',
+          'cmp.ov.r_deps_getx': '1 (web)',
           'cmp.ov.r_files': 'Source Files',
-          'cmp.ov.r_logic': 'Core Logic',
+          'cmp.ov.r_logic': 'Lines of Code (total / excl. blank & comments)',
+          'cmp.ov.r_tests': 'Test Code',
+          'cmp.ov.r_tests_getx': 'Not shipped in the pub package',
+          'cmp.ov.r_collections': 'Reactive Collections',
+          'cmp.ov.r_collections_distil': 'RxList only (microtask-batched)',
+          'cmp.ov.r_collections_getx': 'RxList / RxMap / RxSet',
           'cmp.ov.r_routing': 'Routing',
           'cmp.ov.r_routing_getx': '✅ Built-in (GetPageRoute, etc.)',
           'cmp.ov.r_i18n': 'Internationalization',
           'cmp.ov.r_i18n_distil': '✅ Kept (simplified)',
           'cmp.ov.r_i18n_getx': '✅ Kept',
           'cmp.ov.r_state': 'State Management',
-          'cmp.ov.r_state_distil': '✅ Core enhanced',
+          'cmp.ov.r_state_distil': '✅ Core enhanced (RxS / RxSList / batching)',
           'cmp.ov.r_state_getx': '✅ Basic',
           'cmp.ov.r_di': 'DI',
           'cmp.ov.r_di_distil': '✅ Hybrid (tree+global)',
@@ -297,46 +302,49 @@ class AppTranslations extends Translations {
           'cmp.imp.next_title': '3. Features Sacrificed vs GetX',
           // Item 2.1
           'cmp.imp.i1.title': 'Fast-Path Tracking (Notifier.isTracking)',
-          'cmp.imp.i1.subtitle': 'Most important performance improvement',
+          'cmp.imp.i1.subtitle': 'Cleaner tracking gate — smaller gain vs GetX 4.x than often claimed',
           'cmp.imp.i1.h0': 'Category',
           'cmp.imp.i1.r0c0': 'Approach',
-          'cmp.imp.i1.r0c1': 'Zone-based global proxy (RxInterface.proxy)',
+          'cmp.imp.i1.r0c1': 'Static nullable proxy (RxInterface.proxy?.addListener) — not Zone-based',
           'cmp.imp.i1.r0c2': 'Static boolean flag (Notifier.isTracking)',
           'cmp.imp.i1.r1c0': 'Rx reads outside Obx',
-          'cmp.imp.i1.r1c1': 'Proxy lookup + null check every time',
-          'cmp.imp.i1.r1c2': 'Bypassed entirely (O(1) bool check)',
-          'cmp.imp.i1.r2c0': 'Large data iteration',
-          'cmp.imp.i1.r2c1': 'CPU overhead accumulates',
-          'cmp.imp.i1.r2c2': 'Zero-cost',
+          'cmp.imp.i1.r1c1': 'One static null check (already O(1))',
+          'cmp.imp.i1.r1c2': 'One static bool check (equivalent cost)',
+          'cmp.imp.i1.r2c0': 'Per-Rx notification channel',
+          'cmp.imp.i1.r2c1': 'GetStream allocated eagerly for every Rx',
+          'cmp.imp.i1.r2c2': 'Plain callback list; StreamController created lazily only when a Worker subscribes',
           'cmp.imp.i1.eval':
-              'Dramatically lighter than the Zone-based approach, with substantial CPU cycle savings during large data operations. Excellent design.',
+              'Correction: earlier revisions of this page called GetX "Zone-based". GetX 4.x has used a static proxy since 4.0, so an Rx read outside Obx costs about the same in both libraries. The verifiable saving is structural — getx_distil skips the per-Rx GetStream allocation and subscription plumbing. Clean design, but not a dramatic CPU win.',
           // Item 2.2
           'cmp.imp.i2.title': 'Self-Healing Build-Phase Updates',
           'cmp.imp.i2.subtitle': 'Prevents crashes during build/layout phase',
           'cmp.imp.i2.h0': 'Category',
           'cmp.imp.i2.r0c0': 'State change during build',
-          'cmp.imp.i2.r0c1': 'setState() during build crash',
-          'cmp.imp.i2.r0c2': 'Safely deferred via PostFrameCallback',
+          'cmp.imp.i2.r0c1': 'Debug assertion: setState() or markNeedsBuild() called during build',
+          'cmp.imp.i2.r0c2': 'Deferred via PostFrameCallback (renders one frame later)',
           'cmp.imp.i2.r1c0': 'Detection method',
           'cmp.imp.i2.r1c1': 'None',
           'cmp.imp.i2.r1c2': 'SchedulerBinding.instance.schedulerPhase check',
           'cmp.imp.i2.eval':
-              'Prevents crashes that frequently occur in production. Very high practical value.',
+              'Removes the red-screen assertion in debug mode and makes an otherwise fragile pattern safe. To be precise: release builds do not crash on this in Flutter — the update is simply applied — and the deferral costs one frame of latency. A useful safety net, not a free lunch.',
           // Item 2.3
           'cmp.imp.i3.title': 'RxList Microtask Batching',
           'cmp.imp.i3.subtitle': 'Key performance differentiator',
           'cmp.imp.i3.h0': 'Category',
           'cmp.imp.i3.r0c0': '100 add() calls',
-          'cmp.imp.i3.r0c1': '100 rebuilds',
-          'cmp.imp.i3.r0c2': '1 rebuild',
+          'cmp.imp.i3.r0c1': '100 notifications (100 setState calls; Flutter still builds once per frame)',
+          'cmp.imp.i3.r0c2': '1 notification → 1 build',
           'cmp.imp.i3.r1c0': 'Approach',
           'cmp.imp.i3.r1c1': 'Immediate refresh() on each mutation',
           'cmp.imp.i3.r1c2': 'Dirty-Flag + Microtask pipeline',
           'cmp.imp.i3.r2c0': 'sort() / shuffle()',
-          'cmp.imp.i3.r2c1': 'N notifications (ListMixin default)',
-          'cmp.imp.i3.r2c2': '1 notification (overridden)',
+          'cmp.imp.i3.r2c1': 'sort: 1 (overridden) / shuffle: N (ListMixin default)',
+          'cmp.imp.i3.r2c2': 'Both 1 (overridden)',
+          'cmp.imp.i3.r3c0': 'Notification timing',
+          'cmp.imp.i3.r3c1': 'Synchronous (listeners fire inside add())',
+          'cmp.imp.i3.r3c2': 'Asynchronous (next microtask) — tests need an await/pump',
           'cmp.imp.i3.eval':
-              'When adding 10,000 items to a list, the original triggers 10,000 rebuilds → getx_distil triggers 1 rebuild. The most tangible performance difference.',
+              'Adding 10,000 items fires 10,000 listener notifications (and 10,000 ever/Worker callbacks) in GetX versus exactly 1 in getx_distil. Flutter already coalesces widget builds to one per frame, so the saving is in notification dispatch and Worker side-effects, not in build() calls. The trade-off: notifications become asynchronous.',
           // Item 2.4
           'cmp.imp.i4.title': '100% Tree-Scoped DI (BindingWidget)',
           'cmp.imp.i4.subtitle': 'Architecture paradigm shift',
@@ -351,13 +359,13 @@ class AppTranslations extends Translations {
           'cmp.imp.i4.r2c1': 'Manual Get.delete()',
           'cmp.imp.i4.r2c2': 'Auto GC on widget dispose',
           'cmp.imp.i4.r3c0': 'GoRouter compatibility',
-          'cmp.imp.i4.r3c1': 'Low',
+          'cmp.imp.i4.r3c1': 'Low (Bindings need GetPage; SmartManagement relies on the GetX route observer)',
           'cmp.imp.i4.r3c2': 'Fully compatible',
           'cmp.imp.i4.r4c0': 'Context-free access',
           'cmp.imp.i4.r4c1': 'Get.find<T>()',
-          'cmp.imp.i4.r4c2': 'Get.find<T>() (WeakReference cache)',
+          'cmp.imp.i4.r4c2': 'Get.find<T>() (WeakReference cache; ambiguous when several instances of one type are alive)',
           'cmp.imp.i4.eval':
-              "A design that perfectly aligns with the GoRouter era. Solves GetX's biggest architectural flaw — a key differentiator.",
+              "A design that fits the GoRouter era and fixes GetX's biggest architectural flaw. Caveat: the context-less fallback returns the most recently registered instance, so with N live instances of one type you must pass a context.",
           // Item 2.5
           'cmp.imp.i5.title': 'FIFO Sequential Pipeline (updateSequential)',
           'cmp.imp.i5.subtitle':
@@ -370,7 +378,7 @@ class AppTranslations extends Translations {
           'cmp.imp.i5.r1c1': 'None',
           'cmp.imp.i5.r1c2': 'Completer chain',
           'cmp.imp.i5.eval':
-              'Essential for high-frequency scenarios like real-time quotes, chat, and sensor data. High practical value.',
+              'Essential for high-frequency scenarios like real-time quotes, chat, and sensor data. Caveat: exceptions thrown inside action are routed to the Rx stream via addError, so with no Worker listening they are dropped silently.',
           // Item 2.6
           'cmp.imp.i6.title': 'RxSList / RxS — Status-Aware Reactive Types',
           'cmp.imp.i6.subtitle': 'Unique feature (not in original)',
@@ -378,7 +386,7 @@ class AppTranslations extends Translations {
           'cmp.imp.i6.r0c0': 'List status management',
           'cmp.imp.i6.r0c1':
               'Separate isLoading/errorMessage observables needed',
-          'cmp.imp.i6.r0c2': 'Built into the list itself',
+          'cmp.imp.i6.r0c2': 'Built into the list itself (idle/loading/loaded/empty/error, v1.3.0+)',
           'cmp.imp.i6.r1c0': 'Single value status',
           'cmp.imp.i6.r1c1': 'StateMixin (controller level)',
           'cmp.imp.i6.r1c2': 'Built into the value (RxS)',
@@ -386,7 +394,7 @@ class AppTranslations extends Translations {
           'cmp.imp.i6.r2c1': 'Manual if-else',
           'cmp.imp.i6.r2c2': 'Declarative via .on() builder',
           'cmp.imp.i6.eval':
-              'A DX innovation that eliminates the need for separate isLoading/errorMessage observables. An original contribution not found in the original.',
+              'A DX innovation that eliminates separate isLoading/errorMessage observables — an original contribution not found in GetX. Two nits: .ops is an extension on every type T (it shows up in autocomplete everywhere), and a list constructed with data still starts as idle, not loaded.',
           // Item 2.7
           'cmp.imp.i7.title': 'Strict Async Obx Validation',
           'cmp.imp.i7.subtitle': 'Blocks async Obx anti-patterns',
@@ -404,7 +412,7 @@ class AppTranslations extends Translations {
           'cmp.imp.i8.subtitle': 'Detailed debug info on DI lookup failure',
           'cmp.imp.i8.h0': 'Category',
           'cmp.imp.i8.r0c0': 'Error message',
-          'cmp.imp.i8.r0c1': '"Controller not found"',
+          'cmp.imp.i8.r0c1': '"CounterController" not found. You need to call "Get.put(CounterController())"',
           'cmp.imp.i8.r0c2':
               'Requested widget name + ancestor path + global/immortal service list',
           'cmp.imp.i8.eval':
@@ -417,7 +425,7 @@ class AppTranslations extends Translations {
           'cmp.sac.r0c0': 'Routing Engine',
           'cmp.sac.r0c1': 'GetPageRoute, Get.to(), Get.off(), etc.',
           'cmp.sac.r0c3': 'Use GoRouter/Navigator',
-          'cmp.sac.r1c0': 'GetDialog/BottomSheet',
+          'cmp.sac.r1c0': 'Get.dialog / bottomSheet / snackbar',
           'cmp.sac.r1c1': 'Global overlay management',
           'cmp.sac.r1c3': 'Use Flutter default APIs',
           'cmp.sac.r2c0': 'GetConnect',
@@ -432,12 +440,21 @@ class AppTranslations extends Translations {
           'cmp.sac.r5c0': 'GetX Binding (class)',
           'cmp.sac.r5c1': 'GetPage + Binding pattern',
           'cmp.sac.r5c3': 'Replaced by BindingWidget',
-          'cmp.sac.r6c0': 'interval Worker',
-          'cmp.sac.r6c1': 'Periodic execution worker',
-          'cmp.sac.r6c3': 'Use Timer',
+          'cmp.sac.r6c0': 'interval / everAll Workers',
+          'cmp.sac.r6c1': 'Periodic & multi-Rx workers',
+          'cmp.sac.r6c3': 'Use Timer / one ever() per Rx',
           'cmp.sac.r7c0': 'SmartManagement',
           'cmp.sac.r7c1': 'Memory management policy',
           'cmp.sac.r7c3': 'Replaced by BindingWidget Auto-GC',
+          'cmp.sac.r8c0': 'RxMap / RxSet',
+          'cmp.sac.r8c1': 'Reactive map & set collections',
+          'cmp.sac.r8c3': 'Only RxList exists; hold Map/Set in Rx<T> and reassign',
+          'cmp.sac.r9c0': 'GetBuilder / update(ids)',
+          'cmp.sac.r9c1': 'ID-based partial rebuild',
+          'cmp.sac.r9c3': 'update() still exists but ids are ignored — use Obx granularity',
+          'cmp.sac.r10c0': 'Rx.bindStream',
+          'cmp.sac.r10c1': 'Bind an external Stream to an Rx',
+          'cmp.sac.r10c3': 'Use stream.listen((v) => rx.value = v) and cancel in onClose',
           'cmp.sac.info_card':
               'Removing routing/dialogs/network/storage is an intentional design decision that aligns well with the modern Flutter ecosystem. Delegating each responsibility to specialized packages results in better architecture.',
           'cmp.sac.next_title': '4. Code Quality Assessment',
@@ -446,42 +463,48 @@ class AppTranslations extends Translations {
           // ── Comparison — Quality ──
           'cmp.qa.title': 'Code Quality Assessment',
           'cmp.qa.good0':
-              'Extreme conciseness — core logic at ~1,200 lines, less than 10% of the original. Overwhelming maintainability.',
+              'Compact — 1,968 lines total (1,342 excluding blanks/comments) across 18 files: about 11% of GetX 4.7.3 (17,351 / 11,831). Still small enough to read in one sitting.',
           'cmp.qa.good1':
               'Zero External Dependency — depends only on Flutter SDK. Zero supply chain risk.',
           'cmp.qa.good2':
-              'Thorough testing — 1,594 lines of test code. Covers edge cases like RxList batching, WeakReference zombie prevention, sibling controller onClose cross-references.',
+              'Solid testing — 1,689 lines / 114 test cases in the package suite plus a TDD example test (v1.3.2). Covers RxList batching, WeakReference zombie prevention, sibling onClose cross-references, idle/error transitions.',
           'cmp.qa.good3':
               'Consistent architecture — all Rx types follow GetListenable → RxInterface hierarchy. Excellent extensibility.',
           'cmp.qa.good4':
               'Memory safety — WeakReference cache, guaranteed dispose order (onDelete first → weakRegistry removal), Expando-based GetView context management.',
           'cmp.qa.good5':
-              'Documentation quality — English/Korean README perfectly synchronized. Example app covers all features.',
+              'Documentation quality — English/Korean README kept in sync, example app covers every feature, and v1.3.2 added a TDD guide with mock-service injection.',
+          'cmp.qa.good6':
+              'Root-service eager init — GetMaterialApp(bindings) and BindingWidget(eager: true) initialize GetxService instances at mount (v1.3.1), removing the old builder-callback workaround.',
           'cmp.qa.bad0':
-              'GetxController.update() + ID-based rebuild not supported — ID-based partial rebuild used with GetBuilder in the original is weakened.',
+              'update(ids) is accepted but ids are silently ignored and there is no GetBuilder — GetX code relying on ID-based partial rebuilds compiles but stops working as expected.',
           'cmp.qa.bad1':
-              'RxSList initial status ambiguity — even with data in the constructor, initial status is loading. An option to start as loaded would be nice.',
+              'RxSList/RxS constructed with initial data still start as idle, not loaded — [1, 2, 3].ops reports idle until the first mutation. An option to start loaded would help.',
           'cmp.qa.bad2':
-              'interval Worker not supported — no periodic execution worker, must use Timer instead.',
+              'Collections are RxList-only — no RxMap/RxSet, Workers lack interval/everAll, and Rx.bindStream is gone.',
           'cmp.qa.bad3':
-              'Get.find tag + context combination not possible — when context is provided, tag is ignored.',
+              'Tag and widget-tree scope are mutually exclusive — Get.find<T>(context, tag) skips the BindingWidget lookup entirely, and the positional Get.find(null, tag) differs from GetX\'s named tag: parameter.',
           'cmp.qa.bad4':
-              'RxList operator []= override — custom list operations may trigger notifications without batching.',
+              'updateSequential swallows errors — exceptions are forwarded via addError to a broadcast stream, so with no Worker listening they vanish silently.',
+          'cmp.qa.bad5':
+              'Context-less Get.find<T>() is ambiguous with multiple live instances — it returns the last registered one and may eagerly instantiate a binding inside an unrelated active BindingWidget.',
+          'cmp.qa.bad6':
+              'lazyPut(fenix: true) is stored but never honored — a deleted lazy dependency is not recreated on the next find().',
           'cmp.qa.s0_item': 'Architecture Design',
           'cmp.qa.s0_note': 'Tree-scoped DI + hybrid fallback is best practice',
           'cmp.qa.s1_item': 'Performance Optimization',
-          'cmp.qa.s1_note': 'Fast-Path + Batching + FIFO pipeline triple combo',
+          'cmp.qa.s1_note': 'Batching + FIFO pipeline are real wins; Fast-Path gain vs GetX 4.x is marginal',
           'cmp.qa.s2_item': 'Memory Safety',
           'cmp.qa.s2_note':
-              'WeakReference, guaranteed dispose order, Expando cleanup',
+              'WeakReference, guaranteed dispose order, Expando cleanup; static registries need Get.reset() in tests',
           'cmp.qa.s3_item': 'DX (Developer Experience)',
           'cmp.qa.s3_note':
               'RxSList/RxS .on() pattern is excellent. Great debug messages',
           'cmp.qa.s4_item': 'API Compatibility',
-          'cmp.qa.s4_note': 'Core APIs like .obs, Obx, Get.find are identical',
+          'cmp.qa.s4_note': '.obs / Obx / Get.put are identical; Get.find tag signature, RxMap/RxSet, GetBuilder, bindStream differ',
           'cmp.qa.s5_item': 'Test Coverage',
           'cmp.qa.s5_note':
-              'Core features well covered. Some edge cases could be improved',
+              '114 cases + TDD example; updateSequential error path and fenix are untested',
           'cmp.qa.s6_item': 'Documentation/Examples',
           'cmp.qa.s6_note':
               'English/Korean README + GoRouter-based example app is perfect',
@@ -500,7 +523,7 @@ class AppTranslations extends Translations {
           'cmp.rp.s1.r0c2': 'Declarative',
           'cmp.rp.s1.r1c0': 'State Creation',
           'cmp.rp.s1.r1c1': 'Runtime new + .obs',
-          'cmp.rp.s1.r1c2': 'Compile-time code generation',
+          'cmp.rp.s1.r1c2': 'Typed provider objects (code generation optional)',
           'cmp.rp.s1.r2c0': 'DI Approach',
           'cmp.rp.s1.r2c1': 'Manual registration (Get.put, BindingWidget)',
           'cmp.rp.s1.r2c2': 'Auto registration (@riverpod annotation)',
@@ -512,18 +535,18 @@ class AppTranslations extends Translations {
           'cmp.rp.s1.r4c2': 'Medium~High (annotation + generated code)',
           'cmp.rp.s1.r5c0': 'Build Dependency',
           'cmp.rp.s1.r5c1': 'None',
-          'cmp.rp.s1.r5c2': 'build_runner required',
+          'cmp.rp.s1.r5c2': 'Optional (only with riverpod_generator)',
           'cmp.rp.s1.eval':
-              "getx_distil's imperative paradigm offers a low learning curve and minimal boilerplate for rapid development. Riverpod 3.0's declarative approach is systematic but requires more learning and setup.",
+              "getx_distil's imperative paradigm offers a low learning curve and minimal boilerplate for rapid development. Riverpod 3.x's declarative approach is systematic but requires more learning and setup.",
 
           // 5.2 State Management Approach
           'cmp.rp.s2.title': 'State Management Approach',
           'cmp.rp.s2.desc1': 'getx_distil — Imperative Observable',
-          'cmp.rp.s2.desc2': 'Riverpod 3.0 — Declarative Notifier',
+          'cmp.rp.s2.desc2': 'Riverpod 3.x — Declarative Notifier',
           'cmp.rp.s2.h0': 'Comparison',
           'cmp.rp.s2.r0c0': 'State Declaration',
           'cmp.rp.s2.r0c1': '.obs one-liner',
-          'cmp.rp.s2.r0c2': 'Class + annotation + build()',
+          'cmp.rp.s2.r0c2': 'Notifier class + build() (+ optional annotation)',
           'cmp.rp.s2.r1c0': 'State Mutation',
           'cmp.rp.s2.r1c1': '.value = direct assignment',
           'cmp.rp.s2.r1c2': 'Method call to change state',
@@ -551,21 +574,21 @@ class AppTranslations extends Translations {
           'cmp.rp.s3.r2c2': 'Automatic (AsyncValue.guard)',
           'cmp.rp.s3.r3c0': 'Caching/Retry',
           'cmp.rp.s3.r3c1': 'Manual implementation',
-          'cmp.rp.s3.r3c2': 'Built-in (keepAlive, retry, invalidate)',
+          'cmp.rp.s3.r3c2': 'Built-in (keepAlive, automatic retry, invalidate, experimental offline persistence)',
           'cmp.rp.s3.r4c0': 'DX',
           'cmp.rp.s3.r4c1': 'Intuitive but manual',
           'cmp.rp.s3.r4c2': 'Automated but requires learning',
           'cmp.rp.s3.eval':
-              "For pure async API call scenarios, Riverpod 3.0's AsyncNotifier is safer and more automated. getx_distil requires manual state transition control, but offers greater flexibility.",
+              "For pure async API call scenarios, Riverpod 3.x's AsyncNotifier is safer and more automated. getx_distil requires manual state transition control, but offers greater flexibility.",
 
           // 5.4 DI
           'cmp.rp.s4.title': 'DI (Dependency Injection)',
           'cmp.rp.s4.desc1': 'getx_distil — Hybrid DI',
-          'cmp.rp.s4.desc2': 'Riverpod 3.0 — Provider Scope',
+          'cmp.rp.s4.desc2': 'Riverpod 3.x — Provider Scope',
           'cmp.rp.s4.h0': 'Comparison',
           'cmp.rp.s4.r0c0': 'Registration',
           'cmp.rp.s4.r0c1': 'Manual (Get.put, BindingWidget)',
-          'cmp.rp.s4.r0c2': 'Automatic (annotation + code generation)',
+          'cmp.rp.s4.r0c2': 'Declarative provider objects (codegen optional)',
           'cmp.rp.s4.r1c0': 'Scope',
           'cmp.rp.s4.r1c1': 'Widget tree scope + global',
           'cmp.rp.s4.r1c2': 'Provider scope (overridable)',
@@ -574,10 +597,10 @@ class AppTranslations extends Translations {
           'cmp.rp.s4.r2c2': 'family modifier (compile-time)',
           'cmp.rp.s4.r3c0': 'Context-free Access',
           'cmp.rp.s4.r3c1': '✅ Get.find<T>()',
-          'cmp.rp.s4.r3c2': '❌ ref required (only inside widgets/functions)',
+          'cmp.rp.s4.r3c2': '❌ ref/container required (a global container is an anti-pattern)',
           'cmp.rp.s4.r4c0': 'Lifecycle Management',
           'cmp.rp.s4.r4c1': 'Auto GC on widget dispose',
-          'cmp.rp.s4.r4c2': 'ref.onDispose() callback',
+          'cmp.rp.s4.r4c2': 'autoDispose + ref.onDispose()',
           'cmp.rp.s4.r5c0': 'Multi-instance Isolation',
           'cmp.rp.s4.r5c1': 'Intuitive (BindingWidget nesting)',
           'cmp.rp.s4.r5c2': 'Strict (family + override)',
@@ -589,24 +612,24 @@ class AppTranslations extends Translations {
           'cmp.rp.s5.subtitle': 'RxList bulk mutation',
           'cmp.rp.s5.h0': 'Scenario',
           'cmp.rp.s5.r0c0': '10,000 add() calls',
-          'cmp.rp.s5.r0c1': '1 rebuild (Microtask Batching)',
-          'cmp.rp.s5.r0c2': 'N rebuilds (per state change)',
+          'cmp.rp.s5.r0c1': '1 notification (Microtask Batching)',
+          'cmp.rp.s5.r0c2': 'N notifications + N list copies (state = [...state, x]); Flutter still builds once per frame',
           'cmp.rp.s5.r1c0': 'for loop mutations',
           'cmp.rp.s5.r1c1': 'Automatic batching',
           'cmp.rp.s5.r1c2':
-              'Manual batching needed or single state = [...] assignment',
+              'Idiom: build the list first, assign once',
           'cmp.rp.s5.r2c0': 'Rx reads outside Obx',
           'cmp.rp.s5.r2c1': 'Zero-cost (isTracking flag)',
           'cmp.rp.s5.r2c2': 'N/A (Provider reads always need ref)',
           'cmp.rp.s5.eval':
-              "In high-frequency list mutation scenarios, getx_distil's Microtask Batching has a clear performance advantage over Riverpod. To achieve the same effect in Riverpod, developers must implement batching logic manually or use single state = newList assignment.",
+              "In naive loop-mutation code getx_distil wins clearly: one notification and no copies versus N notifications and O(N²) copying. In idiomatic Riverpod code (build the list, assign once) the gap disappears — so this is a DX advantage more than a hard performance wall.",
 
           // 5.6 Safety Features
           'cmp.rp.s6.title': 'Safety Features',
           'cmp.rp.s6.h0': 'Safety Feature',
           'cmp.rp.s6.r0c0': 'Build-phase state mutation',
           'cmp.rp.s6.r0c1': 'Self-healing (PostFrameCallback deferral)',
-          'cmp.rp.s6.r0c2': 'N/A (only ref.watch allowed during build)',
+          'cmp.rp.s6.r0c2': 'Throws "Tried to modify a provider while the widget tree was building"',
           'cmp.rp.s6.r1c0': 'Ref.watch during build',
           'cmp.rp.s6.r1c1': 'N/A',
           'cmp.rp.s6.r1c2': 'Strict runtime check',
@@ -618,35 +641,37 @@ class AppTranslations extends Translations {
           'cmp.rp.s6.r3c2': 'ProviderNotFoundException',
           'cmp.rp.s6.r4c0': 'Race condition prevention',
           'cmp.rp.s6.r4c1': 'FIFO pipeline (updateSequential)',
-          'cmp.rp.s6.r4c2': 'N/A (no sequential execution guarantee)',
+          'cmp.rp.s6.r4c2': 'No FIFO queue; stale results handled via ref.mounted / rebuild cancellation',
           'cmp.rp.s6.r5c0': 'Type Safety',
           'cmp.rp.s6.r5c1': 'Runtime (dynamic Get.find<T>())',
-          'cmp.rp.s6.r5c2': 'Compile-time (code generation)',
+          'cmp.rp.s6.r5c2': 'Compile-time (typed provider objects; no codegen needed)',
           'cmp.rp.s6.eval':
-              "getx_distil has richer runtime safety nets. Compile-time type safety is Riverpod 3.0's overwhelming advantage.",
+              "getx_distil has richer runtime safety nets. Compile-time type safety is Riverpod 3.x's overwhelming advantage.",
 
           // 5.7 Code Generation vs Zero Dependency
           'cmp.rp.s7.title': 'Code Generation vs Zero Dependency',
           'cmp.rp.s7.h0': 'Category',
           'cmp.rp.s7.r0c0': 'build_runner needed',
+          'cmp.rp.s7.r0c1': 'None',
+          'cmp.rp.s7.r0c2': 'Optional',
           'cmp.rp.s7.r1c0': 'Generated code (.g.dart)',
           'cmp.rp.s7.r1c1': 'None',
-          'cmp.rp.s7.r1c2': 'Yes',
+          'cmp.rp.s7.r1c2': 'Only with riverpod_generator',
           'cmp.rp.s7.r2c0': 'Build time impact',
           'cmp.rp.s7.r2c1': 'None',
-          'cmp.rp.s7.r2c2': 'Increases (code generation overhead)',
+          'cmp.rp.s7.r2c2': 'Increases only when codegen is used',
           'cmp.rp.s7.r3c0': 'IDE Support',
           'cmp.rp.s7.r3c1': 'Standard Dart analysis',
-          'cmp.rp.s7.r3c2': 'Generated code exploration needed',
+          'cmp.rp.s7.r3c2': 'Generated code exploration needed (codegen only)',
           'cmp.rp.s7.r4c0': 'CI/CD Complexity',
           'cmp.rp.s7.r4c1': 'Low',
-          'cmp.rp.s7.r4c2': 'High (build_runner step added)',
+          'cmp.rp.s7.r4c2': 'Medium (build_runner step only with codegen)',
           'cmp.rp.s7.r5c0': 'External Dependencies',
           'cmp.rp.s7.r5c1': '0',
           'cmp.rp.s7.r5c2':
-              'Multiple (riverpod, riverpod_annotation, build_runner, etc.)',
+              'flutter_riverpod → riverpod, meta, collection, state_notifier (codegen adds more)',
           'cmp.rp.s7.eval':
-              "For small/personal projects, getx_distil's zero dependency is a strong advantage. For large team projects, Riverpod's code generation provides refactoring safety.",
+              "For small projects the zero-dependency setup is a real advantage. Note that Riverpod 3.x works without build_runner; codegen is an opt-in that buys extra refactoring safety for large teams.",
 
           // 5.8 Testability
           'cmp.rp.s8.title': 'Testability',
@@ -655,16 +680,16 @@ class AppTranslations extends Translations {
           'cmp.rp.s8.r0c1': 'Get.put(mock) → Get.find()',
           'cmp.rp.s8.r0c2': 'ProviderContainer(overrides: [...])',
           'cmp.rp.s8.r1c0': 'Widget Testing',
-          'cmp.rp.s8.r1c1': 'Scope control via BindingWidget',
+          'cmp.rp.s8.r1c1': 'BindingWidget with Bind<Interface>(() => Mock()) (TDD guide, v1.3.2)',
           'cmp.rp.s8.r1c2': 'ProviderScope(overrides: [...])',
           'cmp.rp.s8.r2c0': 'Mocking Convenience',
-          'cmp.rp.s8.r2c1': 'Moderate (manual registration/replacement)',
+          'cmp.rp.s8.r2c1': 'Good for widget tests (declarative Bind list); manual for global Get.put',
           'cmp.rp.s8.r2c2': 'Excellent (systematic override system)',
           'cmp.rp.s8.r3c0': 'Test Isolation',
-          'cmp.rp.s8.r3c1': 'Manual Get.reset() call',
+          'cmp.rp.s8.r3c1': 'BindingWidget scopes self-isolate; Get.reset() still needed for global/immortal registries',
           'cmp.rp.s8.r3c2': 'Automatic ProviderContainer isolation',
           'cmp.rp.s8.eval':
-              "Riverpod 3.0's override system is more systematic for test mocking. getx_distil is intuitive but has potential for global state pollution.",
+              "Riverpod's override system remains the more systematic mocking story. getx_distil closed part of the gap in 1.3.2 with the BindingWidget TDD pattern, but its static registries (global, immortal, weak) still demand Get.reset() discipline.",
 
           // Matrix items
           'cmp.rp.mx.learning_curve': 'Learning Curve',
@@ -684,7 +709,7 @@ class AppTranslations extends Translations {
 
           // Guide
           'cmp.rp.guide.winner_title': 'When to choose getx_distil',
-          'cmp.rp.guide.loser_title': 'When to choose Riverpod 3.0',
+          'cmp.rp.guide.loser_title': 'When to choose Riverpod 3.x',
           'cmp.rp.guide.winner0':
               '🚀 Rapid Prototyping / MVP — minimal boilerplate, start immediately',
           'cmp.rp.guide.winner1':
@@ -700,7 +725,7 @@ class AppTranslations extends Translations {
           'cmp.rp.guide.loser0':
               '🏢 Large Team Projects — compile-time safety protects refactoring',
           'cmp.rp.guide.loser1':
-              '🧪 Test-Driven Development (TDD) — override system is optimal for mocking',
+              '🧪 Override-heavy testing — provider overrides scale better than manual bindings for large mock graphs',
           'cmp.rp.guide.loser2':
               '📡 Async-centric Apps — API calls/caching/retry are core features',
           'cmp.rp.guide.loser3':
@@ -715,19 +740,19 @@ class AppTranslations extends Translations {
           'cmp.con.card0.p0':
               'If GetX is a "framework," getx_distil is a "micro-engine." The design decision to boldly remove routing, dialogs, networking, and storage — focusing solely on state management and DI — perfectly aligns with the modern Flutter ecosystem (GoRouter, dio, shared_preferences, etc.).',
           'cmp.con.card0.p1':
-              'In particular, Fast-Path Tracking, RxList Microtask Batching, and Tree-Scoped DI provide clear, measurable performance/stability advantages over the original, while RxSList/RxS are original contributions not found in the original.',
+              'RxList Microtask Batching and Tree-Scoped DI provide clear, verifiable advantages over the original, and RxSList/RxS are original contributions. Fast-Path Tracking is sound design but, against GetX 4.x\'s static proxy, its measurable gain is small.',
           'cmp.con.card0.p2':
               'For existing GetX users, it provides the same DX (.obs → Obx → Get.find) while fundamentally solving memory leak and scope collision issues in GoRouter environments. For new projects, it has a clear advantage over the original GetX.',
           'cmp.con.card1.quote':
-              'getx_distil and Riverpod 3.0 are closer to a complementary relationship rather than a competitive one.',
+              'getx_distil and Riverpod 3.x are closer to a complementary relationship rather than a competitive one.',
           'cmp.con.card1.p0':
-              'getx_distil is a lightweight engine pursuing "fastest and freest with minimum code," while Riverpod 3.0 is a structure-oriented framework that "strictly prevents mistakes through static types."',
+              'getx_distil is a lightweight engine pursuing "fastest and freest with minimum code," while Riverpod 3.x is a structure-oriented framework that "strictly prevents mistakes through static types."',
           'cmp.con.card1.p1':
-              'Performance tuning features provided by getx_distil—such as RxList microtask batching optimization, build-phase auto-healing, and Fast-Path technology—do not exist in Riverpod. Thus, getx_distil has a clear advantage for pages with extremely high-frequency real-time data mutations.',
+              'RxList microtask batching and build-phase self-healing have no counterpart in Riverpod, so getx_distil is more forgiving on pages with very high-frequency mutations. Riverpod reaches similar efficiency only when written idiomatically.',
           'cmp.con.card1.p2':
-              "On the other hand, Riverpod 3.0's compile-time type safety and systematic async state management shine in large-scale projects. Choose based on project scale, team maturity, and data manipulation patterns.",
+              "On the other hand, Riverpod 3.x's compile-time type safety and systematic async state management shine in large-scale projects. Choose based on project scale, team maturity, and data manipulation patterns.",
           'cmp.con.footer':
-              'Written: 2026-06-10\nTarget version: getx_distil v1.1.3',
+              'Revised: 2026-09-07\nVersions analyzed: getx_distil 1.3.2 · GetX 4.7.3 · flutter_riverpod 3.4.3',
         },
         'ko_KR': {
           // ── Nav ──
@@ -998,16 +1023,21 @@ class AppTranslations extends Translations {
           'cmp.ov.r_version': '버전',
           'cmp.ov.r_deps': '외부 의존성',
           'cmp.ov.r_deps_distil': '0 (Flutter SDK만 사용)',
-          'cmp.ov.r_deps_getx': '수십 개 (collection, web, js 등)',
+          'cmp.ov.r_deps_getx': '1개 (web)',
           'cmp.ov.r_files': '소스 파일 수',
-          'cmp.ov.r_logic': '핵심 코드 라인 수',
+          'cmp.ov.r_logic': '코드 라인 수 (전체 / 공백·주석 제외)',
+          'cmp.ov.r_tests': '테스트 코드',
+          'cmp.ov.r_tests_getx': 'pub 패키지에 미포함',
+          'cmp.ov.r_collections': '반응형 컬렉션',
+          'cmp.ov.r_collections_distil': 'RxList만 제공 (마이크로태스크 배치)',
+          'cmp.ov.r_collections_getx': 'RxList / RxMap / RxSet',
           'cmp.ov.r_routing': '자체 라우팅',
           'cmp.ov.r_routing_getx': '✅ 내장됨 (GetPageRoute 등)',
           'cmp.ov.r_i18n': '다국어 지원',
           'cmp.ov.r_i18n_distil': '✅ 유지 (경량화)',
           'cmp.ov.r_i18n_getx': '✅ 내장됨',
           'cmp.ov.r_state': '상태 관리 기능',
-          'cmp.ov.r_state_distil': '✅ 핵심 엔진 성능 강화',
+          'cmp.ov.r_state_distil': '✅ 핵심 엔진 강화 (RxS / RxSList / 배치)',
           'cmp.ov.r_state_getx': '✅ 제공 (기본)',
           'cmp.ov.r_di': '의존성 주입 (DI)',
           'cmp.ov.r_di_distil': '✅ 하이브리드 DI (위젯트리 + 글로벌)',
@@ -1019,47 +1049,50 @@ class AppTranslations extends Translations {
           'cmp.imp.next_title': '3. 미지원 기능 (제거 항목)',
           // Item 2.1
           'cmp.imp.i1.title': '빠른 경로 추적 (Notifier.isTracking)',
-          'cmp.imp.i1.subtitle': '가장 핵심적인 성능 최적화 부분',
+          'cmp.imp.i1.subtitle': '추적 게이트가 더 깔끔하지만, GetX 4.x 대비 이득은 흔히 말하는 것보다 작음',
           'cmp.imp.i1.h0': '비교 항목',
           'cmp.imp.i1.r0c0': '동작 메커니즘',
-          'cmp.imp.i1.r0c1': 'Zone 기반 글로벌 프록시 방식 (RxInterface.proxy)',
+          'cmp.imp.i1.r0c1': '정적 nullable 프록시 (RxInterface.proxy?.addListener) — Zone 기반이 아님',
           'cmp.imp.i1.r0c2': '정적 불리언 플래그 기반 방식 (Notifier.isTracking)',
           'cmp.imp.i1.r1c0': 'Obx 외부에서 Rx 읽기',
-          'cmp.imp.i1.r1c1': '조회할 때마다 매번 프록시 탐색 및 널 검사 발생',
-          'cmp.imp.i1.r1c2': '완전 생략 가능 (O(1) 단순 불리언 조회)',
-          'cmp.imp.i1.r2c0': '대용량 데이터 반복 조회',
-          'cmp.imp.i1.r2c1': 'CPU 오버헤드 지속적 누적',
-          'cmp.imp.i1.r2c2': '오버헤드 거의 없음',
+          'cmp.imp.i1.r1c1': '정적 필드 널 검사 1회 (이미 O(1))',
+          'cmp.imp.i1.r1c2': '정적 불리언 검사 1회 (비용 사실상 동일)',
+          'cmp.imp.i1.r2c0': 'Rx당 알림 채널 구조',
+          'cmp.imp.i1.r2c1': '모든 Rx마다 GetStream을 즉시 할당',
+          'cmp.imp.i1.r2c2': '단순 콜백 리스트, StreamController는 Worker 구독 시에만 지연 생성',
           'cmp.imp.i1.eval':
-              'Zone 기반 방식에 비해 매우 가벼우며 대규모 루프 처리를 수행할 때 CPU 자원을 획기적으로 절약할 수 있습니다. 뛰어난 성능 설계입니다.',
+              '정정: 이 페이지의 이전 판은 GetX를 "Zone 기반"이라고 설명했으나, GetX 4.x는 4.0부터 정적 프록시를 사용합니다. 따라서 Obx 밖에서의 Rx 읽기 비용은 두 라이브러리가 사실상 같습니다. 검증 가능한 실질 이득은 구조적인 부분 — Rx마다 GetStream을 할당하고 구독을 관리하는 배관을 getx_distil이 생략한다는 점입니다. 깔끔한 설계이지만 극적인 CPU 절감은 아닙니다.',
           // Item 2.2
           'cmp.imp.i2.title': '자동 오류 치료형 렌더링 지연 업데이트',
           'cmp.imp.i2.subtitle': '빌드 및 레이아웃 단계 중 크래시 발생 방지',
           'cmp.imp.i2.h0': '비교 항목',
           'cmp.imp.i2.r0c0': '빌드 중 상태 변경',
-          'cmp.imp.i2.r0c1': 'setState() 호출 오류로 앱 크래시 발생',
-          'cmp.imp.i2.r0c2': 'PostFrameCallback을 통하여 안전하게 지연 처리',
+          'cmp.imp.i2.r0c1': '디버그 assert: setState() or markNeedsBuild() called during build',
+          'cmp.imp.i2.r0c2': 'PostFrameCallback으로 지연 (한 프레임 늦게 반영)',
           'cmp.imp.i2.r1c0': '감지 기법',
           'cmp.imp.i2.r1c1': '없음',
           'cmp.imp.i2.r1c2':
               'SchedulerBinding.instance.schedulerPhase 상태 정밀 분석',
           'cmp.imp.i2.eval':
-              '실제 프로덕션 환경에서 드물게 발생하는 위젯 빌드 크래시 문제를 안전하게 해결해 주는 탁월한 실무형 기능입니다.',
+              '디버그 모드의 레드 스크린 assert를 제거하고 취약한 패턴을 안전하게 만듭니다. 다만 정확히 말하면 릴리스 빌드에서는 Flutter가 이 상황에서 크래시하지 않고 갱신을 그대로 적용하며, 지연 처리에는 한 프레임의 지연 비용이 따릅니다. 유용한 안전망이지만 공짜는 아닙니다.',
           // Item 2.3
           'cmp.imp.i3.title': 'RxList 마이크로태스크 배치 업데이트',
           'cmp.imp.i3.subtitle': '가장 체감되는 주요 성능 최적화 요소',
           'cmp.imp.i3.h0': '비교 항목',
           'cmp.imp.i3.r0c0': 'add() 100회 호출',
-          'cmp.imp.i3.r0c1': 'UI 리빌드 100회 실행',
-          'cmp.imp.i3.r0c2': 'UI 리빌드 단 1회 실행',
+          'cmp.imp.i3.r0c1': '알림 100회 (setState 100회 호출, 실제 build는 프레임당 1회)',
+          'cmp.imp.i3.r0c2': '알림 1회 → build 1회',
           'cmp.imp.i3.r1c0': '구현 메커니즘',
           'cmp.imp.i3.r1c1': '동작이 발생할 때마다 즉시 리프레시 진행',
           'cmp.imp.i3.r1c2': '더티 플래그(Dirty-Flag) 및 마이크로태스크 스케줄러 결합',
           'cmp.imp.i3.r2c0': 'sort() / shuffle() 수행',
-          'cmp.imp.i3.r2c1': '각 원소 변경에 따라 N번 노티파이 전송',
-          'cmp.imp.i3.r2c2': '작업 완료 후 단 1번 노티파이 전송',
+          'cmp.imp.i3.r2c1': 'sort: 1회 (오버라이드됨) / shuffle: N회 (ListMixin 기본)',
+          'cmp.imp.i3.r2c2': '둘 다 1회 (오버라이드됨)',
+          'cmp.imp.i3.r3c0': '알림 타이밍',
+          'cmp.imp.i3.r3c1': '동기 (add() 내부에서 리스너 즉시 실행)',
+          'cmp.imp.i3.r3c2': '비동기 (다음 마이크로태스크) — 테스트에서 await/pump 필요',
           'cmp.imp.i3.eval':
-              '리스트에 1만 개의 항목을 순차 추가하는 시나리오에서 GetX은 1만 번의 빌드 요청을 보내는 반면 getx_distil은 단 1번으로 배치 통합시킵니다. 체감 성능이 대폭 상승합니다.',
+              '1만 개를 순차 추가하면 GetX는 리스너 알림 1만 회(ever/Worker 콜백도 1만 회)를 발생시키고 getx_distil은 정확히 1회입니다. 단, Flutter는 위젯 build를 프레임당 1회로 이미 병합하므로 절감되는 것은 build() 호출이 아니라 알림 디스패치와 Worker 부수효과입니다. 대가로 알림이 비동기가 됩니다.',
           // Item 2.4
           'cmp.imp.i4.title': '100% 위젯 트리 스코프 DI (BindingWidget)',
           'cmp.imp.i4.subtitle': '아키텍처 설계 패러다임의 중대한 변화',
@@ -1074,13 +1107,13 @@ class AppTranslations extends Translations {
           'cmp.imp.i4.r2c1': 'Get.delete()를 수동으로 지정해서 제거해야 함',
           'cmp.imp.i4.r2c2': '해당 위젯 트리 제거 시 자동으로 가비지 컬렉션 가동',
           'cmp.imp.i4.r3c0': 'GoRouter 연동성',
-          'cmp.imp.i4.r3c1': '낮음 (글로벌 맵 충돌 빈발)',
+          'cmp.imp.i4.r3c1': '낮음 (Binding은 GetPage 필요, SmartManagement는 GetX 라우트 옵저버에 의존)',
           'cmp.imp.i4.r3c2': '완전 호환 및 연동 가능',
           'cmp.imp.i4.r4c0': '컨텍스트 없는 탐색',
           'cmp.imp.i4.r4c1': 'Get.find<T>() 호출',
-          'cmp.imp.i4.r4c2': 'Get.find<T>() 지원 (WeakReference 캐시 활용)',
+          'cmp.imp.i4.r4c2': 'Get.find<T>() 지원 (WeakReference 캐시; 동일 타입 인스턴스가 여럿 살아 있으면 모호함)',
           'cmp.imp.i4.eval':
-              '현대의 GoRouter 시대를 완벽하게 지원하는 디자인입니다. GetX 최대의 약점이던 글로벌 상태 누수 문제를 깔끔하게 해소합니다.',
+              'GoRouter 시대에 맞는 설계이며 GetX 최대의 구조적 약점을 해소합니다. 주의: 컨텍스트 없는 폴백은 가장 최근에 등록된 인스턴스를 반환하므로, 같은 타입의 인스턴스가 N개 살아 있는 상황에서는 반드시 context를 넘겨야 합니다.',
           // Item 2.5
           'cmp.imp.i5.title': 'FIFO 순차 실행 파이프라인 (updateSequential)',
           'cmp.imp.i5.subtitle': '빈번한 비동기 작업 시 경쟁 상태(Race Condition) 방지',
@@ -1092,14 +1125,14 @@ class AppTranslations extends Translations {
           'cmp.imp.i5.r1c1': '없음',
           'cmp.imp.i5.r1c2': 'Completer 체이닝 파이프라인 탑재',
           'cmp.imp.i5.eval':
-              '실시간 시세 알림, 채팅 기능 또는 센서 모니터링 시스템과 같이 찰나의 순간에 다량의 데이터 요청이 들어오는 환경에 꼭 필요한 안전장치입니다.',
+              '실시간 시세, 채팅, 센서 모니터링처럼 짧은 순간에 다량의 비동기 갱신이 몰리는 환경에 꼭 필요한 안전장치입니다. 주의: action 내부 예외는 addError로 Rx 스트림에 전달되므로, 구독 중인 Worker가 없으면 조용히 사라집니다.',
           // Item 2.6
           'cmp.imp.i6.title': 'RxSList / RxS — 상태 인지형 반응형 타입',
           'cmp.imp.i6.subtitle': 'GetX 패키지에는 없는 오리지널 신기능',
           'cmp.imp.i6.h0': '비교 항목',
           'cmp.imp.i6.r0c0': '리스트 상태 관리',
           'cmp.imp.i6.r0c1': '별도의 isLoading, errorMessage 등의 변수 선언 필요',
-          'cmp.imp.i6.r0c2': '리스트 내부에 비동기 진행 상태가 자동 탑재됨',
+          'cmp.imp.i6.r0c2': '리스트 자체에 상태 내장 (idle/loading/loaded/empty/error, v1.3.0+)',
           'cmp.imp.i6.r1c0': '단일 인스턴스 상태',
           'cmp.imp.i6.r1c1': '컨트롤러 레벨의 StateMixin을 통해서만 제어 가능',
           'cmp.imp.i6.r1c2': '개별 변수 단위로 상태 관리가 내장됨 (RxS)',
@@ -1107,7 +1140,7 @@ class AppTranslations extends Translations {
           'cmp.imp.i6.r2c1': '조건부(if-else) 뷰 조각 수동 구성',
           'cmp.imp.i6.r2c2': '.on() 선언형 빌더를 활용한 깔끔한 바인딩',
           'cmp.imp.i6.eval':
-              '개발자가 직접 로딩 변수나 에러 필드를 일일이 정의하지 않아도 되어 상용구 코드가 엄청나게 단축됩니다. 획기적인 아이디어입니다.',
+              '별도의 isLoading/errorMessage 변수를 없애는 DX 혁신이며 GetX에는 없는 독창적 기여입니다. 아쉬운 점 둘: .ops가 모든 타입 T에 대한 확장이라 자동완성 어디에나 노출되고, 데이터를 넣어 생성한 리스트도 loaded가 아닌 idle로 시작합니다.',
           // Item 2.7
           'cmp.imp.i7.title': '엄격한 비동기 Obx 코드 검증 체계',
           'cmp.imp.i7.subtitle': '비동기 Obx 작성 안티패턴 사전 차단',
@@ -1125,7 +1158,7 @@ class AppTranslations extends Translations {
           'cmp.imp.i8.subtitle': '찾기 실패한 컨트롤러 추적을 돕는 가이드 제공',
           'cmp.imp.i8.h0': '비교 항목',
           'cmp.imp.i8.r0c0': '오류 안내 메시지',
-          'cmp.imp.i8.r0c1': '"Controller not found"라는 아주 불친절한 문자열 출력',
+          'cmp.imp.i8.r0c1': '"CounterController" not found. You need to call "Get.put(...)" 한 줄 출력',
           'cmp.imp.i8.r0c2': '요청 위젯 정보 + 부모 탐색 구조(위젯 트리) + 현재 등록 정보 전체 출력',
           'cmp.imp.i8.eval':
               '의존성 탐색 오류가 일어났을 때 어디서 누락이 일어났는지 위젯 조상 추적 및 글로벌 인벤토리 정보를 모아 한눈에 시각화해 줍니다.',
@@ -1137,7 +1170,7 @@ class AppTranslations extends Translations {
           'cmp.sac.r0c0': '자체 라우팅 엔진',
           'cmp.sac.r0c1': 'GetPageRoute, Get.to(), Get.off() 등',
           'cmp.sac.r0c3': 'GoRouter 또는 Flutter 표준 네비게이터 활용 권장',
-          'cmp.sac.r1c0': '다이얼로그/바텀시트',
+          'cmp.sac.r1c0': 'Get.dialog / bottomSheet / snackbar',
           'cmp.sac.r1c1': 'BuildContext가 없는 글로벌 오버레이 처리',
           'cmp.sac.r1c3': 'Flutter 기본 다이얼로그 API 사용 권장',
           'cmp.sac.r2c0': 'GetConnect',
@@ -1152,12 +1185,21 @@ class AppTranslations extends Translations {
           'cmp.sac.r5c0': 'GetX Binding 클래스',
           'cmp.sac.r5c1': 'GetPage 선언에 묶어 쓰던 라우트 바인딩 클래스',
           'cmp.sac.r5c3': 'BindingWidget을 사용하여 선언형 위젯 단위로 바인딩',
-          'cmp.sac.r6c0': 'interval 백그라운드 워커',
-          'cmp.sac.r6c1': '일정 시간 간격으로 실행되는 워커',
-          'cmp.sac.r6c3': 'Dart 내장 Timer 클래스를 사용해 동일하게 구현 가능',
+          'cmp.sac.r6c0': 'interval / everAll 워커',
+          'cmp.sac.r6c1': '주기 실행 워커 및 다중 Rx 감시 워커',
+          'cmp.sac.r6c3': 'Timer 또는 Rx별 ever()로 대체',
           'cmp.sac.r7c0': 'SmartManagement 기능',
           'cmp.sac.r7c1': '메모리 인스턴스 자동 파기 및 유지 정책 제어',
           'cmp.sac.r7c3': 'BindingWidget의 생명주기 자동 가비지 컬렉션(GC)으로 완전 일원화',
+          'cmp.sac.r8c0': 'RxMap / RxSet',
+          'cmp.sac.r8c1': '반응형 Map/Set 컬렉션',
+          'cmp.sac.r8c3': 'RxList만 존재. Map/Set은 Rx<T>에 담아 재대입',
+          'cmp.sac.r9c0': 'GetBuilder / update(ids)',
+          'cmp.sac.r9c1': 'ID 기반 부분 리빌드',
+          'cmp.sac.r9c3': 'update()는 남아 있지만 ids는 무시됨 — Obx 단위로 분리',
+          'cmp.sac.r10c0': 'Rx.bindStream',
+          'cmp.sac.r10c1': '외부 Stream을 Rx에 바인딩',
+          'cmp.sac.r10c3': 'stream.listen((v) => rx.value = v) 후 onClose에서 cancel',
           'cmp.sac.info_card':
               '라우팅, 다이얼로그, 통신, 저장소 등을 제거한 것은 현대 Flutter 생태계에 부합하기 위한 의도적인 다운사이징입니다. 각 역할에 집중된 전문 패키지를 결합하여 사용하면 더욱 견고하고 확장성 있는 구조를 완성할 수 있습니다.',
           'cmp.sac.next_title': '4. 코드 품질 종합 진단',
@@ -1166,39 +1208,45 @@ class AppTranslations extends Translations {
           // ── Comparison — Quality ──
           'cmp.qa.title': '코드 품질 종합 평가',
           'cmp.qa.good0':
-              '초정밀 경량화 — 핵심 코드가 약 1,200줄에 불과해 GetX 대비 10% 이하입니다. 압도적인 관리 편의성을 자랑합니다.',
+              '컴팩트 — 18개 파일, 전체 1,968줄(공백·주석 제외 1,342줄)로 GetX 4.7.3(17,351 / 11,831줄)의 약 11%입니다. 한 번에 다 읽을 수 있는 크기입니다.',
           'cmp.qa.good1': '제로 의존성 — Flutter SDK에만 의존하여 공급망 보안 위험이 완전히 제로입니다.',
           'cmp.qa.good2':
-              '철저한 테스트 커버리지 — 핵심 기능 테스트 코드가 약 1,594줄에 달하며 좀비 메모리 감지, RxList 일괄 갱신 등 엣지 케이스까지 안전히 커버합니다.',
+              '탄탄한 테스트 — 패키지 테스트 1,689줄 / 114 케이스에 TDD 예제 테스트(v1.3.2)가 추가되었습니다. RxList 배치, WeakReference 좀비 방지, 형제 컨트롤러 onClose 상호 참조, idle/error 전환을 커버합니다.',
           'cmp.qa.good3':
               '단일 구조 체계 — 모든 반응형 타입이 GetListenable -> RxInterface 계층을 완벽히 따라 확장성이 좋습니다.',
           'cmp.qa.good4':
               '안정성 극대화 — 약한 참조(WeakReference) 캐시, 라이프사이클 역순 파괴 정책, Expando 기반 GetView 관리 등이 정교히 짜여 있습니다.',
           'cmp.qa.good5':
-              '문서 퀄리티 — 영문 및 국문 한글 문서가 일치화되어 있으며 최신 GoRouter 연동 샘플까지 모범적으로 수록되어 있습니다.',
+              '문서 퀄리티 — 영문/국문 README가 동기화되어 있고 예제 앱이 전 기능을 다루며, v1.3.2에서 목 서비스 주입을 다룬 TDD 가이드가 추가되었습니다.',
+          'cmp.qa.good6':
+              '루트 서비스 즉시 초기화 — GetMaterialApp(bindings)과 BindingWidget(eager: true)이 마운트 시점에 GetxService를 초기화(v1.3.1)하여 기존 builder 콜백 우회책이 사라졌습니다.',
           'cmp.qa.bad0':
-              'GetxController.update() 및 ID 기반 리빌드 미지원 — 기존 GetBuilder와 엮어 쓰던 ID 기반 부분 리빌드 기능은 지원되지 않습니다.',
+              'update(ids)는 받아들이지만 ids를 조용히 무시하고 GetBuilder도 없음 — ID 기반 부분 리빌드에 의존하던 GetX 코드가 컴파일은 되지만 기대와 다르게 동작합니다.',
           'cmp.qa.bad1':
-              'RxSList 초기 데이터 로딩 처리 애매함 — 생성 시점에 데이터를 넘겨주어도 로딩 상태로 시작됩니다. 로드 상태로 즉시 시작할 수 있는 초기 인자 선택지가 추가되면 더 좋을 것입니다.',
+              '초기 데이터를 넣은 RxSList/RxS도 loaded가 아닌 idle로 시작 — [1, 2, 3].ops는 첫 변경 전까지 idle을 보고합니다. loaded로 시작하는 옵션이 있으면 좋겠습니다.',
           'cmp.qa.bad2':
-              'interval 백그라운드 워커 미탑재 — 주기적 처리를 제어하는 헬퍼 클래스가 없어 Timer 등을 수동 구현해야 합니다.',
+              '컬렉션은 RxList만 — RxMap/RxSet이 없고, Worker에 interval/everAll이 없으며, Rx.bindStream도 사라졌습니다.',
           'cmp.qa.bad3':
-              'Get.find 태그와 Context 중복 사용 불가 — BuildContext를 직접 지정하여 찾을 때는 네임스페이스 태그를 조합해 찾을 수 없습니다.',
+              '태그와 위젯 트리 스코프는 상호 배타적 — Get.find<T>(context, tag)는 BindingWidget 탐색을 완전히 건너뛰며, 위치 인자 방식의 Get.find(null, tag)는 GetX의 named tag: 파라미터와 시그니처가 다릅니다.',
           'cmp.qa.bad4':
-              'RxList []= 대입 연산 오버라이딩 미흡 — 커스텀 인덱스 강제 쓰기 시 스케줄러 일괄 적용을 타지 않고 즉시 이벤트가 날아갈 수 있습니다.',
+              'updateSequential이 오류를 삼킴 — 예외가 addError로 브로드캐스트 스트림에 전달되므로 구독 중인 Worker가 없으면 소리 없이 사라집니다.',
+          'cmp.qa.bad5':
+              '컨텍스트 없는 Get.find<T>()는 동일 타입 인스턴스가 여럿이면 모호함 — 마지막에 등록된 것을 반환하며, 무관한 활성 BindingWidget 안의 바인딩을 미리 인스턴스화할 수도 있습니다.',
+          'cmp.qa.bad6':
+              'lazyPut(fenix: true)는 저장만 되고 실제로는 동작하지 않음 — 삭제된 lazy 의존성이 다음 find()에서 재생성되지 않습니다.',
           'cmp.qa.s0_item': '아키텍처 설계 품질',
           'cmp.qa.s0_note': '위젯 트리 기반 스코프 주입과 하이브리드 탐색 연동은 최고 수준',
           'cmp.qa.s1_item': '성능 최적화 역량',
-          'cmp.qa.s1_note': 'Fast-Path boolean 체크 및 리스트 일괄 갱신의 강력한 시너지',
+          'cmp.qa.s1_note': '배치와 FIFO 파이프라인은 실질적 이득, Fast-Path의 GetX 4.x 대비 이득은 미미',
           'cmp.qa.s2_item': '메모리 관리 안전성',
-          'cmp.qa.s2_note': 'WeakReference 활용과 Expando 바인딩을 통한 강력한 누수 제거',
+          'cmp.qa.s2_note': 'WeakReference·해제 순서 보장·Expando 정리는 우수, 정적 레지스트리는 테스트에서 Get.reset() 필요',
           'cmp.qa.s3_item': 'DX (개발자 경험)',
           'cmp.qa.s3_note': '상태 인지형 RxSList와 .on() 분기 처리 가독성은 최고 수준',
           'cmp.qa.s4_item': 'GetX 호환성',
           'cmp.qa.s4_note':
-              '.obs, Obx, Get.find 등 핵심 패러다임이 100% 같아 손쉬운 마이그레이션 가능',
+              '.obs / Obx / Get.put은 동일하나 Get.find 태그 시그니처, RxMap/RxSet, GetBuilder, bindStream은 다름',
           'cmp.qa.s5_item': '테스트 신뢰성',
-          'cmp.qa.s5_note': '핵심 동작들이 잘 검증되어 있으나 일부 엣지 케이스는 확장 여지 있음',
+          'cmp.qa.s5_note': '114 케이스 + TDD 예제. updateSequential 오류 경로와 fenix는 미검증',
           'cmp.qa.s6_item': '문서화 수준',
           'cmp.qa.s6_note': '한글/영문 가이드라인과 정교한 완성형 데모의 품질이 훌륭함',
           'cmp.qa.s7_item': '생태계 친화성',
@@ -1216,7 +1264,7 @@ class AppTranslations extends Translations {
           'cmp.rp.s1.r0c2': '선언형(Declarative)에 철저히 입각한 상태 전달',
           'cmp.rp.s1.r1c0': '상태 데이터 선언',
           'cmp.rp.s1.r1c1': '런타임 도중 동적 선언 + .obs 지정',
-          'cmp.rp.s1.r1c2': '컴파일 타임 정적 코드 생성(Code Gen)',
+          'cmp.rp.s1.r1c2': '타입이 있는 프로바이더 객체 (코드 생성은 선택)',
           'cmp.rp.s1.r2c0': '의존성 주입 방식',
           'cmp.rp.s1.r2c1': '수동 등록 체계 (Get.put, BindingWidget)',
           'cmp.rp.s1.r2c2': '자동 등록 체계 (@riverpod 어노테이션 분석)',
@@ -1228,18 +1276,18 @@ class AppTranslations extends Translations {
           'cmp.rp.s1.r4c2': '많음 (어노테이션 작성 및 자동 빌드 파일 생성 수반)',
           'cmp.rp.s1.r5c0': '빌드 의존성',
           'cmp.rp.s1.r5c1': '의존성 제로',
-          'cmp.rp.s1.r5c2': 'build_runner 가동 필수',
+          'cmp.rp.s1.r5c2': '선택 (riverpod_generator 사용 시에만)',
           'cmp.rp.s1.eval':
-              'getx_distil의 명료한 명령형 패러다임은 극히 낮은 학습 곡선과 상용구 제로 수준의 속도를 보장합니다. 반면 Riverpod 3.0은 체계적이지만 사전 설정과 공부할 개념이 많습니다.',
+              'getx_distil의 명료한 명령형 패러다임은 극히 낮은 학습 곡선과 상용구 제로 수준의 속도를 보장합니다. 반면 Riverpod 3.x은 체계적이지만 사전 설정과 공부할 개념이 많습니다.',
 
           // 5.2 State Management Approach
           'cmp.rp.s2.title': '상태 관리 접근 방식의 차이',
           'cmp.rp.s2.desc1': 'getx_distil — 명령형 옵저버블 방식',
-          'cmp.rp.s2.desc2': 'Riverpod 3.0 — 선언형 노티파이어 방식',
+          'cmp.rp.s2.desc2': 'Riverpod 3.x — 선언형 노티파이어 방식',
           'cmp.rp.s2.h0': '비교 특징',
           'cmp.rp.s2.r0c0': '상태 변수 선언',
           'cmp.rp.s2.r0c1': '.obs 한 줄로 간단히 해결',
-          'cmp.rp.s2.r0c2': '클래스 정의 + 어노테이션 + build() 구현',
+          'cmp.rp.s2.r0c2': 'Notifier 클래스 + build() (+ 선택적 어노테이션)',
           'cmp.rp.s2.r1c0': '상태 변경 작업',
           'cmp.rp.s2.r1c1': '.value = 새로운 데이터 대입 식',
           'cmp.rp.s2.r1c2': '특화 메소드 호출을 통한 상태 제어 유도',
@@ -1267,7 +1315,7 @@ class AppTranslations extends Translations {
           'cmp.rp.s3.r2c2': 'AsyncValue.guard()가 예외 자동 수집',
           'cmp.rp.s3.r3c0': '캐싱 및 재시도',
           'cmp.rp.s3.r3c1': '개발자가 직접 수동 로직 구성',
-          'cmp.rp.s3.r3c2': '기본 내장 (keepAlive, retry, invalidate 등)',
+          'cmp.rp.s3.r3c2': '기본 내장 (keepAlive, 자동 retry, invalidate, 실험적 오프라인 영속화)',
           'cmp.rp.s3.r4c0': '사용자 개발 경험(DX)',
           'cmp.rp.s3.r4c1': '직관적이나 손이 더 많이 감',
           'cmp.rp.s3.r4c2': '자동화되어 있으나 개념 학습 장벽 존재',
@@ -1277,11 +1325,11 @@ class AppTranslations extends Translations {
           // 5.4 DI
           'cmp.rp.s4.title': '의존성 주입(DI) 아키텍처 비교',
           'cmp.rp.s4.desc1': 'getx_distil — 하이브리드 탐색 체인',
-          'cmp.rp.s4.desc2': 'Riverpod 3.0 — 프로바이더 범위(Scope) 지향',
+          'cmp.rp.s4.desc2': 'Riverpod 3.x — 프로바이더 범위(Scope) 지향',
           'cmp.rp.s4.h0': '비교 특징',
           'cmp.rp.s4.r0c0': '의존성 등록',
           'cmp.rp.s4.r0c1': '수동 등록 지향 (Get.put, BindingWidget 활용)',
-          'cmp.rp.s4.r0c2': '어노테이션 정보 분석을 통해 빌드 타임 자동 연동',
+          'cmp.rp.s4.r0c2': '선언적 프로바이더 객체 (코드 생성은 선택)',
           'cmp.rp.s4.r1c0': '주입 유효 스코프',
           'cmp.rp.s4.r1c1': '위젯 트리 단위 로컬 영역 + 글로벌 영역 복합 방식',
           'cmp.rp.s4.r1c2': '프로바이더 범위 (특정 노드 오버라이드 가능)',
@@ -1290,10 +1338,10 @@ class AppTranslations extends Translations {
           'cmp.rp.s4.r2c2': 'family 제어 모디파이어 활용 (컴파일 타임 규격 필요)',
           'cmp.rp.s4.r3c0': '컨텍스트 독립 탐색',
           'cmp.rp.s4.r3c1': '✅ 완전 지원 (어디서나 Get.find<T>() 호출 가능)',
-          'cmp.rp.s4.r3c2': '❌ 불가능 (반드시 ref 매개 객체가 전달되어야 함)',
+          'cmp.rp.s4.r3c2': '❌ ref/container 필요 (전역 컨테이너 접근은 안티패턴)',
           'cmp.rp.s4.r4c0': '의존성 생명주기 관리',
           'cmp.rp.s4.r4c1': '해당 위젯 트리 제거 시 컨트롤러 자동 GC 작동',
-          'cmp.rp.s4.r4c2': 'ref.onDispose() 콜백을 수동 트리거하여 제어',
+          'cmp.rp.s4.r4c2': 'autoDispose + ref.onDispose() 콜백',
           'cmp.rp.s4.r5c0': '인스턴스 상호 격리',
           'cmp.rp.s4.r5c1': '위젯 트리 조상 경로 격리로 쉽고 편리함',
           'cmp.rp.s4.r5c2': 'family 및 오버라이드 조합으로 철저한 격리 규칙 준수',
@@ -1305,23 +1353,23 @@ class AppTranslations extends Translations {
           'cmp.rp.s5.subtitle': '대규모 리스트 데이터 일괄 조작 시나리오',
           'cmp.rp.s5.h0': '비교 상황',
           'cmp.rp.s5.r0c0': 'add() 10,000회 연속 처리',
-          'cmp.rp.s5.r0c1': '마이크로태스크 배치 최적화로 UI 리빌드 단 1회 실행',
-          'cmp.rp.s5.r0c2': '각 데이터 변경 사항이 순차 전달되어 과부하 가능성 존재',
+          'cmp.rp.s5.r0c1': '마이크로태스크 배치로 알림 1회',
+          'cmp.rp.s5.r0c2': '알림 N회 + 리스트 복사 N회 (state = [...state, x]); build는 여전히 프레임당 1회',
           'cmp.rp.s5.r1c0': '루프 내부 변경',
           'cmp.rp.s5.r1c1': '배치 최적화로 자동 병합 제어',
-          'cmp.rp.s5.r1c2': '루프 외부에서 새로운 리스트 통대입 형태로 구성해야 과부하를 막음',
+          'cmp.rp.s5.r1c2': '관용구: 리스트를 먼저 만들고 한 번에 대입',
           'cmp.rp.s5.r2c0': 'Obx 미사용 읽기',
           'cmp.rp.s5.r2c1': 'isTracking 플래그 O(1) 초고속 패스 패스',
           'cmp.rp.s5.r2c2': '해당 없음 (프로바이더 값을 얻으려면 상시 ref 전달이 필요)',
           'cmp.rp.s5.eval':
-              '실시간 다량의 메시지 처리, 센서 신호 처리와 같이 데이터가 요동치는 화면에 있어서는 getx_distil의 배치 엔진이 압도적인 성능 강점을 제공합니다. Riverpod에서는 이를 막기 위해 데이터를 통째로 새로 만들어 덮어써야 합니다.',
+              '루프 안에서 그대로 변경하는 순진한 코드에서는 getx_distil이 확실히 우세합니다: 알림 1회·복사 0회 vs 알림 N회·O(N²) 복사. 그러나 관용적인 Riverpod 코드(리스트를 만들어 한 번에 대입)에서는 격차가 사라지므로, 이는 절대적 성능 장벽보다 DX 우위에 가깝습니다.',
 
           // 5.6 Safety Features
           'cmp.rp.s6.title': '안정성 및 검증 장치 비교',
           'cmp.rp.s6.h0': '검증 및 안전 장치',
           'cmp.rp.s6.r0c0': '빌드 단계 상태 갱신',
           'cmp.rp.s6.r0c1': '프레임 종료 후로 안전하게 자동 스케줄 지연 (오류 복구)',
-          'cmp.rp.s6.r0c2': '에러 발생 (빌드 타임 중에는 ref.watch만 허용됨)',
+          'cmp.rp.s6.r0c2': '"Tried to modify a provider while the widget tree was building" 예외 발생',
           'cmp.rp.s6.r1c0': '빌드 중 ref.watch 검사',
           'cmp.rp.s6.r1c1': '해당 없음',
           'cmp.rp.s6.r1c2': '런타임 도중 강력한 위반 검증 및 방지',
@@ -1333,10 +1381,10 @@ class AppTranslations extends Translations {
           'cmp.rp.s6.r3c2': '단순 ProviderNotFoundException 계열 예외 송출',
           'cmp.rp.s6.r4c0': '경쟁 상태 제어 장치',
           'cmp.rp.s6.r4c1': 'updateSequential FIFO 파이프라인 내장',
-          'cmp.rp.s6.r4c2': '없음 (경쟁 상태 방지는 개발자가 수동 제어해야 함)',
+          'cmp.rp.s6.r4c2': 'FIFO 큐는 없음. 낡은 결과는 ref.mounted / 리빌드 취소로 처리',
           'cmp.rp.s6.r5c0': '정적 타입 안전성',
           'cmp.rp.s6.r5c1': '런타임 위젯 트리 조회 기반 (오동작 시 런타임 익셉션 발생)',
-          'cmp.rp.s6.r5c2': '컴파일 단계 정적 안전성 (Code Gen을 통해 컴파일 타임 오류 검출 가능)',
+          'cmp.rp.s6.r5c2': '컴파일 타임 (타입이 있는 프로바이더 객체, 코드 생성 불필요)',
           'cmp.rp.s6.eval':
               'getx_distil은 유연한 런타임 구조 위에 다양한 다중 안전 그물을 덧댄 형태입니다. 반면 Riverpod은 컴파일 수준에서 실수를 사전 봉쇄하는 것에 초점이 맞추어져 있습니다.',
 
@@ -1344,24 +1392,26 @@ class AppTranslations extends Translations {
           'cmp.rp.s7.title': '코드 생성 방식 vs 제로 의존성 순수 방식',
           'cmp.rp.s7.h0': '비교 항목',
           'cmp.rp.s7.r0c0': '빌드 러너 가동 여부',
+          'cmp.rp.s7.r0c1': '불필요',
+          'cmp.rp.s7.r0c2': '선택',
           'cmp.rp.s7.r1c0': '자동 생성 코드 파일 (.g.dart)',
           'cmp.rp.s7.r1c1': '없음 (순수 코드로 개발 완료)',
-          'cmp.rp.s7.r1c2': '있음 (모든 파일 생성 필요)',
+          'cmp.rp.s7.r1c2': 'riverpod_generator 사용 시에만 생성',
           'cmp.rp.s7.r2c0': '전체 빌드 소요 시간',
           'cmp.rp.s7.r2c1': '차이 없음 (순수 Flutter 빌드 시간만 소요)',
-          'cmp.rp.s7.r2c2': '늘어남 (코드 생성 엔진 작동 오버헤드 추가)',
+          'cmp.rp.s7.r2c2': '코드 생성을 쓸 때만 늘어남',
           'cmp.rp.s7.r3c0': 'IDE 지연 감지',
           'cmp.rp.s7.r3c1': '표준 분석기 작동으로 지연 없음',
-          'cmp.rp.s7.r3c2': '생성물 연동에 따른 자동 완성 렉 유발 가능성 존재',
+          'cmp.rp.s7.r3c2': '생성 코드 탐색 필요 (코드 생성 사용 시)',
           'cmp.rp.s7.r4c0': 'CI/CD 빌드 프로세스',
           'cmp.rp.s7.r4c1': '단순하고 빠른 셋업',
-          'cmp.rp.s7.r4c2': '빌드 단계 이전 코드 생성 단계 주입 필수',
+          'cmp.rp.s7.r4c2': '중간 (코드 생성 사용 시에만 build_runner 단계 추가)',
           'cmp.rp.s7.r5c0': '패키지 총 의존성',
           'cmp.rp.s7.r5c1': '0 (Flutter SDK 내장)',
           'cmp.rp.s7.r5c2':
-              '다수 (riverpod, riverpod_annotation, build_runner 등 다량)',
+              'flutter_riverpod → riverpod, meta, collection, state_notifier (코드 생성 시 추가)',
           'cmp.rp.s7.eval':
-              '소규모 1인 개발 또는 빠른 MVP 개발 단계에서는 코드 생성이 필요 없는 getx_distil이 속도전에서 월등히 강합니다. 반면 대규모 대기업 프로젝트에서는 컴파일 안전장치가 코드 유지보수에 기여합니다.',
+              '소규모 프로젝트에서는 의존성 제로 셋업이 실질적 장점입니다. 단, Riverpod 3.x는 build_runner 없이도 동작하며 코드 생성은 대규모 팀의 리팩토링 안전성을 추가로 사는 선택 사항입니다.',
 
           // 5.8 Testability
           'cmp.rp.s8.title': '단위 테스트 및 모킹(Mocking)',
@@ -1370,16 +1420,16 @@ class AppTranslations extends Translations {
           'cmp.rp.s8.r0c1': 'Get.put(mock)을 통해 수동 교환 후 Get.find 호출',
           'cmp.rp.s8.r0c2': 'ProviderContainer의 overrides 속성에 모킹 전달',
           'cmp.rp.s8.r1c0': '위젯 테스트 수행',
-          'cmp.rp.s8.r1c1': 'BindingWidget의 스코프 트리를 수동 통제하여 제어',
+          'cmp.rp.s8.r1c1': 'BindingWidget에 Bind<Interface>(() => Mock()) 선언 (TDD 가이드, v1.3.2)',
           'cmp.rp.s8.r1c2': 'ProviderScope 내부 overrides 목록 교체 방식으로 간편함',
           'cmp.rp.s8.r2c0': '모킹 처리 난이도',
-          'cmp.rp.s8.r2c1': '보통 (글로벌 맵 등록 정보를 임의 교체하는 수동 작업 필요)',
+          'cmp.rp.s8.r2c1': '위젯 테스트는 양호 (선언적 Bind 목록), 글로벌 Get.put은 수동',
           'cmp.rp.s8.r2c2': '매우 편리함 (프로바이더 단위 오버라이드 시스템 완벽 지원)',
           'cmp.rp.s8.r3c0': '각 테스트 간 독립 격리',
-          'cmp.rp.s8.r3c1': '새로운 테스트 실행 시 수동 Get.reset() 클리어 처리 필요',
+          'cmp.rp.s8.r3c1': 'BindingWidget 스코프는 자체 격리, 글로벌/immortal 레지스트리는 Get.reset() 필요',
           'cmp.rp.s8.r3c2': '새 컨테이너 객체 생성 방식으로 테스트 간 간섭 자동 차단',
           'cmp.rp.s8.eval':
-              '테스트 모킹에 있어서는 Riverpod의 선언적 컨테이너 독립 시스템이 훨씬 모던하고 강력합니다. getx_distil은 글로벌 상태를 완전히 클리어해 주지 않으면 테스트 간 데이터 간섭이 유발될 여지가 있습니다.',
+              '모킹은 여전히 Riverpod의 override 시스템이 더 체계적입니다. getx_distil은 1.3.2의 BindingWidget TDD 패턴으로 격차를 일부 줄였지만, 정적 레지스트리(글로벌·immortal·weak)는 여전히 Get.reset() 규율을 요구합니다.',
 
           // Matrix items
           'cmp.rp.mx.learning_curve': '학습 장벽 (장벽이 낮을수록 고득점)',
@@ -1399,7 +1449,7 @@ class AppTranslations extends Translations {
 
           // Guide
           'cmp.rp.guide.winner_title': '이런 상황이라면 getx_distil을 선택하세요!',
-          'cmp.rp.guide.loser_title': '이런 상황이라면 Riverpod 3.0을 선택하세요!',
+          'cmp.rp.guide.loser_title': '이런 상황이라면 Riverpod 3.x을 선택하세요!',
           'cmp.rp.guide.winner0':
               '🚀 초고속 프로토타이핑 및 MVP 개발 — 상용구 코드가 없어 개발 속도가 제일 빠릅니다',
           'cmp.rp.guide.winner1':
@@ -1415,7 +1465,7 @@ class AppTranslations extends Translations {
           'cmp.rp.guide.loser0':
               '🏢 대기업의 대규모 협업 프로젝트 — 수십 명 규모의 동시 작업 시 컴파일 안전장치가 리팩토링 버그를 확실히 예방',
           'cmp.rp.guide.loser1':
-              '🧪 철저한 테스트 주도 개발(TDD) 지향 — 프레임워크가 제공하는 프로바이더 overrides 기능이 안전한 목 주입을 도움',
+              '🧪 override 중심의 대규모 테스트 — 목 그래프가 커질수록 프로바이더 override가 수동 바인딩보다 잘 확장됨',
           'cmp.rp.guide.loser2':
               '📡 고도화된 비동기 데이터 쿼리 시스템 — 서버 데이터 캐싱, 리프레시 갱신 및 백그라운드 재호출이 아키텍처의 절대 다수인 경우',
           'cmp.rp.guide.loser3':
@@ -1430,18 +1480,18 @@ class AppTranslations extends Translations {
           'cmp.con.card0.p0':
               'GetX가 모든 기능이 종합된 "종합 프레임워크"였다면 getx_distil은 날렵하게 튜닝된 "마이크로 엔진"입니다. 라우팅, 오버레이, 네트워크 및 로컬 스토리지를 미련 없이 제거하고 오직 상태 관리와 의존성 주입에 초점을 맞춰 현대 Flutter 생태계(GoRouter, dio, shared_preferences 등)와의 결합도를 완벽한 수준으로 끌어올렸습니다.',
           'cmp.con.card0.p1':
-              '특히 Fast-Path Tracking, RxList Microtask Batching, 위젯 트리 스코프 DI인 BindingWidget 등은 기존 GetX의 한계를 보완하는 획기적 성능 개선 장치이며, 독창적인 RxSList/RxS 체계는 다른 패키지에서 맛볼 수 없는 훌륭한 신규 아이디어입니다.',
+              'RxList 마이크로태스크 배치와 위젯 트리 스코프 DI(BindingWidget)는 원본 대비 검증 가능한 명확한 개선이며, RxSList/RxS는 독창적 기여입니다. Fast-Path Tracking은 건전한 설계이지만 GetX 4.x의 정적 프록시와 비교하면 측정 가능한 이득은 작습니다.',
           'cmp.con.card0.p2':
               '기존 GetX 유저에게는 친숙한 문법 그대로 제공하며 의존성 누수를 잡고, 신규 프로젝트에는 GoRouter 시대를 여는 고효율 엔진을 공급한다는 측면에서 원조 패키지보다 압도적인 경쟁 우위를 점합니다.',
           'cmp.con.card1.quote':
-              'getx_distil과 Riverpod 3.0은 경쟁 관계라기보다 상호보완 관계에 가깝습니다.',
+              'getx_distil과 Riverpod 3.x은 경쟁 관계라기보다 상호보완 관계에 가깝습니다.',
           'cmp.con.card1.p0':
-              'getx_distil은 "최소한의 코드로 가장 빠르고 자유롭게"를 추구하는 라이트웨이트 엔진이며, Riverpod 3.0은 "정적 타입을 통해 엄격하게 실수를 방지하는" 구조 지향형 프레임워크입니다.',
+              'getx_distil은 "최소한의 코드로 가장 빠르고 자유롭게"를 추구하는 라이트웨이트 엔진이며, Riverpod 3.x은 "정적 타입을 통해 엄격하게 실수를 방지하는" 구조 지향형 프레임워크입니다.',
           'cmp.con.card1.p1':
-              'getx_distil이 제공하는 RxList의 마이크로태스크 배치 최적화나 빌드 단계 자동 보정, Fast-Path 기술 등은 Riverpod에 존재하지 않는 성능 튜닝 장치로, 실시간 데이터 변동이 매우 심한 페이지일수록 getx_distil이 더 유리합니다.',
+              'RxList 마이크로태스크 배치와 빌드 단계 자동 보정은 Riverpod에 대응물이 없어, 변경 빈도가 매우 높은 페이지에서는 getx_distil이 더 관대합니다. Riverpod은 관용구를 지켜 작성해야 비슷한 효율에 도달합니다.',
           'cmp.con.card1.p2':
-              '반면 Riverpod 3.0은 코드 생성이 주는 컴파일 타임 검증성과 탄탄한 비동기 프로바이더가 거대한 엔터프라이즈 프로젝트에서 진가를 발휘하게 돕습니다. 프로젝트 예산 규모, 구성원의 기술적 성숙도, 처리해야 할 실시간 연산량 등에 맞춰 최적의 솔루션을 선택하는 것이 현명합니다.',
-          'cmp.con.footer': '작성일자: 2026-06-10\n적용 엔진 버전: getx_distil v1.1.3',
+              '반면 Riverpod 3.x은 코드 생성이 주는 컴파일 타임 검증성과 탄탄한 비동기 프로바이더가 거대한 엔터프라이즈 프로젝트에서 진가를 발휘하게 돕습니다. 프로젝트 예산 규모, 구성원의 기술적 성숙도, 처리해야 할 실시간 연산량 등에 맞춰 최적의 솔루션을 선택하는 것이 현명합니다.',
+          'cmp.con.footer': '개정일: 2026-09-07\n분석 대상 버전: getx_distil 1.3.2 · GetX 4.7.3 · flutter_riverpod 3.4.3',
         },
       };
 }

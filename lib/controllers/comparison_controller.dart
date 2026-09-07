@@ -125,15 +125,25 @@ class ComparisonController extends GetxController {
             'GetX'
           ],
           'tableRows': [
-            _row(['cmp.ov.r_version'.tr, '1.2.0 (Stable)', '4.6.6']),
-            _row(['SDK', 'Dart ^3.12.0', 'Dart >=2.14.0']),
+            _row(['cmp.ov.r_version'.tr, '1.3.2 (Stable)', '4.7.3 (Stable)']),
+            _row(['SDK', 'Dart ^3.12.0', 'Dart >=2.15.0 <4.0.0']),
             _row([
               'cmp.ov.r_deps'.tr,
               'cmp.ov.r_deps_distil'.tr,
               'cmp.ov.r_deps_getx'.tr
             ]),
-            _row(['cmp.ov.r_files'.tr, '15', '100+']),
-            _row(['cmp.ov.r_logic'.tr, '~1,200 lines', '~15,000+ lines']),
+            _row(['cmp.ov.r_files'.tr, '18', '118']),
+            _row([
+              'cmp.ov.r_logic'.tr,
+              '1,968 (1,342 code)',
+              '17,351 (11,831 code)'
+            ]),
+            _row(['cmp.ov.r_tests'.tr, '1,689 lines / 114 cases', 'cmp.ov.r_tests_getx'.tr]),
+            _row([
+              'cmp.ov.r_collections'.tr,
+              'cmp.ov.r_collections_distil'.tr,
+              'cmp.ov.r_collections_getx'.tr
+            ]),
             _row([
               'cmp.ov.r_routing'.tr,
               _del('cmp.ov.r_removed'.tr),
@@ -182,7 +192,7 @@ class ComparisonController extends GetxController {
                 _row([
                   'cmp.imp.i1.r1c0'.tr,
                   'cmp.imp.i1.r1c1'.tr,
-                  _ok('cmp.imp.i1.r1c2'.tr)
+                  'cmp.imp.i1.r1c2'.tr
                 ]),
                 _row([
                   'cmp.imp.i1.r2c0'.tr,
@@ -241,6 +251,11 @@ class ComparisonController extends GetxController {
                   'cmp.imp.i3.r2c0'.tr,
                   'cmp.imp.i3.r2c1'.tr,
                   _ok('cmp.imp.i3.r2c2'.tr)
+                ]),
+                _row([
+                  'cmp.imp.i3.r3c0'.tr,
+                  'cmp.imp.i3.r3c1'.tr,
+                  'cmp.imp.i3.r3c2'.tr
                 ]),
               ],
               'codeKey': 'comp_auto_batch_refresh',
@@ -444,6 +459,24 @@ class ComparisonController extends GetxController {
               _del('cmp.sac.removed'.tr),
               'cmp.sac.r7c3'.tr
             ]),
+            _row([
+              'cmp.sac.r8c0'.tr,
+              'cmp.sac.r8c1'.tr,
+              _del('cmp.sac.removed'.tr),
+              'cmp.sac.r8c3'.tr
+            ]),
+            _row([
+              'cmp.sac.r9c0'.tr,
+              'cmp.sac.r9c1'.tr,
+              _del('cmp.sac.removed'.tr),
+              'cmp.sac.r9c3'.tr
+            ]),
+            _row([
+              'cmp.sac.r10c0'.tr,
+              'cmp.sac.r10c1'.tr,
+              _del('cmp.sac.removed'.tr),
+              'cmp.sac.r10c3'.tr
+            ]),
           ],
           'infoCard': 'cmp.sac.info_card'.tr,
           'nextSection': 'quality',
@@ -461,6 +494,7 @@ class ComparisonController extends GetxController {
             'cmp.qa.good3'.tr,
             'cmp.qa.good4'.tr,
             'cmp.qa.good5'.tr,
+            'cmp.qa.good6'.tr,
           ],
           'improvePoints': [
             'cmp.qa.bad0'.tr,
@@ -468,6 +502,8 @@ class ComparisonController extends GetxController {
             'cmp.qa.bad2'.tr,
             'cmp.qa.bad3'.tr,
             'cmp.qa.bad4'.tr,
+            'cmp.qa.bad5'.tr,
+            'cmp.qa.bad6'.tr,
           ],
           'scores': [
             {
@@ -477,12 +513,12 @@ class ComparisonController extends GetxController {
             },
             {
               'item': 'cmp.qa.s1_item'.tr,
-              'score': '⭐⭐⭐⭐⭐',
+              'score': '⭐⭐⭐⭐',
               'note': 'cmp.qa.s1_note'.tr
             },
             {
               'item': 'cmp.qa.s2_item'.tr,
-              'score': '⭐⭐⭐⭐⭐',
+              'score': '⭐⭐⭐⭐½',
               'note': 'cmp.qa.s2_note'.tr
             },
             {
@@ -492,7 +528,7 @@ class ComparisonController extends GetxController {
             },
             {
               'item': 'cmp.qa.s4_item'.tr,
-              'score': '⭐⭐⭐⭐',
+              'score': '⭐⭐⭐½',
               'note': 'cmp.qa.s4_note'.tr
             },
             {
@@ -512,13 +548,13 @@ class ComparisonController extends GetxController {
             },
           ],
           'nextSection': 'riverpod',
-          'nextTitle': 'getx_distil vs Riverpod 3.0',
+          'nextTitle': 'getx_distil vs Riverpod 3.x',
         },
 
         // ── Riverpod ──
         'riverpod': {
           'type': 'riverpod',
-          'title': 'getx_distil vs Riverpod 3.0',
+          'title': 'getx_distil vs Riverpod 3.x',
           'subsections': [
             {
               'subtype': 'table',
@@ -527,7 +563,7 @@ class ComparisonController extends GetxController {
               'tableHeaders': [
                 'cmp.rp.s1.h0'.tr,
                 'getx_distil',
-                'Riverpod 3.0'
+                'Riverpod 3.x'
               ],
               'tableRows': [
                 _row([
@@ -574,7 +610,7 @@ class ComparisonController extends GetxController {
               'tableHeaders': [
                 'cmp.rp.s2.h0'.tr,
                 'getx_distil',
-                'Riverpod 3.0'
+                'Riverpod 3.x'
               ],
               'tableRows': [
                 _row([
@@ -611,12 +647,12 @@ class ComparisonController extends GetxController {
               'title': 'cmp.rp.s3.title'.tr,
               'description': 'getx_distil — RxSList / RxS',
               'codeKey1': 'comp_rp_s3_distil',
-              'description2': 'Riverpod 3.0 — AsyncNotifier + AsyncValue',
+              'description2': 'Riverpod 3.x — AsyncNotifier + AsyncValue',
               'codeKey2': 'comp_rp_s3_riverpod',
               'tableHeaders': [
                 'cmp.rp.s3.h0'.tr,
                 'getx_distil',
-                'Riverpod 3.0'
+                'Riverpod 3.x'
               ],
               'tableRows': [
                 _row([
@@ -658,7 +694,7 @@ class ComparisonController extends GetxController {
               'tableHeaders': [
                 'cmp.rp.s4.h0'.tr,
                 'getx_distil',
-                'Riverpod 3.0'
+                'Riverpod 3.x'
               ],
               'tableRows': [
                 _row([
@@ -701,7 +737,7 @@ class ComparisonController extends GetxController {
               'tableHeaders': [
                 'cmp.rp.s5.h0'.tr,
                 'getx_distil',
-                'Riverpod 3.0'
+                'Riverpod 3.x'
               ],
               'tableRows': [
                 _row([
@@ -729,7 +765,7 @@ class ComparisonController extends GetxController {
               'tableHeaders': [
                 'cmp.rp.s6.h0'.tr,
                 'getx_distil',
-                'Riverpod 3.0'
+                'Riverpod 3.x'
               ],
               'tableRows': [
                 _row([
@@ -772,13 +808,13 @@ class ComparisonController extends GetxController {
               'tableHeaders': [
                 'cmp.rp.s7.h0'.tr,
                 'getx_distil',
-                'Riverpod 3.0'
+                'Riverpod 3.x'
               ],
               'tableRows': [
                 _row([
                   'cmp.rp.s7.r0c0'.tr,
-                  _ok('cmp.rp.s7.r1c1'.tr),
-                  _ok('cmp.rp.s7.r1c2'.tr)
+                  _ok('cmp.rp.s7.r0c1'.tr),
+                  'cmp.rp.s7.r0c2'.tr
                 ]),
                 _row([
                   'cmp.rp.s7.r1c0'.tr,
@@ -815,7 +851,7 @@ class ComparisonController extends GetxController {
               'tableHeaders': [
                 'cmp.rp.s8.h0'.tr,
                 'getx_distil',
-                'Riverpod 3.0'
+                'Riverpod 3.x'
               ],
               'tableRows': [
                 _row([
@@ -846,15 +882,15 @@ class ComparisonController extends GetxController {
             {'item': 'cmp.rp.mx.learning_curve'.tr, 'g': 5, 'r': 3},
             {'item': 'cmp.rp.mx.boilerplate'.tr, 'g': 5, 'r': 3},
             {'item': 'cmp.rp.mx.compile_safety'.tr, 'g': 3, 'r': 5},
-            {'item': 'cmp.rp.mx.async_auto'.tr, 'g': 4, 'r': 5},
-            {'item': 'cmp.rp.mx.list_perf'.tr, 'g': 5, 'r': 3},
+            {'item': 'cmp.rp.mx.async_auto'.tr, 'g': 3, 'r': 5},
+            {'item': 'cmp.rp.mx.list_perf'.tr, 'g': 5, 'r': 4},
             {'item': 'cmp.rp.mx.di_flex'.tr, 'g': 5, 'r': 4},
             {'item': 'cmp.rp.mx.ctx_free'.tr, 'g': 5, 'r': 2},
             {'item': 'cmp.rp.mx.test_mock'.tr, 'g': 4, 'r': 5},
-            {'item': 'cmp.rp.mx.build_complex'.tr, 'g': 5, 'r': 3},
+            {'item': 'cmp.rp.mx.build_complex'.tr, 'g': 5, 'r': 4},
             {'item': 'cmp.rp.mx.refactor'.tr, 'g': 3, 'r': 5},
             {'item': 'cmp.rp.mx.mem_mgmt'.tr, 'g': 4, 'r': 5},
-            {'item': 'cmp.rp.mx.runtime_safety'.tr, 'g': 5, 'r': 3},
+            {'item': 'cmp.rp.mx.runtime_safety'.tr, 'g': 4, 'r': 4},
             {'item': 'cmp.rp.mx.ext_deps'.tr, 'g': 5, 'r': 3},
             {'item': 'cmp.rp.mx.i18n'.tr, 'g': 4, 'r': 2},
           ],
@@ -902,7 +938,7 @@ class ComparisonController extends GetxController {
             {
               'icon': Icons.swap_horiz_rounded,
               'color': AppTheme.googleGreen,
-              'cardTitle': 'getx_distil vs Riverpod 3.0',
+              'cardTitle': 'getx_distil vs Riverpod 3.x',
               'quote': 'cmp.con.card1.quote'.tr,
               'paragraphs': [
                 'cmp.con.card1.p0'.tr,

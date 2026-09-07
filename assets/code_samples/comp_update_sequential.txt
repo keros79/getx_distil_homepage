@@ -1,9 +1,15 @@
 Future<void> updateSequential(Future<T> Function(T currentValue) action) {
   final completer = Completer<void>();
   _lastUpdateFuture = _lastUpdateFuture.then((_) async {
-    final newValue = await action(value);
-    value = newValue;
-    completer.complete();
+    try {
+      final newValue = await action(value);
+      value = newValue;
+    } catch (e, s) {
+      addError(e, s);   // ← goes to the broadcast stream:
+                        //   silently dropped if no Worker is listening
+    } finally {
+      completer.complete();
+    }
   });
   return completer.future;
 }

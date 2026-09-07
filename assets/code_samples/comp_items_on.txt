@@ -1,6 +1,7 @@
 Obx(() => items.on(
+  idle:    () => const Text('Pull to load'),      // v1.3.0+
   loading: () => const CircularProgressIndicator(),
   loaded:  (data) => ListView.builder(...),
   empty:   () => const Text('No items'),
-  error:   (msg) => Text('Error: $msg'),
+  error:   (msg) => Text('Error: ${msg ?? "Unknown"}'),
 ));

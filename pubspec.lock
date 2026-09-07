@@ -188,10 +188,10 @@ packages:
     dependency: "direct main"
     description:
       name: getx_distil
-      sha256: "7c3c1c98a10ed6408da8cf94829e0eca2497a21d0dfa43ef7c8e3c78482db1d1"
+      sha256: d1d8d4c56305d3a5d7c178126aa33cb7eaf417ac6caa381772dc4daa699657b9
       url: "https://pub.dev"
     source: hosted
-    version: "1.3.0"
+    version: "1.3.2"
   go_router:
     dependency: "direct main"
     description:

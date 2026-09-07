@@ -986,7 +986,7 @@ class ComparisonPage extends GetView<ComparisonController> {
                             ),
                             Expanded(
                               child: _matrixCellWidget(
-                                  'Riverpod 3.0', r, winner == 'Riverpod'),
+                                  'Riverpod 3.x', r, winner == 'Riverpod'),
                             ),
                           ],
                         ),
@@ -1030,7 +1030,7 @@ class ComparisonPage extends GetView<ComparisonController> {
                                   style:
                                       TextStyle(fontWeight: FontWeight.bold))),
                           DataColumn(
-                              label: Text('Riverpod 3.0',
+                              label: Text('Riverpod 3.x',
                                   style:
                                       TextStyle(fontWeight: FontWeight.bold))),
                           DataColumn(

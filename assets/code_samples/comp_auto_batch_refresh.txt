@@ -1,9 +1,11 @@
 void _autoBatchRefresh() {
   if (_isNotificationScheduled) return;  // ← drop-path
   _isNotificationScheduled = true;
-  scheduleMicrotask(() {
-    refresh();
-    notifyStream();
+  scheduleMicrotask(() {                 // ← async: fires after the sync block
+    refresh();                           //    Obx updaters (1×)
+    notifyStream();                      //    ever/once/debounce (1×)
     _isNotificationScheduled = false;
   });
 }
+
+// GetX 4.7.3 RxList.add()  → refresh() → subject.add(value)  (N×, synchronous)
