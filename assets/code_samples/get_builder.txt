@@ -1,4 +1,4 @@
-// Imperative controllers (plain fields + update()) — v2.0.0+
+// Imperative controllers (plain fields + update()) — v1.4.0+
 class CartController extends GetxController {
   int total = 0;
   int badge = 0;

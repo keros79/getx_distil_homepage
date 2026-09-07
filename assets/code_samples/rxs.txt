@@ -2,7 +2,7 @@
 // 1. RxSList (Status-Aware List)
 // ==========================================
 final items = <String>[].ops;        // starts as idle
-final seeded = ['a', 'b'].ops;       // starts as loaded (v2.0.0+: seeded data = loaded)
+final seeded = ['a', 'b'].ops;       // starts as loaded (v1.4.0+: seeded data = loaded)
 
 // UI Binding using items.on(...) inside Obx
 Obx(() => items.on(
@@ -13,7 +13,7 @@ Obx(() => items.on(
   error: (err) => Text('Error: ${err ?? "Unknown"}'),
 ));
 
-// One-line async loading (v2.0.0+): idle → loading → loaded / empty / error
+// One-line async loading (v1.4.0+): idle → loading → loaded / empty / error
 // • the future never throws — errors are captured into status
 // • previous items are preserved on failure
 // • overlapping calls: only the latest result is applied (stale responses dropped)
@@ -44,7 +44,7 @@ Obx(() => user.on(
   error: (err) => Text('Error: ${err ?? "Unknown"}'),
 ));
 
-// One-line async loading with a friendly error mapper (v2.0.0+)
+// One-line async loading with a friendly error mapper (v1.4.0+)
 Future<void> fetchUser() => user.load(
   () => api.getUser(),
   errorMessage: (e) => 'Could not load profile',

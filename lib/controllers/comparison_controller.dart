@@ -125,7 +125,7 @@ class ComparisonController extends GetxController {
             'GetX'
           ],
           'tableRows': [
-            _row(['cmp.ov.r_version'.tr, '2.0.0', '4.7.3 (Stable)']),
+            _row(['cmp.ov.r_version'.tr, '1.4.0', '4.7.3 (Stable)']),
             _row(['SDK', 'Dart ^3.12.0', 'Dart >=2.15.0 <4.0.0']),
             _row([
               'cmp.ov.r_deps'.tr,

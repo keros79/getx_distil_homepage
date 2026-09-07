@@ -2,8 +2,8 @@ class FilterController extends GetxController {
   // All three collections share the same dirty-flag microtask batching:
   // any number of mutations in one synchronous block → exactly ONE rebuild.
   final tags     = <String>[].obs;          // RxList<String>
-  final prefs    = <String, bool>{}.obs;    // RxMap<String, bool>   (v2.0.0+)
-  final selected = <int>{}.obs;             // RxSet<int>            (v2.0.0+)
+  final prefs    = <String, bool>{}.obs;    // RxMap<String, bool>   (v1.4.0+)
+  final selected = <int>{}.obs;             // RxSet<int>            (v1.4.0+)
 
   void applyPreset() {
     prefs['dark'] = true;                    // ┐

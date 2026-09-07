@@ -153,7 +153,7 @@ class AppTranslations extends Translations {
           'api.meta.rxs.pt3':
               'Resilient Data Retention: Assigning error preserves existing data underneath, allowing retry options without visual flickers.',
           'api.meta.rxs.pt4':
-              'One-line async loading (v2.0.0+); load() drives idle → loading → loaded/empty/error, keeps previous data on failure, drops stale overlapping responses, and loadMore() appends pages without flashing loading.',
+              'One-line async loading (v1.4.0+); load() drives idle → loading → loaded/empty/error, keeps previous data on failure, drops stale overlapping responses, and loadMore() appends pages without flashing loading.',
           'api.meta.rxs.next_title': 'Global Dependency Injection',
 
           // ── API Section Meta — Global DI ──
@@ -167,7 +167,7 @@ class AppTranslations extends Translations {
           'api.meta.global_di.pt2':
               'Hybrid Resolver pipeline: Prioritizes local BindingWidget scopes before searching global registry maps.',
           'api.meta.global_di.pt3':
-              'fenix & GetX-style tag (v2.0.0+); lazyPut(fenix: true) re-creates a deleted dependency on the next find, and Get.find<T>(tag:) / Get.find<T>(context:) use named parameters like GetX.',
+              'fenix & GetX-style tag (v1.4.0+); lazyPut(fenix: true) re-creates a deleted dependency on the next find, and Get.find<T>(tag:) / Get.find<T>(context:) use named parameters like GetX.',
           'api.meta.global_di.next_title': 'Widget Tree Scoped DI',
 
           // ── API Section Meta — BindingWidget ──
@@ -205,7 +205,7 @@ class AppTranslations extends Translations {
           'api.meta.worker.pt2':
               'Clean Lifecycle hooks: Declare inside onInit() and unregister inside onClose() triggers.',
           'api.meta.worker.pt3':
-              'Complete worker set (v2.0.0+); everAll for several observables, interval for rate-limiting, ever(onError:) for failures, and Rx.bindStream to drive an observable from a Stream.',
+              'Complete worker set (v1.4.0+); everAll for several observables, interval for rate-limiting, ever(onError:) for failures, and Rx.bindStream to drive an observable from a Stream.',
           'api.meta.worker.next_title': 'Declarative Async Branching',
 
           // ── API Section Meta — StateMixin ──
@@ -259,7 +259,7 @@ class AppTranslations extends Translations {
           // ── API Section Meta — Reactive Collections ──
           'api.meta.collections.title': 'Reactive Collections (RxList / RxMap / RxSet)',
           'api.meta.collections.desc':
-              'Every reactive collection shares one engine (v2.0.0+ adds RxMap and RxSet). Mutations made in the same synchronous block are coalesced into a single notification, reads outside Obx cost nothing, and Workers receive one event per batch.',
+              'Every reactive collection shares one engine (v1.4.0+ adds RxMap and RxSet). Mutations made in the same synchronous block are coalesced into a single notification, reads outside Obx cost nothing, and Workers receive one event per batch.',
           'api.meta.collections.pt0':
               'Dirty-flag microtask batching; a for-loop of 10,000 writes to a list, map or set schedules exactly one refresh instead of 10,000.',
           'api.meta.collections.pt1':
@@ -272,7 +272,7 @@ class AppTranslations extends Translations {
           // ── API Section Meta — GetBuilder ──
           'api.meta.get_builder.title': 'Imperative Rebuilds (GetBuilder & update)',
           'api.meta.get_builder.desc':
-              'For controllers that keep plain fields and call update() instead of using Rx, GetBuilder (v2.0.0+) rebuilds exactly like GetX, including id-scoped partial rebuilds.',
+              'For controllers that keep plain fields and call update() instead of using Rx, GetBuilder (v1.4.0+) rebuilds exactly like GetX, including id-scoped partial rebuilds.',
           'api.meta.get_builder.pt0':
               'update() vs update(ids); update() rebuilds every GetBuilder without an id, update([\'badge\']) rebuilds only GetBuilder(id: \'badge\').',
           'api.meta.get_builder.pt1':
@@ -397,7 +397,7 @@ class AppTranslations extends Translations {
           'cmp.imp.i4.r4c1': 'Get.find<T>()',
           'cmp.imp.i4.r4c2': 'Get.find<T>() (WeakReference cache; ambiguous when several instances of one type are alive)',
           'cmp.imp.i4.eval':
-              "A design that fits the GoRouter era and fixes GetX's biggest architectural flaw. Caveat: with N live instances of one type the context-less fallback is heuristic (2.0 prefers live instances and warns once); pass context: to let the tree decide.",
+              "A design that fits the GoRouter era and fixes GetX's biggest architectural flaw. Caveat: with N live instances of one type the context-less fallback is heuristic (1.4 prefers live instances and warns once); pass context: to let the tree decide.",
           // Item 2.5
           'cmp.imp.i5.title': 'FIFO Sequential Pipeline (updateSequential)',
           'cmp.imp.i5.subtitle':
@@ -410,7 +410,7 @@ class AppTranslations extends Translations {
           'cmp.imp.i5.r1c1': 'None',
           'cmp.imp.i5.r1c2': 'Completer chain',
           'cmp.imp.i5.eval':
-              'Essential for high-frequency scenarios like real-time quotes, chat, and sensor data. Since 2.0 an exception completes the returned future with the error (or calls onError:) and reaches ever(onError:), so nothing is silently dropped.',
+              'Essential for high-frequency scenarios like real-time quotes, chat, and sensor data. Since 1.4 an exception completes the returned future with the error (or calls onError:) and reaches ever(onError:), so nothing is silently dropped.',
           // Item 2.6
           'cmp.imp.i6.title': 'RxSList / RxS — Status-Aware Reactive Types',
           'cmp.imp.i6.subtitle': 'Unique feature (not in original)',
@@ -418,7 +418,7 @@ class AppTranslations extends Translations {
           'cmp.imp.i6.r0c0': 'List status management',
           'cmp.imp.i6.r0c1':
               'Separate isLoading/errorMessage observables needed',
-          'cmp.imp.i6.r0c2': 'Built into the list itself (idle/loading/loaded/empty/error) + one-line load() / loadMore() (2.0)',
+          'cmp.imp.i6.r0c2': 'Built into the list itself (idle/loading/loaded/empty/error) + one-line load() / loadMore() (1.4)',
           'cmp.imp.i6.r1c0': 'Single value status',
           'cmp.imp.i6.r1c1': 'StateMixin (controller level)',
           'cmp.imp.i6.r1c2': 'Built into the value (RxS)',
@@ -426,7 +426,7 @@ class AppTranslations extends Translations {
           'cmp.imp.i6.r2c1': 'Manual if-else',
           'cmp.imp.i6.r2c2': 'Declarative via .on() builder',
           'cmp.imp.i6.eval':
-              'A DX innovation that eliminates separate isLoading/errorMessage observables — an original contribution not found in GetX. Since 2.0, load() automates the loading/loaded/error transitions and seeded data starts as loaded. Remaining nit: .ops is an extension on every type T, so it shows up in autocomplete everywhere.',
+              'A DX innovation that eliminates separate isLoading/errorMessage observables — an original contribution not found in GetX. Since 1.4, load() automates the loading/loaded/error transitions and seeded data starts as loaded. Remaining nit: .ops is an extension on every type T, so it shows up in autocomplete everywhere.',
           // Item 2.7
           'cmp.imp.i7.title': 'Strict Async Obx Validation',
           'cmp.imp.i7.subtitle': 'Blocks async Obx anti-patterns',
@@ -474,29 +474,29 @@ class AppTranslations extends Translations {
           'cmp.sac.r5c3': 'Replaced by BindingWidget',
           'cmp.sac.r6c0': 'interval / everAll Workers',
           'cmp.sac.r6c1': 'Periodic & multi-Rx workers',
-          'cmp.sac.r6c3': 'interval() and everAll() shipped in 2.0',
+          'cmp.sac.r6c3': 'interval() and everAll() shipped in 1.4',
           'cmp.sac.r7c0': 'SmartManagement',
           'cmp.sac.r7c1': 'Memory management policy',
           'cmp.sac.r7c3': 'Replaced by BindingWidget Auto-GC',
           'cmp.sac.r8c0': 'RxMap / RxSet',
           'cmp.sac.r8c1': 'Reactive map & set collections',
-          'cmp.sac.r8c3': 'RxMap / RxSet with the same microtask batching (2.0)',
+          'cmp.sac.r8c3': 'RxMap / RxSet with the same microtask batching (1.4)',
           'cmp.sac.r9c0': 'GetBuilder / update(ids)',
           'cmp.sac.r9c1': 'ID-based partial rebuild',
-          'cmp.sac.r9c3': 'GetBuilder + update(ids) behave like GetX (2.0)',
+          'cmp.sac.r9c3': 'GetBuilder + update(ids) behave like GetX (1.4)',
           'cmp.sac.r10c0': 'Rx.bindStream',
           'cmp.sac.r10c1': 'Bind an external Stream to an Rx',
-          'cmp.sac.r10c3': 'Rx.bindStream() with auto-cancel on close() (2.0)',
+          'cmp.sac.r10c3': 'Rx.bindStream() with auto-cancel on close() (1.4)',
           'cmp.sac.info_card':
               'Removing routing/dialogs/network/storage is an intentional design decision that aligns well with the modern Flutter ecosystem. Delegating each responsibility to specialized packages results in better architecture.',
           'cmp.sac.next_title': '4. Code Quality Assessment',
           'cmp.sac.removed': '❌ Removed',
-          'cmp.sac.restored': '✅ Added in 2.0',
+          'cmp.sac.restored': '✅ Added in 1.4',
 
           // ── Comparison — Quality ──
           'cmp.qa.title': 'Code Quality Assessment',
           'cmp.qa.good0':
-              'Compact — 2,867 lines total (1,852 excluding blanks/comments) across 19 files: about 16% of GetX 4.7.3 (17,351 / 11,831) even after 2.0 added RxMap/RxSet, GetBuilder and load(). Still readable in one sitting.',
+              'Compact — 2,867 lines total (1,852 excluding blanks/comments) across 19 files: about 16% of GetX 4.7.3 (17,351 / 11,831) even after 1.4 added RxMap/RxSet, GetBuilder and load(). Still readable in one sitting.',
           'cmp.qa.good1':
               'Zero External Dependency — depends only on Flutter SDK. Zero supply chain risk.',
           'cmp.qa.good2':
@@ -510,7 +510,7 @@ class AppTranslations extends Translations {
           'cmp.qa.good6':
               'Root-service eager init — GetMaterialApp(bindings) and BindingWidget(eager: true) initialize GetxService instances at mount (v1.3.1), removing the old builder-callback workaround.',
           'cmp.qa.bad0':
-              'Context-less Get.find<T>() with several live instances is still heuristic — 2.0 prefers live instances and warns once in debug, but the widget tree remains the only deterministic answer; pass context:.',
+              'Context-less Get.find<T>() with several live instances is still heuristic — 1.4 prefers live instances and warns once in debug, but the widget tree remains the only deterministic answer; pass context:.',
           'cmp.qa.bad1':
               '.ops is an extension on every type T — it shows up in autocomplete on every object; a narrower target or a static constructor would be cleaner.',
           'cmp.qa.bad2':
@@ -518,7 +518,7 @@ class AppTranslations extends Translations {
           'cmp.qa.bad3':
               'Collection notifications are asynchronous (microtask) — tests must await a microtask/pump, and code expecting a synchronous ever() callback behaves differently from GetX.',
           'cmp.qa.bad4':
-              '2.0 is a breaking release — Get.find takes named parameters (context:, tag:), seeded RxS/RxSList start loaded and updateSequential rethrows, so 1.x call sites need a mechanical migration.',
+              '1.4 is a breaking release — Get.find takes named parameters (context:, tag:), seeded RxS/RxSList start loaded and updateSequential rethrows, so 1.x call sites need a mechanical migration.',
           'cmp.qa.s0_item': 'Architecture Design',
           'cmp.qa.s0_note': 'Tree-scoped DI + hybrid fallback is best practice',
           'cmp.qa.s1_item': 'Performance Optimization',
@@ -596,7 +596,7 @@ class AppTranslations extends Translations {
           'cmp.rp.s3.r0c1': 'RxSList / RxS + load() (auto status; manual still possible)',
           'cmp.rp.s3.r0c2': 'AsyncValue<T> (automatic state management)',
           'cmp.rp.s3.r1c0': 'Loading→Data Transition',
-          'cmp.rp.s3.r1c1': 'Automatic via load() (2.0) or manual assignAll()',
+          'cmp.rp.s3.r1c1': 'Automatic via load() (1.4) or manual assignAll()',
           'cmp.rp.s3.r1c2': 'Automatic (on Future completion)',
           'cmp.rp.s3.r2c0': 'Error Handling',
           'cmp.rp.s3.r2c1': 'Automatic in load() (captured into status, previous data kept)',
@@ -608,7 +608,7 @@ class AppTranslations extends Translations {
           'cmp.rp.s3.r4c1': 'Intuitive but manual',
           'cmp.rp.s3.r4c2': 'Automated but requires learning',
           'cmp.rp.s3.eval':
-              "For a plain fetch, getx_distil 2.0's load() now matches AsyncValue.guard: automatic transitions, captured errors, stale responses discarded. Riverpod still leads on retry, caching, invalidation and family-keyed providers.",
+              "For a plain fetch, getx_distil 1.4's load() now matches AsyncValue.guard: automatic transitions, captured errors, stale responses discarded. Riverpod still leads on retry, caching, invalidation and family-keyed providers.",
 
           // 5.4 DI
           'cmp.rp.s4.title': 'DI (Dependency Injection)',
@@ -781,7 +781,7 @@ class AppTranslations extends Translations {
           'cmp.con.card1.p2':
               "On the other hand, Riverpod 3.x's compile-time type safety and systematic async state management shine in large-scale projects. Choose based on project scale, team maturity, and data manipulation patterns.",
           'cmp.con.footer':
-              'Revised: 2026-09-07\nVersions analyzed: getx_distil 2.0.0 · GetX 4.7.3 · flutter_riverpod 3.4.3',
+              'Revised: 2026-09-07\nVersions analyzed: getx_distil 1.4.0 · GetX 4.7.3 · flutter_riverpod 3.4.3',
         },
         'ko_KR': {
           // ── Nav ──
@@ -931,7 +931,7 @@ class AppTranslations extends Translations {
           'api.meta.rxs.pt3':
               '회복력 있는 데이터 유지: 에러 상태로 전이되더라도 내부의 기존 데이터를 유실하지 않으므로, 화면 깜빡임 없이 재시도 UI를 보여줄 수 있습니다.',
           'api.meta.rxs.pt4':
-              '한 줄 비동기 로딩 (v2.0.0+); load()가 idle → loading → loaded/empty/error 전환을 자동 처리하고, 실패 시 기존 데이터를 유지하며, 겹친 호출의 오래된 응답은 무시합니다. loadMore()는 loading 깜빡임 없이 다음 페이지를 이어 붙입니다.',
+              '한 줄 비동기 로딩 (v1.4.0+); load()가 idle → loading → loaded/empty/error 전환을 자동 처리하고, 실패 시 기존 데이터를 유지하며, 겹친 호출의 오래된 응답은 무시합니다. loadMore()는 loading 깜빡임 없이 다음 페이지를 이어 붙입니다.',
           'api.meta.rxs.next_title': '글로벌 의존성 주입',
 
           // ── API Section Meta — Global DI ──
@@ -945,7 +945,7 @@ class AppTranslations extends Translations {
           'api.meta.global_di.pt2':
               '하이브리드 리졸버 파이프라인: 글로벌 탐색 전, 로컬 BindingWidget 스코프를 우선 탐색하여 독립성을 보장합니다.',
           'api.meta.global_di.pt3':
-              'fenix 및 GetX 스타일 tag (v2.0.0+); lazyPut(fenix: true)는 삭제된 의존성을 다음 find에서 재생성하고, Get.find<T>(tag:) / Get.find<T>(context:)는 GetX처럼 named 파라미터를 사용합니다.',
+              'fenix 및 GetX 스타일 tag (v1.4.0+); lazyPut(fenix: true)는 삭제된 의존성을 다음 find에서 재생성하고, Get.find<T>(tag:) / Get.find<T>(context:)는 GetX처럼 named 파라미터를 사용합니다.',
           'api.meta.global_di.next_title': '위젯 트리 범위의 스코프 DI',
 
           // ── API Section Meta — BindingWidget ──
@@ -983,7 +983,7 @@ class AppTranslations extends Translations {
           'api.meta.worker.pt2':
               '명확한 라이프사이클 훅: onInit()에서 백그라운드 작업을 실행하고 onClose()를 통해 종료되도록 통제합니다.',
           'api.meta.worker.pt3':
-              '완전한 워커 세트 (v2.0.0+); 여러 옵저버블을 감시하는 everAll, 호출 빈도를 제한하는 interval, 실패를 받는 ever(onError:), Stream으로 옵저버블을 구동하는 Rx.bindStream을 제공합니다.',
+              '완전한 워커 세트 (v1.4.0+); 여러 옵저버블을 감시하는 everAll, 호출 빈도를 제한하는 interval, 실패를 받는 ever(onError:), Stream으로 옵저버블을 구동하는 Rx.bindStream을 제공합니다.',
           'api.meta.worker.next_title': '선언형 비동기 분기 처리',
 
           // ── API Section Meta — StateMixin ──
@@ -1037,7 +1037,7 @@ class AppTranslations extends Translations {
           // ── API Section Meta — Reactive Collections ──
           'api.meta.collections.title': '반응형 컬렉션 (RxList / RxMap / RxSet)',
           'api.meta.collections.desc':
-              '모든 반응형 컬렉션이 하나의 엔진을 공유합니다(v2.0.0+에서 RxMap, RxSet 추가). 같은 동기 블록에서 일어난 변경은 알림 1회로 병합되고, Obx 밖의 읽기는 비용이 없으며, Worker는 배치당 이벤트 1개를 받습니다.',
+              '모든 반응형 컬렉션이 하나의 엔진을 공유합니다(v1.4.0+에서 RxMap, RxSet 추가). 같은 동기 블록에서 일어난 변경은 알림 1회로 병합되고, Obx 밖의 읽기는 비용이 없으며, Worker는 배치당 이벤트 1개를 받습니다.',
           'api.meta.collections.pt0':
               '더티 플래그 마이크로태스크 배치; 리스트·맵·셋에 for 루프로 1만 번 쓰더라도 refresh는 정확히 1회만 예약됩니다.',
           'api.meta.collections.pt1':
@@ -1050,7 +1050,7 @@ class AppTranslations extends Translations {
           // ── API Section Meta — GetBuilder ──
           'api.meta.get_builder.title': '명령형 리빌드 (GetBuilder & update)',
           'api.meta.get_builder.desc':
-              'Rx 대신 일반 필드와 update() 호출을 쓰는 컨트롤러를 위해 GetBuilder(v2.0.0+)가 GetX와 똑같이, id 단위 부분 리빌드까지 포함해 동작합니다.',
+              'Rx 대신 일반 필드와 update() 호출을 쓰는 컨트롤러를 위해 GetBuilder(v1.4.0+)가 GetX와 똑같이, id 단위 부분 리빌드까지 포함해 동작합니다.',
           'api.meta.get_builder.pt0':
               'update()와 update(ids); update()는 id가 없는 모든 GetBuilder를, update([\'badge\'])는 GetBuilder(id: \'badge\')만 리빌드합니다.',
           'api.meta.get_builder.pt1':
@@ -1174,7 +1174,7 @@ class AppTranslations extends Translations {
           'cmp.imp.i4.r4c1': 'Get.find<T>() 호출',
           'cmp.imp.i4.r4c2': 'Get.find<T>() 지원 (WeakReference 캐시; 동일 타입 인스턴스가 여럿 살아 있으면 모호함)',
           'cmp.imp.i4.eval':
-              'GoRouter 시대에 맞는 설계이며 GetX 최대의 구조적 약점을 해소합니다. 주의: 같은 타입의 인스턴스가 N개 살아 있으면 컨텍스트 없는 폴백은 휴리스틱입니다(2.0은 살아 있는 인스턴스를 우선하고 1회 경고). context:를 넘겨 트리가 결정하게 하세요.',
+              'GoRouter 시대에 맞는 설계이며 GetX 최대의 구조적 약점을 해소합니다. 주의: 같은 타입의 인스턴스가 N개 살아 있으면 컨텍스트 없는 폴백은 휴리스틱입니다(1.4는 살아 있는 인스턴스를 우선하고 1회 경고). context:를 넘겨 트리가 결정하게 하세요.',
           // Item 2.5
           'cmp.imp.i5.title': 'FIFO 순차 실행 파이프라인 (updateSequential)',
           'cmp.imp.i5.subtitle': '빈번한 비동기 작업 시 경쟁 상태(Race Condition) 방지',
@@ -1186,14 +1186,14 @@ class AppTranslations extends Translations {
           'cmp.imp.i5.r1c1': '없음',
           'cmp.imp.i5.r1c2': 'Completer 체이닝 파이프라인 탑재',
           'cmp.imp.i5.eval':
-              '실시간 시세, 채팅, 센서 모니터링처럼 짧은 순간에 다량의 비동기 갱신이 몰리는 환경에 꼭 필요한 안전장치입니다. 2.0부터 action 내부 예외는 반환된 Future를 실패시키거나(onError: 지정 시 그것을 호출) ever(onError:)에도 전달되어, 조용히 사라지는 일이 없습니다.',
+              '실시간 시세, 채팅, 센서 모니터링처럼 짧은 순간에 다량의 비동기 갱신이 몰리는 환경에 꼭 필요한 안전장치입니다. 1.4부터 action 내부 예외는 반환된 Future를 실패시키거나(onError: 지정 시 그것을 호출) ever(onError:)에도 전달되어, 조용히 사라지는 일이 없습니다.',
           // Item 2.6
           'cmp.imp.i6.title': 'RxSList / RxS — 상태 인지형 반응형 타입',
           'cmp.imp.i6.subtitle': 'GetX 패키지에는 없는 오리지널 신기능',
           'cmp.imp.i6.h0': '비교 항목',
           'cmp.imp.i6.r0c0': '리스트 상태 관리',
           'cmp.imp.i6.r0c1': '별도의 isLoading, errorMessage 등의 변수 선언 필요',
-          'cmp.imp.i6.r0c2': '리스트 자체에 상태 내장 (idle/loading/loaded/empty/error) + 한 줄 load() / loadMore() (2.0)',
+          'cmp.imp.i6.r0c2': '리스트 자체에 상태 내장 (idle/loading/loaded/empty/error) + 한 줄 load() / loadMore() (1.4)',
           'cmp.imp.i6.r1c0': '단일 인스턴스 상태',
           'cmp.imp.i6.r1c1': '컨트롤러 레벨의 StateMixin을 통해서만 제어 가능',
           'cmp.imp.i6.r1c2': '개별 변수 단위로 상태 관리가 내장됨 (RxS)',
@@ -1201,7 +1201,7 @@ class AppTranslations extends Translations {
           'cmp.imp.i6.r2c1': '조건부(if-else) 뷰 조각 수동 구성',
           'cmp.imp.i6.r2c2': '.on() 선언형 빌더를 활용한 깔끔한 바인딩',
           'cmp.imp.i6.eval':
-              '별도의 isLoading/errorMessage 변수를 없애는 DX 혁신이며 GetX에는 없는 독창적 기여입니다. 2.0부터 load()가 loading/loaded/error 전환을 자동화하고 초기 데이터가 있으면 loaded로 시작합니다. 남은 아쉬움: .ops가 모든 타입 T에 대한 확장이라 자동완성 어디에나 노출됩니다.',
+              '별도의 isLoading/errorMessage 변수를 없애는 DX 혁신이며 GetX에는 없는 독창적 기여입니다. 1.4부터 load()가 loading/loaded/error 전환을 자동화하고 초기 데이터가 있으면 loaded로 시작합니다. 남은 아쉬움: .ops가 모든 타입 T에 대한 확장이라 자동완성 어디에나 노출됩니다.',
           // Item 2.7
           'cmp.imp.i7.title': '엄격한 비동기 Obx 코드 검증 체계',
           'cmp.imp.i7.subtitle': '비동기 Obx 작성 안티패턴 사전 차단',
@@ -1248,29 +1248,29 @@ class AppTranslations extends Translations {
           'cmp.sac.r5c3': 'BindingWidget을 사용하여 선언형 위젯 단위로 바인딩',
           'cmp.sac.r6c0': 'interval / everAll 워커',
           'cmp.sac.r6c1': '주기 실행 워커 및 다중 Rx 감시 워커',
-          'cmp.sac.r6c3': '2.0에서 interval()과 everAll() 제공',
+          'cmp.sac.r6c3': '1.4에서 interval()과 everAll() 제공',
           'cmp.sac.r7c0': 'SmartManagement 기능',
           'cmp.sac.r7c1': '메모리 인스턴스 자동 파기 및 유지 정책 제어',
           'cmp.sac.r7c3': 'BindingWidget의 생명주기 자동 가비지 컬렉션(GC)으로 완전 일원화',
           'cmp.sac.r8c0': 'RxMap / RxSet',
           'cmp.sac.r8c1': '반응형 Map/Set 컬렉션',
-          'cmp.sac.r8c3': '동일한 마이크로태스크 배치를 가진 RxMap / RxSet (2.0)',
+          'cmp.sac.r8c3': '동일한 마이크로태스크 배치를 가진 RxMap / RxSet (1.4)',
           'cmp.sac.r9c0': 'GetBuilder / update(ids)',
           'cmp.sac.r9c1': 'ID 기반 부분 리빌드',
-          'cmp.sac.r9c3': 'GetBuilder + update(ids)가 GetX와 동일하게 동작 (2.0)',
+          'cmp.sac.r9c3': 'GetBuilder + update(ids)가 GetX와 동일하게 동작 (1.4)',
           'cmp.sac.r10c0': 'Rx.bindStream',
           'cmp.sac.r10c1': '외부 Stream을 Rx에 바인딩',
-          'cmp.sac.r10c3': 'close() 시 자동 취소되는 Rx.bindStream() (2.0)',
+          'cmp.sac.r10c3': 'close() 시 자동 취소되는 Rx.bindStream() (1.4)',
           'cmp.sac.info_card':
               '라우팅, 다이얼로그, 통신, 저장소 등을 제거한 것은 현대 Flutter 생태계에 부합하기 위한 의도적인 다운사이징입니다. 각 역할에 집중된 전문 패키지를 결합하여 사용하면 더욱 견고하고 확장성 있는 구조를 완성할 수 있습니다.',
           'cmp.sac.next_title': '4. 코드 품질 종합 진단',
           'cmp.sac.removed': '❌ 제거됨',
-          'cmp.sac.restored': '✅ 2.0에서 추가',
+          'cmp.sac.restored': '✅ 1.4에서 추가',
 
           // ── Comparison — Quality ──
           'cmp.qa.title': '코드 품질 종합 평가',
           'cmp.qa.good0':
-              '컴팩트 — 19개 파일, 전체 2,867줄(공백·주석 제외 1,852줄)로 2.0에서 RxMap/RxSet, GetBuilder, load()를 더한 뒤에도 GetX 4.7.3(17,351 / 11,831줄)의 약 16%입니다. 여전히 한 번에 읽을 수 있는 크기입니다.',
+              '컴팩트 — 19개 파일, 전체 2,867줄(공백·주석 제외 1,852줄)로 1.4에서 RxMap/RxSet, GetBuilder, load()를 더한 뒤에도 GetX 4.7.3(17,351 / 11,831줄)의 약 16%입니다. 여전히 한 번에 읽을 수 있는 크기입니다.',
           'cmp.qa.good1': '제로 의존성 — Flutter SDK에만 의존하여 공급망 보안 위험이 완전히 제로입니다.',
           'cmp.qa.good2':
               '탄탄한 테스트 — 테스트 2,405줄 / 109 케이스에 TDD 예제 테스트를 포함합니다. 컬렉션 배치(List/Map/Set), WeakReference 좀비 방지, 형제 컨트롤러 onClose 상호 참조, fenix, update(ids), updateSequential 오류 전파, load()의 오래된 응답 처리를 커버합니다.',
@@ -1283,7 +1283,7 @@ class AppTranslations extends Translations {
           'cmp.qa.good6':
               '루트 서비스 즉시 초기화 — GetMaterialApp(bindings)과 BindingWidget(eager: true)이 마운트 시점에 GetxService를 초기화(v1.3.1)하여 기존 builder 콜백 우회책이 사라졌습니다.',
           'cmp.qa.bad0':
-              '컨텍스트 없는 Get.find<T>()는 동일 타입 인스턴스가 여럿이면 여전히 휴리스틱 — 2.0은 살아 있는 인스턴스를 우선하고 디버그에서 1회 경고하지만, 결정적인 답은 위젯 트리뿐이므로 context:를 넘겨야 합니다.',
+              '컨텍스트 없는 Get.find<T>()는 동일 타입 인스턴스가 여럿이면 여전히 휴리스틱 — 1.4는 살아 있는 인스턴스를 우선하고 디버그에서 1회 경고하지만, 결정적인 답은 위젯 트리뿐이므로 context:를 넘겨야 합니다.',
           'cmp.qa.bad1':
               '.ops가 모든 타입 T에 대한 확장 — 모든 객체의 자동완성에 노출됩니다. 대상을 좁히거나 정적 생성자로 바꾸는 편이 깔끔합니다.',
           'cmp.qa.bad2':
@@ -1291,7 +1291,7 @@ class AppTranslations extends Translations {
           'cmp.qa.bad3':
               '컬렉션 알림이 비동기(마이크로태스크) — 테스트는 마이크로태스크/pump를 기다려야 하고, 동기 ever() 콜백을 기대하는 코드는 GetX와 다르게 동작합니다.',
           'cmp.qa.bad4':
-              '2.0은 호환성이 깨지는 릴리스 — Get.find가 named 파라미터(context:, tag:)를 받고, 초기 데이터가 있는 RxS/RxSList는 loaded로 시작하며, updateSequential은 예외를 다시 던지므로 1.x 호출부에 기계적 마이그레이션이 필요합니다.',
+              '1.4는 호환성이 깨지는 릴리스 — Get.find가 named 파라미터(context:, tag:)를 받고, 초기 데이터가 있는 RxS/RxSList는 loaded로 시작하며, updateSequential은 예외를 다시 던지므로 1.x 호출부에 기계적 마이그레이션이 필요합니다.',
           'cmp.qa.s0_item': '아키텍처 설계 품질',
           'cmp.qa.s0_note': '위젯 트리 기반 스코프 주입과 하이브리드 탐색 연동은 최고 수준',
           'cmp.qa.s1_item': '성능 최적화 역량',
@@ -1366,7 +1366,7 @@ class AppTranslations extends Translations {
           'cmp.rp.s3.r0c1': 'RxSList / RxS + load() (자동 상태 전환, 수동도 가능)',
           'cmp.rp.s3.r0c2': 'AsyncValue<T> 상태 타입 (스케줄러 자동 관리)',
           'cmp.rp.s3.r1c0': '로딩 → 완료 전환',
-          'cmp.rp.s3.r1c1': 'load()로 자동 (2.0) 또는 수동 assignAll()',
+          'cmp.rp.s3.r1c1': 'load()로 자동 (1.4) 또는 수동 assignAll()',
           'cmp.rp.s3.r1c2': 'Future 리턴 시 프레임워크가 자동 전환',
           'cmp.rp.s3.r2c0': '예외(에러) 제어',
           'cmp.rp.s3.r2c1': 'load()가 자동 처리 (상태에 흡수, 기존 데이터 유지)',
@@ -1378,7 +1378,7 @@ class AppTranslations extends Translations {
           'cmp.rp.s3.r4c1': '직관적이나 손이 더 많이 감',
           'cmp.rp.s3.r4c2': '자동화되어 있으나 개념 학습 장벽 존재',
           'cmp.rp.s3.eval':
-              '단순 fetch라면 getx_distil 2.0의 load()가 AsyncValue.guard와 같은 수준입니다: 자동 전환, 예외 흡수, 오래된 응답 폐기. retry, 캐싱, invalidation, family 키 프로바이더는 여전히 Riverpod이 앞섭니다.',
+              '단순 fetch라면 getx_distil 1.4의 load()가 AsyncValue.guard와 같은 수준입니다: 자동 전환, 예외 흡수, 오래된 응답 폐기. retry, 캐싱, invalidation, family 키 프로바이더는 여전히 Riverpod이 앞섭니다.',
 
           // 5.4 DI
           'cmp.rp.s4.title': '의존성 주입(DI) 아키텍처 비교',
@@ -1549,7 +1549,7 @@ class AppTranslations extends Translations {
               'RxList 마이크로태스크 배치와 빌드 단계 자동 보정은 Riverpod에 대응물이 없어, 변경 빈도가 매우 높은 페이지에서는 getx_distil이 더 관대합니다. Riverpod은 관용구를 지켜 작성해야 비슷한 효율에 도달합니다.',
           'cmp.con.card1.p2':
               '반면 Riverpod 3.x은 코드 생성이 주는 컴파일 타임 검증성과 탄탄한 비동기 프로바이더가 거대한 엔터프라이즈 프로젝트에서 진가를 발휘하게 돕습니다. 프로젝트 예산 규모, 구성원의 기술적 성숙도, 처리해야 할 실시간 연산량 등에 맞춰 최적의 솔루션을 선택하는 것이 현명합니다.',
-          'cmp.con.footer': '개정일: 2026-09-07\n분석 대상 버전: getx_distil 2.0.0 · GetX 4.7.3 · flutter_riverpod 3.4.3',
+          'cmp.con.footer': '개정일: 2026-09-07\n분석 대상 버전: getx_distil 1.4.0 · GetX 4.7.3 · flutter_riverpod 3.4.3',
         },
       };
 }

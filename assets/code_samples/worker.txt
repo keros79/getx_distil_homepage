@@ -13,17 +13,17 @@ class SearchController extends GetxController {
       debounce(searchQuery, (q) => fetchApi(q),
           time: const Duration(milliseconds: 500)),
 
-      // v2.0.0+: at most once per window (first value wins) — anti double-tap
+      // v1.4.0+: at most once per window (first value wins) — anti double-tap
       interval(page, (p) => loadPage(p), time: const Duration(seconds: 1)),
 
-      // v2.0.0+: any of several observables changed
+      // v1.4.0+: any of several observables changed
       everAll([page, sort], (_) => refreshList()),
 
       // Every change; onError also receives failures from updateSequential / load()
       ever(searchQuery, (q) => log(q), onError: (e) => report(e)),
     ]);
 
-    // v2.0.0+: drive an Rx from a Stream — cancelled automatically on close()
+    // v1.4.0+: drive an Rx from a Stream — cancelled automatically on close()
     ticks.bindStream(Stream.periodic(const Duration(seconds: 1), (i) => i));
   }
 
