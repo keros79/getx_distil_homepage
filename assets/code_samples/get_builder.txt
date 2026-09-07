@@ -1,0 +1,37 @@
+// Imperative controllers (plain fields + update()) — v2.0.0+
+class CartController extends GetxController {
+  int total = 0;
+  int badge = 0;
+
+  void addItem() {
+    total += 1;
+    badge += 1;
+    update();          // → rebuilds every GetBuilder WITHOUT an id
+    update(['badge']); // → rebuilds only GetBuilder(id: 'badge')
+  }
+}
+
+// 1. Rebuilds on any update()
+GetBuilder<CartController>(
+  builder: (c) => Text('Total: ${c.total}'),
+);
+
+// 2. Rebuilds only on update(['badge'])
+GetBuilder<CartController>(
+  id: 'badge',
+  builder: (c) => Badge(count: c.badge),
+);
+
+// 3. Controller resolution
+//    • init:  registers via Get.put (removed again on dispose when autoRemove)
+//    • none:  hybrid Get.find(context: ..., tag: ...) → BindingWidget scope first,
+//             then the global registry
+GetBuilder<CartController>(
+  init: CartController(),
+  builder: (c) => Text('${c.total}'),
+);
+
+// 4. Listener API behind GetBuilder (usable from anywhere)
+final dispose = controller.addListenerId('badge', () => debugPrint('badge changed'));
+controller.refreshGroup('badge'); // same as update(['badge'])
+dispose();                        // unsubscribe

@@ -1,7 +1,8 @@
 // ==========================================
 // 1. RxSList (Status-Aware List)
 // ==========================================
-final items = RxSList<String>(); // Starts as idle status
+final items = <String>[].ops;        // starts as idle
+final seeded = ['a', 'b'].ops;       // starts as loaded (v2.0.0+: seeded data = loaded)
 
 // UI Binding using items.on(...) inside Obx
 Obx(() => items.on(
@@ -12,22 +13,30 @@ Obx(() => items.on(
   error: (err) => Text('Error: ${err ?? "Unknown"}'),
 ));
 
-void fetchItems() async {
+// One-line async loading (v2.0.0+): idle → loading → loaded / empty / error
+// • the future never throws — errors are captured into status
+// • previous items are preserved on failure
+// • overlapping calls: only the latest result is applied (stale responses dropped)
+Future<void> fetchItems() => items.load(() => api.getItems());
+
+// Paging: appends WITHOUT flashing `loading`, sets hasMore = page.isNotEmpty
+Future<void> nextPage() => items.loadMore(() => api.getItems(page: ++_page));
+
+// Manual control is still available when you need it
+void fetchItemsManually() async {
   try {
     items.setLoading();
-    final res = await api.getItems();
-    items.assignAll(res); // Automatically transitions to loaded (or empty if empty list)
+    items.assignAll(await api.getItems()); // → loaded (or empty)
   } catch (e) {
-    items.setError(e.toString()); // Preserves items, transitions status to error
+    items.setError(e.toString());          // keeps items, status → error
   }
 }
 
 // ==========================================
 // 2. RxS (Status-Aware Nullable Value)
 // ==========================================
-final user = RxS<User?>(null); // Starts as idle status
+final user = RxS<User?>(null);       // starts as idle
 
-// UI Binding using user.on(...) inside Obx
 Obx(() => user.on(
   idle: () => const Text('Idle...'),
   loading: () => const CircularProgressIndicator(),
@@ -35,12 +44,8 @@ Obx(() => user.on(
   error: (err) => Text('Error: ${err ?? "Unknown"}'),
 ));
 
-void fetchUser() async {
-  try {
-    user.setLoading();
-    final res = await api.getUser();
-    user.value = res; // Automatically transitions to loaded
-  } catch (e) {
-    user.setError(e.toString()); // Preserves data, transitions status to error
-  }
-}
+// One-line async loading with a friendly error mapper (v2.0.0+)
+Future<void> fetchUser() => user.load(
+  () => api.getUser(),
+  errorMessage: (e) => 'Could not load profile',
+);

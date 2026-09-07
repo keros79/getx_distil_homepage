@@ -137,9 +137,37 @@ class ApiDetailController extends GetxController
             'api.meta.route_guard.pt1'.tr,
             'api.meta.route_guard.pt2'.tr,
           ],
+          'next': 'collections',
+          'nextTitle': 'api.meta.collections.title'.tr,
+          'color': AppTheme.googleGreen,
+        },
+        'collections': {
+          'title': 'api.meta.collections.title'.tr,
+          'codeKey': 'collections',
+          'description': 'api.meta.collections.desc'.tr,
+          'points': [
+            'api.meta.collections.pt0'.tr,
+            'api.meta.collections.pt1'.tr,
+            'api.meta.collections.pt2'.tr,
+            'api.meta.collections.pt3'.tr,
+          ],
+          'next': 'get-builder',
+          'nextTitle': 'api.meta.get_builder.title'.tr,
+          'color': AppTheme.googleYellow,
+        },
+        'get-builder': {
+          'title': 'api.meta.get_builder.title'.tr,
+          'codeKey': 'get_builder',
+          'description': 'api.meta.get_builder.desc'.tr,
+          'points': [
+            'api.meta.get_builder.pt0'.tr,
+            'api.meta.get_builder.pt1'.tr,
+            'api.meta.get_builder.pt2'.tr,
+            'api.meta.get_builder.pt3'.tr,
+          ],
           'next': 'comparison',
           'nextTitle': 'api.meta.route_guard.next_title'.tr,
-          'color': AppTheme.googleGreen,
+          'color': AppTheme.googleRed,
         },
       };
 
@@ -174,6 +202,8 @@ class ApiDetailController extends GetxController
         'route_guard_auth_controller',
         'route_guard_setup',
         'route_guard_bad_example',
+        'collections',
+        'get_builder',
       ];
 
       for (var key in keys) {

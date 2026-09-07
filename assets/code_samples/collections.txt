@@ -1,0 +1,36 @@
+class FilterController extends GetxController {
+  // All three collections share the same dirty-flag microtask batching:
+  // any number of mutations in one synchronous block → exactly ONE rebuild.
+  final tags     = <String>[].obs;          // RxList<String>
+  final prefs    = <String, bool>{}.obs;    // RxMap<String, bool>   (v2.0.0+)
+  final selected = <int>{}.obs;             // RxSet<int>            (v2.0.0+)
+
+  void applyPreset() {
+    prefs['dark'] = true;                    // ┐
+    prefs['compact'] = false;                // ├─ batched into a single
+    prefs.addAll({'sound': true});           // ┘  notification
+    selected.addAll([1, 2, 3]);              // one notification
+    tags.assignAll(['flutter', 'getx']);     // one notification
+  }
+
+  void toggle(int id) =>
+      selected.contains(id) ? selected.remove(id) : selected.add(id);
+}
+
+// Reads inside Obx register a dependency; reads elsewhere are free (isTracking fast-path)
+Obx(() => Switch(
+  value: controller.prefs['dark'] ?? false,
+  onChanged: (v) => controller.prefs['dark'] = v,
+));
+
+Obx(() => Text('${controller.selected.length} selected'));
+
+// Workers see one event per batch, not one per mutation
+ever(controller.selected, (Set<int> s) => debugPrint('selection → $s'));
+
+// Replace everything atomically
+controller.prefs.assignAll({'dark': false});
+controller.selected.assignAll({});
+
+// Non-reactive access when you deliberately don't want a dependency
+final snapshot = controller.prefs.rawMap;

@@ -33,6 +33,9 @@ class _AppDrawerState extends State<AppDrawer> {
     {'title': 'Declarative Async Branching', 'path': 'state-mixin'},
     {'title': 'Reactive Localization', 'path': 'i18n'},
     {'title': 'TDD & Testability', 'path': 'tdd'},
+    {'title': 'GoRouter & Route Guard', 'path': 'route-guard'},
+    {'title': 'Reactive Collections (RxMap & RxSet)', 'path': 'collections'},
+    {'title': 'Imperative Rebuilds (GetBuilder)', 'path': 'get-builder'},
   ];
 
   static const List<Map<String, String>> _comparisonSections = [

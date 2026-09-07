@@ -51,6 +51,14 @@ class SidebarToc extends StatelessWidget {
       'title': '10. GoRouter & Route Guard',
       'path': 'route-guard',
     },
+    {
+      'title': '11. Reactive Collections (RxMap & RxSet)',
+      'path': 'collections',
+    },
+    {
+      'title': '12. Imperative Rebuilds (GetBuilder)',
+      'path': 'get-builder',
+    },
   ];
 
   @override

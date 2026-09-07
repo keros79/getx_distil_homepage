@@ -4,13 +4,23 @@ final controller = Get.put(CounterController());
 // 2. lazyPut: Registers a builder, instantiated on first Get.find
 Get.lazyPut(() => CounterController());
 
-// 3. put with tag: Register multiple instances of the same type
+// 3. fenix (v2.0.0+): survives Get.delete — onClose() runs, but the builder
+//    stays registered, so the next Get.find re-creates a fresh instance
+Get.lazyPut(() => SessionController(), fenix: true);
+Get.delete<SessionController>();               // disposed, still registered
+final fresh = Get.find<SessionController>();   // brand-new instance
+
+// 4. put with tag: multiple instances of the same type (global registry only)
 Get.put(CounterController(), tag: 'special_counter');
 
-// 4. Find instances (context-less anywhere in your code)
+// 5. Find instances (context-less anywhere in your code)
 final controller = Get.find<CounterController>();
-final specialController = Get.find<CounterController>(null, 'special_counter');
+final special = Get.find<CounterController>(tag: 'special_counter'); // v2.0.0+: GetX-style named tag
 
-// 5. Context-aware (Hybrid DI lookup)
-// Prioritizes tree-scoped BindingWidget. Falls back to global registry.
-final contextController = Get.find<CounterController>(context);
+// 6. Context-aware (Hybrid DI lookup) — v2.0.0+: named parameter
+//    Prioritizes the nearest BindingWidget scope, then falls back to the global registry.
+final scoped = Get.find<CounterController>(context: context);
+
+// 7. Registry queries
+Get.isRegistered<CounterController>();   // instantiated OR lazily prepared
+Get.isPrepared<SessionController>();     // v2.0.0+: lazy/fenix builder waiting to be built
